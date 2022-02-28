@@ -10,13 +10,13 @@ const studyStackMutations = {
    * @returns errorステータス
    */
   addStudyStack: (_: any, { stack }: any) => {
-    const { content, timeStack, createdAt, skillTags, userId } = stack;
+    const { content, timeStack, createdAt, skillTagId, userId } = stack;
     try {
       const newStudyStack = new StudyStack({
         content,
         timeStack,
         createdAt,
-        skillTags,
+        skillTagId,
         userId,
       });
       const result = newStudyStack.save();
@@ -49,7 +49,7 @@ const studyStackMutations = {
    * @returns errorステータス
    */
   updateStudyStack: async (_: any, { stack }: any) => {
-    const { studyStackId, content, timeStack, createdAt, skillTags, userId } =
+    const { studyStackId, content, timeStack, createdAt, skillTagId, userId } =
       stack;
     try {
       const result = await StudyStack.findByIdAndUpdate(
@@ -59,7 +59,7 @@ const studyStackMutations = {
             content,
             timeStack,
             createdAt,
-            skillTags,
+            skillTagId,
             userId,
           },
         },

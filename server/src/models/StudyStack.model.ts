@@ -4,7 +4,7 @@ const StudyStackSchema = new mongoose.Schema({
   content: String,
   timeStack: Number,
   createdAt: String,
-  skillTags: [String],
+  skillTagId: String,
   userId: String,
 });
 
