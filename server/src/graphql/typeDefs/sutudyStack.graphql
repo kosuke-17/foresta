@@ -1,13 +1,13 @@
 type StudyStack {
   content: String!
-  timeStack: Number!
+  timeStack: Int!
   createdAt: String!
   userId: String!
 }
 
 input StudyStackAddInput {
   content: String!
-  timeStack: Number!
+  timeStack: Int!
   createdAt: String!
   userId: String!
 }
