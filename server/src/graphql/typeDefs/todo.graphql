@@ -1,0 +1,32 @@
+# ユーザーのtodo情報
+type Todo {
+  title: String
+  description: String
+  startedAt: String
+  finishedAt: String
+  isStatus: Boolean
+  userId: String
+}
+
+################################
+#リクエストボディ
+
+# todoを追加する情報
+input TodoInput {
+  id: String
+  title: String
+  description: String
+  startedAt: String
+  finishedAt: String
+  isStatus: Boolean
+  userId: String
+}
+
+################################
+#レスポンス
+
+# 追加したTodo情報
+type ResponseTodo {
+  status: String
+  node: Todo
+}

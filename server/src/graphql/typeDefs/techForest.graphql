@@ -1,0 +1,64 @@
+type TechLeaf {
+  id: String
+  name: String
+  techBranch_id: String
+}
+
+# id,name,techTree_idは子リゾルバのtechLeafsに渡る
+type TechBranch {
+  id: String
+  name: String
+  techTree_id: String
+  techLeafs: [TechLeaf!]
+}
+# id,name,techArea_idは子リゾルバのtechBranchesに渡る
+type TechTree {
+  id: String
+  name: String
+  techArea_id: String
+  techBranches: [TechBranch!]
+}
+# id,nameは子リゾルバのtechTreeに渡る
+type TechArea {
+  id: String
+  name: String
+  techTrees: [TechTree!]
+}
+
+################
+#リクエストボディ
+
+input TechLeafCreateInput {
+  name: String
+  techBranch_id: String
+}
+input TechBranchCreateInput {
+  name: String
+  techTree_id: String
+}
+input TechTreeCreateInput {
+  name: String
+  techArea_id: String
+}
+input TechAreaCreateInput {
+  name: String
+}
+################
+#レスポンス
+
+type CreatedTechLeaf {
+  status: String!
+  node: TechLeaf
+}
+type CreatedTechBranch {
+  status: String!
+  node: TechBranch
+}
+type CreatedTechTree {
+  status: String!
+  node: TechTree
+}
+type CreatedTechArea {
+  status: String!
+  node: TechArea
+}
