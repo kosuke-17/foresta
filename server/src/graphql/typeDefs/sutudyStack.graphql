@@ -1,0 +1,18 @@
+type StudyStack {
+  content: String!
+  timeStack: Number!
+  createdAt: String!
+  userId: String!
+}
+
+input StudyStackAddInput {
+  content: String!
+  timeStack: Number!
+  createdAt: String!
+  userId: String!
+}
+
+type ResponseStudyStack {
+  status: String!
+  node: StudyStack!
+}
