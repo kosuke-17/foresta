@@ -4,7 +4,7 @@ type Query {
   """
   getAllUser: [User!]
   """
-  _idに紐づくユーザー情報を取得する.
+  ユーザーidに紐づくユーザー情報を取得する.
   """
   user(_id: String!): User!
   """
@@ -12,13 +12,17 @@ type Query {
   """
   getAllTodoByUser(userId: String): [Todo!]!
   """
-  Todoに紐づいたTodo情報を取得する.
+  TodoIdに紐づいたTodo情報を取得する.
   """
   getTodoByTodoId(todoId: String): Todo!
   """
   ユーザーのTodo一覧情報を取得する.
   """
   getAllStudyStackByUserId(userId: String): [StudyStack!]!
+  """
+  StudyStackIdに紐づいたStudyStack情報を取得する.
+  """
+  getStudyStackByStudyStackId(studyStackId: String): StudyStack!
   """
   それぞれのTechを取得する
   """
