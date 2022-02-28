@@ -1,11 +1,12 @@
 import { FC, memo } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { TodoWithCheck } from "../../molucules/TodoWithCheck";
 
 export const Todos: FC = memo(() => {
   return (
     <>
       <h2>Todoリスト</h2>
-      <Tabs variant="soft-rounded" colorScheme='green' isLazy>
+      <Tabs variant="soft-rounded" colorScheme="green" isLazy>
         <TabList>
           <Tab>全て</Tab>
           <Tab>今日</Tab>
@@ -14,10 +15,10 @@ export const Todos: FC = memo(() => {
         <TabPanels>
           <TabPanel>
             <p>全てのTodo</p>
-  return (<>
-    Todos
-    
-  </>);
+            <TodoWithCheck />
+            <TodoWithCheck />
+            <TodoWithCheck />
+            <TodoWithCheck />
           </TabPanel>
           <TabPanel>
             <p>今日のTodo</p>
