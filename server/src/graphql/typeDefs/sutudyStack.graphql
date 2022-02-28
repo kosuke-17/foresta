@@ -2,6 +2,7 @@ type StudyStack {
   content: String!
   timeStack: Int!
   createdAt: String!
+  skillTags: [String!]!
   userId: String!
 }
 
@@ -9,9 +10,11 @@ input StudyStackAddInput {
   content: String!
   timeStack: Int!
   createdAt: String!
+  skillTags: [String!]!
   userId: String!
 }
 
 type ResponseStudyStack {
   status: String!
+  node: StudyStack
 }

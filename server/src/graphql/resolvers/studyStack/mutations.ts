@@ -10,12 +10,13 @@ const studyStackMutations = {
    * @returns errorステータス
    */
   addStudyStack: (_: any, { stack }: any) => {
-    const { content, timeStack, createdAt, userId } = stack;
+    const { content, timeStack, createdAt, skillTags, userId } = stack;
     try {
       const newStudyStack = new StudyStack({
         content,
         timeStack,
         createdAt,
+        skillTags,
         userId,
       });
       const result = newStudyStack.save();
