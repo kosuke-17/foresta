@@ -13,6 +13,14 @@ input StudyStackAddInput {
   skillTags: [String!]!
   userId: String!
 }
+input StudyStackRemoveInput {
+  studyStackId: String
+  content: String
+  timeStack: Int
+  createdAt: String
+  skillTags: [String]
+  userId: String!
+}
 
 type ResponseStudyStack {
   status: String!

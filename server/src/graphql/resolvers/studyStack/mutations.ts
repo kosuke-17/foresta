@@ -41,6 +41,36 @@ const studyStackMutations = {
       return { status: "error" };
     }
   },
+  /**
+   * 学習記録を更新する.
+   *
+   * @param stack - 学習記録情報
+   * @returns successステータス, 更新した学習記録の情報
+   * @returns errorステータス
+   */
+  updateStudyStack: async (_: any, { stack }: any) => {
+    const { studyStackId, content, timeStack, createdAt, skillTags, userId } =
+      stack;
+    try {
+      const result = await StudyStack.findByIdAndUpdate(
+        { _id: studyStackId },
+        {
+          $set: {
+            content,
+            timeStack,
+            createdAt,
+            skillTags,
+            userId,
+          },
+        },
+        { new: true }
+      );
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      return { status: "error" };
+    }
+  },
 };
 
 export default studyStackMutations;
