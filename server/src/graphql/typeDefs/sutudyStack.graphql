@@ -13,7 +13,7 @@ input StudyStackAddInput {
   skillTagId: String!
   userId: String!
 }
-input StudyStackRemoveInput {
+input StudyStackUpdateInput {
   studyStackId: String
   content: String
   timeStack: Int

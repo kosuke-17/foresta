@@ -30,7 +30,6 @@ input UserCreateInput {
 
 # ログインユーザー情報
 input UserLoginInput {
-  _id: String!
   email: String!
   password: String!
 }
