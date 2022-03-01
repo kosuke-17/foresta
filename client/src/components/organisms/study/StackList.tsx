@@ -1,12 +1,13 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { StackListTable } from "../../molucules/stackList/StackListTable";
 import { LogListTable } from "../../molucules/stackList/LogListTable";
+import { memo } from "react";
 
 /**
  * 学習リスト/更新情報を表示する
  * @returns 学習リストと更新情報
  */
-export const StackList = () => {
+export const StackList = memo(() => {
   return (
     <div>
       <Tabs>
@@ -14,7 +15,7 @@ export const StackList = () => {
           <Tab>学習リスト</Tab>
           <Tab>更新情報</Tab>
         </TabList>
-        <TabPanels>
+        <TabPanels overflow="auto" height="200px">
           <TabPanel>
             <StackListTable />
           </TabPanel>
@@ -25,4 +26,4 @@ export const StackList = () => {
       </Tabs>
     </div>
   );
-};
+});
