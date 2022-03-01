@@ -15,7 +15,7 @@ export const StackList = memo(() => {
           <Tab>学習リスト</Tab>
           <Tab>更新情報</Tab>
         </TabList>
-        <TabPanels overflow="auto" height="200px">
+        <TabPanels overflow="auto" height="250px">
           <TabPanel>
             <StackListTable />
           </TabPanel>
