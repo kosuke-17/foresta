@@ -14,14 +14,6 @@ type TechLeafInfo {
   achievementRate: Int
   techLeafIds: [String]
 }
-type URL {
-  urlName: String
-  url: String
-}
-type UserUrls {
-  user_urls: [URL]
-  userId: String
-}
 ################
 #リクエストボディ
 
@@ -40,23 +32,6 @@ input UserLoginInput {
   password: String!
 }
 
-# ユーザーに紐づくurl情報
-input UserUrlsCreateInput {
-  userId: String
-  urlName: String
-  url: String
-}
-input UserUrlsAddInput {
-  urlId: String
-  userId: String
-  urlName: String
-  url: String
-}
-input UserUrlsRemoveInput {
-  urlId: String
-  userUrlsId: String
-}
-
 # TechLeaf情報
 input UserTechLeafAddInput {
   _id: String!
@@ -68,8 +43,6 @@ input UserTechLeafRemoveInput {
   _id: String!
   techLeafId: String!
 }
-
-################
 
 ################################
 #レスポンス

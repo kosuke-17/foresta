@@ -2,6 +2,7 @@ import { TechBranch, TechLeaf, TechTree } from "../../models/TechForest.model";
 import { studyStackMutations, studyStackQueries } from "./studyStack";
 import { techForestMutations, techForestQueries } from "./techForest";
 import { userMutations, userQueries } from "./user";
+import { userUrlsMutations } from "./userUrls";
 
 const resolvers = {
   Query: {
@@ -11,6 +12,7 @@ const resolvers = {
   },
   Mutation: {
     ...userMutations,
+    ...userUrlsMutations,
     ...techForestMutations,
     ...studyStackMutations,
   },
