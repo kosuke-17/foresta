@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema({
   },
   have_techLeafs: [
     {
-      techTree: { type: String },
+      techTreeId: { type: String },
       achievementRate: { type: Number },
       techLeafIds: { type: [String] },
     },

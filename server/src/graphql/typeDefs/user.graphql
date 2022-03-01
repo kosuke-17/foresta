@@ -10,7 +10,7 @@ type User {
 }
 # ユーザー習得技術情報
 type TechLeafInfo {
-  techTree: String
+  techTreeId: String
   achievementRate: Int
   techLeafIds: [String]
 }
@@ -60,7 +60,9 @@ input UserUrlsRemoveInput {
 # TechLeaf情報
 input UserTechLeafAddInput {
   _id: String!
-  techLeafId: String!
+  techTreeId: String!
+  achievementRate: Int!
+  techLeafIds: [String]!
 }
 input UserTechLeafRemoveInput {
   _id: String!

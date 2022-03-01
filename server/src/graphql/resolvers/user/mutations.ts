@@ -1,3 +1,4 @@
+import { TechTree } from "../../../models/TechForest.model";
 import { User, UserTodo, UserUrls } from "../../../models/User.model";
 import { success } from "../responseStatus";
 import { UserType, UserTechLeafsType, UserLoginType } from "../types";
@@ -16,6 +17,18 @@ const userMutations = {
     if (githubURL == null) {
       githubURL = "";
     }
+    const techTrees = await TechTree.find({});
+    const techLeafInfo = [];
+    for (const tech of techTrees) {
+      techLeafInfo.push(
+        new Object({
+          techTreeId: tech._id,
+          achievementRate: 0,
+          techLeafIds: [],
+        })
+      );
+    }
+
     try {
       const createUser = new User({
         name,
@@ -23,6 +36,7 @@ const userMutations = {
         email,
         password,
         githubURL,
+        have_techLeafs: techLeafInfo,
       });
       const result = await createUser.save();
       return success(result);
@@ -141,16 +155,21 @@ const userMutations = {
    * @returns success : successステータス,技術を習得したユーザー
    * @returns error : errorステータス
    */
-  addUserTechLeafs: async (
-    _parent: any,
-    { user }: { user: UserTechLeafsType }
-  ) => {
-    const { _id, techLeafId } = user;
+  addUserTechLeafs: async (_parent: any, { user }: { user: any }) => {
+    const { _id, techTreeId, achievementRate, techLeafIds } = user;
+    const techLeafInfo = {
+      techTreeId: techTreeId,
+      achievementRate: achievementRate,
+      techLeafIds: [...techLeafIds],
+    };
     try {
       const result = await User.findByIdAndUpdate(
         { _id: _id },
         {
-          $addToSet: { have_techLeafs: techLeafId },
+          $addToSet: { have_techLeafs: techLeafInfo },
+        },
+        {
+          new: true,
         }
       );
       return success(result);
