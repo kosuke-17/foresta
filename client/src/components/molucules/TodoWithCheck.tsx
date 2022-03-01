@@ -15,7 +15,11 @@ export const TodoWithCheck: FC = memo(() => {
     endedAt: null,
   };
   return (
-    <Flex align="center" justify="space-between">
+    <Flex
+      align="center"
+      justify="space-between"
+      _hover={{ backgroundColor: "#f5f5f5", cursor: "pointer" }}
+    >
       <Flex align="center">
         <Checkbox
           isChecked={dummyTodo.isStatus}

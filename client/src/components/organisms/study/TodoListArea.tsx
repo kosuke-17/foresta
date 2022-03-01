@@ -17,7 +17,7 @@ export const TodoListArea: FC = memo(() => {
       <Heading as="h2" size="lg">
         Todoリスト
       </Heading>
-      <Box bg="#f5f5f5" padding="5px 24px">
+      <Box bg="#f5f5f5" padding="5px 24px 10px 24px">
         <Tabs
           variant="soft-rounded"
           colorScheme="green"
@@ -33,10 +33,10 @@ export const TodoListArea: FC = memo(() => {
             bg="white"
             padding="10px 40px"
             overflow="auto"
-            height="200px"
+            height="180px"
           >
             <TabPanel>
-              <p>全てのTodo</p>
+              {/* <p>全てのTodo</p> */}
               <TodoWithCheck />
               <TodoWithCheck />
               <TodoWithCheck />
