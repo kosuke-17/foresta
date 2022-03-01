@@ -35,15 +35,20 @@ input UserLoginInput {
 }
 
 # ユーザーに紐づくurl情報
-input UserUrlsInput {
+input UserUrlsCreateInput {
+  userId: String
+  urlName: String
+  url: String
+}
+input UserUrlsAddInput {
+  urlId: String
   userId: String
   urlName: String
   url: String
 }
 input UserUrlsRemoveInput {
-  uId: String
-  userId: String
   urlId: String
+  userUrlsId: String
 }
 
 # TechLeaf情報
