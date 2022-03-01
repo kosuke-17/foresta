@@ -1,11 +1,22 @@
 import { FC, memo } from "react";
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Container } from "@chakra-ui/react";
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Box,
+  Container,
+  Heading,
+} from "@chakra-ui/react";
 import { TodoWithCheck } from "../../molucules/TodoWithCheck";
 
-export const Todos: FC = memo(() => {
+export const TodoListArea: FC = memo(() => {
   return (
     <Container maxW="5xl">
-      <h2>Todoリスト</h2>
+      <Heading as="h2" size="lg">
+        Todoリスト
+      </Heading>
       <Box bg="#f5f5f5" padding="5px 24px">
         <Tabs
           variant="soft-rounded"
@@ -18,7 +29,12 @@ export const Todos: FC = memo(() => {
             <Tab _focus={{ boxShadow: "green" }}>今日</Tab>
             <Tab _focus={{ boxShadow: "green" }}>期限切れ</Tab>
           </TabList>
-          <TabPanels bg="white" padding="10px 40px" overflow="auto" height="200px">
+          <TabPanels
+            bg="white"
+            padding="10px 40px"
+            overflow="auto"
+            height="200px"
+          >
             <TabPanel>
               <p>全てのTodo</p>
               <TodoWithCheck />
