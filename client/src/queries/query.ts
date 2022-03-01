@@ -12,3 +12,29 @@ import { gql } from "@apollo/client";
 //     }
 //   }
 // `;
+
+//学習リスト全件表示
+gql`
+  query getAllStudyStackByUserId($userId: String) {
+    getAllStudyStackByUserId(userId: $userId) {
+      content
+      timeStack
+      createdAt
+      skillTagId
+      userId
+    }
+  }
+`;
+
+//学習リスト１件取得
+gql`
+  query GetStudyStackByStudyStackId($studyStackId: String) {
+    getStudyStackByStudyStackId(studyStackId: $studyStackId) {
+      content
+      timeStack
+      createdAt
+      skillTagId
+      userId
+    }
+  }
+`;
