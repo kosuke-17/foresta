@@ -30,7 +30,6 @@ input UserCreateInput {
 
 # ログインユーザー情報
 input UserLoginInput {
-  _id: String!
   email: String!
   password: String!
 }
@@ -64,7 +63,8 @@ input UserTechLeafRemoveInput {
 # ユーザー情報
 type ResponseUser {
   status: String!
-  node: User!
+  node: User
+  message: String
 }
 # 追加したユーザーURL
 type ResponseUserUrls {
