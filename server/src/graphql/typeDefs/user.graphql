@@ -63,7 +63,8 @@ input UserTechLeafRemoveInput {
 # ユーザー情報
 type ResponseUser {
   status: String!
-  node: User!
+  node: User
+  message: String
 }
 # 追加したユーザーURL
 type ResponseUserUrls {

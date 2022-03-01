@@ -46,6 +46,12 @@ const userMutations = {
         email: email,
         password: password,
       });
+      if (result === null) {
+        return {
+          status: "error",
+          message: "該当のユーザーが見つかりませんでした",
+        };
+      }
 
       return success(result);
     } catch (error) {
