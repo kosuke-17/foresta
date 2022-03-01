@@ -40,13 +40,18 @@ const userMutations = {
    * @returns error : errorステータス
    */
   userLogin: async (_parent: any, { user }: { user: UserLoginType }) => {
-    const { _id, email, password } = user;
+    const { email, password } = user;
     try {
       const result = await User.findOne({
-        _id: _id,
         email: email,
         password: password,
       });
+      if (result === null) {
+        return {
+          status: "error",
+          message: "該当のユーザーが見つかりませんでした",
+        };
+      }
 
       return success(result);
     } catch (error) {

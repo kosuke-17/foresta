@@ -1,0 +1,28 @@
+type StudyStack {
+  content: String!
+  timeStack: Int!
+  createdAt: String!
+  skillTagId: String!
+  userId: String!
+}
+
+input StudyStackAddInput {
+  content: String!
+  timeStack: Int!
+  createdAt: String!
+  skillTagId: String!
+  userId: String!
+}
+input StudyStackUpdateInput {
+  studyStackId: String
+  content: String
+  timeStack: Int
+  createdAt: String
+  skillTagId: String
+  userId: String!
+}
+
+type ResponseStudyStack {
+  status: String!
+  node: StudyStack
+}
