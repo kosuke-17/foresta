@@ -1,4 +1,3 @@
-import { v4 as uuid } from "uuid";
 import { User, UserTodo, UserUrls } from "../../../models/User.model";
 import { success } from "../responseStatus";
 import { UserType, UserTechLeafsType, UserLoginType } from "../types";
@@ -95,11 +94,11 @@ const userMutations = {
    * @returns error : errorステータス
    */
   addUserUrls: async (_parent: any, { user }: any) => {
-    const { urlName, url, userId } = user;
-    const user_urls_obj = { uid: uuid(), urlName: urlName, url: url };
+    const { urlName, url, userId, urlId } = user;
+    const user_urls_obj = { urlId, urlName: urlName, url: url };
     try {
-      const result = await UserUrls.findOneAndUpdate(
-        { userId: userId },
+      const result = await UserUrls.findByIdAndUpdate(
+        { _id: urlId },
         { $addToSet: { user_urls: user_urls_obj } }
       );
       return success(result);
@@ -114,24 +113,26 @@ const userMutations = {
    * @returns success : successステータス,追加したURL情報
    * @returns error : errorステータス
    */
-  // removeUserUrls: async (_parent: any, { user }: any) => {
-  //   const { uId, userId, urlId } = user;
-  //   console.log("uId : " + uId);
-  //   // console.log("urlId : " + urlId);
-  //   console.log("userId : " + userId);
+  removeUserUrls: async (_parent: any, { user }: any) => {
+    const { urlId, userUrlsId } = user;
 
-  //   try {
-  //     const result = await UserUrls.findOneAndUpdate(
-  //       {
-  //         userId: userId,
-  //       },
-  //       { $pull: { user_urls: { $elemMatch: { uid: uId } } } }
-  //     );
-  //     return success(result);
-  //   } catch (error) {
-  //     return { status: "error" };
-  //   }
-  // },
+    try {
+      const result = await UserUrls.findOneAndUpdate(
+        {
+          _id: userUrlsId,
+        },
+        {
+          $pull: {
+            user_urls: { _id: urlId },
+          },
+        },
+        { new: true }
+      );
+      return success(result);
+    } catch (error) {
+      return { status: "error" };
+    }
+  },
 
   /**
    * 習得技術追加.

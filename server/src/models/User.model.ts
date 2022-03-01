@@ -35,9 +35,8 @@ export const User = mongoose.model("user", UserSchema);
 
 /**
  *  ユーザーURLスキーマ.
- *  @remarks
- *  -
- *    - ユニークなID : string
+ *
+ * @remarks
  *    - Url名 : string
  *    - Url : string
  *  - ユーザーID : string
@@ -45,7 +44,6 @@ export const User = mongoose.model("user", UserSchema);
 const UserUrlsSchema = new mongoose.Schema({
   user_urls: [
     {
-      uid: { type: String },
       urlName: { type: String },
       url: { type: String },
     },
