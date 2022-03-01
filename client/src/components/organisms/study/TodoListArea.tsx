@@ -9,8 +9,12 @@ import {
   Container,
   Heading,
 } from "@chakra-ui/react";
+
 import { TodoWithCheck } from "../../molucules/TodoWithCheck";
 
+/**
+ * Todoを表示するエリアのコンポーネント.
+ */
 export const TodoListArea: FC = memo(() => {
   return (
     <Container maxW="5xl">
