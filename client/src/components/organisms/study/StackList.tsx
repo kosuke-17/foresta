@@ -1,4 +1,5 @@
 import {
+  Button,
   Tab,
   Table,
   TableCaption,
@@ -76,22 +77,46 @@ export const StackList = () => {
                   <Td>2022/2/2</Td>
                   <Td>React</Td>
                   <Td>1時間</Td>
-                  <Td></Td>
-                  <Td></Td>
+                  <Td>
+                    <Button colorScheme="green" size="sm">
+                      編集
+                    </Button>
+                  </Td>
+                  <Td>
+                    <Button colorScheme="green" variant="outline" size="sm">
+                      削除
+                    </Button>
+                  </Td>
                 </Tr>
                 <Tr>
                   <Td>2022/1/2</Td>
                   <Td>React</Td>
                   <Td>40分</Td>
-                  <Td></Td>
-                  <Td></Td>
+                  <Td>
+                    <Button colorScheme="green" size="sm">
+                      編集
+                    </Button>
+                  </Td>
+                  <Td>
+                    <Button colorScheme="green" variant="outline" size="sm">
+                      削除
+                    </Button>
+                  </Td>
                 </Tr>
                 <Tr>
                   <Td>2022/2/20</Td>
                   <Td>Vue</Td>
                   <Td>1時間</Td>
-                  <Td></Td>
-                  <Td></Td>
+                  <Td>
+                    <Button colorScheme="green" size="sm">
+                      編集
+                    </Button>
+                  </Td>
+                  <Td>
+                    <Button colorScheme="green" variant="outline" size="sm">
+                      削除
+                    </Button>
+                  </Td>
                 </Tr>
               </Tbody>
             </Table>
