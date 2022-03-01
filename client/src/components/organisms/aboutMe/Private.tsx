@@ -1,7 +1,7 @@
 import { memo, FC } from "react";
 import styled from "styled-components";
-import { AccordionContent } from "../../molucules/AccordionContent";
-import { UserInfoTable } from "../../molucules/UserInfoTable";
+import { AccordionContent } from "../../molucules/aboutMePublic/AccordionContent";
+import { UserInfoTable } from "../../molucules/aboutMePublic/UserInfoTable";
 import { Box, Flex, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 
 export const Private: FC = memo(() => {
