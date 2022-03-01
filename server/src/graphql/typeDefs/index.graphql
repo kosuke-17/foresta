@@ -4,7 +4,7 @@ type Query {
   """
   getAllUser: [User!]
   """
-  _idに紐づくユーザー情報を取得する.
+  ユーザーidに紐づくユーザー情報を取得する.
   """
   user(_id: String!): User!
   """
@@ -12,9 +12,17 @@ type Query {
   """
   getAllTodoByUser(userId: String): [Todo!]!
   """
-  Todoに紐づいたTodo情報を取得する.
+  TodoIdに紐づいたTodo情報を取得する.
   """
   getTodoByTodoId(todoId: String): Todo!
+  """
+  ユーザーのTodo一覧情報を取得する.
+  """
+  getAllStudyStackByUserId(userId: String): [StudyStack!]!
+  """
+  StudyStackIdに紐づいたStudyStack情報を取得する.
+  """
+  getStudyStackByStudyStackId(studyStackId: String): StudyStack!
   """
   それぞれのTechを取得する
   """
@@ -41,9 +49,9 @@ type Mutation {
   """
   ユーザーの持つUrlを作成する：引数(ユーザーID, TechLeafID)
   """
-  createUserUrls(user: UserUrlsInput!): ResponseUserUrls!
-  addUserUrls(user: UserUrlsInput!): ResponseUserUrls!
-  # removeUserUrls(user: UserUrlsRemoveInput!): ResponseUserUrls!
+  createUserUrls(user: UserUrlsCreateInput!): ResponseUserUrls!
+  addUserUrls(user: UserUrlsAddInput!): ResponseUserUrls!
+  removeUserUrls(user: UserUrlsRemoveInput!): ResponseUserUrls!
 
   """
   Todoを追加する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)
@@ -69,7 +77,18 @@ type Mutation {
   ユーザーがログインする：引数(ユーザーID, email, password)
   """
   userLogin(user: UserLoginInput!): ResponseUser!
-
+  """
+  ユーザーの学習記録を追加する
+  """
+  addStudyStack(stack: StudyStackAddInput!): ResponseStudyStack!
+  """
+  ユーザーの学習記録を削除する
+  """
+  removeStudyStack(studyStackId: String!): ResponseStudyStack!
+  """
+  ユーザーの学習記録を更新する
+  """
+  updateStudyStack(stack: StudyStackUpdateInput!): ResponseStudyStack!
   """
   Techを追加する：引数(Leaf名 or Branch名 or Tree名)
   """

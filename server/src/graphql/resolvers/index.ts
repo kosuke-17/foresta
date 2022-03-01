@@ -1,4 +1,5 @@
 import { TechBranch, TechLeaf, TechTree } from "../../models/TechForest.model";
+import { studyStackMutations, studyStackQueries } from "./studyStack";
 import { techForestMutations, techForestQueries } from "./techForest";
 import { userMutations, userQueries } from "./user";
 
@@ -6,10 +7,12 @@ const resolvers = {
   Query: {
     ...userQueries,
     ...techForestQueries,
+    ...studyStackQueries,
   },
   Mutation: {
     ...userMutations,
     ...techForestMutations,
+    ...studyStackMutations,
   },
   TechBranch: {
     techLeafs: async ({ _id }: any) =>
