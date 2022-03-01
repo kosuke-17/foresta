@@ -18,9 +18,12 @@ export const Todos: FC = memo(() => {
             <Tab _focus={{ boxShadow: "green" }}>今日</Tab>
             <Tab _focus={{ boxShadow: "green" }}>期限切れ</Tab>
           </TabList>
-          <TabPanels bg="white" padding="10px 40px">
+          <TabPanels bg="white" padding="10px 40px" overflow="auto" height="200px">
             <TabPanel>
               <p>全てのTodo</p>
+              <TodoWithCheck />
+              <TodoWithCheck />
+              <TodoWithCheck />
               <TodoWithCheck />
               <TodoWithCheck />
               <TodoWithCheck />
