@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import { TodoWithCheck } from "../../molucules/TodoWithCheck";
+import { Calendar } from "../../molucules/calendar";
 
 /**
  * Todoを表示するエリアのコンポーネント.
@@ -58,6 +59,7 @@ export const TodoListArea: FC = memo(() => {
           </TabPanels>
         </Tabs>
       </Box>
+      <Calendar />
     </Container>
   );
 });
