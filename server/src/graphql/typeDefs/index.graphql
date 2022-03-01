@@ -49,9 +49,9 @@ type Mutation {
   """
   ユーザーの持つUrlを作成する：引数(ユーザーID, TechLeafID)
   """
-  createUserUrls(user: UserUrlsInput!): ResponseUserUrls!
-  addUserUrls(user: UserUrlsInput!): ResponseUserUrls!
-  # removeUserUrls(user: UserUrlsRemoveInput!): ResponseUserUrls!
+  createUserUrls(user: UserUrlsCreateInput!): ResponseUserUrls!
+  addUserUrls(user: UserUrlsAddInput!): ResponseUserUrls!
+  removeUserUrls(user: UserUrlsRemoveInput!): ResponseUserUrls!
 
   """
   Todoを追加する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)
