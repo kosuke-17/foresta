@@ -60,7 +60,7 @@ input UserUrlsRemoveInput {
 # TechLeaf情報
 input UserTechLeafAddInput {
   _id: String!
-  techTreeId: String!
+  haveTechLeafId: String!
   achievementRate: Int!
   techLeafIds: [String]!
 }

@@ -156,23 +156,31 @@ const userMutations = {
    * @returns error : errorステータス
    */
   addUserTechLeafs: async (_parent: any, { user }: { user: any }) => {
-    const { _id, techTreeId, achievementRate, techLeafIds } = user;
-    const techLeafInfo = {
-      techTreeId: techTreeId,
-      achievementRate: achievementRate,
-      techLeafIds: [...techLeafIds],
-    };
+    const { _id, haveTechLeafId, achievementRate, techLeafIds } = user;
     try {
-      const result = await User.findByIdAndUpdate(
-        { _id: _id },
+      // console.log("_id" + _id);
+      // console.log("haveTechLeafId" + haveTechLeafId);
+      // console.log("achievementRate" + achievementRate);
+      // console.dir("techLeafIds" + techLeafIds);
+      // console.log("");
+
+      // const result = await User.find({
+      //   _id: _id,
+      //   have_techLeafs: { $elemMatch: { _id: haveTechLeafId } },
+      // });
+      const result = await User.findOneAndUpdate(
+        { have_techLeafs: { $elemMatch: { _id: haveTechLeafId } } },
         {
-          $addToSet: { have_techLeafs: techLeafInfo },
+          $addToSet: {
+            have_techLeafs: { techLeafIds: { $each: [...techLeafIds] } },
+          },
+          $set: { have_techLeafs: { achievementRate: achievementRate } },
         },
         {
           new: true,
         }
       );
-      return success(result);
+      return success(result[0]);
     } catch (e) {
       // 必須のデータがnullだとエラーを返す
       return { status: "error" };
