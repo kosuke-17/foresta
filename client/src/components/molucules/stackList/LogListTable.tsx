@@ -13,7 +13,7 @@ import {
  * 更新情報を表示するテーブル
  * @returns 更新情報テーブル
  */
-export const UpdateInfoTable = () => {
+export const LogListTable = () => {
   return (
     <Table variant="striped" colorScheme="green">
       <TableCaption>更新情報</TableCaption>

@@ -1,6 +1,6 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { StackListTable } from "../../molucules/stackList/StackListTable";
-import { UpdateInfoTable } from "../../molucules/stackList/UpdateInfoTable";
+import { LogListTable } from "../../molucules/stackList/LogListTable";
 
 /**
  * 学習リスト/更新情報を表示する
@@ -19,7 +19,7 @@ export const StackList = () => {
             <StackListTable />
           </TabPanel>
           <TabPanel>
-            <UpdateInfoTable />
+            <LogListTable />
           </TabPanel>
         </TabPanels>
       </Tabs>
