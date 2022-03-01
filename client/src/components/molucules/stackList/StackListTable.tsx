@@ -7,12 +7,13 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { memo } from "react";
 
 /**
  * 学習リストを表示するテーブル
  * @returns 学習リストテーブル
  */
-export const StackListTable = () => {
+export const StackListTable = memo(() => {
   return (
     <Table variant="striped" colorScheme="green">
       <TableCaption>学習の記録</TableCaption>
@@ -50,4 +51,4 @@ export const StackListTable = () => {
       </Tbody>
     </Table>
   );
-};
+});
