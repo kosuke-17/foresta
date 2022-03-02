@@ -1,4 +1,5 @@
-import { User, UserTodo, UserUrls } from "../../../models/User.model";
+import { TechTree } from "../../../models/TechForest.model";
+import { User } from "../../../models/User.model";
 import { success } from "../responseStatus";
 import { UserType, UserTechLeafsType, UserLoginType } from "../types";
 
@@ -16,6 +17,18 @@ const userMutations = {
     if (githubURL == null) {
       githubURL = "";
     }
+    const techTrees = await TechTree.find({});
+    const techLeafInfo = [];
+    for (const tech of techTrees) {
+      techLeafInfo.push(
+        new Object({
+          techTreeId: tech._id,
+          achievementRate: 0,
+          techLeafIds: [],
+        })
+      );
+    }
+
     try {
       const createUser = new User({
         name,
@@ -23,6 +36,7 @@ const userMutations = {
         email,
         password,
         githubURL,
+        have_techLeafs: techLeafInfo,
       });
       const result = await createUser.save();
       return success(result);
@@ -60,100 +74,38 @@ const userMutations = {
   },
 
   /**
-   * ユーザーのurl情報を作成.
-   *
-   * @param user - ユーザー情報
-   * @returns success : successステータス,作成したURL情報
-   * @returns error : errorステータス
-   */
-  createUserUrls: async (_parent: any, { user }: any) => {
-    const { urlName, url, userId } = user;
-
-    try {
-      const createUserUrls = new UserUrls({
-        user_urls: [
-          {
-            urlName: urlName,
-            url: url,
-          },
-        ],
-        userId: userId,
-      });
-
-      const result = await createUserUrls.save();
-      return success(result);
-    } catch (error) {
-      return { status: "error" };
-    }
-  },
-  /**
-   * ユーザーのurl情報を追加.
-   *
-   * @param user - ユーザー情報
-   * @returns success : successステータス,追加したURL情報
-   * @returns error : errorステータス
-   */
-  addUserUrls: async (_parent: any, { user }: any) => {
-    const { urlName, url, userId, urlId } = user;
-    const user_urls_obj = { urlId, urlName: urlName, url: url };
-    try {
-      const result = await UserUrls.findByIdAndUpdate(
-        { _id: urlId },
-        { $addToSet: { user_urls: user_urls_obj } }
-      );
-      return success(result);
-    } catch (error) {
-      return { status: "error" };
-    }
-  },
-  /**
-   * ユーザーのurl情報を削除.
-   *
-   * @param user - ユーザー情報
-   * @returns success : successステータス,追加したURL情報
-   * @returns error : errorステータス
-   */
-  removeUserUrls: async (_parent: any, { user }: any) => {
-    const { urlId, userUrlsId } = user;
-
-    try {
-      const result = await UserUrls.findOneAndUpdate(
-        {
-          _id: userUrlsId,
-        },
-        {
-          $pull: {
-            user_urls: { _id: urlId },
-          },
-        },
-        { new: true }
-      );
-      return success(result);
-    } catch (error) {
-      return { status: "error" };
-    }
-  },
-
-  /**
    * 習得技術追加.
    *
    * @param user - ユーザー情報
    * @returns success : successステータス,技術を習得したユーザー
    * @returns error : errorステータス
    */
-  addUserTechLeafs: async (
-    _parent: any,
-    { user }: { user: UserTechLeafsType }
-  ) => {
-    const { _id, techLeafId } = user;
+  addUserTechLeafs: async (_parent: any, { user }: { user: any }) => {
+    const { _id, haveTechLeafId, achievementRate, techLeafIds } = user;
     try {
-      const result = await User.findByIdAndUpdate(
-        { _id: _id },
+      // console.log("_id" + _id);
+      // console.log("haveTechLeafId" + haveTechLeafId);
+      // console.log("achievementRate" + achievementRate);
+      // console.dir("techLeafIds" + techLeafIds);
+      // console.log("");
+
+      // const result = await User.find({
+      //   _id: _id,
+      //   have_techLeafs: { $elemMatch: { _id: haveTechLeafId } },
+      // });
+      const result = await User.findOneAndUpdate(
+        { have_techLeafs: { $elemMatch: { _id: haveTechLeafId } } },
         {
-          $addToSet: { have_techLeafs: techLeafId },
+          $addToSet: {
+            have_techLeafs: { techLeafIds: { $each: [...techLeafIds] } },
+          },
+          $set: { have_techLeafs: { achievementRate: achievementRate } },
+        },
+        {
+          new: true,
         }
       );
-      return success(result);
+      return success(result[0]);
     } catch (e) {
       // 必須のデータがnullだとエラーを返す
       return { status: "error" };
@@ -180,115 +132,6 @@ const userMutations = {
       );
       return success(result);
     } catch (e) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
-    }
-  },
-  /**
-   * todoの追加.
-   *
-   * @param todo - todo情報
-   * @returns success : successステータス,追加したtodo情報
-   * @returns error : errorステータス
-   */
-  addTodo: async (_parent: any, { todo }: any) => {
-    const { title, description, startedAt, finishedAt, isStatus, userId } =
-      todo;
-    try {
-      const newTodo = new UserTodo({
-        title,
-        description,
-        startedAt,
-        finishedAt,
-        isStatus,
-        userId,
-      });
-
-      const result = await newTodo.save();
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
-    }
-  },
-  /**
-   * todoの削除.
-   *
-   * @param todoId - todoId
-   * @returns success : successステータス
-   * @returns error : errorステータス
-   */
-  removeTodo: async (_parent: any, { todoId }: any) => {
-    try {
-      const result = await UserTodo.deleteOne({ _id: todoId });
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
-    }
-  },
-  /**
-   * todoの編集.
-   *
-   * @param todo - todo情報
-   * @returns success : successステータス,更新したtodo情報
-   * @returns error : errorステータス
-   */
-  updateTodo: async (_parent: any, { todo }: any) => {
-    const { id, title, description, startedAt, finishedAt, isStatus } = todo;
-    try {
-      const result = await UserTodo.findByIdAndUpdate(
-        { _id: id },
-        {
-          $set: {
-            title: title,
-            description: description,
-            startedAt: startedAt,
-            finishedAt: finishedAt,
-            isStatus: isStatus,
-          },
-        }
-      );
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
-    }
-  },
-  /**
-   * todoの状態をtrueにする
-   *
-   * @param todoId - todoID
-   * @returns success : successステータス,更新したtodo情報
-   * @returns error : errorステータス
-   */
-  chekedTodoStatus: async (_parent: any, { todoId }: any) => {
-    try {
-      const result = await UserTodo.findByIdAndUpdate(
-        { _id: todoId },
-        { $set: { isStatus: true } }
-      );
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
-    }
-  },
-  /**
-   * todoの状態をfalseにする
-   *
-   * @param todoId - todoID
-   * @returns success : successステータス,更新したtodo情報
-   * @returns error : errorステータス
-   */
-  unChekedTodoStatus: async (_parent: any, { todoId }: any) => {
-    try {
-      const result = await UserTodo.findByIdAndUpdate(
-        { _id: todoId },
-        { $set: { isStatus: false } }
-      );
-      return success(result);
-    } catch (error) {
       // 必須のデータがnullだとエラーを返す
       return { status: "error" };
     }
