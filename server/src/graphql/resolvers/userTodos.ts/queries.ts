@@ -1,4 +1,4 @@
-import { UserTodo } from "../../../models/User.model";
+import { UserTodos } from "../../../models/User.model";
 
 const userTodosQueries = {
   /**
@@ -8,7 +8,7 @@ const userTodosQueries = {
    * @returns todo一覧情報
    */
   getAllTodoByUser: async (_parent: any, { userId }: any) => {
-    return await UserTodo.find({ userId: userId });
+    return await UserTodos.find({ userId: userId });
   },
   /**
    * todoIDに紐づいたのTodoを取得する
@@ -17,7 +17,7 @@ const userTodosQueries = {
    * @returns todo一覧情報
    */
   getTodoByTodoId: async (_parent: any, { todoId }: any) => {
-    return await UserTodo.findById({ _id: todoId });
+    return await UserTodos.findById({ _id: todoId });
   },
 };
 

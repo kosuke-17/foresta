@@ -1,5 +1,5 @@
 import { TechTree } from "../../../models/TechForest.model";
-import { User, UserLeafs } from "../../../models/User.model";
+import { Users, UserLeafs } from "../../../models/User.model";
 import { success } from "../responseStatus";
 import { UserType, UserTechLeafsType, UserLoginType } from "../types";
 
@@ -20,7 +20,7 @@ const userMutations = {
 
     try {
       // ここでobj_idが生成される
-      const createUser = new User({
+      const createUser = new Users({
         name,
         jobType,
         email,
@@ -62,7 +62,7 @@ const userMutations = {
   userLogin: async (_parent: any, { user }: { user: UserLoginType }) => {
     const { email, password } = user;
     try {
-      const result = await User.findOne({
+      const result = await Users.findOne({
         email: email,
         password: password,
       });
@@ -93,7 +93,7 @@ const userMutations = {
       // const result = await User.find({
       //   $and: [{ _id: _id }, { techTreeId: "6219ab06358ce51f57b9dfa5" }],
       // });
-      const result = await User.findOneAndUpdate(
+      const result = await Users.findOneAndUpdate(
         {
           $and: [
             { _id: { $eq: _id } },
@@ -132,7 +132,7 @@ const userMutations = {
   ) => {
     const { _id, techLeafId } = user;
     try {
-      const result = await User.findByIdAndUpdate(
+      const result = await Users.findByIdAndUpdate(
         { _id: _id },
         {
           $pull: { have_techLeafs: techLeafId },

@@ -1,4 +1,4 @@
-import { UserTodo } from "../../../models/User.model";
+import { UserTodos } from "../../../models/User.model";
 import { success } from "../responseStatus";
 
 const userTodosMutations = {
@@ -13,7 +13,7 @@ const userTodosMutations = {
     const { title, description, startedAt, finishedAt, isStatus, userId } =
       todo;
     try {
-      const newTodo = new UserTodo({
+      const newTodo = new UserTodos({
         title,
         description,
         startedAt,
@@ -38,7 +38,7 @@ const userTodosMutations = {
    */
   removeTodo: async (_parent: any, { todoId }: any) => {
     try {
-      const result = await UserTodo.deleteOne({ _id: todoId });
+      const result = await UserTodos.deleteOne({ _id: todoId });
       return success(result);
     } catch (error) {
       // 必須のデータがnullだとエラーを返す
@@ -55,7 +55,7 @@ const userTodosMutations = {
   updateTodo: async (_parent: any, { todo }: any) => {
     const { id, title, description, startedAt, finishedAt, isStatus } = todo;
     try {
-      const result = await UserTodo.findByIdAndUpdate(
+      const result = await UserTodos.findByIdAndUpdate(
         { _id: id },
         {
           $set: {
@@ -82,7 +82,7 @@ const userTodosMutations = {
    */
   chekedTodoStatus: async (_parent: any, { todoId }: any) => {
     try {
-      const result = await UserTodo.findByIdAndUpdate(
+      const result = await UserTodos.findByIdAndUpdate(
         { _id: todoId },
         { $set: { isStatus: true } }
       );
@@ -101,7 +101,7 @@ const userTodosMutations = {
    */
   unChekedTodoStatus: async (_parent: any, { todoId }: any) => {
     try {
-      const result = await UserTodo.findByIdAndUpdate(
+      const result = await UserTodos.findByIdAndUpdate(
         { _id: todoId },
         { $set: { isStatus: false } }
       );

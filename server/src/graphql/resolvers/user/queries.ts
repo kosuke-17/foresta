@@ -1,4 +1,4 @@
-import { User } from "../../../models/User.model";
+import { Users } from "../../../models/User.model";
 
 const userQueries = {
   /**
@@ -7,10 +7,10 @@ const userQueries = {
    * @returns ユーザー一覧情報
    */
   getAllUser: async (_parent: any, _args: any) => {
-    return await User.find({});
+    return await Users.find({});
   },
   user: async (_parent: any, { _id }: any) => {
-    return await User.findById({ _id });
+    return await Users.findById({ _id });
   },
 };
 
