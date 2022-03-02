@@ -30,9 +30,8 @@ const resolvers = {
       await TechBranch.find({ techTree_id: _id }),
   },
   TechArea: {
-    techTrees: async ({ _id }: any) => {
-      return await TechTree.find({ techArea_id: _id });
-    },
+    techTrees: async ({ _id }: any) =>
+      await TechTree.find({ techArea_id: _id }),
   },
 };
 

@@ -9,7 +9,7 @@ const userTodosMutations = {
    * @returns success : successステータス,追加したtodo情報
    * @returns error : errorステータス
    */
-  addTodo: async (_parent: any, { todo }: any) => {
+  addTodo: async (_: any, { todo }: any) => {
     const { title, description, startedAt, finishedAt, isStatus, userId } =
       todo;
     try {
@@ -36,7 +36,7 @@ const userTodosMutations = {
    * @returns success : successステータス
    * @returns error : errorステータス
    */
-  removeTodo: async (_parent: any, { todoId }: any) => {
+  removeTodo: async (_: any, { todoId }: any) => {
     try {
       const result = await UserTodos.deleteOne({ _id: todoId });
       return success(result);
