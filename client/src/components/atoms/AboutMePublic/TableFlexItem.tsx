@@ -1,8 +1,8 @@
-import { memo, FC, useState } from "react";
+import { memo, FC } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 
 type Props = {
-  itemArray: Array<any>;
+  itemArray: Array<string>; //タグのように並べたい項目
 };
 
 /**
