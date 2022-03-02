@@ -43,10 +43,6 @@ type Mutation {
   """
   updateUserTechLeafs(techLeaf: UserTechLeafUpdateInput!): ResponseUserTechLeaf!
   """
-  ユーザーの持つTechLeaf削除する：引数(ユーザーID, TechLeafID)
-  """
-  removeUserTechLeafs(user: UserTechLeafRemoveInput!): ResponseUser!
-  """
   ユーザーの持つUrlを作成する：引数(ユーザーID, TechLeafID)
   """
   createUserUrls(user: UserUrlsCreateInput!): ResponseUserUrls!
