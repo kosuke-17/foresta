@@ -1,12 +1,12 @@
-import { memo, FC } from "react";
+import { FC } from "react";
 import { Private } from "../../components/organisms/aboutMe/Private";
 import { Public } from "../../components/organisms/aboutMe/Public";
 
-export const AboutMe: FC = memo(() => {
+export const AboutMe: FC = () => {
   return (
     <>
       <Public />
       <Private />
     </>
   );
-});
+};
