@@ -22,6 +22,7 @@ gql`
       createdAt
       skillTagId
       userId
+      id
     }
   }
 `;
@@ -35,6 +36,7 @@ gql`
       createdAt
       skillTagId
       userId
+      id
     }
   }
 `;

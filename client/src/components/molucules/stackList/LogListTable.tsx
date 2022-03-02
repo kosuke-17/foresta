@@ -43,9 +43,8 @@ export const LogListTable = memo(() => {
 
         <Tbody>
           {data &&
-            data.getAllStudyStackByUserId.map((stackList, index) => (
-              //キーをindexにしているが、IDにしたい
-              <Tr key={index}>
+            data.getAllStudyStackByUserId.map((stackList) => (
+              <Tr key={stackList.id}>
                 <Td>{stackList.createdAt}</Td>
                 <Td>{stackList.skillTagId}</Td>
                 <Td>{stackList.timeStack}分</Td>

@@ -71,6 +71,7 @@ export type Mutation = {
   removeTodo: ResponseTodo;
   /** ユーザーの持つTechLeaf削除する：引数(ユーザーID, TechLeafID) */
   removeUserTechLeafs: ResponseUser;
+  removeUserUrls: ResponseUserUrls;
   /** Todo状態をfalseにする：引数(todoId) */
   unChekedTodoStatus: ResponseTodo;
   /** ユーザーの学習記録を更新する */
@@ -94,7 +95,7 @@ export type MutationAddUserTechLeafsArgs = {
 };
 
 export type MutationAddUserUrlsArgs = {
-  user: UserUrlsInput;
+  user: UserUrlsAddInput;
 };
 
 export type MutationChekedTodoStatusArgs = {
@@ -122,7 +123,7 @@ export type MutationCreateUserArgs = {
 };
 
 export type MutationCreateUserUrlsArgs = {
-  user: UserUrlsInput;
+  user: UserUrlsCreateInput;
 };
 
 export type MutationRemoveStudyStackArgs = {
@@ -135,6 +136,10 @@ export type MutationRemoveTodoArgs = {
 
 export type MutationRemoveUserTechLeafsArgs = {
   user: UserTechLeafRemoveInput;
+};
+
+export type MutationRemoveUserUrlsArgs = {
+  user: UserUrlsRemoveInput;
 };
 
 export type MutationUnChekedTodoStatusArgs = {
@@ -223,6 +228,7 @@ export type StudyStack = {
   __typename?: "StudyStack";
   content: Scalars["String"];
   createdAt: Scalars["String"];
+  id?: Maybe<Scalars["String"]>;
   skillTagId: Scalars["String"];
   timeStack: Scalars["Int"];
   userId: Scalars["String"];
@@ -281,6 +287,13 @@ export type TechLeafCreateInput = {
   techBranch_id?: InputMaybe<Scalars["String"]>;
 };
 
+export type TechLeafInfo = {
+  __typename?: "TechLeafInfo";
+  achievementRate?: Maybe<Scalars["Int"]>;
+  techLeafIds?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  techTreeId?: Maybe<Scalars["String"]>;
+};
+
 export type TechTree = {
   __typename?: "TechTree";
   id?: Maybe<Scalars["String"]>;
@@ -298,6 +311,7 @@ export type Todo = {
   __typename?: "Todo";
   description?: Maybe<Scalars["String"]>;
   finishedAt?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["String"]>;
   isStatus?: Maybe<Scalars["Boolean"]>;
   startedAt?: Maybe<Scalars["String"]>;
   title?: Maybe<Scalars["String"]>;
@@ -324,7 +338,7 @@ export type User = {
   __typename?: "User";
   email?: Maybe<Scalars["String"]>;
   githubURL?: Maybe<Scalars["String"]>;
-  have_techLeafs?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  have_techLeafs?: Maybe<Array<Maybe<TechLeafInfo>>>;
   id?: Maybe<Scalars["String"]>;
   jobType?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
@@ -346,7 +360,9 @@ export type UserLoginInput = {
 
 export type UserTechLeafAddInput = {
   _id: Scalars["String"];
-  techLeafId: Scalars["String"];
+  achievementRate: Scalars["Int"];
+  haveTechLeafId: Scalars["String"];
+  techLeafIds: Array<InputMaybe<Scalars["String"]>>;
 };
 
 export type UserTechLeafRemoveInput = {
@@ -360,16 +376,21 @@ export type UserUrls = {
   user_urls?: Maybe<Array<Maybe<Url>>>;
 };
 
-export type UserUrlsInput = {
+export type UserUrlsAddInput = {
+  url?: InputMaybe<Scalars["String"]>;
+  urlId?: InputMaybe<Scalars["String"]>;
+  urlName?: InputMaybe<Scalars["String"]>;
+};
+
+export type UserUrlsCreateInput = {
   url?: InputMaybe<Scalars["String"]>;
   urlName?: InputMaybe<Scalars["String"]>;
   userId?: InputMaybe<Scalars["String"]>;
 };
 
 export type UserUrlsRemoveInput = {
-  uId?: InputMaybe<Scalars["String"]>;
   urlId?: InputMaybe<Scalars["String"]>;
-  userId?: InputMaybe<Scalars["String"]>;
+  userUrlsId?: InputMaybe<Scalars["String"]>;
 };
 
 export type GetAllStudyStackByUserIdQueryVariables = Exact<{
@@ -385,6 +406,7 @@ export type GetAllStudyStackByUserIdQuery = {
     createdAt: string;
     skillTagId: string;
     userId: string;
+    id?: string | null;
   }>;
 };
 
@@ -401,17 +423,19 @@ export type GetStudyStackByStudyStackIdQuery = {
     createdAt: string;
     skillTagId: string;
     userId: string;
+    id?: string | null;
   };
 };
 
 export const GetAllStudyStackByUserIdDocument = gql`
-  query getAllStudyStackByUserId($userId: String) {
+  query GetAllStudyStackByUserId($userId: String) {
     getAllStudyStackByUserId(userId: $userId) {
       content
       timeStack
       createdAt
       skillTagId
       userId
+      id
     }
   }
 `;
@@ -474,6 +498,7 @@ export const GetStudyStackByStudyStackIdDocument = gql`
       createdAt
       skillTagId
       userId
+      id
     }
   }
 `;
