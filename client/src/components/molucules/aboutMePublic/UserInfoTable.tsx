@@ -1,5 +1,15 @@
 import { memo, FC } from "react";
-import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  UnorderedList,
+  ListItem,
+  Flex,
+} from "@chakra-ui/react";
 
 /**
  * ユーザの基本情報テーブル.
@@ -38,11 +48,13 @@ export const UserInfoTable: FC = memo(() => {
           <Tr>
             <Td>エンジニア歴</Td>
             <Td>
-              0年0ヵ月
-              <ul>
-                <li>SE経験:0年0ヵ月</li>
-                <li>PG/作業員経験:0年0ヵ月</li>
-              </ul>
+              <Flex>
+                0年0ヵ月
+                <UnorderedList listStyleType="none" ml={10}>
+                  <ListItem>SE経験:0年0ヵ月</ListItem>
+                  <ListItem>PG,作業員経験:0年0ヵ月</ListItem>
+                </UnorderedList>
+              </Flex>
             </Td>
           </Tr>
           <Tr>
