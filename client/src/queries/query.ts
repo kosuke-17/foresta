@@ -15,7 +15,7 @@ import { gql } from "@apollo/client";
 
 //学習リスト全件表示
 gql`
-  query getAllStudyStackByUserId($userId: String) {
+  query GetAllStudyStackByUserId($userId: String) {
     getAllStudyStackByUserId(userId: $userId) {
       content
       timeStack
