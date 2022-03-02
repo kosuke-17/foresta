@@ -7,6 +7,8 @@ const userMutations = {
   /**
    * ユーザー追加.
    *
+   * @remarks ユーザーを作成すると同時に、ユーザーの技術情報のコレクションを作成する
+   *
    * @param user - 名、職種、email、パスワード、GithubURL
    * @returns success : successステータス,作成したユーザー
    * @returns error : errorステータス
@@ -83,34 +85,27 @@ const userMutations = {
   /**
    * 習得技術追加.
    *
+   * @remarks upsertがあることで指定したフィールドが配列でなかったり、指定したフィールドが存在しなかった場合にエラーが発生する
+   *
    * @param user - ユーザー情報
    * @returns success : successステータス,技術を習得したユーザー
    * @returns error : errorステータス
    */
-  addUserTechLeafs: async (_parent: any, { user }: { user: any }) => {
-    const { _id, haveTechLeafId, achievementRate, techLeafIds } = user;
+  addUserTechLeafs: async (_parent: any, { techLeaf }: { techLeaf: any }) => {
+    const { techTreeId, achievementRate, techLeafIds, userId } = techLeaf;
     try {
-      // const result = await User.find({
-      //   $and: [{ _id: _id }, { techTreeId: "6219ab06358ce51f57b9dfa5" }],
-      // });
-      const result = await Users.findOneAndUpdate(
-        {
-          $and: [
-            { _id: { $eq: _id } },
-            { "have_techLeafs._id": haveTechLeafId },
-          ],
-        },
+      const result = await UserLeafs.findOneAndUpdate(
+        { userId: userId, "techLeafs.techTreeId": techTreeId },
         {
           $set: {
-            "have_techLeafs.$[_id].achievementRate": achievementRate,
+            "techLeafs.$[techLeafInfo].techLeafIds": [...techLeafIds],
+            "techLeafs.$[techLeafInfo].achievementRate": achievementRate,
           },
-          // $addToSet: {
-          //   "have_techLeafs.$[techLeafIds]": { $each: [...techLeafIds] },
-          // },
         },
         {
+          arrayFilters: [{ "techLeafInfo.techTreeId": { $eq: techTreeId } }],
+          upsert: true,
           new: true,
-          arrayFilters: [{ _id: { $eq: haveTechLeafId } }],
         }
       );
       return success(result);

@@ -6,10 +6,14 @@ type User {
   email: String
   password: String
   githubURL: String
-  have_techLeafs: [TechLeafInfo]
 }
 # ユーザー習得技術情報
-type TechLeafInfo {
+type UserLeafs {
+  id: String
+  techLeafs: [leafInfo]
+  userId: String
+}
+type leafInfo {
   techTreeId: String
   achievementRate: Int
   techLeafIds: [String]
@@ -34,10 +38,10 @@ input UserLoginInput {
 
 # TechLeaf情報
 input UserTechLeafAddInput {
-  _id: String!
-  haveTechLeafId: String!
+  techTreeId: String!
   achievementRate: Int!
   techLeafIds: [String]!
+  userId: String!
 }
 input UserTechLeafRemoveInput {
   _id: String!
@@ -52,8 +56,8 @@ type ResponseUser {
   node: User
   message: String
 }
-# 追加したユーザーURL
-type ResponseUserUrls {
+
+type ResponseUserTechLeaf {
   status: String
-  node: UserUrls
+  node: UserLeafs
 }
