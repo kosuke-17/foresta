@@ -7,17 +7,7 @@ type User {
   password: String
   githubURL: String
 }
-# ユーザー習得技術情報
-type UserLeafs {
-  id: String
-  techLeafs: [leafInfo]
-  userId: String
-}
-type leafInfo {
-  techTreeId: String
-  achievementRate: Int
-  techLeafIds: [String]
-}
+
 ################
 #リクエストボディ
 
@@ -36,18 +26,6 @@ input UserLoginInput {
   password: String!
 }
 
-# TechLeaf情報
-input UserTechLeafAddInput {
-  techTreeId: String!
-  achievementRate: Int!
-  techLeafIds: [String]!
-  userId: String!
-}
-input UserTechLeafRemoveInput {
-  _id: String!
-  techLeafId: String!
-}
-
 ################################
 #レスポンス
 # ユーザー情報
@@ -55,9 +33,4 @@ type ResponseUser {
   status: String!
   node: User
   message: String
-}
-
-type ResponseUserTechLeaf {
-  status: String
-  node: UserLeafs
 }
