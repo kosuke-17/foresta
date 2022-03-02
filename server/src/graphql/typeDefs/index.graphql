@@ -39,9 +39,9 @@ type Mutation {
   createUser(user: UserCreateInput!): ResponseUser!
 
   """
-  TechLeafをユーザー情報に追加する：引数(ユーザーID, TechLeafID)
+  ユーザー習得技術を更新する：引数(ユーザーID, TechLeafID)
   """
-  addUserTechLeafs(techLeaf: UserTechLeafAddInput!): ResponseUserTechLeaf!
+  updateUserTechLeafs(techLeaf: UserTechLeafUpdateInput!): ResponseUserTechLeaf!
   """
   ユーザーの持つTechLeaf削除する：引数(ユーザーID, TechLeafID)
   """

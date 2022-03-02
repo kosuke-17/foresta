@@ -14,15 +14,11 @@ type leafInfo {
 #リクエストボディ
 
 # TechLeaf情報
-input UserTechLeafAddInput {
+input UserTechLeafUpdateInput {
   techTreeId: String!
   achievementRate: Int!
   techLeafIds: [String]!
   userId: String!
-}
-input UserTechLeafRemoveInput {
-  _id: String!
-  techLeafId: String!
 }
 
 ################################
