@@ -1,5 +1,5 @@
 import { memo, FC, useState } from "react";
-import { Table, Thead, Tbody, Tr, Th, Td, Flex, Box } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 
 import { TextBox } from "./TextBox";
 import { TableFlexItem } from "../../atoms/AboutMePublic/TableFlexItem";

@@ -1,4 +1,4 @@
-import { memo, FC, useState } from "react";
+import { memo, FC } from "react";
 import styled from "styled-components";
 import { Box } from "@chakra-ui/react";
 import HTMLReactParser from "html-react-parser";
