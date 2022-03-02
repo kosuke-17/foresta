@@ -17,6 +17,7 @@ import {
 
 import { memo } from "react";
 import { useGetAllStudyStackByUserIdQuery } from "../../../types/generated/graphql";
+import { StudyModal } from "../../molucules/StudyModal";
 
 /**
  * 学習リスト/更新情報を表示する
@@ -108,18 +109,10 @@ export const StackList = memo(() => {
                           <Td>{stackList.skillTagId}</Td>
                           <Td>{stackList.timeStack}分</Td>
                           <Td>
-                            <Button colorScheme="green" size="sm">
-                              編集
-                            </Button>
+                            <StudyModal title="記録編集" buttonTitle="編集" />
                           </Td>
                           <Td>
-                            <Button
-                              colorScheme="green"
-                              variant="outline"
-                              size="sm"
-                            >
-                              削除
-                            </Button>
+                            <StudyModal title="記録削除" buttonTitle="削除" />
                           </Td>
                         </Tr>
                       ))}
