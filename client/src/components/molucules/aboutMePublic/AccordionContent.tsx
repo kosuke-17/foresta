@@ -1,4 +1,4 @@
-import { memo, FC } from "react";
+import { memo, FC, ReactNode } from "react";
 import {
   Box,
   Accordion,
@@ -10,20 +10,26 @@ import {
 
 type Props = {
   title: string;
-  content: any;
+  content: ReactNode;
+  size: string;
 };
 
-export const AccordionContent: FC<Props> = memo((props) => {
-  const { title, content } = props;
-
+export const AccordionContent: FC<Props> = memo(({ title, content, size }) => {
   return (
     <>
       <Accordion allowMultiple>
         <AccordionItem outlineOffset={0}>
-          <AccordionButton>
-            <Box flex="1" textAlign="left" fontWeight="bold" fontSize={30}>
-              {title}
-            </Box>
+          <AccordionButton _focus={{ boxShadow: "none" }}>
+            {size === "lg" ? (
+              <Box flex="1" textAlign="left" fontWeight="bold" fontSize={25}>
+                {title}
+              </Box>
+            ) : (
+              <Box flex="1" textAlign="left">
+                {title}
+              </Box>
+            )}
+
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel pb={4}>{content}</AccordionPanel>

@@ -18,25 +18,26 @@ export const Private: FC = memo(() => {
     "プロジェクト3",
   ]);
 
+  const propsDataArray = [
+    { title: "基本情報", content: <UserInfoTable />, size: "lg" },
+    { title: "スキル要約", content: <SkillTable />, size: "lg" },
+    { title: "自己PR・前職経験", content: { testData }, size: "lg" },
+    { title: "その他", content: <OtherData />, size: "lg" },
+  ];
+
   return (
     <>
       <Box background={"white.50"} m={10} p={20} rounded={20}>
-        <AccordionContent title="基本情報" content={<UserInfoTable />} />
-        <AccordionContent title="スキル要約" content={<SkillTable />} />
-        <AccordionContent
-          title="自己PR・前職経験"
-          content={
-            <Box ml={10} width={900}>
-              {testData}
-            </Box>
-          }
-        />
-        <AccordionContent title="その他" content={<OtherData />} />
+        {propsDataArray.map((propsData) => (
+          <div key={propsData.title}>
+            <AccordionContent {...propsData} />
+          </div>
+        ))}
 
         <_Title>開発経験</_Title>
         {projects.map((title) => (
           <div key={title}>
-            <AccordionContent title={title} content={<Project />} />
+            <AccordionContent title={title} content={<Project />} size="sm" />
           </div>
         ))}
       </Box>
@@ -46,6 +47,6 @@ export const Private: FC = memo(() => {
 
 const _Title = styled.div`
   font-weight: bold;
-  font-size: 30px;
+  font-size: 25px;
   margin: 60px 0px 10px 0px;
 `;
