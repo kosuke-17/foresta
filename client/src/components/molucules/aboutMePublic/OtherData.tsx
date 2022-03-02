@@ -1,11 +1,11 @@
-import { memo, FC, useState } from "react";
-import { Table, Thead, Tbody, Tr, Th, Td, Flex, Box } from "@chakra-ui/react";
+import { memo, FC } from "react";
 import styled from "styled-components";
 
+/**
+ * その他のデータ.
+ * @remarks - 業務外、資格、前職について
+ */
 export const OtherData: FC = memo(() => {
-  //テストデータ
-  const [boxItems] = useState(["Windows", "Mac", "Linux"]);
-
   return (
     <>
       <_Title>業務外に取り組んでいること</_Title>
@@ -32,6 +32,7 @@ export const OtherData: FC = memo(() => {
   );
 });
 
+//項目タイトル
 const _Title = styled.div`
   font-weight: bold;
   font-size: 30px;

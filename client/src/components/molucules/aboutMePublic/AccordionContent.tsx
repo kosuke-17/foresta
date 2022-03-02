@@ -9,11 +9,14 @@ import {
 } from "@chakra-ui/react";
 
 type Props = {
-  title: string;
-  content: ReactNode;
-  size: string;
+  title: string; //アコーディオンを閉じている際に表示するタイトル
+  content: ReactNode; //中に表示する内容
+  size: string; //タイトルのサイズ
 };
 
+/**
+ * アコーディオン(トグル)が作成出来るコンポーネント.
+ */
 export const AccordionContent: FC<Props> = memo(({ title, content, size }) => {
   return (
     <>

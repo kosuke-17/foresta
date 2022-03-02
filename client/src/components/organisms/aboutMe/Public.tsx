@@ -1,8 +1,10 @@
 import { memo, FC } from "react";
-import styled from "styled-components";
 import { Button, Box } from "@chakra-ui/react";
 
 export const Public: FC = memo(() => {
+  /**
+   * AboutMeプライベートゾーン.
+   */
   return (
     <>
       <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">

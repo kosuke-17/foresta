@@ -1,6 +1,9 @@
 import { memo, FC, useState } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td, Flex, Box } from "@chakra-ui/react";
 
+/**
+ * スキル要約.
+ */
 export const SkillTable: FC = memo(() => {
   //テストデータ
   const [boxItems] = useState(["Windows", "Mac", "Linux"]);

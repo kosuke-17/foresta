@@ -1,6 +1,9 @@
 import { memo, FC } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 
+/**
+ * ユーザの基本情報テーブル.
+ */
 export const UserInfoTable: FC = memo(() => {
   return (
     <>

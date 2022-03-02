@@ -1,7 +1,11 @@
 import { memo, FC, useState } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td, Flex, Box } from "@chakra-ui/react";
-import styled from "styled-components";
 
+import { TextBox } from "./TextBox";
+
+/**
+ * 開発経験.
+ */
 export const Project: FC = memo(() => {
   //テストデータ
   const [boxItems] = useState(["Windows", "Mac", "Linux"]);
@@ -140,17 +144,7 @@ export const Project: FC = memo(() => {
         </Tbody>
       </Table>
       <div>プロジェクト詳細</div>
-      <Box ml={10} width={900}>
-        後で改行調整しなきゃ
-        あああああああああああああああああああああああああああああああああああああああああああああああ
-        あああああああああああああああああ
-        ああああああああああああああああああああああああああああああああ
-        ああああああああああああああああああああああああああああああああああああああああああ
-        ああああああああああああああああああああああああああああああああ
-        ああああああああああああああああああああああああああああああああああああああああああ
-        あああああああああああああああああああああああああああああああああ
-        あああああああああああああああああああああああああああああああああ
-      </Box>
+      <TextBox />
     </>
   );
 });
