@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import { TodoWithCheck } from "../../molucules/TodoWithCheck";
-import { Calendar } from "../../molucules/calendar";
+import { Calendar } from "../../molucules/Calendar";
 
 /**
  * Todoを表示するエリアのコンポーネント.
