@@ -2,6 +2,7 @@ import { memo, FC, useState } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td, Flex, Box } from "@chakra-ui/react";
 
 import { TextBox } from "./TextBox";
+import { TableFlexItem } from "../../atoms/AboutMePublic/TableFlexItem";
 
 /**
  * 開発経験.
@@ -31,22 +32,7 @@ export const Project: FC = memo(() => {
           <Tr>
             <Td>担当役割</Td>
             <Td>
-              <Flex>
-                {boxItems.map((item) => (
-                  <div key={item}>
-                    <Box
-                      backgroundColor="gray.400"
-                      borderRadius={5}
-                      ml={2}
-                      px={2}
-                      py={1}
-                      textColor="white"
-                    >
-                      {item}
-                    </Box>
-                  </div>
-                ))}
-              </Flex>
+              <TableFlexItem itemArray={boxItems} />
             </Td>
           </Tr>
           <Tr>
@@ -56,89 +42,31 @@ export const Project: FC = memo(() => {
           <Tr>
             <Td>動作環境(OS)</Td>
             <Td>
-              <Flex>
-                {boxItems.map((item) => (
-                  <div key={item}>
-                    <Box
-                      backgroundColor="gray.400"
-                      borderRadius={5}
-                      ml={2}
-                      px={2}
-                      py={1}
-                      textColor="white"
-                    >
-                      {item}
-                    </Box>
-                  </div>
-                ))}
-              </Flex>
+              <TableFlexItem itemArray={boxItems} />
             </Td>
           </Tr>
           <Tr>
             <Td>言語</Td>
             <Td>
-              <Flex>
-                {boxItems.map((item) => (
-                  <div key={item}>
-                    <Box
-                      backgroundColor="gray.400"
-                      borderRadius={5}
-                      ml={2}
-                      px={2}
-                      py={1}
-                      textColor="white"
-                    >
-                      {item}
-                    </Box>
-                  </div>
-                ))}
-              </Flex>
+              <TableFlexItem itemArray={boxItems} />
             </Td>
           </Tr>
           <Tr>
             <Td>フレームワーク</Td>
-            <Td>Vue.js</Td>
+            <Td>
+              <TableFlexItem itemArray={boxItems} />
+            </Td>
           </Tr>
           <Tr>
             <Td>ライブラリ</Td>
             <Td>
-              <Flex>
-                {boxItems.map((item) => (
-                  <div key={item}>
-                    <Box
-                      backgroundColor="gray.400"
-                      borderRadius={5}
-                      ml={2}
-                      px={2}
-                      py={1}
-                      textColor="white"
-                    >
-                      {item}
-                    </Box>
-                  </div>
-                ))}
-              </Flex>
+              <TableFlexItem itemArray={boxItems} />
             </Td>
           </Tr>
           <Tr>
             <Td>ツール・その他</Td>
             <Td>
-              <Flex>
-                {boxItems.map((item) => (
-                  <div key={item}>
-                    <Box
-                      backgroundColor="gray.400"
-                      borderRadius={5}
-                      ml={2}
-                      px={2}
-                      py={1}
-                      textColor="white"
-                    >
-                      {item}
-                    </Box>
-                  </div>
-                ))}
-              </Flex>
+              <TableFlexItem itemArray={boxItems} />
             </Td>
           </Tr>
         </Tbody>
