@@ -6,7 +6,7 @@ import mongoose from "mongoose";
  *  - ユーザー名 : string
  *  - 職業タイプ : string
  *  - GithubURL : string
- *  - techLeaf習得技術 : string[]]
+ *  - 習得技術情報 : obj
  */
 const UserSchema = new mongoose.Schema({
   name: {
@@ -28,10 +28,14 @@ const UserSchema = new mongoose.Schema({
   githubURL: {
     type: String,
   },
-  have_techLeafs: [String],
+  have_techLeafs: [
+    {
+      techTreeId: { type: String },
+      achievementRate: { type: Number },
+      techLeafIds: { type: [String] },
+    },
+  ],
 });
-
-export const User = mongoose.model("user", UserSchema);
 
 /**
  *  ユーザーURLスキーマ.
@@ -50,8 +54,6 @@ const UserUrlsSchema = new mongoose.Schema({
   ],
   userId: { type: String },
 });
-
-export const UserUrls = mongoose.model("userurl", UserUrlsSchema);
 
 /**
  *  ユーザーTodoスキーマ.
@@ -73,4 +75,6 @@ const UseTodoSchema = new mongoose.Schema({
   userId: String,
 });
 
+export const User = mongoose.model("user", UserSchema);
+export const UserUrls = mongoose.model("userurl", UserUrlsSchema);
 export const UserTodo = mongoose.model("userTodo", UseTodoSchema);

@@ -1,0 +1,29 @@
+type URL {
+  urlName: String
+  url: String
+}
+type UserUrls {
+  user_urls: [URL]
+  userId: String
+}
+
+################
+#リクエストボディ
+
+# ユーザーに紐づくurlを作成する
+input UserUrlsCreateInput {
+  userId: String
+  urlName: String
+  url: String
+}
+# ユーザーに紐づくurlを追加する
+input UserUrlsAddInput {
+  urlId: String
+  urlName: String
+  url: String
+}
+# ユーザーに紐づくurlを削除する
+input UserUrlsRemoveInput {
+  urlId: String
+  userUrlsId: String
+}

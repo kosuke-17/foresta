@@ -6,15 +6,13 @@ type User {
   email: String
   password: String
   githubURL: String
-  have_techLeafs: [String]
+  have_techLeafs: [TechLeafInfo]
 }
-type URL {
-  urlName: String
-  url: String
-}
-type UserUrls {
-  user_urls: [URL]
-  userId: String
+# ユーザー習得技術情報
+type TechLeafInfo {
+  techTreeId: String
+  achievementRate: Int
+  techLeafIds: [String]
 }
 ################
 #リクエストボディ
@@ -34,34 +32,17 @@ input UserLoginInput {
   password: String!
 }
 
-# ユーザーに紐づくurl情報
-input UserUrlsCreateInput {
-  userId: String
-  urlName: String
-  url: String
-}
-input UserUrlsAddInput {
-  urlId: String
-  userId: String
-  urlName: String
-  url: String
-}
-input UserUrlsRemoveInput {
-  urlId: String
-  userUrlsId: String
-}
-
 # TechLeaf情報
 input UserTechLeafAddInput {
   _id: String!
-  techLeafId: String!
+  haveTechLeafId: String!
+  achievementRate: Int!
+  techLeafIds: [String]!
 }
 input UserTechLeafRemoveInput {
   _id: String!
   techLeafId: String!
 }
-
-################
 
 ################################
 #レスポンス
