@@ -1,5 +1,5 @@
 import { TechTree } from "../../../models/TechForest.model";
-import { User } from "../../../models/User.model";
+import { User, UserLeafs } from "../../../models/User.model";
 import { success } from "../responseStatus";
 import { UserType, UserTechLeafsType, UserLoginType } from "../types";
 
@@ -17,28 +17,35 @@ const userMutations = {
     if (githubURL == null) {
       githubURL = "";
     }
-    const techTrees = await TechTree.find({});
-    const techLeafInfo = [];
-    for (const tech of techTrees) {
-      techLeafInfo.push(
-        new Object({
-          techTreeId: tech._id,
-          achievementRate: 0,
-          techLeafIds: [],
-        })
-      );
-    }
 
     try {
+      // ここでobj_idが生成される
       const createUser = new User({
         name,
         jobType,
         email,
         password,
         githubURL,
-        have_techLeafs: techLeafInfo,
       });
       const result = await createUser.save();
+
+      // ユーザー技術情報オブジェクトを生成
+      if (result !== null) {
+        const techTrees = await TechTree.find({});
+        const techLeafInfo = { techLeafs: new Array(), userId: createUser._id };
+        for (const tech of techTrees) {
+          const userTechInfo = new Object({
+            techTreeId: tech._id,
+            achievementRate: 0,
+            techLeafIds: [],
+          });
+          techLeafInfo.techLeafs.push(userTechInfo);
+        }
+        const createdTechLeafs = new UserLeafs({ ...techLeafInfo });
+        // ユーザーの技術オブジェクトを保存
+        createdTechLeafs.save();
+      }
+
       return success(result);
     } catch (e) {
       // 必須のデータがnullだとエラーを返す
@@ -83,29 +90,30 @@ const userMutations = {
   addUserTechLeafs: async (_parent: any, { user }: { user: any }) => {
     const { _id, haveTechLeafId, achievementRate, techLeafIds } = user;
     try {
-      // console.log("_id" + _id);
-      // console.log("haveTechLeafId" + haveTechLeafId);
-      // console.log("achievementRate" + achievementRate);
-      // console.dir("techLeafIds" + techLeafIds);
-      // console.log("");
-
       // const result = await User.find({
-      //   _id: _id,
-      //   have_techLeafs: { $elemMatch: { _id: haveTechLeafId } },
+      //   $and: [{ _id: _id }, { techTreeId: "6219ab06358ce51f57b9dfa5" }],
       // });
       const result = await User.findOneAndUpdate(
-        { have_techLeafs: { $elemMatch: { _id: haveTechLeafId } } },
         {
-          $addToSet: {
-            have_techLeafs: { techLeafIds: { $each: [...techLeafIds] } },
+          $and: [
+            { _id: { $eq: _id } },
+            { "have_techLeafs._id": haveTechLeafId },
+          ],
+        },
+        {
+          $set: {
+            "have_techLeafs.$[_id].achievementRate": achievementRate,
           },
-          $set: { have_techLeafs: { achievementRate: achievementRate } },
+          // $addToSet: {
+          //   "have_techLeafs.$[techLeafIds]": { $each: [...techLeafIds] },
+          // },
         },
         {
           new: true,
+          arrayFilters: [{ _id: { $eq: haveTechLeafId } }],
         }
       );
-      return success(result[0]);
+      return success(result);
     } catch (e) {
       // 必須のデータがnullだとエラーを返す
       return { status: "error" };
