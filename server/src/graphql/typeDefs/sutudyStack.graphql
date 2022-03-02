@@ -1,4 +1,5 @@
 type StudyStack {
+  id: String
   content: String!
   timeStack: Int!
   createdAt: String!
