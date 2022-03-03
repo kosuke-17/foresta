@@ -23,6 +23,10 @@ type Props = {
 
 /**
  * モーダルコンポーネント.
+ * @remarks  このコンポーネントを使用する際は、hooksからインポートしたメソッドをそのまま渡してください
+ *  const modalStore = useModal();
+ *  const { onOpen, isOpen, onClose } = modalStore;
+ * …<ModalSet isOpen={isOpen} onClose={onClose} />
  */
 export const ModalSet: FC<Props> = memo((props) => {
   const {
@@ -33,8 +37,6 @@ export const ModalSet: FC<Props> = memo((props) => {
     closeBtnName = "キャンセル",
     actionBtnArray,
   } = props;
-
-  console.log("モーダル側:" + isOpen);
 
   return (
     <>
