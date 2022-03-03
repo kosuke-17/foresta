@@ -6,7 +6,7 @@ type Query {
   """
   ユーザーidに紐づくユーザー情報を取得する.
   """
-  user(_id: String!): User!
+  getUserById(_id: String!): User!
   """
   ユーザーのTodo一覧情報を取得する.
   """
@@ -14,15 +14,15 @@ type Query {
   """
   TodoIdに紐づいたTodo情報を取得する.
   """
-  getTodoByTodoId(todoId: String): Todo!
+  getTodoById(todoId: String): Todo!
   """
   ユーザーのTodo一覧情報を取得する.
   """
-  getAllStudyStackByUserId(userId: String): [StudyStack!]!
+  getAllStudyStack(userId: String): [StudyStack!]!
   """
   StudyStackIdに紐づいたStudyStack情報を取得する.
   """
-  getStudyStackByStudyStackId(studyStackId: String): StudyStack!
+  getStudyStackById(studyStackId: String): StudyStack!
   """
   それぞれのTechを取得する
   """
@@ -39,24 +39,20 @@ type Mutation {
   createUser(user: UserCreateInput!): ResponseUser!
 
   """
-  TechLeafをユーザー情報に追加する：引数(ユーザーID, TechLeafID)
+  ユーザー習得技術を更新する：引数(ユーザーID, TechLeafID)
   """
-  addUserTechLeafs(user: UserTechLeafAddInput!): ResponseUser!
-  """
-  ユーザーの持つTechLeaf削除する：引数(ユーザーID, TechLeafID)
-  """
-  removeUserTechLeafs(user: UserTechLeafRemoveInput!): ResponseUser!
+  updateUserTechLeafs(techLeaf: UserTechLeafUpdateInput!): ResponseUserTechLeaf!
   """
   ユーザーの持つUrlを作成する：引数(ユーザーID, TechLeafID)
   """
-  createUserUrls(user: UserUrlsCreateInput!): ResponseUserUrls!
-  addUserUrls(user: UserUrlsAddInput!): ResponseUserUrls!
-  removeUserUrls(user: UserUrlsRemoveInput!): ResponseUserUrls!
+  createUserUrls(urlData: UserUrlsCreateInput!): ResponseUserUrls!
+  addUserUrls(urlData: UserUrlsAddInput!): ResponseUserUrls!
+  removeUserUrls(urlData: UserUrlsRemoveInput!): ResponseUserUrls!
 
   """
   Todoを追加する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)
   """
-  addTodo(todo: TodoInput): ResponseTodo!
+  addTodo(todo: TodoAddInput): ResponseTodo!
   """
   Todoを削除する：引数(todoId)
   """
@@ -64,7 +60,7 @@ type Mutation {
   """
   Todoを更新する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)
   """
-  updateTodo(todo: TodoInput): ResponseTodo!
+  updateTodo(todo: TodoUpdateInput): ResponseTodo!
   """
   Todo状態をtrueにする：引数(todoId)
   """

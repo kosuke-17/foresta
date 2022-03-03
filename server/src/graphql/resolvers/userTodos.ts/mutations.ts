@@ -1,4 +1,5 @@
-import { UserTodo } from "../../../models/User.model";
+import { UserTodos } from "../../../models/User.model";
+import { TodoAddType, TodoIdType, TodoUpdateType } from "../../../types";
 import { success } from "../responseStatus";
 
 const userTodosMutations = {
@@ -9,11 +10,11 @@ const userTodosMutations = {
    * @returns success : successステータス,追加したtodo情報
    * @returns error : errorステータス
    */
-  addTodo: async (_parent: any, { todo }: any) => {
+  addTodo: async (_: any, { todo }: TodoAddType) => {
     const { title, description, startedAt, finishedAt, isStatus, userId } =
       todo;
     try {
-      const newTodo = new UserTodo({
+      const newTodo = new UserTodos({
         title,
         description,
         startedAt,
@@ -36,9 +37,9 @@ const userTodosMutations = {
    * @returns success : successステータス
    * @returns error : errorステータス
    */
-  removeTodo: async (_parent: any, { todoId }: any) => {
+  removeTodo: async (_: any, { todoId }: TodoIdType) => {
     try {
-      const result = await UserTodo.deleteOne({ _id: todoId });
+      const result = await UserTodos.deleteOne({ _id: todoId });
       return success(result);
     } catch (error) {
       // 必須のデータがnullだとエラーを返す
@@ -52,11 +53,12 @@ const userTodosMutations = {
    * @returns success : successステータス,更新したtodo情報
    * @returns error : errorステータス
    */
-  updateTodo: async (_parent: any, { todo }: any) => {
-    const { id, title, description, startedAt, finishedAt, isStatus } = todo;
+  updateTodo: async (_: any, { todo }: TodoUpdateType) => {
+    const { todoId, title, description, startedAt, finishedAt, isStatus } =
+      todo;
     try {
-      const result = await UserTodo.findByIdAndUpdate(
-        { _id: id },
+      const result = await UserTodos.findByIdAndUpdate(
+        { _id: todoId },
         {
           $set: {
             title: title,
@@ -80,9 +82,9 @@ const userTodosMutations = {
    * @returns success : successステータス,更新したtodo情報
    * @returns error : errorステータス
    */
-  chekedTodoStatus: async (_parent: any, { todoId }: any) => {
+  chekedTodoStatus: async (_: any, { todoId }: TodoIdType) => {
     try {
-      const result = await UserTodo.findByIdAndUpdate(
+      const result = await UserTodos.findByIdAndUpdate(
         { _id: todoId },
         { $set: { isStatus: true } }
       );
@@ -99,9 +101,9 @@ const userTodosMutations = {
    * @returns success : successステータス,更新したtodo情報
    * @returns error : errorステータス
    */
-  unChekedTodoStatus: async (_parent: any, { todoId }: any) => {
+  unChekedTodoStatus: async (_: any, { todoId }: TodoIdType) => {
     try {
-      const result = await UserTodo.findByIdAndUpdate(
+      const result = await UserTodos.findByIdAndUpdate(
         { _id: todoId },
         { $set: { isStatus: false } }
       );
