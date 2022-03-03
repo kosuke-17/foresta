@@ -1,10 +1,12 @@
 export type UserType = {
-  name: String;
-  jobType: String;
-  email: String;
-  password: String;
-  githubURL?: String;
-  have_techLeafs?: String[];
+  user: {
+    name: String;
+    jobType: String;
+    email: String;
+    password: String;
+    githubURL?: String;
+    have_techLeafs?: String[];
+  };
 };
 
 export type UserTechLeafsType = {
