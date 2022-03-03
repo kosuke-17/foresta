@@ -5,12 +5,12 @@ const userUrlsMutations = {
   /**
    * ユーザーのurl情報を作成.
    *
-   * @param user - ユーザー情報
+   * @param urlData - url情報
    * @returns success : successステータス,作成したURL情報
    * @returns error : errorステータス
    */
-  createUserUrls: async (_parent: any, { user }: any) => {
-    const { urlName, url, userId } = user;
+  createUserUrls: async (_: any, { urlData }: any) => {
+    const { urlName, url, userId } = urlData;
 
     try {
       const createUserUrls = new UserUrls({
@@ -32,17 +32,15 @@ const userUrlsMutations = {
   /**
    * ユーザーのurl情報を追加.
    *
-   * @param user - ユーザー情報
+   * @param urlData - url情報
    * @returns success : successステータス,追加したURL情報
    * @returns error : errorステータス
    */
-  addUserUrls: async (_parent: any, { user }: any) => {
-    const { urlName, url, urlId } = user;
-    const user_urls_obj = { urlId, urlName: urlName, url: url };
+  addUserUrls: async (_parent: any, { urlData }: any) => {
     try {
       const result = await UserUrls.findByIdAndUpdate(
-        { _id: urlId },
-        { $addToSet: { user_urls: user_urls_obj } }
+        { _id: urlData.urlId },
+        { $addToSet: { user_urls: urlData } }
       );
       return success(result);
     } catch (error) {
@@ -56,8 +54,8 @@ const userUrlsMutations = {
    * @returns success : successステータス,追加したURL情報
    * @returns error : errorステータス
    */
-  removeUserUrls: async (_parent: any, { user }: any) => {
-    const { urlId, userUrlsId } = user;
+  removeUserUrls: async (_parent: any, { urlData }: any) => {
+    const { urlId, userUrlsId } = urlData;
 
     try {
       const result = await UserUrls.findOneAndUpdate(
