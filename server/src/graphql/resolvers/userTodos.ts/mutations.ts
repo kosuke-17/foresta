@@ -1,4 +1,5 @@
 import { UserTodos } from "../../../models/User.model";
+import { TodoAddType, TodoIdType, TodoUpdateType } from "../../../types";
 import { success } from "../responseStatus";
 
 const userTodosMutations = {
@@ -9,7 +10,7 @@ const userTodosMutations = {
    * @returns success : successステータス,追加したtodo情報
    * @returns error : errorステータス
    */
-  addTodo: async (_: any, { todo }: any) => {
+  addTodo: async (_: any, { todo }: TodoAddType) => {
     const { title, description, startedAt, finishedAt, isStatus, userId } =
       todo;
     try {
@@ -36,7 +37,7 @@ const userTodosMutations = {
    * @returns success : successステータス
    * @returns error : errorステータス
    */
-  removeTodo: async (_: any, { todoId }: any) => {
+  removeTodo: async (_: any, { todoId }: TodoIdType) => {
     try {
       const result = await UserTodos.deleteOne({ _id: todoId });
       return success(result);
@@ -52,11 +53,12 @@ const userTodosMutations = {
    * @returns success : successステータス,更新したtodo情報
    * @returns error : errorステータス
    */
-  updateTodo: async (_parent: any, { todo }: any) => {
-    const { id, title, description, startedAt, finishedAt, isStatus } = todo;
+  updateTodo: async (_: any, { todo }: TodoUpdateType) => {
+    const { todoId, title, description, startedAt, finishedAt, isStatus } =
+      todo;
     try {
       const result = await UserTodos.findByIdAndUpdate(
-        { _id: id },
+        { _id: todoId },
         {
           $set: {
             title: title,
