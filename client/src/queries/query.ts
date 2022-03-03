@@ -21,8 +21,6 @@ gql`
       id
       name
       jobType
-      email
-      password
       githubURL
     }
   }

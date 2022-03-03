@@ -414,8 +414,6 @@ export type GetUserByIdQuery = {
     id: string;
     name: string;
     jobType: string;
-    email: string;
-    password: string;
     githubURL: string;
   };
 };
@@ -426,8 +424,6 @@ export const GetUserByIdDocument = gql`
       id
       name
       jobType
-      email
-      password
       githubURL
     }
   }
