@@ -9,8 +9,10 @@ export type UserType = {
   };
 };
 
+// ユーザーIDは受け取り方が２種類ある
 export type UserIdType = {
-  userId: String;
+  _id?: String;
+  userId?: String;
 };
 
 export type UserTechLeafsType = {
@@ -25,4 +27,3 @@ export type UserLoginType = {
     password: String;
   };
 };
-

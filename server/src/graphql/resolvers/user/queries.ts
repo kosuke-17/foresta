@@ -1,4 +1,5 @@
 import { Users } from "../../../models/User.model";
+import { UserIdType } from "../../../types";
 
 const userQueries = {
   /**
@@ -13,7 +14,8 @@ const userQueries = {
    * @param _id - ユーザーID
    * @returns ユーザーIDに紐づくユーザー情報
    */
-  getUserById: async (_: any, { _id }: any) => await Users.findById({ _id }),
+  getUserById: async (_: any, { _id }: UserIdType) =>
+    await Users.findById({ _id }),
 };
 
 export default userQueries;
