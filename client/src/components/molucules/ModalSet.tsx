@@ -8,14 +8,12 @@ import {
   ModalBody,
   Flex,
   Button,
-  useDisclosure,
   Box,
 } from "@chakra-ui/react";
 
 type Props = {
-  openBtnName: string; //モーダルを開くボタンの名前
-  openBtnColor?: string; //モーダルを開くボタンの色
-  openBtnTextColor?: string; //モーダルを開くボタンの文字色
+  onClose: () => void; //閉じるメソッド
+  isOpen: boolean; //モーダルの開閉状態
   modalTitle?: string; //モーダルのタイトル
   contents: any; //モーダルの中身
   closeBtnName?: string; //モーダルを閉じるボタンの名前(デフォルトあり)
@@ -28,28 +26,18 @@ type Props = {
  */
 export const ModalSet: FC<Props> = memo((props) => {
   const {
-    openBtnName,
-    openBtnColor = "green.400",
-    openBtnTextColor = "white",
+    isOpen,
+    onClose,
     modalTitle,
     contents,
     closeBtnName = "キャンセル",
     actionBtnArray,
   } = props;
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  console.log("モーダル側:" + isOpen);
+
   return (
     <>
-      {/* 開くボタン */}
-      <Button
-        onClick={onOpen}
-        _focus={{ boxShadow: "none" }}
-        backgroundColor={openBtnColor}
-        _hover={{ backgroundColor: openBtnColor }}
-        textColor={openBtnTextColor}
-      >
-        {openBtnName}
-      </Button>
-
       {/* モーダル本体 */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

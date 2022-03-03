@@ -10,7 +10,6 @@ export default {
 
 export const Default: ComponentStoryObj<typeof ModalSet> = {
   args: {
-    openBtnName: "Default",
     modalTitle: "Default",
     contents: "Default",
     actionBtnArray: [
@@ -22,7 +21,6 @@ export const Default: ComponentStoryObj<typeof ModalSet> = {
 
 export const noneTitle: ComponentStoryObj<typeof ModalSet> = {
   args: {
-    openBtnName: "noneTitle",
     contents: "noneTitle",
     actionBtnArray: [
       { name: "noneTitle", action: () => alert("noneTitleAction") },
@@ -33,7 +31,6 @@ export const noneTitle: ComponentStoryObj<typeof ModalSet> = {
 
 export const manyAction: ComponentStoryObj<typeof ModalSet> = {
   args: {
-    openBtnName: "manyAction",
     modalTitle: "manyAction",
     contents: "manyAction",
     actionBtnArray: [
@@ -48,22 +45,8 @@ export const manyAction: ComponentStoryObj<typeof ModalSet> = {
 
 export const noneAction: ComponentStoryObj<typeof ModalSet> = {
   args: {
-    openBtnName: "noneAction",
     modalTitle: "noneAction",
     contents: "noneAction",
   },
   storyName: "メソッドボタンなし",
-};
-
-export const changeBtnName: ComponentStoryObj<typeof ModalSet> = {
-  args: {
-    openBtnName: "changeBtnName",
-    openBtnColor: "red.500",
-    openBtnTextColor: "white",
-    modalTitle: "changeBtnName",
-    contents: "changeBtnName",
-    actionBtnArray: [{ name: "はい", action: () => alert("Action1") }],
-    closeBtnName: "いいえ",
-  },
-  storyName: "ボタンの名前、色を変更",
 };
