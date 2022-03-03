@@ -11,7 +11,6 @@ import {
   useDisclosure,
   Box,
 } from "@chakra-ui/react";
-import styled from "styled-components";
 
 type Props = {
   openBtnName: string; //モーダルを開くボタンの名前
@@ -40,6 +39,7 @@ export const ModalSet: FC<Props> = memo((props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
+      {/* 開くボタン */}
       <Button
         onClick={onOpen}
         _focus={{ boxShadow: "none" }}
@@ -50,6 +50,7 @@ export const ModalSet: FC<Props> = memo((props) => {
         {openBtnName}
       </Button>
 
+      {/* モーダル本体 */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent
@@ -66,6 +67,7 @@ export const ModalSet: FC<Props> = memo((props) => {
           )}
           <ModalBody textAlign="center">{contents}</ModalBody>
 
+          {/* ボタンコーナー */}
           <ModalFooter justifyContent="center">
             <Flex>
               {actionBtnArray &&
