@@ -14,7 +14,9 @@ import {
 import styled from "styled-components";
 
 type Props = {
-  openBtnName: string; //モーダルを開けるボタンの名前
+  openBtnName: string; //モーダルを開くボタンの名前
+  openBtnColor?: string; //モーダルを開くボタンの色
+  openBtnTextColor?: string; //モーダルを開くボタンの文字色
   modalTitle?: string; //モーダルのタイトル
   contents: any; //モーダルの中身
   closeBtnName?: string; //モーダルを閉じるボタンの名前(デフォルトあり)
@@ -28,6 +30,8 @@ type Props = {
 export const ModalSet: FC<Props> = memo((props) => {
   const {
     openBtnName,
+    openBtnColor = "green.400",
+    openBtnTextColor = "white",
     modalTitle,
     contents,
     closeBtnName = "キャンセル",
@@ -36,7 +40,13 @@ export const ModalSet: FC<Props> = memo((props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen} _focus={{ boxShadow: "none" }}>
+      <Button
+        onClick={onOpen}
+        _focus={{ boxShadow: "none" }}
+        backgroundColor={openBtnColor}
+        _hover={{ backgroundColor: openBtnColor }}
+        textColor={openBtnTextColor}
+      >
         {openBtnName}
       </Button>
 
