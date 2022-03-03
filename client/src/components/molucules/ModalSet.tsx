@@ -9,7 +9,6 @@ import {
   Flex,
   Button,
   useDisclosure,
-  flexbox,
 } from "@chakra-ui/react";
 
 type Props = {
@@ -17,10 +16,8 @@ type Props = {
   modalTitle?: string; //モーダルのタイトル
   contents: any; //モーダルの中身
   closeBtnName?: string; //モーダルを閉じるボタンの名前(デフォルトあり)
-  actionBtnName1?: string; //ボタン作成したかったら渡す1
-  onClickMethod1?: () => void; //ボタン1を押した際に発動させるメソッド
-  actionBtnName2?: string; //ボタン作成したかったら渡す2
-  onClickMethod2?: () => void; //ボタン2を押した際に発動させるメソッド
+  //メソッドを含めたボタンを作成したい場合:[{name:hoge,action:method},{…}]の形で渡してください
+  actionBtnArray?: Array<{ name: string; action: () => void }>;
 };
 
 /**
@@ -32,10 +29,7 @@ export const ModalSet: FC<Props> = memo((props) => {
     modalTitle,
     contents,
     closeBtnName = "とじる",
-    actionBtnName1,
-    onClickMethod1,
-    actionBtnName2,
-    onClickMethod2,
+    actionBtnArray,
   } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -52,16 +46,17 @@ export const ModalSet: FC<Props> = memo((props) => {
 
           <ModalFooter>
             <Flex justifyContent="center">
-              {actionBtnName1 && (
-                <Button variant="ghost" onClick={onClickMethod1}>
-                  {actionBtnName1}
-                </Button>
-              )}
-              {actionBtnName2 && (
-                <Button variant="ghost" onClick={onClickMethod2}>
-                  {actionBtnName2}
-                </Button>
-              )}
+              {actionBtnArray &&
+                actionBtnArray.map((btn) => (
+                  <Button
+                    colorScheme="blue"
+                    key={btn.name}
+                    mr={3}
+                    onClick={btn.action}
+                  >
+                    {btn.name}
+                  </Button>
+                ))}
               <Button colorScheme="blue" mr={3} onClick={onClose}>
                 {closeBtnName}
               </Button>
