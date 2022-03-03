@@ -1,4 +1,5 @@
 import { UserLeafs } from "../../../models/User.model";
+import { TechLeafUpdateType } from "../../../types";
 import { success } from "../responseStatus";
 
 const userLeafsMutation = {
@@ -11,7 +12,7 @@ const userLeafsMutation = {
    * @returns success : successステータス,技術を習得したユーザー
    * @returns error : errorステータス
    */
-  updateUserTechLeafs: async (_: any, { techLeaf }: { techLeaf: any }) => {
+  updateUserTechLeafs: async (_: any, { techLeaf }: TechLeafUpdateType) => {
     const { techTreeId, achievementRate, techLeafIds, userId } = techLeaf;
     try {
       const result = await UserLeafs.findOneAndUpdate(

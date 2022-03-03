@@ -1,11 +1,11 @@
 # ユーザー情報
 type User {
-  id: String
-  name: String
-  jobType: String
-  email: String
-  password: String
-  githubURL: String
+  id: String!
+  name: String!
+  jobType: String!
+  email: String!
+  password: String!
+  githubURL: String!
 }
 
 ################
