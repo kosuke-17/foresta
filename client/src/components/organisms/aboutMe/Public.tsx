@@ -31,41 +31,31 @@ export const Public: FC = memo(() => {
    */
   return (
     <>
-      <Box
-        background={"green.100"}
-        m={10}
-        p={20}
-        rounded={20}
-        boxShadow="md"
-        textAlign="center"
-      >
+      <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">
         {user && (
           <>
-            <Flex justifyContent="center">
-              <_Name>氏名:{user.name}</_Name>
-              {user.githubURL && (
-                <_Icon>
-                  <a
-                    href={`https://github.com/${user.githubURL}`}
-                    target="blank"
-                  >
-                    <MarkGithubIcon size={16} />
-                  </a>
-                </_Icon>
-              )}
-            </Flex>
-            <div>{user.jobType}</div>
-            <div>
-              <Button backgroundColor="green.400" size="md" textColor="white">
-                {/* 仮のリンク */}
-                <Link to={"/study"}>このユーザの学習記録</Link>
-              </Button>
-            </div>
-            <div>
-              {/* <Button backgroundColor="green.400" size="md" textColor="white"> */}
-
-              {/* </Button> */}
-            </div>
+            <_User>
+              <Flex justifyContent="center">
+                <_Name>氏名:{user.name}</_Name>
+                {user.githubURL && (
+                  <_Icon>
+                    <a
+                      href={`https://github.com/${user.githubURL}`}
+                      target="blank"
+                    >
+                      <MarkGithubIcon size={16} />
+                    </a>
+                  </_Icon>
+                )}
+              </Flex>
+              <div>{user.jobType}</div>
+              <div>
+                <Button backgroundColor="green.400" size="md" textColor="white">
+                  {/* 仮のリンク */}
+                  <Link to={"/study"}>このユーザの学習記録</Link>
+                </Button>
+              </div>
+            </_User>
             <div>技術進捗ツリーチェック項目</div>
             <div>制作物一覧</div>
             <div>ほげほげサイト</div>
@@ -94,4 +84,8 @@ const _Icon = styled.div`
   :hover {
     color: gray;
   }
+`;
+
+const _User = styled.div`
+  text-align: center;
 `;
