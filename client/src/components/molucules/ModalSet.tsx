@@ -34,7 +34,9 @@ export const ModalSet: FC<Props> = memo((props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen}>{openBtnName}</Button>
+      <Button onClick={onOpen} _focus={{ boxShadow: "none" }}>
+        {openBtnName}
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -56,7 +58,10 @@ export const ModalSet: FC<Props> = memo((props) => {
                     _focus={{ boxShadow: "none" }}
                     key={btn.name}
                     mr={3}
-                    onClick={btn.action}
+                    onClick={() => {
+                      btn.action();
+                      onClose();
+                    }}
                   >
                     {btn.name}
                   </Button>
