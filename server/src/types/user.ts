@@ -1,29 +1,29 @@
 export type UserType = {
   user: {
-    name: String;
-    jobType: String;
-    email: String;
-    password: String;
-    githubURL?: String;
-    have_techLeafs?: String[];
+    name: string;
+    jobType: string;
+    email: string;
+    password: string;
+    githubURL?: string;
+    have_techLeafs?: string[];
   };
 };
 
 // ユーザーIDは受け取り方が２種類ある
 export type UserIdType = {
-  _id?: String;
-  userId?: String;
+  _id?: string;
+  userId?: string;
 };
 
 export type UserTechLeafsType = {
-  _id: String;
+  _id: string;
   techLeafId: string;
 };
 
 export type UserLoginType = {
   user: {
-    _id: String;
-    email: String;
-    password: String;
+    _id: string;
+    email: string;
+    password: string;
   };
 };

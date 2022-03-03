@@ -1,22 +1,22 @@
 export type StudyStackIdType = {
-  studyStackId: String;
+  studyStackId: string;
 };
 export type StackAddType = {
   stack: {
-    content: String;
-    timeStack: String;
-    createdAt: String;
-    skillTagId: String;
-    userId: String;
+    content: string;
+    timeStack: string;
+    createdAt: string;
+    skillTagId: string;
+    userId: string;
   };
 };
 export type StackUpdateType = {
   stack: {
-    studyStackId: String;
-    content: String;
-    timeStack: String;
-    createdAt: String;
-    skillTagId: String;
-    userId: String;
+    studyStackId: string;
+    content: string;
+    timeStack: string;
+    createdAt: string;
+    skillTagId: string;
+    userId: string;
   };
 };
