@@ -16,7 +16,7 @@ import {
 
 import { memo } from "react";
 import {
-  useGetAllStudyStackByUserIdQuery,
+  useGetAllStudyStackQuery,
   // useGetSkillTagIdQuery,
 } from "../../../types/generated/graphql";
 import { StudyModal } from "../../molucules/StudyModal";
@@ -36,7 +36,7 @@ type StackList = {
  */
 export const StackList = memo(() => {
   //userIdから学習記録データを取得する
-  const { loading, data, error } = useGetAllStudyStackByUserIdQuery({
+  const { loading, data, error } = useGetAllStudyStackQuery({
     //仮のユーザーID
     variables: { userId: "621c795fea18ffdb80e66462" },
   });
@@ -53,7 +53,7 @@ export const StackList = memo(() => {
 
   if (data) {
     //取得したデータを変数に格納
-    const stackDatas = data.getAllStudyStackByUserId;
+    const stackDatas = data.getAllStudyStack;
     //記録データの数だけfor文を回す
     for (let i = 0; i < stackDatas.length; i++) {
       let stackAnswer = stackDatas[i].timeStack;
@@ -165,7 +165,7 @@ export const StackList = memo(() => {
                   </Thead>
                   <Tbody>
                     {data &&
-                      data.getAllStudyStackByUserId.map((stackList) => (
+                      data.getAllStudyStack.map((stackList) => (
                         <Tr key={stackList.id}>
                           <Td>{stackList.createdAt}</Td>
                           <Td>{stackList.skillTagId}</Td>
