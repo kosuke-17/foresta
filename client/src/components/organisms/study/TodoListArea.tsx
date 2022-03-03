@@ -8,15 +8,38 @@ import {
   Box,
   Container,
   Heading,
+  List,
+  ListItem,
 } from "@chakra-ui/react";
 
 import { TodoWithCheck } from "../../molucules/TodoWithCheck";
 import { Calendar } from "../../molucules/Calendar";
+import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
 
 /**
  * Todoを表示するエリアのコンポーネント.
  */
 export const TodoListArea: FC = memo(() => {
+  const userId = "621f1cba386085f036353ecd";
+
+  const { data, error, loading } = useGetAllTodoByUserQuery({
+    variables: {
+      userId,
+    },
+  });
+  console.log(
+    "🚀 ~ file: TodoListArea.tsx ~ line 24 ~ constTodoListArea:FC=memo ~ data",
+    data,
+  );
+
+  if (error) {
+    return <div>エラー</div>;
+  }
+
+  if (loading) {
+    return <div>...loading</div>;
+  }
+
   return (
     <Container maxW="5xl">
       <Heading as="h2" size="lg">
@@ -42,13 +65,17 @@ export const TodoListArea: FC = memo(() => {
           >
             <TabPanel>
               {/* <p>全てのTodo</p> */}
-              <TodoWithCheck />
-              <TodoWithCheck />
-              <TodoWithCheck />
-              <TodoWithCheck />
-              <TodoWithCheck />
-              <TodoWithCheck />
-              <TodoWithCheck />
+              {data?.todos.length ? (
+                <List>
+                  {data.todos.map((todo) => (
+                    <ListItem key={todo.id}>
+                      <TodoWithCheck {...todo} />
+                    </ListItem>
+                  ))}
+                </List>
+              ) : (
+                <p>Todoが存在しません</p>
+              )}
             </TabPanel>
             <TabPanel>
               <p>今日のTodo</p>
