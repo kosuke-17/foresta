@@ -27,3 +27,11 @@ input UserUrlsRemoveInput {
   urlId: String
   userUrlsId: String
 }
+
+################################
+#レスポンス
+# 追加したユーザーURL
+type ResponseUserUrls {
+  status: String
+  node: UserUrls
+}
