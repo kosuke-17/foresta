@@ -3,7 +3,7 @@ import { Button, Box } from "@chakra-ui/react";
 
 export const Public: FC = memo(() => {
   /**
-   * AboutMeプライベートゾーン.
+   * AboutMeパブリックゾーン.
    */
   return (
     <>
