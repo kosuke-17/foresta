@@ -41,24 +41,45 @@ export const StackList = memo(() => {
     variables: { userId: "621c795fea18ffdb80e66462" },
   });
 
-  const timeStackDatas = new Array<number>();
-  const skillTagIdtackDatas = new Array<string>();
+  //学習リストの詳細内容一つ一つを格納する新しい配列を作成
+  const timeStackDatas = new Array<number>(); //学習時間
+  const skillTagIdtackDatas = new Array<string>(); //学習技術
+  const createdAtStartDatas = new Array<string>(); //記録開始日
+  const createdAtLastDatas = new Array<string>(); //最終記録日
+  const contentDatas = new Array<string>(); //メモ内容
+  const idDatas = new Array<string | null | undefined>(); //記録id
+  //上記の記録データを格納する配列
+  const stackSumList = new Array<StackList>();
 
   if (data) {
+    //取得したデータを変数に格納
     const stackDatas = data.getAllStudyStackByUserId;
-    //カテゴリ名が被っていたら学習時間を合わせて排除
+    //記録データの数だけfor文を回す
     for (let i = 0; i < stackDatas.length; i++) {
-      let answer = stackDatas[i].timeStack;
+      let stackAnswer = stackDatas[i].timeStack;
+      const startDate = stackDatas[i].createdAt;
+      let lastDate = stackDatas[i].createdAt;
+      let contentAnswer = stackDatas[i].content;
+      const idAnswer = stackDatas[i].id;
       for (let j = i + 1; j < stackDatas.length; j++) {
+        //カテゴリ名が被っていた場合
         if (stackDatas[i].skillTagId === stackDatas[j].skillTagId) {
-          answer = answer + stackDatas[j].timeStack;
+          //技術内容が被っていた場合に学習時間は足し、最終記録日とメモデータは上書きする
+          stackAnswer = stackAnswer + stackDatas[j].timeStack;
+          lastDate = stackDatas[j].createdAt;
+          contentAnswer = stackDatas[j].content;
+          //上書きした分のデータを次のfor文で反映させないようにする
           i = i + 1;
         }
       }
-      timeStackDatas.push(answer);
+      //それぞれのデータを配列にプッシュする
       skillTagIdtackDatas.push(stackDatas[i].skillTagId);
-      console.log(timeStackDatas);
-      console.log(skillTagIdtackDatas);
+      timeStackDatas.push(stackAnswer);
+      createdAtStartDatas.push(startDate);
+      createdAtLastDatas.push(lastDate);
+      contentDatas.push(contentAnswer);
+      idDatas.push(idAnswer);
+    }
     }
   }
 
