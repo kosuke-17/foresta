@@ -8,14 +8,8 @@ import mongoose from "mongoose";
  *  - techBranch_id(外部キー) : string
  */
 const TechLeafSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  techBranch_id: {
-    type: String,
-    required: true,
-  },
+  name: { type: String, required: true },
+  techBranch_id: { type: String, required: true },
 });
 
 /**
@@ -26,14 +20,8 @@ const TechLeafSchema = new mongoose.Schema({
  *  - techTree_id(外部キー) : string
  */
 const TechBranchSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  techTree_id: {
-    type: String,
-    required: true,
-  },
+  name: { type: String, required: true },
+  techTree_id: { type: String, required: true },
 });
 
 /**
@@ -44,14 +32,8 @@ const TechBranchSchema = new mongoose.Schema({
  *  - techArea_id(外部キー) : string
  */
 const TechTreeSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  techArea_id: {
-    type: String,
-    required: true,
-  },
+  name: { type: String, required: true },
+  techArea_id: { type: String, required: true },
 });
 
 /**
@@ -61,10 +43,7 @@ const TechTreeSchema = new mongoose.Schema({
  *  - TechArea名 : string
  */
 const TechAreaSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
+  name: { type: String, required: true },
 });
 
 export const TechLeaf = mongoose.model("techleaf", TechLeafSchema);
