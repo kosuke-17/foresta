@@ -28,7 +28,7 @@ export const ModalSet: FC<Props> = memo((props) => {
     openBtnName,
     modalTitle,
     contents,
-    closeBtnName = "とじる",
+    closeBtnName = "キャンセル",
     actionBtnArray,
   } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,8 +44,8 @@ export const ModalSet: FC<Props> = memo((props) => {
           )}
           <ModalBody textAlign="center">{contents}</ModalBody>
 
-          <ModalFooter>
-            <Flex justifyContent="center">
+          <ModalFooter justifyContent="center">
+            <Flex>
               {actionBtnArray &&
                 actionBtnArray.map((btn) => (
                   <Button
@@ -57,7 +57,7 @@ export const ModalSet: FC<Props> = memo((props) => {
                     {btn.name}
                   </Button>
                 ))}
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
+              <Button colorScheme="blue" onClick={onClose}>
                 {closeBtnName}
               </Button>
             </Flex>
