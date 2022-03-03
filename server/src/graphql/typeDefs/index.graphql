@@ -45,14 +45,14 @@ type Mutation {
   """
   ユーザーの持つUrlを作成する：引数(ユーザーID, TechLeafID)
   """
-  createUserUrls(user: UserUrlsCreateInput!): ResponseUserUrls!
-  addUserUrls(user: UserUrlsAddInput!): ResponseUserUrls!
-  removeUserUrls(user: UserUrlsRemoveInput!): ResponseUserUrls!
+  createUserUrls(urlData: UserUrlsCreateInput!): ResponseUserUrls!
+  addUserUrls(urlData: UserUrlsAddInput!): ResponseUserUrls!
+  removeUserUrls(urlData: UserUrlsRemoveInput!): ResponseUserUrls!
 
   """
   Todoを追加する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)
   """
-  addTodo(todo: TodoInput): ResponseTodo!
+  addTodo(todo: TodoAddInput): ResponseTodo!
   """
   Todoを削除する：引数(todoId)
   """
@@ -60,7 +60,7 @@ type Mutation {
   """
   Todoを更新する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)
   """
-  updateTodo(todo: TodoInput): ResponseTodo!
+  updateTodo(todo: TodoUpdateInput): ResponseTodo!
   """
   Todo状態をtrueにする：引数(todoId)
   """
