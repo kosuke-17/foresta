@@ -49,7 +49,11 @@ export const ModalSet: FC<Props> = memo((props) => {
               {actionBtnArray &&
                 actionBtnArray.map((btn) => (
                   <Button
-                    colorScheme="blue"
+                    backgroundColor="green.400"
+                    textColor="white"
+                    _hover={{ backgroundColor: "green.400" }}
+                    _active={{ backgroundColor: "green.600" }}
+                    _focus={{ boxShadow: "none" }}
                     key={btn.name}
                     mr={3}
                     onClick={btn.action}
@@ -57,7 +61,13 @@ export const ModalSet: FC<Props> = memo((props) => {
                     {btn.name}
                   </Button>
                 ))}
-              <Button colorScheme="blue" onClick={onClose}>
+              <Button
+                backgroundColor="gray.300"
+                _hover={{ backgroundColor: "gray.300" }}
+                _active={{ backgroundColor: "gray.500" }}
+                _focus={{ boxShadow: "none" }}
+                onClick={onClose}
+              >
                 {closeBtnName}
               </Button>
             </Flex>
