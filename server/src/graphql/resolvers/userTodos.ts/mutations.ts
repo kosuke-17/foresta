@@ -82,7 +82,7 @@ const userTodosMutations = {
    * @returns success : successステータス,更新したtodo情報
    * @returns error : errorステータス
    */
-  chekedTodoStatus: async (_parent: any, { todoId }: any) => {
+  chekedTodoStatus: async (_: any, { todoId }: TodoIdType) => {
     try {
       const result = await UserTodos.findByIdAndUpdate(
         { _id: todoId },
@@ -101,7 +101,7 @@ const userTodosMutations = {
    * @returns success : successステータス,更新したtodo情報
    * @returns error : errorステータス
    */
-  unChekedTodoStatus: async (_parent: any, { todoId }: any) => {
+  unChekedTodoStatus: async (_: any, { todoId }: TodoIdType) => {
     try {
       const result = await UserTodos.findByIdAndUpdate(
         { _id: todoId },
