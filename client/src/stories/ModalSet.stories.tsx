@@ -1,6 +1,9 @@
 import type { ComponentStoryObj, ComponentMeta } from "@storybook/react";
 import { ModalSet } from "../components/molucules/ModalSet";
 
+/**
+ * モーダルコンポーネント.
+ */
 export default {
   component: ModalSet,
 } as ComponentMeta<typeof ModalSet>;
@@ -25,7 +28,7 @@ export const noneTitle: ComponentStoryObj<typeof ModalSet> = {
       { name: "noneTitle", action: () => alert("noneTitleAction") },
     ],
   },
-  storyName: "モーダルタイトルなしの場合",
+  storyName: "モーダルタイトルなし",
 };
 
 export const manyAction: ComponentStoryObj<typeof ModalSet> = {
@@ -40,7 +43,7 @@ export const manyAction: ComponentStoryObj<typeof ModalSet> = {
       { name: "Action4", action: () => alert("Action4") },
     ],
   },
-  storyName: "メソッドボタンが複数ある場合",
+  storyName: "メソッドボタンが複数",
 };
 
 export const noneAction: ComponentStoryObj<typeof ModalSet> = {
@@ -49,7 +52,7 @@ export const noneAction: ComponentStoryObj<typeof ModalSet> = {
     modalTitle: "noneAction",
     contents: "noneAction",
   },
-  storyName: "メソッドボタンがない場合",
+  storyName: "メソッドボタンなし",
 };
 
 export const changeBtnName: ComponentStoryObj<typeof ModalSet> = {

@@ -50,57 +50,57 @@ export const ModalSet: FC<Props> = memo((props) => {
         {openBtnName}
       </Button>
 
-      <_Test>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent position="fixed" top={150}>
-            {modalTitle ? (
-              <ModalHeader textAlign="center">{modalTitle}</ModalHeader>
-            ) : (
-              <Box pb={30}></Box>
-            )}
-            <ModalBody textAlign="center">{contents}</ModalBody>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent
+          position="fixed"
+          top={150}
+          width="auto"
+          minWidth={500}
+          maxWidth="none"
+        >
+          {modalTitle ? (
+            <ModalHeader textAlign="center">{modalTitle}</ModalHeader>
+          ) : (
+            <Box pb={30}></Box>
+          )}
+          <ModalBody textAlign="center">{contents}</ModalBody>
 
-            <ModalFooter justifyContent="center">
-              <Flex>
-                {actionBtnArray &&
-                  actionBtnArray.map((btn) => (
-                    <Button
-                      minWidth={120}
-                      backgroundColor="green.400"
-                      textColor="white"
-                      _hover={{ backgroundColor: "green.400" }}
-                      _active={{ backgroundColor: "green.600" }}
-                      _focus={{ boxShadow: "none" }}
-                      key={btn.name}
-                      mr={3}
-                      onClick={() => {
-                        btn.action();
-                        onClose();
-                      }}
-                    >
-                      {btn.name}
-                    </Button>
-                  ))}
-                <Button
-                  minWidth={120}
-                  backgroundColor="gray.300"
-                  _hover={{ backgroundColor: "gray.300" }}
-                  _active={{ backgroundColor: "gray.500" }}
-                  _focus={{ boxShadow: "none" }}
-                  onClick={onClose}
-                >
-                  {closeBtnName}
-                </Button>
-              </Flex>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </_Test>
+          <ModalFooter justifyContent="center">
+            <Flex>
+              {actionBtnArray &&
+                actionBtnArray.map((btn) => (
+                  <Button
+                    minWidth={120}
+                    backgroundColor="green.400"
+                    textColor="white"
+                    _hover={{ backgroundColor: "green.400" }}
+                    _active={{ backgroundColor: "green.600" }}
+                    _focus={{ boxShadow: "none" }}
+                    key={btn.name}
+                    mr={3}
+                    onClick={() => {
+                      btn.action();
+                      onClose();
+                    }}
+                  >
+                    {btn.name}
+                  </Button>
+                ))}
+              <Button
+                minWidth={120}
+                backgroundColor="gray.300"
+                _hover={{ backgroundColor: "gray.300" }}
+                _active={{ backgroundColor: "gray.500" }}
+                _focus={{ boxShadow: "none" }}
+                onClick={onClose}
+              >
+                {closeBtnName}
+              </Button>
+            </Flex>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 });
-
-const _Test = styled.div`
-  top: 200px;
-`;

@@ -23,8 +23,10 @@ export const AboutMe: FC = () => {
     alert("ボタン2が押された");
   };
   const testArray = [
-    { name: "test1", action: testAction1 },
-    { name: "test2", action: testAction2 },
+    { name: "Action1", action: () => alert("Action1") },
+    { name: "Action1", action: () => alert("Action1") },
+    { name: "Action1", action: () => alert("Action1") },
+    { name: "Action1", action: () => alert("Action1") },
   ];
 
   //   const testArray = [{ name: "はい", action: testAction1 }];
