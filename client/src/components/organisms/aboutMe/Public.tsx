@@ -48,13 +48,13 @@ export const Public: FC = memo(() => {
                   </_Icon>
                 )}
               </Flex>
-              <div>{user.jobType}</div>
-              <div>
+              <_Content>{user.jobType}</_Content>
+              <_Content>
                 <Button backgroundColor="green.400" size="md" textColor="white">
                   {/* 仮のリンク */}
                   <Link to={"/study"}>このユーザの学習記録</Link>
                 </Button>
-              </div>
+              </_Content>
             </_User>
             <div>技術進捗ツリーチェック項目</div>
             <div>制作物一覧</div>
@@ -88,4 +88,8 @@ const _Icon = styled.div`
 
 const _User = styled.div`
   text-align: center;
+`;
+
+const _Content = styled.div`
+  margin-top: 10px;
 `;
