@@ -4,6 +4,7 @@ import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { MarkGithubIcon } from "@primer/octicons-react";
+import { AccordionContent } from "../../molucules/AccordionContent";
 
 export const Public: FC = memo(() => {
   /**
@@ -56,7 +57,13 @@ export const Public: FC = memo(() => {
                 </Button>
               </_Content>
             </_User>
-            <div>技術進捗ツリーチェック項目</div>
+            <_Content>
+              <AccordionContent
+                title="技術進捗ツリーチェック項目"
+                content={<p>技術ツリー</p>}
+                size="sm"
+              />
+            </_Content>
             <div>制作物一覧</div>
             <div>ほげほげサイト</div>
             <div>ほげほげサイト</div>
