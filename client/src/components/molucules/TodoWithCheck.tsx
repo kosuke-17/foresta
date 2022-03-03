@@ -5,6 +5,7 @@ import {
   getFormattedDate,
   getFormattedDateWithoutYear,
 } from "../../utils/methods";
+import styled from "styled-components";
 
 // 自動生成したTodoの型から使用したいプロパティ名だけを指定
 type Props = Pick<
@@ -43,7 +44,7 @@ export const TodoWithCheck: FC<Props> = memo((props) => {
       justify="space-between"
       _hover={{ backgroundColor: "#f5f5f5", cursor: "pointer" }}
     >
-      <Flex align="center">
+      <Flex align="center" overflow="hidden" white-space="nowrap">
         <Checkbox
           isChecked={isStatus!}
           colorScheme="teal"
@@ -51,9 +52,20 @@ export const TodoWithCheck: FC<Props> = memo((props) => {
           onChange={() => alert("toggle")}
           padding="5px"
         />
-        <span>{title}</span>
+        <_Title>{title}</_Title>
       </Flex>
-      <span>{getformattedTodoDate()}</span>
+      <_Date>{getformattedTodoDate()}</_Date>
     </Flex>
   );
 });
+
+// Todoのタイトルのスタイル
+// 長すぎる場合は...で省略する
+const _Title = styled.span`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+const _Date = styled.span`
+  white-space: nowrap;
+`;
