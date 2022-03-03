@@ -2,6 +2,7 @@ import { TechTree } from "../../../models/TechForest.model";
 import { Users, UserLeafs } from "../../../models/User.model";
 import { success } from "../responseStatus";
 import { UserType, UserLoginType } from "../../../types";
+import { SpecSheets } from "../../../models/SpecSheet";
 
 const userMutations = {
   /**
@@ -46,6 +47,17 @@ const userMutations = {
         const createdTechLeafs = new UserLeafs({ ...techLeafInfo });
         // ユーザーの技術オブジェクトを保存
         createdTechLeafs.save();
+
+        // スプレッドシートオブジェクト作成
+        const createdSpecSheet = new SpecSheets({
+          selfIntro: "",
+          studyOnOwnTime: "",
+          certification: "",
+          prevJobs: [],
+          userId: createUser._id,
+        });
+        // スプレッドシート作成
+        createdSpecSheet.save();
       }
 
       return success(result);

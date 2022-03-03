@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="-SmZYSLaklfBI4JRPdJP" name="ER図_ja">
-        <mxGraphModel dx="2621" dy="1227" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="2083" dy="859" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -2344,7 +2344,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="1079" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1">
+                <mxCell id="1079" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" edge="1">
                     <mxGeometry width="100" height="100" relative="1" as="geometry">
                         <mxPoint x="841" y="1620" as="sourcePoint"/>
                         <mxPoint x="841" y="1060" as="targetPoint"/>
@@ -4756,7 +4756,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="9aas4ENLm9cP-ae6w_6m-0" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;" edge="1" parent="5vLuB-gRbie-JelBlSbu-1">
+                <mxCell id="9aas4ENLm9cP-ae6w_6m-0" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;" parent="5vLuB-gRbie-JelBlSbu-1" edge="1">
                     <mxGeometry width="100" height="100" relative="1" as="geometry">
                         <mxPoint x="840" y="1620" as="sourcePoint"/>
                         <mxPoint x="880" y="1100" as="targetPoint"/>
@@ -4765,7 +4765,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="8m1gm6dWuKwVkEO2yXpk-0" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="5vLuB-gRbie-JelBlSbu-1">
+                <mxCell id="8m1gm6dWuKwVkEO2yXpk-0" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="5vLuB-gRbie-JelBlSbu-1" edge="1">
                     <mxGeometry width="100" height="100" relative="1" as="geometry">
                         <mxPoint x="840" y="1380" as="sourcePoint"/>
                         <mxPoint x="620" y="1595" as="targetPoint"/>
