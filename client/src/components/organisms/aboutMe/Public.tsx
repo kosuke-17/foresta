@@ -64,9 +64,62 @@ export const Public: FC = memo(() => {
                 size="sm"
               />
             </_Content>
-            <div>制作物一覧</div>
-            <div>ほげほげサイト</div>
-            <div>ほげほげサイト</div>
+            <Box backgroundColor="white" pb={10} mb={10}>
+              <Box
+                width="full"
+                textAlign="center"
+                textColor="white"
+                backgroundColor="gray.400"
+                fontWeight="bold"
+                p={3}
+                mt={5}
+                fontSize={20}
+              >
+                制作物一覧
+              </Box>
+              <Flex gap={4} justifyContent="center">
+                <Flex direction="column">
+                  <Box
+                    backgroundColor="gray.400"
+                    width={350}
+                    height={200}
+                    textAlign="center"
+                    alignItems="center"
+                    mt={30}
+                  >
+                    NoImage
+                  </Box>
+                  ほげほげサイト
+                </Flex>
+                <Flex direction="column">
+                  <Box
+                    backgroundColor="gray.400"
+                    width={350}
+                    height={200}
+                    textAlign="center"
+                    alignItems="center"
+                    mt={30}
+                  >
+                    NoImage
+                  </Box>
+                  <div>ほげほげサイト</div>
+                </Flex>
+                <Flex direction="column">
+                  <Box
+                    backgroundColor="gray.400"
+                    width={350}
+                    height={200}
+                    textAlign="center"
+                    alignItems="center"
+                    mt={30}
+                  >
+                    NoImage
+                  </Box>
+                  <div>ほげほげサイト</div>
+                </Flex>
+              </Flex>
+            </Box>
+
             <div>ほげほげサイト</div>
             <div>
               <div>■その他URL</div>
