@@ -1,10 +1,10 @@
 type URL {
-  urlName: String
-  url: String
+  urlName: String!
+  url: String!
 }
 type UserUrls {
-  user_urls: [URL]
-  userId: String
+  user_urls: [URL!]!
+  userId: String!
 }
 
 ################
@@ -12,26 +12,26 @@ type UserUrls {
 
 # ユーザーに紐づくurlを作成する
 input UserUrlsCreateInput {
-  userId: String
-  urlName: String
-  url: String
+  userId: String!
+  urlName: String!
+  url: String!
 }
 # ユーザーに紐づくurlを追加する
 input UserUrlsAddInput {
-  urlId: String
-  urlName: String
-  url: String
+  urlId: String!
+  urlName: String!
+  url: String!
 }
 # ユーザーに紐づくurlを削除する
 input UserUrlsRemoveInput {
-  urlId: String
-  userUrlsId: String
+  urlId: String!
+  userUrlsId: String!
 }
 
 ################################
 #レスポンス
 # 追加したユーザーURL
 type ResponseUserUrls {
-  status: String
+  status: String!
   node: UserUrls
 }
