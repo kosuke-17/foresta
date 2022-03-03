@@ -15,28 +15,28 @@ import { gql } from "@apollo/client";
 
 //学習リスト全件表示
 gql`
-  query GetAllStudyStackByUserId($userId: String) {
-    getAllStudyStackByUserId(userId: $userId) {
-      content
+  query GetAllStudyStack($userId: String) {
+    getAllStudyStack(userId: $userId) {
+      id
       timeStack
+      content
       createdAt
       skillTagId
       userId
-      id
     }
   }
 `;
 
 //学習リスト１件取得
 gql`
-  query GetStudyStackByStudyStackId($studyStackId: String) {
-    getStudyStackByStudyStackId(studyStackId: $studyStackId) {
+  query GetStudyStackById($studyStackId: String) {
+    getStudyStackById(studyStackId: $studyStackId) {
+      id
       content
       timeStack
       createdAt
       skillTagId
       userId
-      id
     }
   }
 `;

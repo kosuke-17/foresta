@@ -51,8 +51,6 @@ export type Mutation = {
   addStudyStack: ResponseStudyStack;
   /** Todoを追加する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID) */
   addTodo: ResponseTodo;
-  /** TechLeafをユーザー情報に追加する：引数(ユーザーID, TechLeafID) */
-  addUserTechLeafs: ResponseUser;
   addUserUrls: ResponseUserUrls;
   /** Todo状態をtrueにする：引数(todoId) */
   chekedTodoStatus: ResponseTodo;
@@ -69,8 +67,6 @@ export type Mutation = {
   removeStudyStack: ResponseStudyStack;
   /** Todoを削除する：引数(todoId) */
   removeTodo: ResponseTodo;
-  /** ユーザーの持つTechLeaf削除する：引数(ユーザーID, TechLeafID) */
-  removeUserTechLeafs: ResponseUser;
   removeUserUrls: ResponseUserUrls;
   /** Todo状態をfalseにする：引数(todoId) */
   unChekedTodoStatus: ResponseTodo;
@@ -78,6 +74,8 @@ export type Mutation = {
   updateStudyStack: ResponseStudyStack;
   /** Todoを更新する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID) */
   updateTodo: ResponseTodo;
+  /** ユーザー習得技術を更新する：引数(ユーザーID, TechLeafID) */
+  updateUserTechLeafs: ResponseUserTechLeaf;
   /** ユーザーがログインする：引数(ユーザーID, email, password) */
   userLogin: ResponseUser;
 };
@@ -87,15 +85,11 @@ export type MutationAddStudyStackArgs = {
 };
 
 export type MutationAddTodoArgs = {
-  todo?: InputMaybe<TodoInput>;
-};
-
-export type MutationAddUserTechLeafsArgs = {
-  user: UserTechLeafAddInput;
+  todo?: InputMaybe<TodoAddInput>;
 };
 
 export type MutationAddUserUrlsArgs = {
-  user: UserUrlsAddInput;
+  urlData: UserUrlsAddInput;
 };
 
 export type MutationChekedTodoStatusArgs = {
@@ -123,7 +117,7 @@ export type MutationCreateUserArgs = {
 };
 
 export type MutationCreateUserUrlsArgs = {
-  user: UserUrlsCreateInput;
+  urlData: UserUrlsCreateInput;
 };
 
 export type MutationRemoveStudyStackArgs = {
@@ -134,12 +128,8 @@ export type MutationRemoveTodoArgs = {
   todoId?: InputMaybe<Scalars["String"]>;
 };
 
-export type MutationRemoveUserTechLeafsArgs = {
-  user: UserTechLeafRemoveInput;
-};
-
 export type MutationRemoveUserUrlsArgs = {
-  user: UserUrlsRemoveInput;
+  urlData: UserUrlsRemoveInput;
 };
 
 export type MutationUnChekedTodoStatusArgs = {
@@ -151,7 +141,11 @@ export type MutationUpdateStudyStackArgs = {
 };
 
 export type MutationUpdateTodoArgs = {
-  todo?: InputMaybe<TodoInput>;
+  todo?: InputMaybe<TodoUpdateInput>;
+};
+
+export type MutationUpdateUserTechLeafsArgs = {
+  techLeaf: UserTechLeafUpdateInput;
 };
 
 export type MutationUserLoginArgs = {
@@ -161,7 +155,7 @@ export type MutationUserLoginArgs = {
 export type Query = {
   __typename?: "Query";
   /** ユーザーのTodo一覧情報を取得する. */
-  getAllStudyStackByUserId: Array<StudyStack>;
+  getAllStudyStack: Array<StudyStack>;
   getAllTechArea: Array<TechArea>;
   getAllTechBranch: Array<TechBranch>;
   /** それぞれのTechを取得する */
@@ -172,14 +166,14 @@ export type Query = {
   /** 全てのユーザー情報を取得する. */
   getAllUser?: Maybe<Array<User>>;
   /** StudyStackIdに紐づいたStudyStack情報を取得する. */
-  getStudyStackByStudyStackId: StudyStack;
+  getStudyStackById: StudyStack;
   /** TodoIdに紐づいたTodo情報を取得する. */
-  getTodoByTodoId: Todo;
+  getTodoById: Todo;
   /** ユーザーidに紐づくユーザー情報を取得する. */
-  user: User;
+  getUserById: User;
 };
 
-export type QueryGetAllStudyStackByUserIdArgs = {
+export type QueryGetAllStudyStackArgs = {
   userId?: InputMaybe<Scalars["String"]>;
 };
 
@@ -187,15 +181,15 @@ export type QueryGetAllTodoByUserArgs = {
   userId?: InputMaybe<Scalars["String"]>;
 };
 
-export type QueryGetStudyStackByStudyStackIdArgs = {
+export type QueryGetStudyStackByIdArgs = {
   studyStackId?: InputMaybe<Scalars["String"]>;
 };
 
-export type QueryGetTodoByTodoIdArgs = {
+export type QueryGetTodoByIdArgs = {
   todoId?: InputMaybe<Scalars["String"]>;
 };
 
-export type QueryUserArgs = {
+export type QueryGetUserByIdArgs = {
   _id: Scalars["String"];
 };
 
@@ -208,7 +202,7 @@ export type ResponseStudyStack = {
 export type ResponseTodo = {
   __typename?: "ResponseTodo";
   node?: Maybe<Todo>;
-  status?: Maybe<Scalars["String"]>;
+  status: Scalars["String"];
 };
 
 export type ResponseUser = {
@@ -218,17 +212,23 @@ export type ResponseUser = {
   status: Scalars["String"];
 };
 
+export type ResponseUserTechLeaf = {
+  __typename?: "ResponseUserTechLeaf";
+  node?: Maybe<UserLeafs>;
+  status: Scalars["String"];
+};
+
 export type ResponseUserUrls = {
   __typename?: "ResponseUserUrls";
   node?: Maybe<UserUrls>;
-  status?: Maybe<Scalars["String"]>;
+  status: Scalars["String"];
 };
 
 export type StudyStack = {
   __typename?: "StudyStack";
   content: Scalars["String"];
   createdAt: Scalars["String"];
-  id?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
   skillTagId: Scalars["String"];
   timeStack: Scalars["Int"];
   userId: Scalars["String"];
@@ -243,106 +243,107 @@ export type StudyStackAddInput = {
 };
 
 export type StudyStackUpdateInput = {
-  content?: InputMaybe<Scalars["String"]>;
-  createdAt?: InputMaybe<Scalars["String"]>;
-  skillTagId?: InputMaybe<Scalars["String"]>;
-  studyStackId?: InputMaybe<Scalars["String"]>;
-  timeStack?: InputMaybe<Scalars["Int"]>;
+  content: Scalars["String"];
+  createdAt: Scalars["String"];
+  skillTagId: Scalars["String"];
+  studyStackId: Scalars["String"];
+  timeStack: Scalars["Int"];
   userId: Scalars["String"];
 };
 
 export type TechArea = {
   __typename?: "TechArea";
-  id?: Maybe<Scalars["String"]>;
-  name?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
+  name: Scalars["String"];
   techTrees?: Maybe<Array<TechTree>>;
 };
 
 export type TechAreaCreateInput = {
-  name?: InputMaybe<Scalars["String"]>;
+  name: Scalars["String"];
 };
 
 export type TechBranch = {
   __typename?: "TechBranch";
-  id?: Maybe<Scalars["String"]>;
-  name?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
+  name: Scalars["String"];
   techLeafs?: Maybe<Array<TechLeaf>>;
-  techTree_id?: Maybe<Scalars["String"]>;
+  techTree_id: Scalars["String"];
 };
 
 export type TechBranchCreateInput = {
-  name?: InputMaybe<Scalars["String"]>;
-  techTree_id?: InputMaybe<Scalars["String"]>;
+  name: Scalars["String"];
+  techTree_id: Scalars["String"];
 };
 
 export type TechLeaf = {
   __typename?: "TechLeaf";
-  id?: Maybe<Scalars["String"]>;
-  name?: Maybe<Scalars["String"]>;
-  techBranch_id?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
+  name: Scalars["String"];
+  techBranch_id: Scalars["String"];
 };
 
 export type TechLeafCreateInput = {
-  name?: InputMaybe<Scalars["String"]>;
-  techBranch_id?: InputMaybe<Scalars["String"]>;
-};
-
-export type TechLeafInfo = {
-  __typename?: "TechLeafInfo";
-  achievementRate?: Maybe<Scalars["Int"]>;
-  techLeafIds?: Maybe<Array<Maybe<Scalars["String"]>>>;
-  techTreeId?: Maybe<Scalars["String"]>;
+  name: Scalars["String"];
+  techBranch_id: Scalars["String"];
 };
 
 export type TechTree = {
   __typename?: "TechTree";
-  id?: Maybe<Scalars["String"]>;
-  name?: Maybe<Scalars["String"]>;
-  techArea_id?: Maybe<Scalars["String"]>;
-  techBranches?: Maybe<Array<TechBranch>>;
+  id: Scalars["String"];
+  name: Scalars["String"];
+  techArea_id: Scalars["String"];
+  techBranches: Array<TechBranch>;
 };
 
 export type TechTreeCreateInput = {
-  name?: InputMaybe<Scalars["String"]>;
-  techArea_id?: InputMaybe<Scalars["String"]>;
+  name: Scalars["String"];
+  techArea_id: Scalars["String"];
 };
 
 export type Todo = {
   __typename?: "Todo";
-  description?: Maybe<Scalars["String"]>;
-  finishedAt?: Maybe<Scalars["String"]>;
-  id?: Maybe<Scalars["String"]>;
-  isStatus?: Maybe<Scalars["Boolean"]>;
-  startedAt?: Maybe<Scalars["String"]>;
-  title?: Maybe<Scalars["String"]>;
-  userId?: Maybe<Scalars["String"]>;
+  description: Scalars["String"];
+  finishedAt: Scalars["String"];
+  id: Scalars["String"];
+  isStatus: Scalars["Boolean"];
+  startedAt: Scalars["String"];
+  title: Scalars["String"];
+  userId: Scalars["String"];
 };
 
-export type TodoInput = {
-  description?: InputMaybe<Scalars["String"]>;
-  finishedAt?: InputMaybe<Scalars["String"]>;
-  id?: InputMaybe<Scalars["String"]>;
-  isStatus?: InputMaybe<Scalars["Boolean"]>;
-  startedAt?: InputMaybe<Scalars["String"]>;
-  title?: InputMaybe<Scalars["String"]>;
-  userId?: InputMaybe<Scalars["String"]>;
+export type TodoAddInput = {
+  description: Scalars["String"];
+  finishedAt: Scalars["String"];
+  isStatus: Scalars["Boolean"];
+  startedAt: Scalars["String"];
+  title: Scalars["String"];
+  userId: Scalars["String"];
+};
+
+export type TodoUpdateInput = {
+  description: Scalars["String"];
+  finishedAt: Scalars["String"];
+  isStatus: Scalars["Boolean"];
+  startedAt: Scalars["String"];
+  title: Scalars["String"];
+  todoId: Scalars["String"];
+  userId: Scalars["String"];
 };
 
 export type Url = {
   __typename?: "URL";
-  url?: Maybe<Scalars["String"]>;
-  urlName?: Maybe<Scalars["String"]>;
+  url: Scalars["String"];
+  urlName: Scalars["String"];
 };
 
 export type User = {
   __typename?: "User";
-  email?: Maybe<Scalars["String"]>;
-  githubURL?: Maybe<Scalars["String"]>;
-  have_techLeafs?: Maybe<Array<Maybe<TechLeafInfo>>>;
-  id?: Maybe<Scalars["String"]>;
-  jobType?: Maybe<Scalars["String"]>;
-  name?: Maybe<Scalars["String"]>;
-  password?: Maybe<Scalars["String"]>;
+  email: Scalars["String"];
+  githubURL: Scalars["String"];
+  id: Scalars["String"];
+  jobType: Scalars["String"];
+  name: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type UserCreateInput = {
@@ -353,203 +354,212 @@ export type UserCreateInput = {
   password: Scalars["String"];
 };
 
+export type UserLeafs = {
+  __typename?: "UserLeafs";
+  id: Scalars["String"];
+  techLeafs: Array<LeafInfo>;
+  userId: Scalars["String"];
+};
+
 export type UserLoginInput = {
   email: Scalars["String"];
   password: Scalars["String"];
 };
 
-export type UserTechLeafAddInput = {
-  _id: Scalars["String"];
+export type UserTechLeafUpdateInput = {
   achievementRate: Scalars["Int"];
-  haveTechLeafId: Scalars["String"];
   techLeafIds: Array<InputMaybe<Scalars["String"]>>;
-};
-
-export type UserTechLeafRemoveInput = {
-  _id: Scalars["String"];
-  techLeafId: Scalars["String"];
+  techTreeId: Scalars["String"];
+  userId: Scalars["String"];
 };
 
 export type UserUrls = {
   __typename?: "UserUrls";
-  userId?: Maybe<Scalars["String"]>;
-  user_urls?: Maybe<Array<Maybe<Url>>>;
+  userId: Scalars["String"];
+  user_urls: Array<Url>;
 };
 
 export type UserUrlsAddInput = {
-  url?: InputMaybe<Scalars["String"]>;
-  urlId?: InputMaybe<Scalars["String"]>;
-  urlName?: InputMaybe<Scalars["String"]>;
+  url: Scalars["String"];
+  urlId: Scalars["String"];
+  urlName: Scalars["String"];
 };
 
 export type UserUrlsCreateInput = {
-  url?: InputMaybe<Scalars["String"]>;
-  urlName?: InputMaybe<Scalars["String"]>;
-  userId?: InputMaybe<Scalars["String"]>;
+  url: Scalars["String"];
+  urlName: Scalars["String"];
+  userId: Scalars["String"];
 };
 
 export type UserUrlsRemoveInput = {
-  urlId?: InputMaybe<Scalars["String"]>;
-  userUrlsId?: InputMaybe<Scalars["String"]>;
+  urlId: Scalars["String"];
+  userUrlsId: Scalars["String"];
 };
 
-export type GetAllStudyStackByUserIdQueryVariables = Exact<{
+export type LeafInfo = {
+  __typename?: "leafInfo";
+  achievementRate: Scalars["Int"];
+  techLeafIds: Array<Scalars["String"]>;
+  techTreeId: Scalars["String"];
+};
+
+export type GetAllStudyStackQueryVariables = Exact<{
   userId?: InputMaybe<Scalars["String"]>;
 }>;
 
-export type GetAllStudyStackByUserIdQuery = {
+export type GetAllStudyStackQuery = {
   __typename?: "Query";
-  getAllStudyStackByUserId: Array<{
+  getAllStudyStack: Array<{
     __typename?: "StudyStack";
-    content: string;
+    id: string;
     timeStack: number;
+    content: string;
     createdAt: string;
     skillTagId: string;
     userId: string;
-    id?: string | null;
   }>;
 };
 
-export type GetStudyStackByStudyStackIdQueryVariables = Exact<{
+export type GetStudyStackByIdQueryVariables = Exact<{
   studyStackId?: InputMaybe<Scalars["String"]>;
 }>;
 
-export type GetStudyStackByStudyStackIdQuery = {
+export type GetStudyStackByIdQuery = {
   __typename?: "Query";
-  getStudyStackByStudyStackId: {
+  getStudyStackById: {
     __typename?: "StudyStack";
+    id: string;
     content: string;
     timeStack: number;
     createdAt: string;
     skillTagId: string;
     userId: string;
-    id?: string | null;
   };
 };
 
-export const GetAllStudyStackByUserIdDocument = gql`
-  query GetAllStudyStackByUserId($userId: String) {
-    getAllStudyStackByUserId(userId: $userId) {
-      content
+export const GetAllStudyStackDocument = gql`
+  query GetAllStudyStack($userId: String) {
+    getAllStudyStack(userId: $userId) {
+      id
       timeStack
+      content
       createdAt
       skillTagId
       userId
-      id
     }
   }
 `;
 
 /**
- * __useGetAllStudyStackByUserIdQuery__
+ * __useGetAllStudyStackQuery__
  *
- * To run a query within a React component, call `useGetAllStudyStackByUserIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllStudyStackByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAllStudyStackQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllStudyStackQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllStudyStackByUserIdQuery({
+ * const { data, loading, error } = useGetAllStudyStackQuery({
  *   variables: {
  *      userId: // value for 'userId'
  *   },
  * });
  */
-export function useGetAllStudyStackByUserIdQuery(
+export function useGetAllStudyStackQuery(
   baseOptions?: Apollo.QueryHookOptions<
-    GetAllStudyStackByUserIdQuery,
-    GetAllStudyStackByUserIdQueryVariables
+    GetAllStudyStackQuery,
+    GetAllStudyStackQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetAllStudyStackByUserIdQuery,
-    GetAllStudyStackByUserIdQueryVariables
-  >(GetAllStudyStackByUserIdDocument, options);
+  return Apollo.useQuery<GetAllStudyStackQuery, GetAllStudyStackQueryVariables>(
+    GetAllStudyStackDocument,
+    options,
+  );
 }
-export function useGetAllStudyStackByUserIdLazyQuery(
+export function useGetAllStudyStackLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetAllStudyStackByUserIdQuery,
-    GetAllStudyStackByUserIdQueryVariables
+    GetAllStudyStackQuery,
+    GetAllStudyStackQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
-    GetAllStudyStackByUserIdQuery,
-    GetAllStudyStackByUserIdQueryVariables
-  >(GetAllStudyStackByUserIdDocument, options);
+    GetAllStudyStackQuery,
+    GetAllStudyStackQueryVariables
+  >(GetAllStudyStackDocument, options);
 }
-export type GetAllStudyStackByUserIdQueryHookResult = ReturnType<
-  typeof useGetAllStudyStackByUserIdQuery
+export type GetAllStudyStackQueryHookResult = ReturnType<
+  typeof useGetAllStudyStackQuery
 >;
-export type GetAllStudyStackByUserIdLazyQueryHookResult = ReturnType<
-  typeof useGetAllStudyStackByUserIdLazyQuery
+export type GetAllStudyStackLazyQueryHookResult = ReturnType<
+  typeof useGetAllStudyStackLazyQuery
 >;
-export type GetAllStudyStackByUserIdQueryResult = Apollo.QueryResult<
-  GetAllStudyStackByUserIdQuery,
-  GetAllStudyStackByUserIdQueryVariables
+export type GetAllStudyStackQueryResult = Apollo.QueryResult<
+  GetAllStudyStackQuery,
+  GetAllStudyStackQueryVariables
 >;
-export const GetStudyStackByStudyStackIdDocument = gql`
-  query GetStudyStackByStudyStackId($studyStackId: String) {
-    getStudyStackByStudyStackId(studyStackId: $studyStackId) {
+export const GetStudyStackByIdDocument = gql`
+  query GetStudyStackById($studyStackId: String) {
+    getStudyStackById(studyStackId: $studyStackId) {
+      id
       content
       timeStack
       createdAt
       skillTagId
       userId
-      id
     }
   }
 `;
 
 /**
- * __useGetStudyStackByStudyStackIdQuery__
+ * __useGetStudyStackByIdQuery__
  *
- * To run a query within a React component, call `useGetStudyStackByStudyStackIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetStudyStackByStudyStackIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetStudyStackByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStudyStackByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetStudyStackByStudyStackIdQuery({
+ * const { data, loading, error } = useGetStudyStackByIdQuery({
  *   variables: {
  *      studyStackId: // value for 'studyStackId'
  *   },
  * });
  */
-export function useGetStudyStackByStudyStackIdQuery(
+export function useGetStudyStackByIdQuery(
   baseOptions?: Apollo.QueryHookOptions<
-    GetStudyStackByStudyStackIdQuery,
-    GetStudyStackByStudyStackIdQueryVariables
+    GetStudyStackByIdQuery,
+    GetStudyStackByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
-    GetStudyStackByStudyStackIdQuery,
-    GetStudyStackByStudyStackIdQueryVariables
-  >(GetStudyStackByStudyStackIdDocument, options);
+    GetStudyStackByIdQuery,
+    GetStudyStackByIdQueryVariables
+  >(GetStudyStackByIdDocument, options);
 }
-export function useGetStudyStackByStudyStackIdLazyQuery(
+export function useGetStudyStackByIdLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetStudyStackByStudyStackIdQuery,
-    GetStudyStackByStudyStackIdQueryVariables
+    GetStudyStackByIdQuery,
+    GetStudyStackByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
-    GetStudyStackByStudyStackIdQuery,
-    GetStudyStackByStudyStackIdQueryVariables
-  >(GetStudyStackByStudyStackIdDocument, options);
+    GetStudyStackByIdQuery,
+    GetStudyStackByIdQueryVariables
+  >(GetStudyStackByIdDocument, options);
 }
-export type GetStudyStackByStudyStackIdQueryHookResult = ReturnType<
-  typeof useGetStudyStackByStudyStackIdQuery
+export type GetStudyStackByIdQueryHookResult = ReturnType<
+  typeof useGetStudyStackByIdQuery
 >;
-export type GetStudyStackByStudyStackIdLazyQueryHookResult = ReturnType<
-  typeof useGetStudyStackByStudyStackIdLazyQuery
+export type GetStudyStackByIdLazyQueryHookResult = ReturnType<
+  typeof useGetStudyStackByIdLazyQuery
 >;
-export type GetStudyStackByStudyStackIdQueryResult = Apollo.QueryResult<
-  GetStudyStackByStudyStackIdQuery,
-  GetStudyStackByStudyStackIdQueryVariables
+export type GetStudyStackByIdQueryResult = Apollo.QueryResult<
+  GetStudyStackByIdQuery,
+  GetStudyStackByIdQueryVariables
 >;
