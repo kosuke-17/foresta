@@ -6,3 +6,4 @@ export {
   TechAreaType,
 } from "./techForest";
 export { UserType, UserIdType, UserTechLeafsType, UserLoginType } from "./user";
+export { TechLeafUpdateType } from "./userLeafs";
