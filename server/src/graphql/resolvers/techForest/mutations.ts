@@ -5,12 +5,12 @@ import {
   TechTree,
 } from "../../../models/TechForest.model";
 import { success } from "../responseStatus";
-import { TechLeafType } from "../../../types";
 import {
   TechAreaType,
   TechBranchType,
+  TechLeafType,
   TechTreeType,
-} from "../../../types/techForest";
+} from "../../../types";
 
 const techForestMutations = {
   /**
@@ -20,10 +20,7 @@ const techForestMutations = {
    * @returns success : successステータス,作成したtechLeaf
    * @returns error : errorステータス
    */
-  createTechLeaf: async (
-    _parent: any,
-    { techLeaf }: { techLeaf: TechLeafType }
-  ) => {
+  createTechLeaf: async (_: any, { techLeaf }: TechLeafType) => {
     const { name } = techLeaf;
 
     try {
@@ -42,10 +39,7 @@ const techForestMutations = {
    * @returns success : successステータス,作成したtechBranch
    * @returns error : errorステータス
    */
-  createTechBranch: async (
-    _: any,
-    { techBranch }: { techBranch: TechBranchType }
-  ) => {
+  createTechBranch: async (_: any, { techBranch }: TechBranchType) => {
     const { name } = techBranch;
 
     try {
@@ -64,7 +58,7 @@ const techForestMutations = {
    * @returns success : successステータス,作成したtechTree
    * @returns error : errorステータス
    */
-  createTechTree: async (_: any, { techTree }: { techTree: TechTreeType }) => {
+  createTechTree: async (_: any, { techTree }: TechTreeType) => {
     const { name } = techTree;
 
     try {
@@ -83,7 +77,7 @@ const techForestMutations = {
    * @returns success : successステータス,作成したtechArea
    * @returns error : errorステータス
    */
-  createTechArea: async (_: any, { techArea }: { techArea: TechAreaType }) => {
+  createTechArea: async (_: any, { techArea }: TechAreaType) => {
     const { name } = techArea;
 
     try {
