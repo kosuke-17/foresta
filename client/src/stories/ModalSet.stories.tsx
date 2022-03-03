@@ -10,6 +10,8 @@ export default {
 
 export const Default: ComponentStoryObj<typeof ModalSet> = {
   args: {
+    isOpen: true,
+    onClose: () => alert("モーダルをとじる"),
     modalTitle: "Default",
     contents: "Default",
     actionBtnArray: [
@@ -21,6 +23,8 @@ export const Default: ComponentStoryObj<typeof ModalSet> = {
 
 export const noneTitle: ComponentStoryObj<typeof ModalSet> = {
   args: {
+    isOpen: true,
+    onClose: () => alert("モーダルをとじる"),
     contents: "noneTitle",
     actionBtnArray: [
       { name: "noneTitle", action: () => alert("noneTitleAction") },
@@ -31,6 +35,8 @@ export const noneTitle: ComponentStoryObj<typeof ModalSet> = {
 
 export const manyAction: ComponentStoryObj<typeof ModalSet> = {
   args: {
+    isOpen: true,
+    onClose: () => alert("モーダルをとじる"),
     modalTitle: "manyAction",
     contents: "manyAction",
     actionBtnArray: [
@@ -45,6 +51,8 @@ export const manyAction: ComponentStoryObj<typeof ModalSet> = {
 
 export const noneAction: ComponentStoryObj<typeof ModalSet> = {
   args: {
+    isOpen: true,
+    onClose: () => alert("モーダルをとじる"),
     modalTitle: "noneAction",
     contents: "noneAction",
   },
