@@ -46,16 +46,29 @@ export const TodoListArea: FC = memo(() => {
         Todoリスト
       </Heading>
       <Box bg="#f5f5f5" padding="5px 24px 10px 24px">
-        <Tabs
-          variant="soft-rounded"
-          colorScheme="green"
-          isLazy
-          _focus={{ boxShadow: "none" }}
-        >
+        <Tabs variant="soft-rounded" isLazy>
           <TabList>
-            <Tab _focus={{ boxShadow: "green" }}>全て</Tab>
-            <Tab _focus={{ boxShadow: "green" }}>今日</Tab>
-            <Tab _focus={{ boxShadow: "green" }}>期限切れ</Tab>
+            <Tab
+              _focus={{ boxShadow: "none" }}
+              _selected={{ pointerEvents: "none", bg: "green.200" }}
+              _hover={{ backgroundColor: "green.50" }}
+            >
+              全て
+            </Tab>
+            <Tab
+              _focus={{ boxShadow: "none" }}
+              _selected={{ pointerEvents: "none", bg: "green.200" }}
+              _hover={{ backgroundColor: "green.50" }}
+            >
+              今日
+            </Tab>
+            <Tab
+              _focus={{ boxShadow: "none" }}
+              _selected={{ pointerEvents: "none", bg: "green.200" }}
+              _hover={{ backgroundColor: "green.50" }}
+            >
+              期限切れ
+            </Tab>
           </TabList>
           <TabPanels
             bg="white"
