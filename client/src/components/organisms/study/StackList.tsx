@@ -21,6 +21,15 @@ import {
 } from "../../../types/generated/graphql";
 import { StudyModal } from "../../molucules/StudyModal";
 
+type StackList = {
+  id: string | null | undefined;
+  timeStack: number;
+  skillTagId: string;
+  content: string;
+  createdAtStart: string;
+  createdAtLast: string;
+};
+
 /**
  * 学習リスト/更新情報を表示する
  * @returns 学習リストと更新情報
