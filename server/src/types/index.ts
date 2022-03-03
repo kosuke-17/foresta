@@ -8,3 +8,8 @@ export {
 export { UserType, UserIdType, UserTechLeafsType, UserLoginType } from "./user";
 export { TechLeafUpdateType } from "./userLeafs";
 export { TodoAddType, TodoIdType, TodoUpdateType } from "./userTodos";
+export {
+  UrlDataCreateType,
+  UrlDataAddType,
+  UrlDataRemoveType,
+} from "./userUrl";

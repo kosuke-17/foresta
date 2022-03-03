@@ -1,4 +1,9 @@
 import { UserUrls } from "../../../models/User.model";
+import {
+  UrlDataAddType,
+  UrlDataCreateType,
+  UrlDataRemoveType,
+} from "../../../types";
 import { success } from "../responseStatus";
 
 const userUrlsMutations = {
@@ -9,7 +14,7 @@ const userUrlsMutations = {
    * @returns success : successステータス,作成したURL情報
    * @returns error : errorステータス
    */
-  createUserUrls: async (_: any, { urlData }: any) => {
+  createUserUrls: async (_: any, { urlData }: UrlDataCreateType) => {
     const { urlName, url, userId } = urlData;
 
     try {
@@ -36,7 +41,7 @@ const userUrlsMutations = {
    * @returns success : successステータス,追加したURL情報
    * @returns error : errorステータス
    */
-  addUserUrls: async (_parent: any, { urlData }: any) => {
+  addUserUrls: async (_parent: any, { urlData }: UrlDataAddType) => {
     try {
       const result = await UserUrls.findByIdAndUpdate(
         { _id: urlData.urlId },
@@ -54,7 +59,7 @@ const userUrlsMutations = {
    * @returns success : successステータス,追加したURL情報
    * @returns error : errorステータス
    */
-  removeUserUrls: async (_parent: any, { urlData }: any) => {
+  removeUserUrls: async (_parent: any, { urlData }: UrlDataRemoveType) => {
     const { urlId, userUrlsId } = urlData;
 
     try {
