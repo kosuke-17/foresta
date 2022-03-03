@@ -80,6 +80,16 @@ export const StackList = memo(() => {
       contentDatas.push(contentAnswer);
       idDatas.push(idAnswer);
     }
+    //まとめたデータをfor文で回して学習リスト表示用に変換
+    for (let i = 0; i < skillTagIdtackDatas.length; i++) {
+      stackSumList.push({
+        id: idDatas[i],
+        timeStack: timeStackDatas[i],
+        skillTagId: skillTagIdtackDatas[i],
+        content: contentDatas[i],
+        createdAtStart: createdAtStartDatas[i],
+        createdAtLast: createdAtLastDatas[i],
+      });
     }
   }
 
@@ -129,12 +139,12 @@ export const StackList = memo(() => {
                   </Thead>
                   <Tbody>
                     {data &&
-                      data.getAllStudyStackByUserId.map((stackList) => (
+                      stackSumList.map((stackList) => (
                         <Tr key={stackList.id}>
                           <Td>{stackList.skillTagId}</Td>
                           <Td>{stackList.timeStack}</Td>
-                          <Td>{stackList.createdAt}</Td>
-                          <Td>{stackList.createdAt}</Td>
+                          <Td>{stackList.createdAtStart}</Td>
+                          <Td>{stackList.createdAtLast}</Td>
                           <Td>{stackList.content}</Td>
                         </Tr>
                       ))}
