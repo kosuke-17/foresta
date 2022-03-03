@@ -6,7 +6,7 @@ const userQueries = {
    *
    * @returns ユーザー一覧情報
    */
-  getAllUser: async (_: any, _args: any) => await Users.find({}),
+  getAllUser: async () => await Users.find({}),
   /**
    * ユーザーIDに紐づくユーザー情報を取得する.
    *

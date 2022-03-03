@@ -1,5 +1,9 @@
 import { StudyStack } from "../../../models/StudyStack.model";
-import { StackAddType, StackUpdateType } from "../../../types/studyStack";
+import {
+  StudyStackIdType,
+  StackAddType,
+  StackUpdateType,
+} from "../../../types/studyStack";
 import { success } from "../responseStatus";
 
 const studyStackMutations = {
@@ -33,7 +37,7 @@ const studyStackMutations = {
    * @param studyStackId - 学習記録ID
    * @returns successステータス or errorステータス
    */
-  removeStudyStack: async (_: any, { studyStackId }: any) => {
+  removeStudyStack: async (_: any, { studyStackId }: StudyStackIdType) => {
     try {
       await StudyStack.deleteOne({ _id: studyStackId });
       return { status: "success" };

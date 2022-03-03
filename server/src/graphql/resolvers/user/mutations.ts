@@ -61,7 +61,7 @@ const userMutations = {
    * @returns success : successステータス,当てはまったユーザー
    * @returns error : errorステータス
    */
-  userLogin: async (_: any, { user }: { user: UserLoginType }) => {
+  userLogin: async (_: any, { user }: UserLoginType) => {
     const { email, password } = user;
     try {
       const result = await Users.findOne({

@@ -1,3 +1,6 @@
+export type StudyStackIdType = {
+  studyStackId: String;
+};
 export type StackAddType = {
   stack: {
     content: String;

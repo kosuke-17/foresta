@@ -9,15 +9,20 @@ export type UserType = {
   };
 };
 
+export type UserIdType = {
+  userId: String;
+};
+
 export type UserTechLeafsType = {
   _id: String;
   techLeafId: string;
 };
 
 export type UserLoginType = {
-  _id: String;
-  email: String;
-  password: String;
+  user: {
+    _id: String;
+    email: String;
+    password: String;
+  };
 };
 
-export type UserIdType = {};
