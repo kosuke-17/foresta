@@ -1,4 +1,5 @@
 import { StudyStack } from "../../../models/StudyStack.model";
+import { StackAddType, StackUpdateType } from "../../../types/studyStack";
 import { success } from "../responseStatus";
 
 const studyStackMutations = {
@@ -9,7 +10,7 @@ const studyStackMutations = {
    * @returns successステータス, 作成した学習記録の情報
    * @returns errorステータス
    */
-  addStudyStack: (_: any, { stack }: any) => {
+  addStudyStack: (_: any, { stack }: StackAddType) => {
     const { content, timeStack, createdAt, skillTagId, userId } = stack;
     try {
       const newStudyStack = new StudyStack({
@@ -48,7 +49,7 @@ const studyStackMutations = {
    * @returns successステータス, 更新した学習記録の情報
    * @returns errorステータス
    */
-  updateStudyStack: async (_: any, { stack }: any) => {
+  updateStudyStack: async (_: any, { stack }: StackUpdateType) => {
     const { studyStackId, content, timeStack, createdAt, skillTagId, userId } =
       stack;
     try {

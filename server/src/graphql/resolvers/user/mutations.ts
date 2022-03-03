@@ -1,7 +1,7 @@
 import { TechTree } from "../../../models/TechForest.model";
 import { User } from "../../../models/User.model";
 import { success } from "../responseStatus";
-import { UserType, UserTechLeafsType, UserLoginType } from "../types";
+import { UserType, UserTechLeafsType, UserLoginType } from "../../../types";
 
 const userMutations = {
   /**
@@ -11,7 +11,7 @@ const userMutations = {
    * @returns success : successステータス,作成したユーザー
    * @returns error : errorステータス
    */
-  createUser: async (_parent: any, { user }: { user: UserType }) => {
+  createUser: async (_parent: any, { user }: UserType) => {
     // user_paramを分割代入
     let { name, jobType, email, password, githubURL } = user;
     if (githubURL == null) {

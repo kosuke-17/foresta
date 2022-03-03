@@ -5,12 +5,12 @@ import {
   TechTree,
 } from "../../../models/TechForest.model";
 import { success } from "../responseStatus";
-import { TechLeafType } from "../types";
+import { TechLeafType } from "../../../types";
 import {
   TechAreaType,
   TechBranchType,
   TechTreeType,
-} from "../types/techForest";
+} from "../../../types/techForest";
 
 const techForestMutations = {
   /**

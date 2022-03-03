@@ -19,3 +19,5 @@ export type UserLoginType = {
   email: String;
   password: String;
 };
+
+export type UserIdType = {};
