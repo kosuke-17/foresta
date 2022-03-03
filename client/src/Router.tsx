@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { TodoListArea } from "./components/organisms/study/TodoListArea";
 import { NotFound } from "./container/pages/NotFound";
 import { Study } from "./container/templates/Study";
-import { Test } from "./container/templates/AboutMe";
+import { AboutMe } from "./container/templates/AboutMe";
 
 export const Router: React.VFC = () => {
   return (
@@ -14,7 +14,7 @@ export const Router: React.VFC = () => {
           <Route path="study" element={<Study />} />
           {/* Todo用仮ページ */}
           <Route path="todos" element={<TodoListArea />} />
-          <Route path="test" element={<Test />} />
+          <Route path="aboutme" element={<AboutMe />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

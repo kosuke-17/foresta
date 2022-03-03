@@ -28,13 +28,6 @@ const UserSchema = new mongoose.Schema({
   githubURL: {
     type: String,
   },
-  have_techLeafs: [
-    {
-      techTreeId: { type: String },
-      achievementRate: { type: Number },
-      techLeafIds: { type: [String] },
-    },
-  ],
 });
 
 /**
@@ -75,6 +68,27 @@ const UseTodoSchema = new mongoose.Schema({
   userId: String,
 });
 
-export const User = mongoose.model("user", UserSchema);
+/**
+ *  ユーザー技術情報スキーマ.
+ *  @remarks
+ *  -
+ *    - 技術ツリーID : string
+ *    - 技術ツリー達成率 : number
+ *    - 技術リーフタグ一覧 : string[]]
+ *    - ユーザーID : string
+ */
+const UserLeafsSchema = new mongoose.Schema({
+  techLeafs: [
+    {
+      techTreeId: String,
+      achievementRate: Number,
+      techLeafIds: [String],
+    },
+  ],
+  userId: String,
+});
+
+export const Users = mongoose.model("user", UserSchema);
 export const UserUrls = mongoose.model("userurl", UserUrlsSchema);
-export const UserTodo = mongoose.model("userTodo", UseTodoSchema);
+export const UserTodos = mongoose.model("userTodo", UseTodoSchema);
+export const UserLeafs = mongoose.model("userLeaf", UserLeafsSchema);

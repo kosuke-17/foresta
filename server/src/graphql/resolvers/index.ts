@@ -2,6 +2,7 @@ import { TechBranch, TechLeaf, TechTree } from "../../models/TechForest.model";
 import { studyStackMutations, studyStackQueries } from "./studyStack";
 import { techForestMutations, techForestQueries } from "./techForest";
 import { userMutations, userQueries } from "./user";
+import { userLeafsMutation } from "./userLeafs";
 import { userTodosMutations, userTodosQueries } from "./userTodos.ts";
 import { userUrlsMutations } from "./userUrls";
 
@@ -15,6 +16,7 @@ const resolvers = {
   Mutation: {
     ...userMutations,
     ...userUrlsMutations,
+    ...userLeafsMutation,
     ...userTodosMutations,
     ...techForestMutations,
     ...studyStackMutations,
@@ -28,9 +30,8 @@ const resolvers = {
       await TechBranch.find({ techTree_id: _id }),
   },
   TechArea: {
-    techTrees: async ({ _id }: any) => {
-      return await TechTree.find({ techArea_id: _id });
-    },
+    techTrees: async ({ _id }: any) =>
+      await TechTree.find({ techArea_id: _id }),
   },
 };
 
