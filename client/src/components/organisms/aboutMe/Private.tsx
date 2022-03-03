@@ -2,7 +2,7 @@ import { memo, FC, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import styled from "styled-components";
 
-import { AccordionContent } from "../../molucules/aboutMePrivate/AccordionContent";
+import { AccordionContent } from "../../molucules/AccordionContent";
 import { UserInfoTable } from "../../molucules/aboutMePrivate/UserInfoTable";
 import { SkillTable } from "../../molucules/aboutMePrivate/SkillTable";
 import { OtherData } from "../../molucules/aboutMePrivate/OtherData";
