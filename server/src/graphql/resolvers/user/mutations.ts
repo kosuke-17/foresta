@@ -2,7 +2,12 @@ import { TechTree } from "../../../models/TechForest.model";
 import { Users, UserLeafs } from "../../../models/User.model";
 import { success } from "../responseStatus";
 import { UserType, UserLoginType } from "../../../types";
-import { SpecSheets } from "../../../models/SpecSheet";
+import {
+  SpecProjectSheet,
+  SpecSheet,
+  SpecTechInfoSheet,
+  SpecUserInfoSheet,
+} from "../../../models/SpecSheet.model";
 
 const userMutations = {
   /**
@@ -22,7 +27,7 @@ const userMutations = {
     }
 
     try {
-      // ここでobj_idが生成される
+      // ユーザーオブジェクト生成
       const createUser = new Users({
         name,
         jobType,
@@ -45,19 +50,64 @@ const userMutations = {
           techLeafInfo.techLeafs.push(userTechInfo);
         }
         const createdTechLeafs = new UserLeafs({ ...techLeafInfo });
-        // ユーザーの技術オブジェクトを保存
-        createdTechLeafs.save();
 
-        // スプレッドシートオブジェクト作成
-        const createdSpecSheet = new SpecSheets({
+        // スペックシートオブジェクト作成
+        const createdSpecSheet = new SpecSheet({
           selfIntro: "",
           studyOnOwnTime: "",
           certification: "",
           prevJobs: [],
           userId: createUser._id,
         });
-        // スプレッドシート作成
-        createdSpecSheet.save();
+
+        // スペックシートユーザー基本情報オブジェクト作成
+        const createdSpecUserInfoSheet = new SpecUserInfoSheet({
+          stuffID: "",
+          age: 0,
+          gender: "",
+          nearestStation: "",
+          startWorkDate: "",
+          seExpAmount: 0,
+          pgExpAmount: 0,
+          itExpAmount: 0,
+          specSheetId: createdSpecSheet._id,
+        });
+        // スペックシート技術情報オブジェクト作成
+        const createdSpecTechInfoSheet = new SpecTechInfoSheet({
+          operationEnvs: [],
+          languages: [],
+          frameworks: [],
+          libraries: [],
+          OtherTools: [],
+          devRoles: [],
+          specSheetId: createdSpecSheet._id,
+        });
+        // スペックシートプロジェクト情報オブジェクト作成
+        const createdSpecProjectSheet = new SpecProjectSheet({
+          name: "",
+          startedAt: "",
+          finishedAt: "",
+          roleSharing: "",
+          content: "",
+          operationEnvs: [],
+          languages: [],
+          frameworks: [],
+          libraries: [],
+          OtherTools: [],
+          devRoles: [],
+          specSheetId: createdSpecSheet._id,
+        });
+        // ユーザーの技術オブジェクトを保存
+        await createdTechLeafs.save();
+        try {
+          // スペックシート関連のオブジェクト保存
+          await createdSpecSheet.save();
+          await createdSpecUserInfoSheet.save();
+          await createdSpecTechInfoSheet.save();
+          await createdSpecProjectSheet.save();
+        } catch (error) {
+          console.log("error: " + error);
+        }
       }
 
       return success(result);
