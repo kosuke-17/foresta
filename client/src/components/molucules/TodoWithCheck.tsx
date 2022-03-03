@@ -1,7 +1,10 @@
 import { FC, memo } from "react";
 import { Checkbox, Flex } from "@chakra-ui/react";
 import { Todo } from "../../types/generated/graphql";
-// import styled from "styled-components";
+import {
+  getFormattedDate,
+  getFormattedDateWithoutYear,
+} from "../../utils/methods";
 
 // 自動生成したTodoの型から使用したいプロパティ名だけを指定
 type Props = Pick<
@@ -15,14 +18,25 @@ type Props = Pick<
 export const TodoWithCheck: FC<Props> = memo((props) => {
   const { id, title, startedAt, finishedAt, isStatus } = props;
 
-  // Todoのダミーデータ
-  // const dummyTodo = {
-  //   title: "dummy Todo",
-  //   description: "dummy description",
-  //   isStatus: true,
-  //   startedAt: "3月1日-3月3日",
-  //   endedAt: null,
-  // };
+  /**
+   * Todo用にフォーマットされた日付を返すメソッド.
+   *
+   * @remarks
+   * 終了日が設定されている場合とされてない場合で場合分け
+   * @returns フォーマットされた日付
+   */
+  const getformattedTodoDate = () => {
+    if (startedAt && finishedAt) {
+      return `${getFormattedDate(
+        new Date(startedAt),
+      )}-${getFormattedDateWithoutYear(new Date(finishedAt))}`;
+    } else if (startedAt) {
+      return `${getFormattedDate(new Date(startedAt))}`;
+    } else {
+      return "未定";
+    }
+  };
+
   return (
     <Flex
       align="center"
@@ -39,12 +53,7 @@ export const TodoWithCheck: FC<Props> = memo((props) => {
         />
         <span>{title}</span>
       </Flex>
-      <span>{startedAt}</span>
+      <span>{getformattedTodoDate()}</span>
     </Flex>
   );
 });
-
-// const _Todo = styled.div`
-//   display: flex;
-//   align-items: center;
-// `;
