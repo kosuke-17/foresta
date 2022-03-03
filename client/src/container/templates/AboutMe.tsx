@@ -22,12 +22,12 @@ export const AboutMe: FC = () => {
   const testAction2 = () => {
     alert("ボタン2が押された");
   };
-  //   const testArray = [
-  //     { name: "test1", action: testAction1 },
-  //     { name: "test2", action: testAction2 },
-  //   ];
+  const testArray = [
+    { name: "test1", action: testAction1 },
+    { name: "test2", action: testAction2 },
+  ];
 
-  const testArray = [{ name: "はい", action: testAction1 }];
+  //   const testArray = [{ name: "はい", action: testAction1 }];
 
   return (
     <>

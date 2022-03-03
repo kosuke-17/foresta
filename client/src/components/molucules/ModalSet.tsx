@@ -66,6 +66,7 @@ export const ModalSet: FC<Props> = memo((props) => {
                 {actionBtnArray &&
                   actionBtnArray.map((btn) => (
                     <Button
+                      minWidth={120}
                       backgroundColor="green.400"
                       textColor="white"
                       _hover={{ backgroundColor: "green.400" }}
@@ -82,6 +83,7 @@ export const ModalSet: FC<Props> = memo((props) => {
                     </Button>
                   ))}
                 <Button
+                  minWidth={120}
                   backgroundColor="gray.300"
                   _hover={{ backgroundColor: "gray.300" }}
                   _active={{ backgroundColor: "gray.500" }}
