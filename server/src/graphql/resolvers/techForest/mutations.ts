@@ -43,7 +43,7 @@ const techForestMutations = {
    * @returns error : errorステータス
    */
   createTechBranch: async (
-    _parent: any,
+    _: any,
     { techBranch }: { techBranch: TechBranchType }
   ) => {
     const { name } = techBranch;
@@ -64,10 +64,7 @@ const techForestMutations = {
    * @returns success : successステータス,作成したtechTree
    * @returns error : errorステータス
    */
-  createTechTree: async (
-    _parent: any,
-    { techTree }: { techTree: TechTreeType }
-  ) => {
+  createTechTree: async (_: any, { techTree }: { techTree: TechTreeType }) => {
     const { name } = techTree;
 
     try {
@@ -86,10 +83,7 @@ const techForestMutations = {
    * @returns success : successステータス,作成したtechArea
    * @returns error : errorステータス
    */
-  createTechArea: async (
-    _parent: any,
-    { techArea }: { techArea: TechAreaType }
-  ) => {
+  createTechArea: async (_: any, { techArea }: { techArea: TechAreaType }) => {
     const { name } = techArea;
 
     try {

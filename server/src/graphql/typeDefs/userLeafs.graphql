@@ -1,0 +1,31 @@
+# ユーザー習得技術情報
+type UserLeafs {
+  id: String!
+  techLeafs: [leafInfo!]!
+  userId: String!
+}
+type leafInfo {
+  techTreeId: String!
+  achievementRate: Int!
+  techLeafIds: [String!]!
+}
+
+################
+#リクエストボディ
+
+# TechLeaf情報
+input UserTechLeafUpdateInput {
+  techTreeId: String!
+  achievementRate: Int!
+  techLeafIds: [String]!
+  userId: String!
+}
+
+################################
+#レスポンス
+
+# ユーザーの習得技術情報
+type ResponseUserTechLeaf {
+  status: String!
+  node: UserLeafs
+}
