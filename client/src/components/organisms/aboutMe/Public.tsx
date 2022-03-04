@@ -92,6 +92,7 @@ export const Public: FC = memo(() => {
               <Flex gap={4} justifyContent="center">
                 <Flex direction="column">
                   <Box
+                    cursor="pointer"
                     onClick={onOpen}
                     backgroundColor="gray.400"
                     width={350}
@@ -106,6 +107,7 @@ export const Public: FC = memo(() => {
                 </Flex>
                 <Flex direction="column">
                   <Box
+                    cursor="pointer"
                     onClick={onOpen}
                     backgroundColor="gray.400"
                     width={350}
@@ -120,6 +122,7 @@ export const Public: FC = memo(() => {
                 </Flex>
                 <Flex direction="column">
                   <Box
+                    cursor="pointer"
                     onClick={onOpen}
                     backgroundColor="gray.400"
                     width={350}
