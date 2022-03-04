@@ -93,35 +93,35 @@ type Mutation {
   基本情報を更新する
   """
   updateSpecUserInfo(
-    specUserInfo: SpecUserInfoUpdateInput
+    specUserInfo: SpecUserInfoUpdateInput!
   ): ResponseSpecUserInfo!
   """
   スキル要約情報を更新する
   """
   updateSpecTechInfo(
-    specTechInfo: SpecTechInfoUpdateInput
+    specTechInfo: SpecTechInfoUpdateInput!
   ): ResponseSpecTechInfo!
   """
   開発経験情報を更新する
   """
-  updateSpecProject(specProject: SpecProjectUpdateInput): ResponseSpecProject!
+  updateSpecProject(specProject: SpecProjectUpdateInput!): ResponseSpecProject!
   """
   開発経験情報を追加する
   """
-  addSpecProject(specProject: SpecProjectAddInput): ResponseSpecProject!
+  addSpecProject(specProject: SpecProjectAddInput!): ResponseSpecProject!
   """
   開発経験情報を削除する
   """
-  removeSpecProject(specProjectId: String): ResponseRemove!
+  removeSpecProject(specProjectId: String!): ResponseRemove!
 
   """
   ポートフォリオを作成する
   """
-  createPortfolio(portfolio: PortfolioCreateInput): ResponsePortfolio!
+  createPortfolio(portfolio: PortfolioCreateInput!): ResponsePortfolio!
   """
   ポートフォリオを更新する
   """
-  updatePortfolio(portfolio: PortfolioUpdateInput): ResponsePortfolio!
+  updatePortfolio(portfolio: PortfolioUpdateInput!): ResponsePortfolio!
   """
   ポートフォリオを削除する
   """

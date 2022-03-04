@@ -231,7 +231,9 @@ const specSheetMutations = {
   },
   removeSpecProject: async (_: any, { specProjectId }: any) => {
     try {
-      const result = SpecProjectSheet.findByIdAndRemove({ _id: specProjectId });
+      const result = await SpecProjectSheet.findByIdAndRemove({
+        _id: specProjectId,
+      });
       return success(result);
     } catch (error) {
       // 必須のデータがnullだとエラーを返す
