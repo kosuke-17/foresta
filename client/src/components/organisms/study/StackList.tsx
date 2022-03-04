@@ -56,12 +56,15 @@ export const StackList = memo(() => {
     const stackDatas = data.getAllStudyStack;
     //記録データの数だけfor文を回す
     for (let i = 0; i < stackDatas.length; i++) {
+      if (stackDatas[i]) {
       let stackAnswer = stackDatas[i].timeStack;
       const startDate = stackDatas[i].createdAt;
       let lastDate = stackDatas[i].createdAt;
       let contentAnswer = stackDatas[i].content;
       const idAnswer = stackDatas[i].id;
+        //i番目とi+1番目のデータを比較
       for (let j = i + 1; j < stackDatas.length; j++) {
+          if (stackDatas[j]) {
         //カテゴリ名が被っていた場合
         if (stackDatas[i].skillTagId === stackDatas[j].skillTagId) {
           //技術内容が被っていた場合に学習時間は足し、最終記録日とメモデータは上書きする
@@ -80,6 +83,7 @@ export const StackList = memo(() => {
       createdAtLastDatas.push(lastDate);
       contentDatas.push(contentAnswer);
       idDatas.push(idAnswer);
+      }
     }
     //まとめたデータをfor文で回して学習リスト表示用に変換
     for (let i = 0; i < skillTagIdtackDatas.length; i++) {
