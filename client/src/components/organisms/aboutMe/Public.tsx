@@ -7,6 +7,7 @@ import { MarkGithubIcon } from "@primer/octicons-react";
 import { AccordionContent } from "../../molucules/AccordionContent";
 import { ModalSet } from "../../molucules/ModalSet";
 import { useModal } from "../../../hooks/useModal";
+import { ImageBox } from "../../atoms/AboutMePublic/ImageBox";
 
 export const Public: FC = memo(() => {
   const modalStore = useModal();
@@ -91,6 +92,7 @@ export const Public: FC = memo(() => {
               </Box>
               <Flex gap={4} justifyContent="center">
                 <Flex direction="column">
+                  <ImageBox siteName="ほげほげサイト" />
                   <Box
                     cursor="pointer"
                     onClick={onOpen}

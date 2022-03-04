@@ -1,13 +1,22 @@
 import { memo, FC } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { Image, Box } from "@chakra-ui/react";
 
 type Props = {
-  imageUrl: string;
+  //後で?外す
+  imageUrl?: string;
+  siteName: string;
 };
 
 /**
  * サイト画面表示用.
  */
-export const ImageBox: FC<Props> = memo(({ imageUrl }) => {
-  return <></>;
+export const ImageBox: FC<Props> = memo(({ imageUrl, siteName }) => {
+  return (
+    <>
+      <Box>
+        <Image src="https://bit.ly/dan-abramov" alt={siteName} />
+        {/* <Image src={imageUrl} alt={siteName} /> */}
+      </Box>
+    </>
+  );
 });
