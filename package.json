@@ -21,6 +21,7 @@
   "homepage": "https://github.com/koda-momo/foresta#readme",
   "devDependencies": {
     "concurrently": "^7.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.6.0"
   }
 }
