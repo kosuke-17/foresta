@@ -3,7 +3,7 @@ import { TechIdType } from "../../types/techForest";
 import { studyStackMutations, studyStackQueries } from "./studyStack";
 import { techForestMutations, techForestQueries } from "./techForest";
 import { userMutations, userQueries } from "./user";
-import { userLeafsMutation } from "./userLeafs";
+import { userLeafsMutations } from "./userLeafs";
 import { userTodosMutations, userTodosQueries } from "./userTodos.ts";
 import { userUrlsMutations } from "./userUrls";
 
@@ -17,7 +17,7 @@ const resolvers = {
   Mutation: {
     ...userMutations,
     ...userUrlsMutations,
-    ...userLeafsMutation,
+    ...userLeafsMutations,
     ...userTodosMutations,
     ...techForestMutations,
     ...studyStackMutations,
