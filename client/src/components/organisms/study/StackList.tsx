@@ -15,10 +15,8 @@ import {
 } from "@chakra-ui/react";
 
 import { memo } from "react";
-import {
-  useGetAllStudyStackQuery,
-} from "../../../types/generated/graphql";
-import { StudyModal } from "../../molucules/StudyModal";
+import { useGetAllStudyStackQuery } from "../../../types/generated/graphql";
+import { LogList } from "../../molucules/stackList/LogList";
 
 type StackList = {
   id: string | null | undefined;
@@ -158,34 +156,7 @@ export const StackList = memo(() => {
                 </Table>
               </TabPanel>
               <TabPanel>
-                <Table variant="simple" colorScheme="green">
-                  <TableCaption>更新情報</TableCaption>
-                  <Thead>
-                    <Tr>
-                      <Th>記録日時</Th>
-                      <Th>技術内容</Th>
-                      <Th>学習時間</Th>
-                      <Th></Th>
-                      <Th></Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {data &&
-                      data.getAllStudyStack.map((stackList) => (
-                        <Tr key={stackList.id}>
-                          <Td>{stackList.createdAt}</Td>
-                          <Td>{stackList.skillTagId}</Td>
-                          <Td>{stackList.timeStack}分</Td>
-                          <Td>
-                            <StudyModal title="記録編集" buttonTitle="編集" />
-                          </Td>
-                          <Td>
-                            <StudyModal title="記録削除" buttonTitle="削除" />
-                          </Td>
-                        </Tr>
-                      ))}
-                  </Tbody>
-                </Table>
+                <LogList data={data}></LogList>
               </TabPanel>
             </TabPanels>
           </Tabs>
