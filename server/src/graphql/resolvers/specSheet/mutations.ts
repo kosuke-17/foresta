@@ -1,4 +1,5 @@
 import {
+  Portfolio,
   SpecProjectSheet,
   SpecSheet,
   SpecTechInfoSheet,
@@ -175,6 +176,25 @@ const specSheetMutations = {
     } catch (error) {
       // 必須のデータがnullだとエラーを返す
       // modelの型とsetしてるデータの方が違うとエラーを返す
+      return { status: "error" };
+    }
+  },
+  createPortfolio: async (_: any, { portfolio }: any) => {
+    const { title, description, img, portfolioURL, userId, specSheetId } =
+      portfolio;
+    const newPortfolio = new Portfolio({
+      title,
+      description,
+      img,
+      portfolioURL,
+      userId,
+      specSheetId,
+    });
+    try {
+      const result = await newPortfolio.save();
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
       return { status: "error" };
     }
   },
