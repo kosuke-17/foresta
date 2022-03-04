@@ -1,4 +1,4 @@
-import { SpecSheet } from "../../../models/SpecSheet.model";
+import { SpecSheet, SpecUserInfoSheet } from "../../../models/SpecSheet.model";
 import { success } from "../responseStatus";
 
 const speckSheetMutations = {
@@ -9,14 +9,8 @@ const speckSheetMutations = {
    * @returns 更新したスペックシートの情報
    */
   updateSpeckSheet: async (_: any, { speckSheet }: any) => {
-    const {
-      speckSheetId,
-      selfIntro,
-      studyOnOwnTime,
-      certification,
-      prevJobs,
-      userId,
-    } = speckSheet;
+    const { speckSheetId, selfIntro, studyOnOwnTime, certification, prevJobs } =
+      speckSheet;
     try {
       // 前職内容をアップデートするオブジェクト生成
       const updatePrevJobs = new Array();
@@ -40,6 +34,43 @@ const speckSheetMutations = {
           new: true,
         }
       );
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      return { status: "error" };
+    }
+  },
+  updateSpecUserInfo: async (_: any, { specUserInfo }: any) => {
+    const {
+      specUserInfoId,
+      stuffID,
+      age,
+      gender,
+      nearestStation,
+      startWorkDate,
+      seExpAmount,
+      pgExpAmount,
+      itExpAmount,
+      specSheetId,
+    } = specUserInfo;
+
+    try {
+      const result = await SpecUserInfoSheet.findByIdAndUpdate(
+        { _id: specUserInfoId },
+        {
+          stuffID,
+          age,
+          gender,
+          nearestStation,
+          startWorkDate,
+          seExpAmount,
+          pgExpAmount,
+          itExpAmount,
+          specSheetId,
+        },
+        { new: true }
+      );
+
       return success(result);
     } catch (error) {
       // 必須のデータがnullだとエラーを返す

@@ -1,3 +1,4 @@
+# スペックシート
 type SpeckSheet {
   id: String
   selfIntro: String!
@@ -6,10 +7,27 @@ type SpeckSheet {
   prevJobs: [prevJobsContent]
   userId: String!
 }
+# 前職経験情報
 type prevJobsContent {
   content: String!
 }
+# スペックシートユーザー基本情報
+type SpecUserInfoSheet {
+  stuffID: String!
+  age: Int!
+  gender: String!
+  nearestStation: String!
+  startWorkDate: String!
+  seExpAmount: Int!
+  pgExpAmount: Int!
+  itExpAmount: Int!
+  specSheetId: String!
+}
 
+################
+#リクエストボディ
+
+# スペックシート
 input SpeckSheetUpdateInput {
   speckSheetId: String!
   selfIntro: String!
@@ -18,8 +36,28 @@ input SpeckSheetUpdateInput {
   prevJobs: [String!]!
   userId: String!
 }
+# スペックシートユーザー基本情報
+input SpeckUserInfoUpdateInput {
+  specUserInfoId: String!
+  stuffID: String!
+  age: Int!
+  gender: String!
+  nearestStation: String!
+  startWorkDate: String!
+  seExpAmount: Int!
+  pgExpAmount: Int!
+  itExpAmount: Int!
+  specSheetId: String!
+}
 
-type SpeckSheetResponse {
+################
+#レスポンス
+
+type ResponseSpeckSheet {
   status: String!
   node: SpeckSheet
+}
+type ResponseSpeckUserInfo {
+  status: String!
+  node: SpecUserInfoSheet
 }

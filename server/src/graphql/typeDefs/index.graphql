@@ -88,7 +88,14 @@ type Mutation {
   """
   スペックシート情報を追加する
   """
-  updateSpeckSheet(speckSheet: SpeckSheetUpdateInput): SpeckSheetResponse!
+  updateSpeckSheet(speckSheet: SpeckSheetUpdateInput): ResponseSpeckSheet!
+  """
+  スペシユーザー基本情報を追加する
+  """
+  updateSpecUserInfo(
+    specUserInfo: SpeckUserInfoUpdateInput
+  ): ResponseSpeckUserInfo!
+
   """
   Techを追加する：引数(Leaf名 or Branch名 or Tree名)
   """
