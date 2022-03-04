@@ -98,7 +98,9 @@ type Mutation {
   """
   スキル要約情報を更新する
   """
-  updateSpecTechInfo(specTechInfo: SpecTechInfoUpdateInput): ResponseSpecSheet!
+  updateSpecTechInfo(
+    specTechInfo: SpecTechInfoUpdateInput
+  ): ResponseSpecTechInfo!
   """
   スキル要約情報を更新する
   """
