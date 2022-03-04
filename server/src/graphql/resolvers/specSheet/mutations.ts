@@ -229,6 +229,15 @@ const specSheetMutations = {
       return { status: "error" };
     }
   },
+  removeSpecProject: async (_: any, { specProjectId }: any) => {
+    try {
+      const result = SpecProjectSheet.findByIdAndRemove({ _id: specProjectId });
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      return { status: "error" };
+    }
+  },
   /**
    * ポートフォリオの作成
    *

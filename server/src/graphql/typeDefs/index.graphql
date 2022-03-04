@@ -106,9 +106,13 @@ type Mutation {
   """
   updateSpecProject(specProject: SpecProjectUpdateInput): ResponseSpecProject!
   """
-  開発経験情報を更新する
+  開発経験情報を追加する
   """
   addSpecProject(specProject: SpecProjectAddInput): ResponseSpecProject!
+  """
+  開発経験情報を削除する
+  """
+  removeSpecProject(specProjectId: String): ResponseRemove!
 
   """
   ポートフォリオを作成する
