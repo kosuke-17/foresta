@@ -1,4 +1,5 @@
 import {
+  SpecProjectSheet,
   SpecSheet,
   SpecTechInfoSheet,
   SpecUserInfoSheet,
@@ -109,6 +110,56 @@ const specSheetMutations = {
         { _id: specTechInfoId, specSheetId: specSheetId },
         {
           $set: {
+            operationEnvs: [...operationEnvs],
+            languages: [...languages],
+            frameworks: [...frameworks],
+            libraries: [...libraries],
+            OtherTools: [...OtherTools],
+            devRoles: [...devRoles],
+          },
+        },
+        { new: true }
+      );
+
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      // modelの型とsetしてるデータの方が違うとエラーを返す
+      return { status: "error" };
+    }
+  },
+  /**
+   * スペックシートの開発経験(プロジェクト)を更新
+   *
+   * @param specProject - 開発経験の情報
+   * @returns 更新したスペックシートの開発経験情報
+   */
+  updateSpecProject: async (_: any, { specProject }: any) => {
+    const {
+      specProjectId,
+      name,
+      startedAt,
+      finishedAt,
+      roleSharing,
+      content,
+      operationEnvs,
+      languages,
+      frameworks,
+      libraries,
+      OtherTools,
+      devRoles,
+      specSheetId,
+    } = specProject;
+    try {
+      const result = await SpecProjectSheet.findOneAndUpdate(
+        { _id: specProjectId, specSheetId: specSheetId },
+        {
+          $set: {
+            name: name,
+            startedAt: startedAt,
+            finishedAt: finishedAt,
+            roleSharing: roleSharing,
+            content: content,
             operationEnvs: [...operationEnvs],
             languages: [...languages],
             frameworks: [...frameworks],

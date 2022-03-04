@@ -40,36 +40,12 @@ const SpecProjectSheetSchema = new mongoose.Schema({
   finishedAt: { type: String },
   roleSharing: { type: String },
   content: { type: String },
-  operationEnvs: [
-    {
-      operationEnvId: { type: String },
-    },
-  ],
-  languages: [
-    {
-      languageId: { type: String },
-    },
-  ],
-  frameworks: [
-    {
-      frameworkId: { type: String },
-    },
-  ],
-  libraries: [
-    {
-      libraryId: { type: String },
-    },
-  ],
-  OtherTools: [
-    {
-      otherToolId: { type: String },
-    },
-  ],
-  devRoles: [
-    {
-      devRoleId: { type: String },
-    },
-  ],
+  operationEnvs: { type: [String] },
+  languages: { type: [String] },
+  frameworks: { type: [String] },
+  libraries: { type: [String] },
+  OtherTools: { type: [String] },
+  devRoles: { type: [String] },
   specSheetId: { type: String, required: true },
 });
 
