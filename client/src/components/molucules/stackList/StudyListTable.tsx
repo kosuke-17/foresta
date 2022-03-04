@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { GetAllStudyStackQuery } from "../../../types/generated/graphql";
-import { StackList } from "../../organisms/study/StackList";
+import { StackList } from "../../../hooks/study/useStackList";
 
 type Props = {
   data: GetAllStudyStackQuery | undefined; //データベースから取得した記録データ
