@@ -16,7 +16,7 @@ import {
 
 import { memo } from "react";
 import { useGetAllStudyStackQuery } from "../../../types/generated/graphql";
-import { LogList } from "../../molucules/stackList/LogList";
+import { LogListTable } from "../../molucules/stackList/LogListTable";
 
 type StackList = {
   id: string | null | undefined;
@@ -156,7 +156,7 @@ export const StackList = memo(() => {
                 </Table>
               </TabPanel>
               <TabPanel>
-                <LogList data={data}></LogList>
+                <LogListTable data={data}></LogListTable>
               </TabPanel>
             </TabPanels>
           </Tabs>
