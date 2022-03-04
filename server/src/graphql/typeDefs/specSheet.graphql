@@ -155,3 +155,7 @@ type ResponsePortfolio {
   status: String!
   node: Portfolio
 }
+
+type ResponseRemove {
+  status: String!
+}

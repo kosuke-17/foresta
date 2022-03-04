@@ -224,6 +224,15 @@ const specSheetMutations = {
       return { status: "error" };
     }
   },
+  removePortfolio: async (_: any, { portfolioId }: any) => {
+    try {
+      const result = await Portfolio.findByIdAndRemove({ _id: portfolioId });
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      return { status: "error" };
+    }
+  },
 };
 
 export default specSheetMutations;

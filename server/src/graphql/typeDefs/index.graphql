@@ -114,6 +114,10 @@ type Mutation {
   ポートフォリオを更新する
   """
   updatePortfolio(portfolio: PortfolioUpdateInput): ResponsePortfolio!
+  """
+  ポートフォリオを削除する
+  """
+  removePortfolio(portfolioId: String!): ResponseRemove!
 
   """
   Techを追加する：引数(Leaf名 or Branch名 or Tree名)
