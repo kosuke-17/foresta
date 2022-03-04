@@ -7,6 +7,9 @@ type StudyStack {
   userId: String!
 }
 
+################
+#リクエストボディ
+
 input StudyStackAddInput {
   content: String!
   timeStack: Int!
@@ -20,8 +23,10 @@ input StudyStackUpdateInput {
   timeStack: Int!
   createdAt: String!
   skillTagId: String!
-  userId: String!
 }
+
+################
+#レスポンス
 
 type ResponseStudyStack {
   status: String!
