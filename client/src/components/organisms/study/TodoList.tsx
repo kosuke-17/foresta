@@ -37,7 +37,7 @@ export const TodoList: FC<Props> = memo((props) => {
           // 今日の場合
           return todos.filter((todo) => {
             // 期間に今日が含まれているものを返す
-            const startDate = new Date(todo.startedAt!);
+            const startDate = new Date(todo.startedAt);
             if (todo.finishedAt) {
               // 複数日間のタスク
               const endDate = new Date(todo.finishedAt);
@@ -61,7 +61,7 @@ export const TodoList: FC<Props> = memo((props) => {
           // 期限切れの場合
           return todos.filter((todo) => {
             // 期限切れのもの
-            const startDate = new Date(todo.startedAt!);
+            const startDate = new Date(todo.startedAt);
             if (todo.finishedAt) {
               // 複数日間のタスク
               const endDate = new Date(todo.finishedAt);

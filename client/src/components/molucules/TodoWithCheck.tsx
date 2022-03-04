@@ -44,7 +44,7 @@ export const TodoWithCheck: FC<Props> = memo((props) => {
     >
       <Flex align="center" overflow="hidden" white-space="nowrap">
         <Checkbox
-          isChecked={isStatus!}
+          isChecked={isStatus}
           colorScheme="teal"
           size="lg"
           onChange={() => alert("toggle")}
