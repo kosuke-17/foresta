@@ -198,6 +198,20 @@ const specSheetMutations = {
       return { status: "error" };
     }
   },
+  updatePortfolio: async (_: any, { portfolio }: any) => {
+    const { portfolioId, title, description, img, portfolioURL } = portfolio;
+    try {
+      const result = await Portfolio.findByIdAndUpdate(
+        { _id: portfolioId },
+        { $set: { title, description, img, portfolioURL } },
+        { new: true }
+      );
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      return { status: "error" };
+    }
+  },
 };
 
 export default specSheetMutations;
