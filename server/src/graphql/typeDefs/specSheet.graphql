@@ -1,0 +1,25 @@
+type SpeckSheet {
+  id: String
+  selfIntro: String!
+  studyOnOwnTime: String!
+  certification: String!
+  prevJobs: [prevJobsContent]
+  userId: String!
+}
+type prevJobsContent {
+  content: String!
+}
+
+input SpeckSheetUpdateInput {
+  speckSheetId: String!
+  selfIntro: String!
+  studyOnOwnTime: String!
+  certification: String!
+  prevJobs: [String!]!
+  userId: String!
+}
+
+type SpeckSheetResponse {
+  status: String!
+  node: SpeckSheet
+}

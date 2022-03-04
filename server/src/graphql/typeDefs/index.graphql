@@ -86,6 +86,10 @@ type Mutation {
   """
   updateStudyStack(stack: StudyStackUpdateInput!): ResponseStudyStack!
   """
+  スペックシート情報を追加する
+  """
+  updateSpeckSheet(speckSheet: SpeckSheetUpdateInput): SpeckSheetResponse!
+  """
   Techを追加する：引数(Leaf名 or Branch名 or Tree名)
   """
   createTechLeaf(techLeaf: TechLeafCreateInput!): CreatedTechLeaf!
