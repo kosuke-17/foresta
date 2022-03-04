@@ -1,5 +1,5 @@
 import type { ComponentStoryObj, ComponentMeta } from "@storybook/react";
-import { OtherData } from "../components/molucules/aboutMePublic/OtherData";
+import { OtherData } from "../components/molucules/aboutMePrivate/OtherData";
 
 export default {
   component: OtherData,
