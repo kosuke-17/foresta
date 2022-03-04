@@ -53,36 +53,37 @@ export const StackList = memo(() => {
 
   if (data) {
     //取得したデータを変数に格納
-    const stackDatas = data.getAllStudyStack;
+    //スプレッド構文で変数に格納しないと下でdeleteする際に元のオブジェクトにも影響が出てしまうためdeleteができない
+    const stackDatas = [...data.getAllStudyStack];
     //記録データの数だけfor文を回す
     for (let i = 0; i < stackDatas.length; i++) {
       if (stackDatas[i]) {
-      let stackAnswer = stackDatas[i].timeStack;
-      const startDate = stackDatas[i].createdAt;
-      let lastDate = stackDatas[i].createdAt;
-      let contentAnswer = stackDatas[i].content;
-      const idAnswer = stackDatas[i].id;
+        let stackAnswer = stackDatas[i].timeStack;
+        const startDate = stackDatas[i].createdAt;
+        let lastDate = stackDatas[i].createdAt;
+        let contentAnswer = stackDatas[i].content;
+        const idAnswer = stackDatas[i].id;
         //i番目とi+1番目のデータを比較
-      for (let j = i + 1; j < stackDatas.length; j++) {
+        for (let j = i + 1; j < stackDatas.length; j++) {
           if (stackDatas[j]) {
-        //カテゴリ名が被っていた場合
-        if (stackDatas[i].skillTagId === stackDatas[j].skillTagId) {
-          //技術内容が被っていた場合に学習時間は足し、最終記録日とメモデータは上書きする
-          stackAnswer = stackAnswer + stackDatas[j].timeStack;
-          lastDate = stackDatas[j].createdAt;
-          contentAnswer = stackDatas[j].content;
+            //カテゴリ名が被っていた場合
+            if (stackDatas[i].skillTagId === stackDatas[j].skillTagId) {
+              //技術内容が被っていた場合に学習時間は足し、最終記録日とメモデータは上書きする
+              stackAnswer = stackAnswer + stackDatas[j].timeStack;
+              lastDate = stackDatas[j].createdAt;
+              contentAnswer = stackDatas[j].content;
               //上書きした分のデータを次のfor文で反映させないように削除
               delete stackDatas[j];
             }
+          }
         }
-      }
-      //それぞれのデータを配列にプッシュする
-      skillTagIdtackDatas.push(stackDatas[i].skillTagId);
-      timeStackDatas.push(stackAnswer);
-      createdAtStartDatas.push(startDate);
-      createdAtLastDatas.push(lastDate);
-      contentDatas.push(contentAnswer);
-      idDatas.push(idAnswer);
+        //それぞれのデータを配列にプッシュする
+        skillTagIdtackDatas.push(stackDatas[i].skillTagId);
+        timeStackDatas.push(stackAnswer);
+        createdAtStartDatas.push(startDate);
+        createdAtLastDatas.push(lastDate);
+        contentDatas.push(contentAnswer);
+        idDatas.push(idAnswer);
       }
     }
     //まとめたデータをfor文で回して学習リスト表示用に変換
