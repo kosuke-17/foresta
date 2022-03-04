@@ -1,6 +1,6 @@
 import { TechBranch, TechLeaf, TechTree } from "../../models/TechForest.model";
 import { TechIdType } from "../../types/techForest";
-import { speckSheetMutations } from "./specSheet";
+import { specSheetMutations } from "./specSheet";
 import { studyStackMutations, studyStackQueries } from "./studyStack";
 import { techForestMutations, techForestQueries } from "./techForest";
 import { userMutations, userQueries } from "./user";
@@ -22,7 +22,7 @@ const resolvers = {
     ...userTodosMutations,
     ...techForestMutations,
     ...studyStackMutations,
-    ...speckSheetMutations,
+    ...specSheetMutations,
   },
   TechBranch: {
     techLeafs: async ({ _id }: TechIdType) =>

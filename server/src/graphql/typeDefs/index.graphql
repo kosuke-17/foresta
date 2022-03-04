@@ -86,15 +86,25 @@ type Mutation {
   """
   updateStudyStack(stack: StudyStackUpdateInput!): ResponseStudyStack!
   """
-  スペックシート情報を追加する
+  スペックシート情報を更新する
   """
-  updateSpeckSheet(speckSheet: SpeckSheetUpdateInput): ResponseSpeckSheet!
+  updateSpecSheet(specSheet: SpecSheetUpdateInput): ResponseSpecSheet!
   """
-  スペシユーザー基本情報を追加する
+  基本情報を更新する
   """
   updateSpecUserInfo(
-    specUserInfo: SpeckUserInfoUpdateInput
-  ): ResponseSpeckUserInfo!
+    specUserInfo: SpecUserInfoUpdateInput
+  ): ResponseSpecUserInfo!
+  """
+  スキル要約情報を更新する
+  """
+  updateSpecTechInfo(
+    specTechInfo: SpecTechInfoUpdateInput
+  ): ResponseSpecTechInfo!
+  """
+  スキル要約情報を更新する
+  """
+  updateSpecProject(specProject: SpecProjectUpdateInput): ResponseSpecProject!
 
   """
   Techを追加する：引数(Leaf名 or Branch名 or Tree名)

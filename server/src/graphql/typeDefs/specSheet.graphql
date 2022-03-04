@@ -1,10 +1,10 @@
 # スペックシート
-type SpeckSheet {
-  id: String
+type SpecSheet {
+  id: String!
   selfIntro: String!
   studyOnOwnTime: String!
   certification: String!
-  prevJobs: [prevJobsContent]
+  prevJobs: [prevJobsContent!]!
   userId: String!
 }
 # 前職経験情報
@@ -23,13 +23,59 @@ type SpecUserInfoSheet {
   itExpAmount: Int!
   specSheetId: String!
 }
+# スペックシート技術情報
+type SpecTechInfoSheet {
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  OtherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: String!
+}
+
+# スペックシートプロジェクト
+type SpecProjectSheet {
+  name: String!
+  startedAt: String!
+  finishedAt: String!
+  roleSharing: String!
+  memberCount: Int!
+  content: String!
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  OtherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: String!
+}
+
+# type OperationEnv {
+#   operationEnvId: String!
+# }
+# type Language {
+#   languageId: String!
+# }
+# type Framework {
+#   frameworkId: String!
+# }
+# type Library {
+#   libraryId: String!
+# }
+# type OtherTool {
+#   otherToolId: String!
+# }
+# type DevRole {
+#   devRoleId: String!
+# }
 
 ################
 #リクエストボディ
 
 # スペックシート
-input SpeckSheetUpdateInput {
-  speckSheetId: String!
+input SpecSheetUpdateInput {
+  specSheetId: String!
   selfIntro: String!
   studyOnOwnTime: String!
   certification: String!
@@ -37,7 +83,7 @@ input SpeckSheetUpdateInput {
   userId: String!
 }
 # スペックシートユーザー基本情報
-input SpeckUserInfoUpdateInput {
+input SpecUserInfoUpdateInput {
   specUserInfoId: String!
   stuffID: String!
   age: Int!
@@ -50,14 +96,48 @@ input SpeckUserInfoUpdateInput {
   specSheetId: String!
 }
 
+input SpecTechInfoUpdateInput {
+  specTechInfoId: String!
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  OtherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: String!
+}
+input SpecProjectUpdateInput {
+  specProjectId: String!
+  name: String!
+  startedAt: String!
+  finishedAt: String!
+  roleSharing: String!
+  content: String!
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  OtherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: String!
+}
+
 ################
 #レスポンス
 
-type ResponseSpeckSheet {
+type ResponseSpecSheet {
   status: String!
-  node: SpeckSheet
+  node: SpecSheet
 }
-type ResponseSpeckUserInfo {
+type ResponseSpecUserInfo {
   status: String!
   node: SpecUserInfoSheet
+}
+type ResponseSpecTechInfo {
+  status: String!
+  node: SpecTechInfoSheet
+}
+type ResponseSpecProject {
+  status: String!
+  node: SpecProjectSheet
 }

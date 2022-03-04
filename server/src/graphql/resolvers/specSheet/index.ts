@@ -1,1 +1,1 @@
-export { default as speckSheetMutations } from "./mutations";
+export { default as specSheetMutations } from "./mutations";
