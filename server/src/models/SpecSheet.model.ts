@@ -49,6 +49,15 @@ const SpecProjectSheetSchema = new mongoose.Schema({
   specSheetId: { type: String, required: true },
 });
 
+const PortfolioSchema = new mongoose.Schema({
+  title: { type: String },
+  description: { type: String },
+  img: { type: String },
+  portfolioURL: { type: String },
+  userId: { type: String, required: true },
+  specSheetId: { type: String, required: true },
+});
+
 export const SpecSheet = mongoose.model("specsheet", SpecSheetSchema);
 export const SpecUserInfoSheet = mongoose.model(
   "specuserinfosheet",
@@ -64,3 +73,4 @@ export const SpecProjectSheet = mongoose.model(
   "specprojectsheet",
   SpecProjectSheetSchema
 );
+export const Portfolio = mongoose.model("portfolio", PortfolioSchema);
