@@ -68,8 +68,9 @@ export const StackList = memo(() => {
           stackAnswer = stackAnswer + stackDatas[j].timeStack;
           lastDate = stackDatas[j].createdAt;
           contentAnswer = stackDatas[j].content;
-          //上書きした分のデータを次のfor文で反映させないようにする
-          i = i + 1;
+              //上書きした分のデータを次のfor文で反映させないように削除
+              delete stackDatas[j];
+            }
         }
       }
       //それぞれのデータを配列にプッシュする
