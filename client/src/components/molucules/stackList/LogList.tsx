@@ -12,9 +12,12 @@ import { GetAllStudyStackQuery } from "../../../types/generated/graphql";
 import { StudyModal } from "../StudyModal";
 
 type Props = {
-  data: GetAllStudyStackQuery | undefined;
+  data: GetAllStudyStackQuery | undefined; //データベースから取得した記録データ
 };
 
+/**
+ * 記録情報テーブルモーダル
+ */
 export const LogList: FC<Props> = memo((props) => {
   const { data } = props;
 
