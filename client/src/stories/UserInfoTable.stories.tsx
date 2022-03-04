@@ -1,5 +1,5 @@
 import type { ComponentStoryObj, ComponentMeta } from "@storybook/react";
-import { UserInfoTable } from "../components/molucules/aboutMePublic/UserInfoTable";
+import { UserInfoTable } from "../components/molucules/aboutMePrivate/UserInfoTable";
 
 export default {
   component: UserInfoTable,

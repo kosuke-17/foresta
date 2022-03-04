@@ -1,5 +1,5 @@
 import type { ComponentStoryObj, ComponentMeta } from "@storybook/react";
-import { SkillTable } from "../components/molucules/aboutMePublic/SkillTable";
+import { SkillTable } from "../components/molucules/aboutMePrivate/SkillTable";
 
 export default {
   component: SkillTable,
