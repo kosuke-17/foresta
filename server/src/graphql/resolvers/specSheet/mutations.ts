@@ -181,6 +181,12 @@ const specSheetMutations = {
       return { status: "error" };
     }
   },
+  /**
+   * プロジェクトの追加
+   *
+   * @param specProject - 追加プロジェクト情報
+   * @returns 追加したプロジェクト情報
+   */
   addSpecProject: async (_: any, { specProject }: any) => {
     const {
       name,
@@ -268,6 +274,12 @@ const specSheetMutations = {
       return { status: "error" };
     }
   },
+  /**
+   * ポートフォリオの削除
+   *
+   * @param portfolioID - ポートフォリオID
+   * @returns 削除処理ステータス
+   */
   removePortfolio: async (_: any, { portfolioId }: any) => {
     try {
       const result = await Portfolio.findByIdAndRemove({ _id: portfolioId });
