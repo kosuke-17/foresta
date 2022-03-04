@@ -44,6 +44,12 @@ const speckSheetMutations = {
       return { status: "error" };
     }
   },
+  /**
+   * スペックシートのユーザー情報を更新
+   *
+   * @param specUserInfo - ユーザーの情報
+   * @returns 更新したスペックシートのユーザー情報
+   */
   updateSpecUserInfo: async (_: any, { specUserInfo }: any) => {
     const {
       specUserInfoId,
@@ -81,6 +87,12 @@ const speckSheetMutations = {
       return { status: "error" };
     }
   },
+  /**
+   * スペックシートのスキル要約を更新
+   *
+   * @param specTechInfo - スキル要約の情報
+   * @returns 更新したスペックシートのスキル要約情報
+   */
   updateSpeckTechInfo: async (_: any, { specTechInfo }: any) => {
     const {
       specTechInfoId,
@@ -111,6 +123,7 @@ const speckSheetMutations = {
       return success(result);
     } catch (error) {
       // 必須のデータがnullだとエラーを返す
+      // modelの型とsetしてるデータの方が違うとエラーを返す
       return { status: "error" };
     }
   },
