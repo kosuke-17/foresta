@@ -50,25 +50,16 @@ type SpecProjectSheet {
   devRoles: [String!]!
   specSheetId: String!
 }
-
-# type OperationEnv {
-#   operationEnvId: String!
-# }
-# type Language {
-#   languageId: String!
-# }
-# type Framework {
-#   frameworkId: String!
-# }
-# type Library {
-#   libraryId: String!
-# }
-# type OtherTool {
-#   otherToolId: String!
-# }
-# type DevRole {
-#   devRoleId: String!
-# }
+# ポートフォリオ
+type Portfolio {
+  id: String
+  title: String!
+  description: String!
+  img: String!
+  portfolioURL: String!
+  userId: String!
+  specSheetId: String!
+}
 
 ################
 #リクエストボディ
@@ -95,7 +86,7 @@ input SpecUserInfoUpdateInput {
   itExpAmount: Int!
   specSheetId: String!
 }
-
+# スキル要約更新
 input SpecTechInfoUpdateInput {
   specTechInfoId: String!
   operationEnvs: [String!]!
@@ -106,12 +97,14 @@ input SpecTechInfoUpdateInput {
   devRoles: [String!]!
   specSheetId: String!
 }
+# 開発経験更新
 input SpecProjectUpdateInput {
   specProjectId: String!
   name: String!
   startedAt: String!
   finishedAt: String!
   roleSharing: String!
+  memberCount: Int!
   content: String!
   operationEnvs: [String!]!
   languages: [String!]!
@@ -120,6 +113,39 @@ input SpecProjectUpdateInput {
   OtherTools: [String!]!
   devRoles: [String!]!
   specSheetId: String!
+}
+# 開発経験追加
+input SpecProjectAddInput {
+  name: String!
+  startedAt: String!
+  finishedAt: String!
+  roleSharing: String!
+  memberCount: Int!
+  content: String!
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  OtherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: String!
+}
+# ポートフォリオ作成情報
+input PortfolioCreateInput {
+  title: String!
+  description: String!
+  img: String
+  portfolioURL: String
+  userId: String!
+  specSheetId: String!
+}
+# ポートフォリオ更新
+input PortfolioUpdateInput {
+  portfolioId: String!
+  title: String!
+  description: String!
+  img: String
+  portfolioURL: String
 }
 
 ################
@@ -140,4 +166,13 @@ type ResponseSpecTechInfo {
 type ResponseSpecProject {
   status: String!
   node: SpecProjectSheet
+}
+
+type ResponsePortfolio {
+  status: String!
+  node: Portfolio
+}
+
+type ResponseRemove {
+  status: String!
 }

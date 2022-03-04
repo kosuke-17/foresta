@@ -39,6 +39,7 @@ const SpecProjectSheetSchema = new mongoose.Schema({
   startedAt: { type: String },
   finishedAt: { type: String },
   roleSharing: { type: String },
+  memberCount: { type: Number },
   content: { type: String },
   operationEnvs: { type: [String] },
   languages: { type: [String] },
@@ -46,6 +47,15 @@ const SpecProjectSheetSchema = new mongoose.Schema({
   libraries: { type: [String] },
   OtherTools: { type: [String] },
   devRoles: { type: [String] },
+  specSheetId: { type: String, required: true },
+});
+
+const PortfolioSchema = new mongoose.Schema({
+  title: { type: String },
+  description: { type: String },
+  img: { type: String },
+  portfolioURL: { type: String },
+  userId: { type: String, required: true },
   specSheetId: { type: String, required: true },
 });
 
@@ -64,3 +74,4 @@ export const SpecProjectSheet = mongoose.model(
   "specprojectsheet",
   SpecProjectSheetSchema
 );
+export const Portfolio = mongoose.model("portfolio", PortfolioSchema);

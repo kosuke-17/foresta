@@ -1,4 +1,5 @@
 import {
+  Portfolio,
   SpecProjectSheet,
   SpecSheet,
   SpecTechInfoSheet,
@@ -141,6 +142,7 @@ const specSheetMutations = {
       startedAt,
       finishedAt,
       roleSharing,
+      memberCount,
       content,
       operationEnvs,
       languages,
@@ -159,6 +161,7 @@ const specSheetMutations = {
             startedAt: startedAt,
             finishedAt: finishedAt,
             roleSharing: roleSharing,
+            memberCount: memberCount,
             content: content,
             operationEnvs: [...operationEnvs],
             languages: [...languages],
@@ -175,6 +178,125 @@ const specSheetMutations = {
     } catch (error) {
       // 必須のデータがnullだとエラーを返す
       // modelの型とsetしてるデータの方が違うとエラーを返す
+      return { status: "error" };
+    }
+  },
+  /**
+   * プロジェクトの追加
+   *
+   * @param specProject - 追加プロジェクト情報
+   * @returns 追加したプロジェクト情報
+   */
+  addSpecProject: async (_: any, { specProject }: any) => {
+    const {
+      name,
+      startedAt,
+      finishedAt,
+      roleSharing,
+      memberCount,
+      content,
+      operationEnvs,
+      languages,
+      frameworks,
+      libraries,
+      OtherTools,
+      devRoles,
+      specSheetId,
+    } = specProject;
+
+    const createProject = new SpecProjectSheet({
+      name,
+      startedAt,
+      finishedAt,
+      roleSharing,
+      memberCount,
+      content,
+      operationEnvs: [...operationEnvs],
+      languages: [...languages],
+      frameworks: [...frameworks],
+      libraries: [...libraries],
+      OtherTools: [...OtherTools],
+      devRoles: [...devRoles],
+      specSheetId,
+    });
+
+    try {
+      const result = createProject.save();
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      // modelの型とsetしてるデータの方が違うとエラーを返す
+      return { status: "error" };
+    }
+  },
+  removeSpecProject: async (_: any, { specProjectId }: any) => {
+    try {
+      const result = await SpecProjectSheet.findByIdAndRemove({
+        _id: specProjectId,
+      });
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      return { status: "error" };
+    }
+  },
+  /**
+   * ポートフォリオの作成
+   *
+   * @param portfolio - 作成ポートフォリオ情報
+   * @returns 作成したポートフォリオ情報
+   */
+  createPortfolio: async (_: any, { portfolio }: any) => {
+    const { title, description, img, portfolioURL, userId, specSheetId } =
+      portfolio;
+    const newPortfolio = new Portfolio({
+      title,
+      description,
+      img,
+      portfolioURL,
+      userId,
+      specSheetId,
+    });
+    try {
+      const result = await newPortfolio.save();
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      return { status: "error" };
+    }
+  },
+  /**
+   * ポートフォリオの編集
+   *
+   * @param portfolio - 編集ポートフォリオ情報
+   * @returns 編集したポートフォリオ情報
+   */
+  updatePortfolio: async (_: any, { portfolio }: any) => {
+    const { portfolioId, title, description, img, portfolioURL } = portfolio;
+    try {
+      const result = await Portfolio.findByIdAndUpdate(
+        { _id: portfolioId },
+        { $set: { title, description, img, portfolioURL } },
+        { new: true }
+      );
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      return { status: "error" };
+    }
+  },
+  /**
+   * ポートフォリオの削除
+   *
+   * @param portfolioID - ポートフォリオID
+   * @returns 削除処理ステータス
+   */
+  removePortfolio: async (_: any, { portfolioId }: any) => {
+    try {
+      const result = await Portfolio.findByIdAndRemove({ _id: portfolioId });
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
       return { status: "error" };
     }
   },
