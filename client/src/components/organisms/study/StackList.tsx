@@ -17,7 +17,6 @@ import {
 import { memo } from "react";
 import {
   useGetAllStudyStackQuery,
-  // useGetSkillTagIdQuery,
 } from "../../../types/generated/graphql";
 import { StudyModal } from "../../molucules/StudyModal";
 
@@ -101,7 +100,8 @@ export const StackList = memo(() => {
 
   if (loading) {
     return <p>Loading...</p>;
-  } else if (error) {
+  }
+  if (error) {
     return <p>Error!</p>;
   } else {
     return (
