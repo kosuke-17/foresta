@@ -86,7 +86,7 @@ input SpecUserInfoUpdateInput {
   itExpAmount: Int!
   specSheetId: String!
 }
-
+# スキル要約更新
 input SpecTechInfoUpdateInput {
   specTechInfoId: String!
   operationEnvs: [String!]!
@@ -97,6 +97,7 @@ input SpecTechInfoUpdateInput {
   devRoles: [String!]!
   specSheetId: String!
 }
+# 開発経験更新
 input SpecProjectUpdateInput {
   specProjectId: String!
   name: String!
@@ -112,7 +113,7 @@ input SpecProjectUpdateInput {
   devRoles: [String!]!
   specSheetId: String!
 }
-
+# ポートフォリオ作成情報
 input PortfolioCreateInput {
   title: String!
   description: String!
@@ -120,6 +121,14 @@ input PortfolioCreateInput {
   portfolioURL: String
   userId: String!
   specSheetId: String!
+}
+# ポートフォリオ更新
+input PortfolioUpdateInput {
+  portfolioId: String!
+  title: String!
+  description: String!
+  img: String
+  portfolioURL: String
 }
 
 ################

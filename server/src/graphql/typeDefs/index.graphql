@@ -110,6 +110,10 @@ type Mutation {
   ポートフォリオを作成する
   """
   createPortfolio(portfolio: PortfolioCreateInput): ResponsePortfolio!
+  """
+  ポートフォリオを更新する
+  """
+  updatePortfolio(portfolio: PortfolioUpdateInput): ResponsePortfolio!
 
   """
   Techを追加する：引数(Leaf名 or Branch名 or Tree名)

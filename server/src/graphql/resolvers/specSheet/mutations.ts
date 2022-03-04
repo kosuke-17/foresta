@@ -179,6 +179,12 @@ const specSheetMutations = {
       return { status: "error" };
     }
   },
+  /**
+   * ポートフォリオの作成
+   *
+   * @param portfolio - 作成ポートフォリオ情報
+   * @returns 作成したポートフォリオ情報
+   */
   createPortfolio: async (_: any, { portfolio }: any) => {
     const { title, description, img, portfolioURL, userId, specSheetId } =
       portfolio;
@@ -198,6 +204,12 @@ const specSheetMutations = {
       return { status: "error" };
     }
   },
+  /**
+   * ポートフォリオの編集
+   *
+   * @param portfolio - 編集ポートフォリオ情報
+   * @returns 編集したポートフォリオ情報
+   */
   updatePortfolio: async (_: any, { portfolio }: any) => {
     const { portfolioId, title, description, img, portfolioURL } = portfolio;
     try {
