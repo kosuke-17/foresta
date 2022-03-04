@@ -113,6 +113,21 @@ input SpecProjectUpdateInput {
   devRoles: [String!]!
   specSheetId: String!
 }
+input SpecProjectAddInput {
+  specProjectId: String!
+  name: String!
+  startedAt: String!
+  finishedAt: String!
+  roleSharing: String!
+  content: String!
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  OtherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: String!
+}
 # ポートフォリオ作成情報
 input PortfolioCreateInput {
   title: String!
