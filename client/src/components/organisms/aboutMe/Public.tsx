@@ -5,8 +5,13 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { MarkGithubIcon } from "@primer/octicons-react";
 import { AccordionContent } from "../../molucules/AccordionContent";
+import { ModalSet } from "../../molucules/ModalSet";
+import { useModal } from "../../../hooks/useModal";
 
 export const Public: FC = memo(() => {
+  const modalStore = useModal();
+  const { onOpen, isOpen, onClose } = modalStore;
+
   /**
    * ユーザ情報の取得.
    * @remarks 取得情報:名前、職種、GitHub
@@ -35,6 +40,12 @@ export const Public: FC = memo(() => {
       <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">
         {user && (
           <>
+            <ModalSet
+              isOpen={isOpen}
+              onClose={onClose}
+              modalTitle="ほげほげサイト"
+              contents={<p>コンテンツ</p>}
+            />
             <_User>
               <Flex justifyContent="center">
                 <_Name>氏名:{user.name}</_Name>
@@ -64,6 +75,7 @@ export const Public: FC = memo(() => {
                 size="sm"
               />
             </_Content>
+            {/* 制作物 */}
             <Box backgroundColor="white" pb={10} mb={10}>
               <Box
                 width="full"
@@ -80,6 +92,7 @@ export const Public: FC = memo(() => {
               <Flex gap={4} justifyContent="center">
                 <Flex direction="column">
                   <Box
+                    onClick={onOpen}
                     backgroundColor="gray.400"
                     width={350}
                     height={200}
@@ -87,12 +100,13 @@ export const Public: FC = memo(() => {
                     alignItems="center"
                     mt={30}
                   >
-                    NoImage
+                    仮のBox
                   </Box>
                   ほげほげサイト
                 </Flex>
                 <Flex direction="column">
                   <Box
+                    onClick={onOpen}
                     backgroundColor="gray.400"
                     width={350}
                     height={200}
@@ -100,12 +114,13 @@ export const Public: FC = memo(() => {
                     alignItems="center"
                     mt={30}
                   >
-                    NoImage
+                    仮のBox
                   </Box>
                   <div>ほげほげサイト</div>
                 </Flex>
                 <Flex direction="column">
                   <Box
+                    onClick={onOpen}
                     backgroundColor="gray.400"
                     width={350}
                     height={200}
@@ -113,7 +128,7 @@ export const Public: FC = memo(() => {
                     alignItems="center"
                     mt={30}
                   >
-                    NoImage
+                    仮のBox
                   </Box>
                   <div>ほげほげサイト</div>
                 </Flex>
