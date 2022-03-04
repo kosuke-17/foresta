@@ -17,7 +17,7 @@ export const Public: FC = memo(() => {
   });
 
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
-  const user = data?.getUserById;
+  const user = data?.user;
 
   //読み込み中時の表示
   if (loading) {

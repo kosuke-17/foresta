@@ -11,7 +11,10 @@ import {
 } from "@chakra-ui/react";
 
 import { Calendar } from "../../molucules/Calendar";
-import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
+import {
+  Todo,
+  useGetAllTodoByUserQuery,
+} from "../../../types/generated/graphql";
 import { TodoList } from "./TodoList";
 
 // タブのタイプ
@@ -28,6 +31,9 @@ export const TodosArea: FC = memo(() => {
       userId,
     },
   });
+
+  //すみません、エラーになるので一旦足しました。(codegenミスったかも。。)
+  const todos = data?.todos as Array<Todo>;
 
   if (error) {
     return <div>エラー</div>;
@@ -60,7 +66,7 @@ export const TodosArea: FC = memo(() => {
           >
             {tabs.map((tab, index) => (
               <TabPanel key={index}>
-                <TodoList todos={data?.todos} loading={loading} tabType={tab} />
+                <TodoList todos={todos} loading={loading} tabType={tab} />
               </TabPanel>
             ))}
           </TabPanels>
