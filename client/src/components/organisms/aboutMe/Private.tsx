@@ -2,12 +2,12 @@ import { memo, FC, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import styled from "styled-components";
 
-import { AccordionContent } from "../../molucules/aboutMePublic/AccordionContent";
-import { UserInfoTable } from "../../molucules/aboutMePublic/UserInfoTable";
-import { SkillTable } from "../../molucules/aboutMePublic/SkillTable";
-import { OtherData } from "../../molucules/aboutMePublic/OtherData";
-import { Project } from "../../molucules/aboutMePublic/Project";
-import { TextBox } from "../../molucules/aboutMePublic/TextBox";
+import { AccordionContent } from "../../molucules/aboutMePrivate/AccordionContent";
+import { UserInfoTable } from "../../molucules/aboutMePrivate/UserInfoTable";
+import { SkillTable } from "../../molucules/aboutMePrivate/SkillTable";
+import { OtherData } from "../../molucules/aboutMePrivate/OtherData";
+import { Project } from "../../molucules/aboutMePrivate/Project";
+import { TextBox } from "../../molucules/aboutMePrivate/TextBox";
 
 /**
  * AboutMeプライベート(スペックシート)ゾーン.

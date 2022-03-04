@@ -10,7 +10,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
-import { Calendar } from "../../molucules/Calendar";
+import { Calendar } from "../../molucules/calendar";
 import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
 import { TodoList } from "./TodoList";
 
