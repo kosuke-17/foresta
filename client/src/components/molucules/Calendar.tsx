@@ -4,10 +4,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Box } from "@chakra-ui/react";
 
-import type { Todo } from "../../types/generated/graphql";
+import type { TodoData } from "../../types/types";
 
 type Props = {
-  todos: Pick<Todo, "id" | "title" | "startedAt" | "finishedAt">[] | undefined;
+  todos: Array<TodoData> | undefined;
 };
 
 /**

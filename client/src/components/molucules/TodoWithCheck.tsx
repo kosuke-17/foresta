@@ -1,17 +1,15 @@
 import { FC, memo } from "react";
 import { Checkbox, Flex } from "@chakra-ui/react";
-import { Todo } from "../../types/generated/graphql";
+import styled from "styled-components";
 import {
   getFormattedDate,
   getFormattedDateWithoutYear,
 } from "../../utils/methods";
-import styled from "styled-components";
+
+import type { TodoData } from "../../types/types";
 
 // 自動生成したTodoの型から使用したいプロパティ名だけを指定
-type Props = Pick<
-  Todo,
-  "id" | "title" | "startedAt" | "finishedAt" | "isStatus"
->;
+type Props = TodoData;
 
 /**
  * Todoリストの一つのTodoを表示するコンポーネント.

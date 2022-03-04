@@ -3,11 +3,11 @@ import { List, ListItem } from "@chakra-ui/react";
 import { isWithinInterval, isToday, isBefore, addDays } from "date-fns";
 
 import { TodoWithCheck } from "../../molucules/TodoWithCheck";
-import { Todo } from "../../../types/generated/graphql";
+import type { TodoData } from "../../../types/types";
 // import { TodoDetail } from './TodoDetail';
 
 type Props = {
-  todos: Array<Todo> | undefined;
+  todos: Array<TodoData> | undefined;
   loading: boolean;
   tabType: "全て" | "今日" | "期限切れ";
 };
