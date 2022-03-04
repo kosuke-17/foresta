@@ -1,27 +1,26 @@
 import { gql } from "@apollo/client";
 
-/**
- * 見本.
- */
-// gql`
-//   query todos {
-//     getAllTodo {
-//       id
-//       title
-//       finish
-//     }
-//   }
-// `;
-/**
- * ユーザ情報取得.
- */
+//ユーザ情報取得.
 gql`
   query GetUserById($id: String!) {
-    getUserById(_id: $id) {
+    user: getUserById(_id: $id) {
       id
       name
       jobType
       githubURL
+    }
+  }
+`;
+
+// todo一覧を取得するクエリ
+gql`
+  query GetAllTodoByUser($userId: String) {
+    todos: getAllTodoByUser(userId: $userId) {
+      id
+      title
+      startedAt
+      finishedAt
+      isStatus
     }
   }
 `;
