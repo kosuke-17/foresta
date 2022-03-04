@@ -1,24 +1,18 @@
 import {
   Center,
   Tab,
-  Table,
-  TableCaption,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
 } from "@chakra-ui/react";
 
 import { memo } from "react";
 import { useGetAllStudyStackQuery } from "../../../types/generated/graphql";
 import { LogListTable } from "../../molucules/stackList/LogListTable";
+import { StudyListTable } from "../../molucules/stackList/StudyListTable";
 
-type StackList = {
+export type StackList = {
   id: string | null | undefined;
   timeStack: number;
   skillTagId: string;
@@ -130,33 +124,10 @@ export const StackList = memo(() => {
             </TabList>
             <TabPanels overflow="auto" height="250px">
               <TabPanel>
-                <Table variant="simple" colorScheme="green">
-                  <TableCaption>学習の記録</TableCaption>
-                  <Thead>
-                    <Tr>
-                      <Th>技術内容</Th>
-                      <Th>学習時間(累計)</Th>
-                      <Th>開始日</Th>
-                      <Th>最終学習日</Th>
-                      <Th>メモ</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {data &&
-                      stackSumList.map((stackList) => (
-                        <Tr key={stackList.id}>
-                          <Td>{stackList.skillTagId}</Td>
-                          <Td>{stackList.timeStack}</Td>
-                          <Td>{stackList.createdAtStart}</Td>
-                          <Td>{stackList.createdAtLast}</Td>
-                          <Td>{stackList.content}</Td>
-                        </Tr>
-                      ))}
-                  </Tbody>
-                </Table>
+                <StudyListTable data={data} stackSumList={stackSumList} />
               </TabPanel>
               <TabPanel>
-                <LogListTable data={data}></LogListTable>
+                <LogListTable data={data} />
               </TabPanel>
             </TabPanels>
           </Tabs>
