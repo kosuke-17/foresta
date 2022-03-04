@@ -5,16 +5,16 @@ import {
 } from "../../../models/SpecSheet.model";
 import { success } from "../responseStatus";
 
-const speckSheetMutations = {
+const specSheetMutations = {
   /**
    * スペックシートの情報を更新
    *
-   * @param speckSheet - スペックシートの情報
+   * @param specSheet - スペックシートの情報
    * @returns 更新したスペックシートの情報
    */
-  updateSpeckSheet: async (_: any, { speckSheet }: any) => {
-    const { speckSheetId, selfIntro, studyOnOwnTime, certification, prevJobs } =
-      speckSheet;
+  updateSpecSheet: async (_: any, { specSheet }: any) => {
+    const { specSheetId, selfIntro, studyOnOwnTime, certification, prevJobs } =
+      specSheet;
     try {
       // 前職内容をアップデートするオブジェクト生成
       const updatePrevJobs = new Array();
@@ -25,7 +25,7 @@ const speckSheetMutations = {
 
       // スペックシート更新
       const result = await SpecSheet.findByIdAndUpdate(
-        { _id: speckSheetId },
+        { _id: specSheetId },
         {
           $set: {
             selfIntro: selfIntro,
@@ -93,7 +93,7 @@ const speckSheetMutations = {
    * @param specTechInfo - スキル要約の情報
    * @returns 更新したスペックシートのスキル要約情報
    */
-  updateSpeckTechInfo: async (_: any, { specTechInfo }: any) => {
+  updateSpecTechInfo: async (_: any, { specTechInfo }: any) => {
     const {
       specTechInfoId,
       operationEnvs,
@@ -129,4 +129,4 @@ const speckSheetMutations = {
   },
 };
 
-export default speckSheetMutations;
+export default specSheetMutations;
