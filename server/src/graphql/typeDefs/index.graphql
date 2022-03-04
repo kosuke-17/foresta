@@ -102,9 +102,14 @@ type Mutation {
     specTechInfo: SpecTechInfoUpdateInput
   ): ResponseSpecTechInfo!
   """
-  スキル要約情報を更新する
+  開発経験情報を更新する
   """
   updateSpecProject(specProject: SpecProjectUpdateInput): ResponseSpecProject!
+
+  """
+  ポートフォリオを作成する
+  """
+  createPortfolio(portfolio: PortfolioCreateInput): ResponsePortfolio!
 
   """
   Techを追加する：引数(Leaf名 or Branch名 or Tree名)

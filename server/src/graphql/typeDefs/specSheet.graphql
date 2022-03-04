@@ -51,24 +51,14 @@ type SpecProjectSheet {
   specSheetId: String!
 }
 
-# type OperationEnv {
-#   operationEnvId: String!
-# }
-# type Language {
-#   languageId: String!
-# }
-# type Framework {
-#   frameworkId: String!
-# }
-# type Library {
-#   libraryId: String!
-# }
-# type OtherTool {
-#   otherToolId: String!
-# }
-# type DevRole {
-#   devRoleId: String!
-# }
+type Portfolio {
+  title: String!
+  description: String!
+  img: String!
+  portfolioURL: String!
+  userId: String!
+  specSheetId: String!
+}
 
 ################
 #リクエストボディ
@@ -122,6 +112,15 @@ input SpecProjectUpdateInput {
   specSheetId: String!
 }
 
+input PortfolioCreateInput {
+  title: String!
+  description: String!
+  img: String
+  portfolioURL: String
+  userId: String!
+  specSheetId: String!
+}
+
 ################
 #レスポンス
 
@@ -140,4 +139,9 @@ type ResponseSpecTechInfo {
 type ResponseSpecProject {
   status: String!
   node: SpecProjectSheet
+}
+
+type ResponsePortfolio {
+  status: String!
+  node: Portfolio
 }
