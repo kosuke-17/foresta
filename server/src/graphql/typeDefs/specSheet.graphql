@@ -104,6 +104,7 @@ input SpecProjectUpdateInput {
   startedAt: String!
   finishedAt: String!
   roleSharing: String!
+  memberCount: Int!
   content: String!
   operationEnvs: [String!]!
   languages: [String!]!
@@ -113,12 +114,13 @@ input SpecProjectUpdateInput {
   devRoles: [String!]!
   specSheetId: String!
 }
+# 開発経験追加
 input SpecProjectAddInput {
-  specProjectId: String!
   name: String!
   startedAt: String!
   finishedAt: String!
   roleSharing: String!
+  memberCount: Int!
   content: String!
   operationEnvs: [String!]!
   languages: [String!]!

@@ -142,6 +142,7 @@ const specSheetMutations = {
       startedAt,
       finishedAt,
       roleSharing,
+      memberCount,
       content,
       operationEnvs,
       languages,
@@ -160,6 +161,7 @@ const specSheetMutations = {
             startedAt: startedAt,
             finishedAt: finishedAt,
             roleSharing: roleSharing,
+            memberCount: memberCount,
             content: content,
             operationEnvs: [...operationEnvs],
             languages: [...languages],
@@ -172,6 +174,48 @@ const specSheetMutations = {
         { new: true }
       );
 
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      // modelの型とsetしてるデータの方が違うとエラーを返す
+      return { status: "error" };
+    }
+  },
+  addSpecProject: async (_: any, { specProject }: any) => {
+    const {
+      name,
+      startedAt,
+      finishedAt,
+      roleSharing,
+      memberCount,
+      content,
+      operationEnvs,
+      languages,
+      frameworks,
+      libraries,
+      OtherTools,
+      devRoles,
+      specSheetId,
+    } = specProject;
+
+    const createProject = new SpecProjectSheet({
+      name,
+      startedAt,
+      finishedAt,
+      roleSharing,
+      memberCount,
+      content,
+      operationEnvs: [...operationEnvs],
+      languages: [...languages],
+      frameworks: [...frameworks],
+      libraries: [...libraries],
+      OtherTools: [...OtherTools],
+      devRoles: [...devRoles],
+      specSheetId,
+    });
+
+    try {
+      const result = createProject.save();
       return success(result);
     } catch (error) {
       // 必須のデータがnullだとエラーを返す

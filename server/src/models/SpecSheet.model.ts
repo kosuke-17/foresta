@@ -39,6 +39,7 @@ const SpecProjectSheetSchema = new mongoose.Schema({
   startedAt: { type: String },
   finishedAt: { type: String },
   roleSharing: { type: String },
+  memberCount: { type: Number },
   content: { type: String },
   operationEnvs: { type: [String] },
   languages: { type: [String] },
