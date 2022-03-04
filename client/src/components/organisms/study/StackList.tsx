@@ -89,39 +89,41 @@ export const StackList = memo(() => {
       });
     }
   }
+  
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
   if (error) {
     return <p>Error!</p>;
-  } else {
-    return (
-      <div>
-        <Center>
-          <Tabs
-            isFitted
-            isLazy
-            variant="soft-rounded"
-            colorScheme="green"
-            width="container.xl"
-          >
-            <TabList>
-              <Tab
-                _focus={{ boxShadow: "none" }}
-                _selected={{ color: "white", bg: "green.300" }}
-                _hover={{ bg: "gray.300" }}
-              >
-                学習リスト
-              </Tab>
-              <Tab
-                _focus={{ boxShadow: "none" }}
-                _selected={{ color: "white", bg: "green.300" }}
-                _hover={{ bg: "gray.300" }}
-              >
-                更新情報
-              </Tab>
-            </TabList>
+  }
+
+  return (
+    <div>
+      <Center>
+        <Tabs
+          isFitted
+          isLazy
+          variant="soft-rounded"
+          colorScheme="green"
+          width="container.xl"
+        >
+          <TabList>
+            <Tab
+              _focus={{ boxShadow: "none" }}
+              _selected={{ color: "white", bg: "green.300" }}
+              _hover={{ bg: "gray.300" }}
+            >
+              学習リスト
+            </Tab>
+            <Tab
+              _focus={{ boxShadow: "none" }}
+              _selected={{ color: "white", bg: "green.300" }}
+              _hover={{ bg: "gray.300" }}
+            >
+              更新情報
+            </Tab>
+          </TabList>
+          {loading ? (
+            <p>Loading...</p>
+          ) : data?.getAllStudyStack.length ? (
             <TabPanels overflow="auto" height="250px">
               <TabPanel>
                 <StudyListTable data={data} stackSumList={stackSumList} />
@@ -130,9 +132,11 @@ export const StackList = memo(() => {
                 <LogListTable data={data} />
               </TabPanel>
             </TabPanels>
-          </Tabs>
-        </Center>
-      </div>
-    );
-  }
+          ) : (
+            <p>学習記録が1件もありません</p>
+          )}
+        </Tabs>
+      </Center>
+    </div>
+  );
 });
