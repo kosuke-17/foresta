@@ -10,7 +10,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
-import { Calendar } from "../../molucules/Calendar";
+import { Calendar } from "../../molucules/calendar";
 import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
 import { TodoList } from "./TodoList";
 
@@ -60,7 +60,7 @@ export const TodosArea: FC = memo(() => {
           >
             {tabs.map((tab, index) => (
               <TabPanel key={index}>
-                <TodoList todos={data?.todos} loading={loading} tabType={tab} />
+                {/* <TodoList todos={data?.todos} loading={loading} tabType={tab} /> */}
               </TabPanel>
             ))}
           </TabPanels>
