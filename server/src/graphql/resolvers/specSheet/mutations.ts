@@ -1,4 +1,8 @@
-import { SpecSheet, SpecUserInfoSheet } from "../../../models/SpecSheet.model";
+import {
+  SpecSheet,
+  SpecTechInfoSheet,
+  SpecUserInfoSheet,
+} from "../../../models/SpecSheet.model";
 import { success } from "../responseStatus";
 
 const speckSheetMutations = {
@@ -67,6 +71,39 @@ const speckSheetMutations = {
           pgExpAmount,
           itExpAmount,
           specSheetId,
+        },
+        { new: true }
+      );
+
+      return success(result);
+    } catch (error) {
+      // 必須のデータがnullだとエラーを返す
+      return { status: "error" };
+    }
+  },
+  updateSpeckTechInfo: async (_: any, { specTechInfo }: any) => {
+    const {
+      specTechInfoId,
+      operationEnvs,
+      languages,
+      frameworks,
+      libraries,
+      OtherTools,
+      devRoles,
+      specSheetId,
+    } = specTechInfo;
+    try {
+      const result = await SpecTechInfoSheet.findOneAndUpdate(
+        { _id: specTechInfoId, specSheetId: specSheetId },
+        {
+          $set: {
+            operationEnvs: [...operationEnvs],
+            languages: [...languages],
+            frameworks: [...frameworks],
+            libraries: [...libraries],
+            OtherTools: [...OtherTools],
+            devRoles: [...devRoles],
+          },
         },
         { new: true }
       );

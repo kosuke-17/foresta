@@ -1,10 +1,10 @@
 # スペックシート
 type SpeckSheet {
-  id: String
+  id: String!
   selfIntro: String!
   studyOnOwnTime: String!
   certification: String!
-  prevJobs: [prevJobsContent]
+  prevJobs: [prevJobsContent!]!
   userId: String!
 }
 # 前職経験情報
@@ -22,6 +22,35 @@ type SpecUserInfoSheet {
   pgExpAmount: Int!
   itExpAmount: Int!
   specSheetId: String!
+}
+# スペックシート技術情報
+type SpecTechInfoSheet {
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  OtherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: String!
+}
+
+type OperationEnv {
+  operationEnvId: String!
+}
+type Language {
+  languageId: String!
+}
+type Framework {
+  frameworkId: String!
+}
+type Library {
+  libraryId: String!
+}
+type OtherTool {
+  otherToolId: String!
+}
+type DevRole {
+  devRoleId: String!
 }
 
 ################
@@ -50,6 +79,17 @@ input SpeckUserInfoUpdateInput {
   specSheetId: String!
 }
 
+input SpecTechInfoUpdateInput {
+  specTechInfoId: String!
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  OtherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: String!
+}
+
 ################
 #レスポンス
 
@@ -60,4 +100,8 @@ type ResponseSpeckSheet {
 type ResponseSpeckUserInfo {
   status: String!
   node: SpecUserInfoSheet
+}
+type ResponseSpeckTechInfo {
+  status: String!
+  node: SpecTechInfoSheet
 }
