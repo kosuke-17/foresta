@@ -154,6 +154,7 @@ input PortfolioUpdateInput {
 type ResponseSpecSheet {
   status: String!
   node: SpecSheet
+  message: String
 }
 type ResponseSpecUserInfo {
   status: String!

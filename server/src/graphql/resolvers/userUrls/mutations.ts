@@ -59,7 +59,7 @@ const userUrlsMutations = {
    * @returns success : successステータス,追加したURL情報
    * @returns error : errorステータス
    */
-  removeUserUrls: async (_parent: any, { urlData }: UrlDataRemoveType) => {
+  removeUserUrls: async (_: any, { urlData }: UrlDataRemoveType) => {
     const { urlId, userUrlsId } = urlData;
 
     try {

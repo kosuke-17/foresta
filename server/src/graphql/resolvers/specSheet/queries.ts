@@ -1,8 +1,28 @@
-import { Portfolio } from "../../../models/SpecSheet.model";
+import { Portfolio, SpecSheet } from "../../../models/SpecSheet.model";
 import { success } from "../responseStatus";
 
 const specSheetQueries = {
-  // getSheetByUserId: (_: any) => {},
+  /**
+   * ユーザーIDに紐づくスペックシートの取得.
+   * @param userId - ユーザーID
+   * @returns ユーザーIDに紐づくスペックシート
+   */
+  getSheetByUserId: async (_: any, { userId }: any) => {
+    try {
+      const result = await SpecSheet.findOne({ userId: userId });
+      if (result === null) {
+        return {
+          status: "error",
+          message: "該当のスペックシートが見つかりません。",
+        };
+      }
+      return success(result);
+    } catch (error) {
+      return {
+        status: "error",
+      };
+    }
+  },
   /**
    * ユーザーIDに紐づくポートフォリオの取得.
    *
@@ -15,7 +35,7 @@ const specSheetQueries = {
       if (result === null) {
         return {
           status: "error",
-          message: "該当のデータが見つかりませんでした",
+          message: "該当のポートフォリオが見つかりません。",
         };
       }
       return success(result);
