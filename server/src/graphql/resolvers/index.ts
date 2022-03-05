@@ -4,7 +4,7 @@ import {
   SpecUserInfoSheet,
 } from "../../models/SpecSheet.model";
 import { TechBranch, TechLeaf, TechTree } from "../../models/TechForest.model";
-import { TechIdType } from "../../types/techForest";
+import { IdType } from "../../types";
 import { specSheetMutations, specSheetQueries } from "./specSheet";
 import { studyStackMutations, studyStackQueries } from "./studyStack";
 import { techForestMutations, techForestQueries } from "./techForest";
@@ -31,23 +31,23 @@ const resolvers = {
     ...specSheetMutations,
   },
   TechBranch: {
-    techLeafs: async ({ _id }: TechIdType) =>
+    techLeafs: async ({ _id }: IdType) =>
       await TechLeaf.find({ techBranch_id: _id }),
   },
   TechTree: {
-    techBranches: async ({ _id }: TechIdType) =>
+    techBranches: async ({ _id }: IdType) =>
       await TechBranch.find({ techTree_id: _id }),
   },
   TechArea: {
-    techTrees: async ({ _id }: TechIdType) =>
+    techTrees: async ({ _id }: IdType) =>
       await TechTree.find({ techArea_id: _id }),
   },
   SpecSheet: {
-    userInfo: async ({ _id }: any) =>
+    userInfo: async ({ _id }: IdType) =>
       await SpecUserInfoSheet.findOne({ specSheetId: _id }),
-    techInfo: async ({ _id }: any) =>
+    techInfo: async ({ _id }: IdType) =>
       await SpecTechInfoSheet.findOne({ specSheetId: _id }),
-    project: async ({ _id }: any) =>
+    project: async ({ _id }: IdType) =>
       await SpecProjectSheet.find({ specSheetId: _id }),
   },
 };

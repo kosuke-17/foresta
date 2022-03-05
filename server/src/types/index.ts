@@ -1,3 +1,4 @@
+export { IdType } from "./common";
 export { StudyStackIdType, StackAddType, StackUpdateType } from "./studyStack";
 export {
   TechLeafType,
