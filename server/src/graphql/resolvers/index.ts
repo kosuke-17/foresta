@@ -4,6 +4,7 @@ import {
   SpecUserInfoSheet,
 } from "../../models/SpecSheet.model";
 import { TechBranch, TechLeaf, TechTree } from "../../models/TechForest.model";
+import { UserLeafs, UserUrls } from "../../models/User.model";
 import { IdType } from "../../types";
 import { specSheetMutations, specSheetQueries } from "./specSheet";
 import { studyStackMutations, studyStackQueries } from "./studyStack";
@@ -49,6 +50,12 @@ const resolvers = {
       await SpecTechInfoSheet.findOne({ specSheetId: _id }),
     project: async ({ _id }: IdType) =>
       await SpecProjectSheet.find({ specSheetId: _id }),
+  },
+  User: {
+    userLeafs: async ({ _id }: IdType) =>
+      await UserLeafs.findOne({ userId: _id }),
+    userUrls: async ({ _id }: IdType) =>
+      await UserUrls.findOne({ userId: _id }),
   },
 };
 
