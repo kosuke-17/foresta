@@ -1,4 +1,5 @@
 import {
+  SpecProjectSheet,
   SpecTechInfoSheet,
   SpecUserInfoSheet,
 } from "../../models/SpecSheet.model";
@@ -46,6 +47,8 @@ const resolvers = {
       await SpecUserInfoSheet.findOne({ specSheetId: _id }),
     techInfo: async ({ _id }: any) =>
       await SpecTechInfoSheet.findOne({ specSheetId: _id }),
+    project: async ({ _id }: any) =>
+      await SpecProjectSheet.find({ specSheetId: _id }),
   },
 };
 
