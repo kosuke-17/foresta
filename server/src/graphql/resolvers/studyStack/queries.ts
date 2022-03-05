@@ -1,5 +1,5 @@
 import { StudyStack } from "../../../models/StudyStack.model";
-import { UserIdType } from "../../../types";
+import { StudyStackIdType, UserIdType } from "../../../types";
 /**
  * ## 学習記録の取得
  */
@@ -18,7 +18,7 @@ const studyStackQueries = {
    * @param studyStackId - 学習記録ID
    * @returns 学習記録IDに紐づく学習記録
    */
-  getStudyStackById: async (_: any, { studyStackId }: any) =>
+  getStudyStackById: async (_: any, { studyStackId }: StudyStackIdType) =>
     await StudyStack.findById({ _id: studyStackId }),
 };
 
