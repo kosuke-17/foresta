@@ -6,8 +6,10 @@ import { LoginButton } from "../../atoms/auth/LoginButton";
 import { useMutation } from "@apollo/client";
 import { LOGIN_QUERY } from "../../../queries/query";
 import { Center, Box, SimpleGrid } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm: FC = () => {
+  const navigate = useNavigate();
   // クッキー
   const [cookies, setCookie, removeCookie] = useCookies();
   // メールアドレス
@@ -37,10 +39,7 @@ const LoginForm: FC = () => {
     if (loginData.data.userLogin.status == "success") {
       setCookie("ForestaID", loginData.data.userLogin.node.id);
     }
-    console.log(mailAddress);
-    console.log(password);
-    console.log(loginData);
-    console.log(cookies.ForestaID);
+    navigate("/");
   };
 
   return (
