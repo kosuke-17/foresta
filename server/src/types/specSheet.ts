@@ -33,7 +33,7 @@ export type SpecTechInfoType = {
     languages: string[];
     frameworks: string[];
     libraries: string[];
-    OtherTools: string[];
+    otherTools: string[];
     devRoles: string[];
     specSheetId: string;
   };
@@ -52,7 +52,7 @@ export type SpecProjectType = {
     languages: string[];
     frameworks: string[];
     libraries: string[];
-    OtherTools: string[];
+    otherTools: string[];
     devRoles: string[];
     specSheetId: string;
   };

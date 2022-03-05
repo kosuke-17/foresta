@@ -80,7 +80,7 @@ const userMutations = {
           languages: [],
           frameworks: [],
           libraries: [],
-          OtherTools: [],
+          otherTools: [],
           devRoles: [],
           specSheetId: createdSpecSheet._id,
         });

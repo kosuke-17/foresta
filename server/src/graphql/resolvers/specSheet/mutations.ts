@@ -114,7 +114,7 @@ const specSheetMutations = {
       languages,
       frameworks,
       libraries,
-      OtherTools,
+      otherTools,
       devRoles,
       specSheetId,
     } = specTechInfo;
@@ -127,7 +127,7 @@ const specSheetMutations = {
             languages: [...languages],
             frameworks: [...frameworks],
             libraries: [...libraries],
-            OtherTools: [...OtherTools],
+            oherTools: [...otherTools],
             devRoles: [...devRoles],
           },
         },
@@ -160,7 +160,7 @@ const specSheetMutations = {
       languages,
       frameworks,
       libraries,
-      OtherTools,
+      otherTools,
       devRoles,
       specSheetId,
     } = specProject;
@@ -179,7 +179,7 @@ const specSheetMutations = {
             languages: [...languages],
             frameworks: [...frameworks],
             libraries: [...libraries],
-            OtherTools: [...OtherTools],
+            otherTools: [...otherTools],
             devRoles: [...devRoles],
           },
         },
@@ -211,7 +211,7 @@ const specSheetMutations = {
       languages,
       frameworks,
       libraries,
-      OtherTools,
+      otherTools,
       devRoles,
       specSheetId,
     } = specProject;
@@ -227,7 +227,7 @@ const specSheetMutations = {
       languages: [...languages],
       frameworks: [...frameworks],
       libraries: [...libraries],
-      OtherTools: [...OtherTools],
+      otherTools: [...otherTools],
       devRoles: [...devRoles],
       specSheetId,
     });
