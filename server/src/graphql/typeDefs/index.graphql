@@ -1,30 +1,47 @@
 type Query {
   """
-  全てのユーザー情報を取得する.
+  全てのユーザー情報を取得.
   """
   getAllUser: [User!]
   """
-  ユーザーidに紐づくユーザー情報を取得する.
+  ユーザーidに紐づくユーザー情報を取得.
   """
   getUserById(_id: String!): User!
   """
-  ユーザーのTodo一覧情報を取得する.
+  ユーザーのTodo一覧情報を取得.
   """
   getAllTodoByUser(userId: String): [Todo!]!
   """
-  TodoIdに紐づいたTodo情報を取得する.
+  TodoIdに紐づいたTodo情報を取得.
   """
   getTodoById(todoId: String): Todo!
   """
-  ユーザーのTodo一覧情報を取得する.
+  ユーザーのTodo一覧情報を取得.
   """
   getAllStudyStack(userId: String): [StudyStack!]!
   """
-  StudyStackIdに紐づいたStudyStack情報を取得する.
+  StudyStackIdに紐づいたStudyStack情報を取得.
   """
   getStudyStackById(studyStackId: String): StudyStack!
   """
-  それぞれのTechを取得する
+  ユーザーIDに紐づくスペックシート情報を取得.
+  """
+  getSheetByUserId(userId: String): ResponseSpecSheet!
+  """
+  ユーザーIDに紐づくポートフォリオ情報を取得.
+  """
+  getPortfolioByUserId(userId: String): ResponsePortfolio!
+  """
+  スキル取得.
+  """
+  getAllSkill: [Skill]
+  getOperationEnvs(_id: String): Skill!
+  getLanguages(_id: String): Skill!
+  getFrameworks(_id: String): Skill!
+  getLibraries(_id: String): Skill!
+  getOtherTools(_id: String): Skill!
+  """
+  それぞれのTechを取得.
   """
   getAllTechLeaf: [TechLeaf!]!
   getAllTechBranch: [TechBranch!]!

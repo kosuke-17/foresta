@@ -12,6 +12,9 @@ import {
   TechTreeType,
 } from "../../../types";
 
+/**
+ * ## 技術ツリーの変更処理
+ */
 const techForestMutations = {
   /**
    * TechLeaf追加する.

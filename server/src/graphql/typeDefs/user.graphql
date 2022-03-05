@@ -6,6 +6,9 @@ type User {
   email: String!
   password: String!
   githubURL: String!
+  userLeafs: UserLeafs!
+  userUrls: UserUrls!
+  portfolio: [Portfolio!]
 }
 
 ################
