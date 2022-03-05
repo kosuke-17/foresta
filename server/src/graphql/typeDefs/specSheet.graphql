@@ -63,6 +63,12 @@ type Portfolio {
   userId: String!
   specSheetId: String!
 }
+# 開発経験のスキル
+type Skill {
+  id: String
+  name: String
+  data: [String]
+}
 
 ################
 #リクエストボディ

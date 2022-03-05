@@ -1,4 +1,4 @@
-import { Portfolio, SpecSheet } from "../../../models/SpecSheet.model";
+import { Portfolio, Skill, SpecSheet } from "../../../models/SpecSheet.model";
 import { UserIdType } from "../../../types";
 import { success } from "../responseStatus";
 
@@ -48,6 +48,9 @@ const specSheetQueries = {
         status: "error",
       };
     }
+  },
+  getAllSkill: async () => {
+    return await Skill.find({});
   },
 };
 

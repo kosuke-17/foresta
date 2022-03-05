@@ -32,6 +32,10 @@ type Query {
   """
   getPortfolioByUserId(userId: String): ResponsePortfolio!
   """
+  スキル取得.
+  """
+  getAllSkill: [Skill]
+  """
   それぞれのTechを取得.
   """
   getAllTechLeaf: [TechLeaf!]!
