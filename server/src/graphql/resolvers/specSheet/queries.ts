@@ -1,5 +1,5 @@
 import { Portfolio, Skill, SpecSheet } from "../../../models/SpecSheet.model";
-import { UserIdType } from "../../../types";
+import { IdType, UserIdType } from "../../../types";
 import { success } from "../responseStatus";
 
 /**
@@ -51,6 +51,21 @@ const specSheetQueries = {
   },
   getAllSkill: async () => {
     return await Skill.find({});
+  },
+  getOperationEnvs: async (_: any, { _id }: IdType) => {
+    return await Skill.findById({ _id: _id });
+  },
+  getLanguages: async (_: any, { _id }: IdType) => {
+    return await Skill.findById({ _id: _id });
+  },
+  getFrameworks: async (_: any, { _id }: IdType) => {
+    return await Skill.findById({ _id: _id });
+  },
+  getLibraries: async (_: any, { _id }: IdType) => {
+    return await Skill.findById({ _id: _id });
+  },
+  getOtherTools: async (_: any, { _id }: IdType) => {
+    return await Skill.findById({ _id: _id });
   },
 };
 

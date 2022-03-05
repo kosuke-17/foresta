@@ -35,6 +35,11 @@ type Query {
   スキル取得.
   """
   getAllSkill: [Skill]
+  getOperationEnvs(_id: String): Skill!
+  getLanguages(_id: String): Skill!
+  getFrameworks(_id: String): Skill!
+  getLibraries(_id: String): Skill!
+  getOtherTools(_id: String): Skill!
   """
   それぞれのTechを取得.
   """
