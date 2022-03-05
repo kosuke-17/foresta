@@ -25,7 +25,6 @@ export const LOGIN_QUERY = gql`
         email
         password
         githubURL
-        have_techLeafs
       }
     }
   }
