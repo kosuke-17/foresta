@@ -8,6 +8,9 @@ import {
   SpecUserInfoSheet,
 } from "../../../models/SpecSheet.model";
 
+/**
+ * ## ユーザーの変更処理
+ */
 const userMutations = {
   /**
    * ユーザー追加.

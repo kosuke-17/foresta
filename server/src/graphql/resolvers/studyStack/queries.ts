@@ -1,6 +1,8 @@
 import { StudyStack } from "../../../models/StudyStack.model";
 import { UserIdType } from "../../../types";
-
+/**
+ * ## 学習記録の取得
+ */
 const studyStackQueries = {
   /**
    * ユーザーのStudyStack一覧情報を取得する.

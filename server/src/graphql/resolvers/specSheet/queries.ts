@@ -1,6 +1,9 @@
 import { Portfolio, SpecSheet } from "../../../models/SpecSheet.model";
 import { success } from "../responseStatus";
 
+/**
+ *  ## スペックシート・ポートフォリオの取得
+ */
 const specSheetQueries = {
   /**
    * ユーザーIDに紐づくスペックシートの取得.

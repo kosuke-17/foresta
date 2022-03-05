@@ -1,6 +1,8 @@
 import { Users } from "../../../models/User.model";
 import { UserIdType } from "../../../types";
-
+/**
+ * ## ユーザーの取得
+ */
 const userQueries = {
   /**
    * ユーザー一覧情報を取得.

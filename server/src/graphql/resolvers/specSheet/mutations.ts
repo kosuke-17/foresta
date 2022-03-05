@@ -7,6 +7,9 @@ import {
 } from "../../../models/SpecSheet.model";
 import { success } from "../responseStatus";
 
+/**
+ * ## スペックシートの変更処理
+ */
 const specSheetMutations = {
   /**
    * スペックシートの情報を更新
