@@ -1,4 +1,12 @@
 export { IdType } from "./common";
+export { PortfolioIdType, PortfolioType } from "./portfolio";
+export {
+  SpecSheetIdType,
+  SpecSheetType,
+  SpecUserInfoType,
+  SpecTechInfoType,
+  SpecProjectType,
+} from "./specSheet";
 export { StudyStackIdType, StackAddType, StackUpdateType } from "./studyStack";
 export {
   TechLeafType,

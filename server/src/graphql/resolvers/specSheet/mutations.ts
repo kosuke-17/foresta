@@ -5,6 +5,15 @@ import {
   SpecTechInfoSheet,
   SpecUserInfoSheet,
 } from "../../../models/SpecSheet.model";
+import {
+  PortfolioIdType,
+  PortfolioType,
+  SpecProjectType,
+  SpecSheetIdType,
+  SpecSheetType,
+  SpecTechInfoType,
+  SpecUserInfoType,
+} from "../../../types";
 import { success } from "../responseStatus";
 
 /**
@@ -17,7 +26,7 @@ const specSheetMutations = {
    * @param specSheet - スペックシートの情報
    * @returns 更新したスペックシートの情報
    */
-  updateSpecSheet: async (_: any, { specSheet }: any) => {
+  updateSpecSheet: async (_: any, { specSheet }: SpecSheetType) => {
     const { specSheetId, selfIntro, studyOnOwnTime, certification, prevJobs } =
       specSheet;
     try {
@@ -55,7 +64,7 @@ const specSheetMutations = {
    * @param specUserInfo - ユーザーの情報
    * @returns 更新したスペックシートのユーザー情報
    */
-  updateSpecUserInfo: async (_: any, { specUserInfo }: any) => {
+  updateSpecUserInfo: async (_: any, { specUserInfo }: SpecUserInfoType) => {
     const {
       specUserInfoId,
       stuffID,
@@ -98,7 +107,7 @@ const specSheetMutations = {
    * @param specTechInfo - スキル要約の情報
    * @returns 更新したスペックシートのスキル要約情報
    */
-  updateSpecTechInfo: async (_: any, { specTechInfo }: any) => {
+  updateSpecTechInfo: async (_: any, { specTechInfo }: SpecTechInfoType) => {
     const {
       specTechInfoId,
       operationEnvs,
@@ -138,7 +147,7 @@ const specSheetMutations = {
    * @param specProject - 開発経験の情報
    * @returns 更新したスペックシートの開発経験情報
    */
-  updateSpecProject: async (_: any, { specProject }: any) => {
+  updateSpecProject: async (_: any, { specProject }: SpecProjectType) => {
     const {
       specProjectId,
       name,
@@ -190,7 +199,7 @@ const specSheetMutations = {
    * @param specProject - 追加プロジェクト情報
    * @returns 追加したプロジェクト情報
    */
-  addSpecProject: async (_: any, { specProject }: any) => {
+  addSpecProject: async (_: any, { specProject }: SpecProjectType) => {
     const {
       name,
       startedAt,
@@ -232,7 +241,7 @@ const specSheetMutations = {
       return { status: "error" };
     }
   },
-  removeSpecProject: async (_: any, { specProjectId }: any) => {
+  removeSpecProject: async (_: any, { specProjectId }: SpecSheetIdType) => {
     try {
       const result = await SpecProjectSheet.findByIdAndRemove({
         _id: specProjectId,
@@ -249,7 +258,7 @@ const specSheetMutations = {
    * @param portfolio - 作成ポートフォリオ情報
    * @returns 作成したポートフォリオ情報
    */
-  createPortfolio: async (_: any, { portfolio }: any) => {
+  createPortfolio: async (_: any, { portfolio }: PortfolioType) => {
     const { title, description, img, portfolioURL, userId, specSheetId } =
       portfolio;
     const newPortfolio = new Portfolio({
@@ -274,7 +283,7 @@ const specSheetMutations = {
    * @param portfolio - 編集ポートフォリオ情報
    * @returns 編集したポートフォリオ情報
    */
-  updatePortfolio: async (_: any, { portfolio }: any) => {
+  updatePortfolio: async (_: any, { portfolio }: PortfolioType) => {
     const { portfolioId, title, description, img, portfolioURL } = portfolio;
     try {
       const result = await Portfolio.findByIdAndUpdate(
@@ -294,7 +303,7 @@ const specSheetMutations = {
    * @param portfolioID - ポートフォリオID
    * @returns 削除処理ステータス
    */
-  removePortfolio: async (_: any, { portfolioId }: any) => {
+  removePortfolio: async (_: any, { portfolioId }: PortfolioIdType) => {
     try {
       const result = await Portfolio.findByIdAndRemove({ _id: portfolioId });
       return success(result);

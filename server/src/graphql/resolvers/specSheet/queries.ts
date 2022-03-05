@@ -1,4 +1,5 @@
 import { Portfolio, SpecSheet } from "../../../models/SpecSheet.model";
+import { UserIdType } from "../../../types";
 import { success } from "../responseStatus";
 
 /**
@@ -10,7 +11,7 @@ const specSheetQueries = {
    * @param userId - ユーザーID
    * @returns ユーザーIDに紐づくスペックシート
    */
-  getSheetByUserId: async (_: any, { userId }: any) => {
+  getSheetByUserId: async (_: any, { userId }: UserIdType) => {
     try {
       const result = await SpecSheet.findOne({ userId: userId });
       if (result === null) {
@@ -32,7 +33,7 @@ const specSheetQueries = {
    * @param userId - ユーザーID
    * @returns ユーザーIDに紐づくポートフォリオ
    */
-  getPortfolioByUserId: async (_: any, { userId }: any) => {
+  getPortfolioByUserId: async (_: any, { userId }: UserIdType) => {
     try {
       const result = await Portfolio.findOne({ userId: userId });
       if (result === null) {
