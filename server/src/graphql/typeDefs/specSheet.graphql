@@ -171,6 +171,7 @@ type ResponseSpecProject {
 type ResponsePortfolio {
   status: String!
   node: Portfolio
+  message: String
 }
 
 type ResponseRemove {

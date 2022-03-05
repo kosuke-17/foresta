@@ -23,6 +23,7 @@ type Query {
   StudyStackIdに紐づいたStudyStack情報を取得する.
   """
   getStudyStackById(studyStackId: String): StudyStack!
+  getPortfolioByUserId(userId: String): ResponsePortfolio!
   """
   それぞれのTechを取得する
   """

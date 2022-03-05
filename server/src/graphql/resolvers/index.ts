@@ -1,6 +1,6 @@
 import { TechBranch, TechLeaf, TechTree } from "../../models/TechForest.model";
 import { TechIdType } from "../../types/techForest";
-import { specSheetMutations } from "./specSheet";
+import { specSheetMutations, specSheetQueries } from "./specSheet";
 import { studyStackMutations, studyStackQueries } from "./studyStack";
 import { techForestMutations, techForestQueries } from "./techForest";
 import { userMutations, userQueries } from "./user";
@@ -14,6 +14,7 @@ const resolvers = {
     ...userTodosQueries,
     ...techForestQueries,
     ...studyStackQueries,
+    ...specSheetQueries,
   },
   Mutation: {
     ...userMutations,
