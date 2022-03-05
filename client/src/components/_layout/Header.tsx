@@ -1,10 +1,13 @@
 import { memo, FC } from "react";
+import { LogoutButton } from "../atoms/auth/LogoutButton";
 import styled from "styled-components";
 
 export const Header: FC = memo(() => {
   return (
     <>
-      <_Header>ヘッダ</_Header>
+      <_Header>
+        <LogoutButton />
+      </_Header>
     </>
   );
 });
