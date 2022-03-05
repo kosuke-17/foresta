@@ -27,8 +27,8 @@ const UserSchema = new mongoose.Schema({
 const UserUrlsSchema = new mongoose.Schema({
   user_urls: [
     {
-      urlName: { type: String, required: true },
-      url: { type: String, required: true },
+      urlName: { type: String },
+      url: { type: String },
     },
   ],
   userId: { type: String, required: true },
