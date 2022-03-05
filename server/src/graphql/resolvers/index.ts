@@ -1,4 +1,5 @@
 import {
+  Portfolio,
   SpecProjectSheet,
   SpecTechInfoSheet,
   SpecUserInfoSheet,
@@ -56,6 +57,7 @@ const resolvers = {
       await UserLeafs.findOne({ userId: _id }),
     userUrls: async ({ _id }: IdType) =>
       await UserUrls.findOne({ userId: _id }),
+    portfolio: async ({ _id }: IdType) => await Portfolio.find({ userId: _id }),
   },
 };
 

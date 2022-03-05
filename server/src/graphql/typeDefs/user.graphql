@@ -8,6 +8,7 @@ type User {
   githubURL: String!
   userLeafs: UserLeafs!
   userUrls: UserUrls!
+  portfolio: [Portfolio!]
 }
 
 ################
