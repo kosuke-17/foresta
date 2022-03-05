@@ -3,7 +3,6 @@ import { Users, UserLeafs } from "../../../models/User.model";
 import { success } from "../responseStatus";
 import { UserType, UserLoginType } from "../../../types";
 import {
-  SpecProjectSheet,
   SpecSheet,
   SpecTechInfoSheet,
   SpecUserInfoSheet,
@@ -82,32 +81,12 @@ const userMutations = {
           devRoles: [],
           specSheetId: createdSpecSheet._id,
         });
-        // スペックシートプロジェクト情報オブジェクト作成
-        const createdSpecProjectSheet = new SpecProjectSheet({
-          name: "",
-          startedAt: "",
-          finishedAt: "",
-          roleSharing: "",
-          content: "",
-          operationEnvs: [],
-          languages: [],
-          frameworks: [],
-          libraries: [],
-          OtherTools: [],
-          devRoles: [],
-          specSheetId: createdSpecSheet._id,
-        });
         // ユーザーの技術オブジェクトを保存
         await createdTechLeafs.save();
-        try {
-          // スペックシート関連のオブジェクト保存
-          await createdSpecSheet.save();
-          await createdSpecUserInfoSheet.save();
-          await createdSpecTechInfoSheet.save();
-          await createdSpecProjectSheet.save();
-        } catch (error) {
-          console.log("error: " + error);
-        }
+        // スペックシート関連のオブジェクト保存
+        await createdSpecSheet.save();
+        await createdSpecUserInfoSheet.save();
+        await createdSpecTechInfoSheet.save();
       }
 
       return success(result);
