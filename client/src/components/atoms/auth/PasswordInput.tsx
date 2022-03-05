@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import {
   Flex,
   Center,
@@ -16,7 +16,7 @@ type InputForm = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const PasswordInput: FC<InputForm> = ({ value, onChange }) => {
+export const PasswordInput: FC<InputForm> = memo(({ value, onChange }) => {
   // パスワード表示/非表示の状態管理
   const [show, setShow] = useState(false);
   // パスワード表示/非表示の状態を変更
@@ -58,4 +58,4 @@ export const PasswordInput: FC<InputForm> = ({ value, onChange }) => {
       </SimpleGrid>
     </Center>
   );
-};
+});

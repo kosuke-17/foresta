@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent } from "react";
+import { FC, memo, useState, ChangeEvent } from "react";
 import { useCookies } from "react-cookie";
 import { EmailInput } from "../../atoms/auth/EmailInput";
 import { PasswordInput } from "../../atoms/auth/PasswordInput";
@@ -8,7 +8,7 @@ import { LOGIN_QUERY } from "../../../queries/query";
 import { Center, Box, SimpleGrid } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-const LoginForm: FC = () => {
+const LoginForm: FC = memo(() => {
   const navigate = useNavigate();
   // クッキー
   const [, setCookie] = useCookies();
@@ -70,6 +70,6 @@ const LoginForm: FC = () => {
       </Box>
     </div>
   );
-};
+});
 
 export default LoginForm;

@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { useCookies } from "react-cookie";
 import { Center, SimpleGrid } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 
-export const LogoutButton: FC = () => {
+export const LogoutButton: FC = memo(() => {
   // クッキー
   const [, , removeCookie] = useCookies();
   const doLogout = () => {
@@ -19,4 +19,4 @@ export const LogoutButton: FC = () => {
       </SimpleGrid>
     </Center>
   );
-};
+});

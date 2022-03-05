@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent } from "react";
+import React, { FC, memo } from "react";
 import { Center, Text, Input, SimpleGrid } from "@chakra-ui/react";
 
 type InputForm = {
@@ -6,7 +6,7 @@ type InputForm = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const EmailInput: FC<InputForm> = ({ value, onChange }) => {
+export const EmailInput: FC<InputForm> = memo(({ value, onChange }) => {
   return (
     <Center mt={8}>
       <SimpleGrid columns={1}>
@@ -17,4 +17,4 @@ export const EmailInput: FC<InputForm> = ({ value, onChange }) => {
       </SimpleGrid>
     </Center>
   );
-};
+});
