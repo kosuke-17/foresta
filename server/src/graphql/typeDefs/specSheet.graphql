@@ -6,6 +6,7 @@ type SpecSheet {
   certification: String!
   prevJobs: [prevJobsContent!]!
   userId: String!
+  userInfo: SpecUserInfoSheet!
 }
 # 前職経験情報
 type prevJobsContent {
