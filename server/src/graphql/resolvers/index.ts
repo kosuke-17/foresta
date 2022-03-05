@@ -1,4 +1,7 @@
-import { SpecUserInfoSheet } from "../../models/SpecSheet.model";
+import {
+  SpecTechInfoSheet,
+  SpecUserInfoSheet,
+} from "../../models/SpecSheet.model";
 import { TechBranch, TechLeaf, TechTree } from "../../models/TechForest.model";
 import { TechIdType } from "../../types/techForest";
 import { specSheetMutations, specSheetQueries } from "./specSheet";
@@ -39,9 +42,10 @@ const resolvers = {
       await TechTree.find({ techArea_id: _id }),
   },
   SpecSheet: {
-    userInfo: async ({ _id }: any) => {
-      return await SpecUserInfoSheet.findOne({ specSheetId: _id });
-    },
+    userInfo: async ({ _id }: any) =>
+      await SpecUserInfoSheet.findOne({ specSheetId: _id }),
+    techInfo: async ({ _id }: any) =>
+      await SpecTechInfoSheet.findOne({ specSheetId: _id }),
   },
 };
 

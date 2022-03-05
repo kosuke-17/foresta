@@ -7,6 +7,7 @@ type SpecSheet {
   prevJobs: [prevJobsContent!]!
   userId: String!
   userInfo: SpecUserInfoSheet!
+  techInfo: SpecTechInfoSheet!
 }
 # 前職経験情報
 type prevJobsContent {
