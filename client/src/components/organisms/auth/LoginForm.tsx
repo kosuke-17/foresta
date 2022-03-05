@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 const LoginForm: FC = () => {
   const navigate = useNavigate();
   // クッキー
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [, setCookie] = useCookies();
   // メールアドレス
   const [mailAddress, setMailAddress] = useState<string>("");
   // テキストボックス入力時に入力内容をStateに設定
@@ -23,7 +23,7 @@ const LoginForm: FC = () => {
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
 
-  const [mutateFunction, { data, loading, error }] = useMutation(LOGIN_QUERY, {
+  const [mutateFunction] = useMutation(LOGIN_QUERY, {
     variables: {
       user: {
         email: mailAddress,
