@@ -6,9 +6,11 @@ import { LoginButton } from "../../atoms/auth/LoginButton";
 import { useMutation } from "@apollo/client";
 import { LOGIN_QUERY } from "../../../queries/query";
 import { Center, Box, SimpleGrid } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm: FC = memo(() => {
+  const toast = useToast();
   const navigate = useNavigate();
   // クッキー
   const [, setCookie] = useCookies();
@@ -38,6 +40,19 @@ const LoginForm: FC = memo(() => {
     // ログインが成功した場合はCookieにForestaIDを保存
     if (loginData.data.userLogin.status == "success") {
       setCookie("ForestaID", loginData.data.userLogin.node.id);
+      toast({
+        title: "ログインに成功しました",
+        position: "top-right",
+        status: "success",
+        isClosable: true,
+      });
+    } else if (loginData.data.userLogin.status == "error") {
+      toast({
+        title: "ログインに失敗しました",
+        position: "top-right",
+        status: "error",
+        isClosable: true,
+      });
     }
     navigate("/");
   };

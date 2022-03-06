@@ -1,6 +1,7 @@
 import React, { FC, memo } from "react";
 import { Center, SimpleGrid } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 
 type Login = {
   doLogin: React.MouseEventHandler<HTMLButtonElement>;

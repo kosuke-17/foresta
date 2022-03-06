@@ -1,13 +1,20 @@
 import React, { FC, memo } from "react";
 import { useCookies } from "react-cookie";
-import { Center, SimpleGrid } from "@chakra-ui/react";
+import { Center, SimpleGrid, useToast } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 
 export const LogoutButton: FC = memo(() => {
+  const toast = useToast();
   // クッキー
   const [, , removeCookie] = useCookies();
   const doLogout = () => {
     removeCookie("ForestaID");
+    toast({
+      title: "ログアウトしました",
+      position: "top-right",
+      status: "success",
+      isClosable: true,
+    });
   };
 
   return (
