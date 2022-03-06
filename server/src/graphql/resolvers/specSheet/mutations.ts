@@ -14,7 +14,7 @@ import {
   SpecTechInfoType,
   SpecUserInfoType,
 } from "../../../types";
-import { success } from "../responseStatus";
+import { error, success } from "../responseStatus";
 
 /**
  * ## スペックシートの変更処理
@@ -29,6 +29,11 @@ const specSheetMutations = {
   updateSpecSheet: async (_: any, { specSheet }: SpecSheetType) => {
     const { specSheetId, selfIntro, studyOnOwnTime, certification, prevJobs } =
       specSheet;
+    // argsバリデーション
+    if (!specSheetId) {
+      return error("スペックシートIDを入力してください。");
+    }
+    // DBに該当のデータが存在するかチェック
     try {
       // 前職内容をアップデートするオブジェクト生成
       const updatePrevJobs = new Array();
@@ -52,10 +57,9 @@ const specSheetMutations = {
           new: true,
         }
       );
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "更新に成功しました。");
+    } catch (e) {
+      return error("更新に失敗しました。");
     }
   },
   /**

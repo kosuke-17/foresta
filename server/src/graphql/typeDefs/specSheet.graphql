@@ -80,7 +80,6 @@ input SpecSheetUpdateInput {
   studyOnOwnTime: String!
   certification: String!
   prevJobs: [String!]!
-  userId: String!
 }
 # スペックシートユーザー基本情報
 input SpecUserInfoUpdateInput {
@@ -163,7 +162,7 @@ input PortfolioUpdateInput {
 type ResponseSpecSheet {
   status: String!
   node: SpecSheet
-  message: String
+  msg: String
 }
 type ResponseSpecUserInfo {
   status: String!
