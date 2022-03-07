@@ -16,8 +16,8 @@ export const Public: FC = memo(() => {
    */
   const { loading, error, data } = useGetUserByIdQuery({
     //idは実際cookieから取得
-    variables: { id: "621c786c7ca77263e67c88d0" }, //川島
-    // variables: { id: "621b15dd3200d51bb64b2d42" }, //田中
+    // variables: { id: "621c786c7ca77263e67c88d0" }, //川島
+    variables: { id: "621b15dd3200d51bb64b2d42" }, //田中
     // variables: { id: "62214f1765bb91cc3f60e92f" }, //aaa
   });
 
@@ -40,6 +40,16 @@ export const Public: FC = memo(() => {
       <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">
         {user && (
           <>
+            <Flex justifyContent="right">
+              <Button
+                backgroundColor="green.400"
+                size="md"
+                textColor="white"
+                _hover={{ backgroundColor: "green.300" }}
+              >
+                ユーザ情報を編集
+              </Button>
+            </Flex>
             <_User>
               <Flex justifyContent="center">
                 <_Name>氏名:{user.name}</_Name>
@@ -70,11 +80,37 @@ export const Public: FC = memo(() => {
               />
             </_Content>
             {/* 制作物 */}
-            {user.portfolio && user.portfolio?.length != 0 && (
+            {user.portfolio && user.portfolio?.length != 0 ? (
               <SiteImageBox siteData={user.portfolio} />
+            ) : (
+              <Flex justifyContent="center" my={5}>
+                <Button
+                  backgroundColor="green.400"
+                  size="md"
+                  textColor="white"
+                  width={200}
+                  _hover={{ backgroundColor: "green.300" }}
+                >
+                  制作物を追加
+                </Button>
+              </Flex>
             )}
             {/* URL */}
-            {user.userUrls && <UrlList urlData={user.userUrls.user_urls} />}
+            {user.userUrls ? (
+              <UrlList urlData={user.userUrls.user_urls} />
+            ) : (
+              <Flex justifyContent="center" my={5}>
+                <Button
+                  backgroundColor="green.400"
+                  size="md"
+                  textColor="white"
+                  width={200}
+                  _hover={{ backgroundColor: "green.300" }}
+                >
+                  URLを追加
+                </Button>
+              </Flex>
+            )}
           </>
         )}
       </Box>
@@ -97,7 +133,7 @@ const _Icon = styled.div`
   }
 `;
 
-//バブリックゾーン上半分
+//パブリックゾーン上半分
 const _User = styled.div`
   text-align: center;
 `;

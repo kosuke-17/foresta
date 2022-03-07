@@ -1,5 +1,5 @@
 import { memo, FC } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Button } from "@chakra-ui/react";
 import styled from "styled-components";
 import { Url } from "../../../types/generated/graphql";
 
@@ -13,7 +13,19 @@ type Props = {
 export const UrlList: FC<Props> = memo(({ urlData }) => {
   return (
     <>
-      <_Title>■その他URL</_Title>
+      <Flex alignItems="center">
+        <_Title>■その他URL</_Title>
+        <Button
+          backgroundColor="green.400"
+          size="md"
+          textColor="white"
+          width={200}
+          ml={5}
+          _hover={{ backgroundColor: "green.300" }}
+        >
+          URLを追加
+        </Button>
+      </Flex>
       {urlData.map((urlItem, i) => (
         <div key={i}>
           <Flex>
@@ -34,7 +46,6 @@ export const UrlList: FC<Props> = memo(({ urlData }) => {
 const _Title = styled.div`
   font-weight: bold;
   font-size: 30px;
-  margin: 40px 0px 10px 0px;
 `;
 
 //URLタイトル
