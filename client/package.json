@@ -116,6 +116,7 @@
     "@types/jest": "^27.4.1",
     "@types/styled-components": "^5.1.23",
     "babel-jest": "^27.5.1",
+    "eslint-plugin-jest": "^26.1.1",
     "eslint-plugin-storybook": "^0.5.7",
     "jest": "^27.5.1",
     "jest-css-modules": "^2.1.0",
