@@ -25,6 +25,22 @@ export const Public: FC = memo(() => {
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
   const user = data?.user;
 
+  const siteData = [
+    {
+      siteName: "ほげほげサイト",
+      imageUrl: "http://kansetsu-life.com/common/img/header_image.jpg",
+    },
+    {
+      siteName: "ほげほげサイト",
+      imageUrl:
+        "https://pbs.twimg.com/media/E0sy6v2VUAEm6Y4?format=jpg&name=4096x4096",
+    },
+    {
+      siteName: "ほげほげサイト",
+      imageUrl: "https://bit.ly/dan-abramov",
+    },
+  ];
+
   //読み込み中時の表示
   if (loading) {
     return <p>loding…</p>;
@@ -77,51 +93,38 @@ export const Public: FC = memo(() => {
               />
             </_Content>
             {/* 制作物 */}
-            <Box backgroundColor="white" pb={10} mb={10}>
-              <Box
-                width="full"
-                textAlign="center"
-                textColor="white"
-                backgroundColor="gray.400"
-                fontWeight="bold"
-                p={3}
-                mt={5}
-                fontSize={20}
-              >
-                制作物一覧
-              </Box>
-              <Flex gap={4} justifyContent="center">
-                <Flex direction="column">
-                  <SiteImageBox
-                    siteName="ほげほげサイト"
-                    onOpen={onOpen}
-                    imageUrl="http://kansetsu-life.com/common/img/header_image.jpg"
-                  />
-                </Flex>
-                <Flex direction="column">
-                  <SiteImageBox
-                    siteName="ほげほげサイト"
-                    onOpen={onOpen}
-                    imageUrl="https://pbs.twimg.com/media/E0sy6v2VUAEm6Y4?format=jpg&name=4096x4096"
-                  />
-                </Flex>
-                <Flex direction="column">
+            {siteData && (
+              <>
+                <Box backgroundColor="white" pb={10} mb={10}>
                   <Box
-                    cursor="pointer"
-                    onClick={onOpen}
-                    backgroundColor="gray.400"
-                    width={350}
-                    height={200}
+                    width="full"
                     textAlign="center"
-                    alignItems="center"
-                    mt={30}
+                    textColor="white"
+                    backgroundColor="gray.400"
+                    fontWeight="bold"
+                    p={3}
+                    mt={5}
+                    fontSize={20}
                   >
-                    仮のBox
+                    制作物一覧
                   </Box>
-                  <div>ほげほげサイト</div>
-                </Flex>
-              </Flex>
-            </Box>
+                  <Flex gap={4} justifyContent="center">
+                    {siteData.map((siteItem, i) => (
+                      <div key={i}>
+                        <Flex direction="column">
+                          <SiteImageBox
+                            siteName={siteItem.siteName}
+                            onOpen={onOpen}
+                            imageUrl={siteItem.imageUrl}
+                          />
+                        </Flex>
+                      </div>
+                    ))}
+                  </Flex>
+                </Box>
+              </>
+            )}
+            {/* ここまで */}
 
             <div>ほげほげサイト</div>
             <div>
