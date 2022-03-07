@@ -20,10 +20,6 @@ export const Public: FC = memo(() => {
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
   const user = data?.user;
 
-  //urlName
-  //url
-  //data?.user.userUrls.user_urls
-
   const siteData: Array<{ siteName: string; imageUrl: string }> = [
     {
       siteName: "ほげほげサイト1",
@@ -55,8 +51,6 @@ export const Public: FC = memo(() => {
       imageUrl: "https://bit.ly/dan-abramov",
     },
   ];
-
-  // const siteData: Array<{ siteName: string; imageUrl: string }> = [];
 
   //読み込み中時の表示
   if (loading) {
@@ -110,11 +104,17 @@ export const Public: FC = memo(() => {
               </>
             )}
             {/* ここまで */}
-            <div>■その他URL</div>
+            <_Title>■その他URL</_Title>
             {user.userUrls.user_urls.map((urlItem, i) => (
               <div key={i}>
-                <div>{urlItem.urlName}</div>
-                <div>{urlItem.url}</div>
+                <Flex>
+                  <_UrlTitle>『{urlItem.urlName}』</_UrlTitle>
+                  <_UrlContent>
+                    <a href={urlItem.url} target="blank">
+                      {urlItem.url}
+                    </a>
+                  </_UrlContent>
+                </Flex>
               </div>
             ))}
           </>
@@ -143,4 +143,19 @@ const _User = styled.div`
 
 const _Content = styled.div`
   margin-top: 10px;
+`;
+
+//項目タイトル
+const _Title = styled.div`
+  font-weight: bold;
+  font-size: 30px;
+  margin: 40px 0px 10px 0px;
+`;
+
+const _UrlTitle = styled.div`
+  width: 400px;
+`;
+
+const _UrlContent = styled.div`
+  width: 1000px;
 `;
