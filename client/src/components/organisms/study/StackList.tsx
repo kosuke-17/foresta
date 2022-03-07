@@ -11,6 +11,7 @@ import { memo } from "react";
 import { useStackList } from "../../../hooks/study/useStackList";
 import { LogListTable } from "../../molucules/stackList/LogListTable";
 import { StudyListTable } from "../../molucules/stackList/StudyListTable";
+import { StudyModal } from "../../molucules/StudyModal";
 
 //タブ名
 const tabNames = ["学習リスト", "更新情報"] as const;
@@ -65,6 +66,8 @@ export const StackList = memo(() => {
           )}
         </Tabs>
       </Center>
+      {/* 仮の学習記録ボタン */}
+      <StudyModal title="記録追加" buttonTitle="記録" />
     </div>
   );
 });
