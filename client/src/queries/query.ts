@@ -30,6 +30,17 @@ export const LOGIN_QUERY = gql`
   }
 `;
 
+// エンジニアリスト全件表示
+gql`
+  query GetAllUser {
+    getAllUser {
+      id
+      name
+      jobType
+    }
+  }
+`;
+
 //学習リスト全件表示
 gql`
   query GetAllStudyStack($userId: String) {
