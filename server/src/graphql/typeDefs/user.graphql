@@ -7,7 +7,7 @@ type User {
   password: String!
   githubURL: String!
   userLeafs: UserLeafs!
-  userUrls: UserUrls!
+  userUrls: UserUrls
   portfolio: [Portfolio!]
 }
 
