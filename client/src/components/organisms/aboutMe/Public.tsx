@@ -7,7 +7,7 @@ import { MarkGithubIcon } from "@primer/octicons-react";
 import { AccordionContent } from "../../molucules/AccordionContent";
 import { ModalSet } from "../../molucules/ModalSet";
 import { useModal } from "../../../hooks/useModal";
-import { ImageBox } from "../../atoms/AboutMePublic/ImageBox";
+import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 
 export const Public: FC = memo(() => {
   const modalStore = useModal();
@@ -92,35 +92,18 @@ export const Public: FC = memo(() => {
               </Box>
               <Flex gap={4} justifyContent="center">
                 <Flex direction="column">
-                  <ImageBox siteName="ほげほげサイト" />
-                  <Box
-                    cursor="pointer"
-                    onClick={onOpen}
-                    backgroundColor="gray.400"
-                    width={350}
-                    height={200}
-                    textAlign="center"
-                    alignItems="center"
-                    mt={30}
-                  >
-                    仮のBox
-                  </Box>
-                  ほげほげサイト
+                  <SiteImageBox
+                    siteName="ほげほげサイト"
+                    onOpen={onOpen}
+                    imageUrl="http://kansetsu-life.com/common/img/header_image.jpg"
+                  />
                 </Flex>
                 <Flex direction="column">
-                  <Box
-                    cursor="pointer"
-                    onClick={onOpen}
-                    backgroundColor="gray.400"
-                    width={350}
-                    height={200}
-                    textAlign="center"
-                    alignItems="center"
-                    mt={30}
-                  >
-                    仮のBox
-                  </Box>
-                  <div>ほげほげサイト</div>
+                  <SiteImageBox
+                    siteName="ほげほげサイト"
+                    onOpen={onOpen}
+                    imageUrl="https://pbs.twimg.com/media/E0sy6v2VUAEm6Y4?format=jpg&name=4096x4096"
+                  />
                 </Flex>
                 <Flex direction="column">
                   <Box
