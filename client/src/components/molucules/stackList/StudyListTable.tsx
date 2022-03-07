@@ -20,7 +20,7 @@ type Props = {
  * 学習記録リストを表示するテーブル
  */
 export const StudyListTable: FC<Props> = memo((props) => {
-  const { data, stackSumList } = props;
+  const { stackSumList } = props;
   return (
     <Table variant="simple" colorScheme="green">
       <TableCaption>学習の記録</TableCaption>
@@ -34,7 +34,7 @@ export const StudyListTable: FC<Props> = memo((props) => {
         </Tr>
       </Thead>
       <Tbody>
-        {data &&
+        {stackSumList &&
           stackSumList.map((stackList) => (
             <Tr key={stackList.id}>
               <Td>{stackList.skillTagId}</Td>
