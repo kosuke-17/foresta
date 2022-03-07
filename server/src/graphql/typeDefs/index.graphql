@@ -79,13 +79,9 @@ type Mutation {
   """
   updateTodo(todo: TodoUpdateInput): ResponseTodo!
   """
-  Todo状態をtrueにする：引数(todoId)
+  Todo状態をtrueまたはfalseにする：引数(todoId)
   """
-  chekedTodoStatus(todoId: String): ResponseTodo!
-  """
-  Todo状態をfalseにする：引数(todoId)
-  """
-  unChekedTodoStatus(todoId: String): ResponseTodo!
+  changeTodoStatus(todoId: String): ResponseTodo!
   """
   ユーザーがログインする：引数(ユーザーID, email, password)
   """
