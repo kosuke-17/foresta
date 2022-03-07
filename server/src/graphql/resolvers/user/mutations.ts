@@ -23,7 +23,7 @@ const userMutations = {
    */
   createUser: async (_: any, { user }: UserType) => {
     // user_paramを分割代入
-    let { name, jobType, email, password, githubURL } = user;
+    let { name, jobType, email, password, spreadSheetID, githubURL } = user;
     if (githubURL == null) {
       githubURL = "";
     }
@@ -35,6 +35,7 @@ const userMutations = {
         jobType,
         email,
         password,
+        spreadSheetID,
         githubURL,
       });
       const result = await createUser.save();

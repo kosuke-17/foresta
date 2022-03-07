@@ -4,6 +4,7 @@ export type UserType = {
     jobType: string;
     email: string;
     password: string;
+    spreadSheetID: string;
     githubURL?: string;
     have_techLeafs?: string[];
   };

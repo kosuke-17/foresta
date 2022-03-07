@@ -5,6 +5,7 @@ type User {
   jobType: String!
   email: String!
   password: String!
+  spreadSheetID: String!
   githubURL: String!
   userLeafs: UserLeafs!
   userUrls: UserUrls
@@ -20,6 +21,7 @@ input UserCreateInput {
   jobType: String!
   email: String!
   password: String!
+  spreadSheetID: String
   githubURL: String!
 }
 
