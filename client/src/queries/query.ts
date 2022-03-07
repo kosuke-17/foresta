@@ -41,11 +41,26 @@ gql`
   }
 `;
 
+// Todoリストの取得
 gql`
   query GetAllTodoByUser($userId: String) {
     todos: getAllTodoByUser(userId: $userId) {
       id
       title
+      startedAt
+      finishedAt
+      isStatus
+    }
+  }
+`;
+
+// Todo一件取得
+gql`
+  query GetTodoById($todoId: String) {
+    todo: getTodoById(todoId: $todoId) {
+      id
+      title
+      description
       startedAt
       finishedAt
       isStatus

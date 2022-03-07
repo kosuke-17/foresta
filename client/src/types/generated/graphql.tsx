@@ -70,6 +70,14 @@ export type Mutation = {
   removeUserUrls: ResponseUserUrls;
   /** Todo状態をfalseにする：引数(todoId) */
   unChekedTodoStatus: ResponseTodo;
+  /** スキル要約情報を更新する */
+  updateSpecProject: ResponseSpecProject;
+  /** スペックシート情報を更新する */
+  updateSpecSheet: ResponseSpecSheet;
+  /** スキル要約情報を更新する */
+  updateSpecTechInfo: ResponseSpecTechInfo;
+  /** 基本情報を更新する */
+  updateSpecUserInfo: ResponseSpecUserInfo;
   /** ユーザーの学習記録を更新する */
   updateStudyStack: ResponseStudyStack;
   /** Todoを更新する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID) */
@@ -136,6 +144,22 @@ export type MutationUnChekedTodoStatusArgs = {
   todoId?: InputMaybe<Scalars["String"]>;
 };
 
+export type MutationUpdateSpecProjectArgs = {
+  specProject?: InputMaybe<SpecProjectUpdateInput>;
+};
+
+export type MutationUpdateSpecSheetArgs = {
+  specSheet?: InputMaybe<SpecSheetUpdateInput>;
+};
+
+export type MutationUpdateSpecTechInfoArgs = {
+  specTechInfo?: InputMaybe<SpecTechInfoUpdateInput>;
+};
+
+export type MutationUpdateSpecUserInfoArgs = {
+  specUserInfo?: InputMaybe<SpecUserInfoUpdateInput>;
+};
+
 export type MutationUpdateStudyStackArgs = {
   stack: StudyStackUpdateInput;
 };
@@ -193,6 +217,30 @@ export type QueryGetUserByIdArgs = {
   _id: Scalars["String"];
 };
 
+export type ResponseSpecProject = {
+  __typename?: "ResponseSpecProject";
+  node?: Maybe<SpecProjectSheet>;
+  status: Scalars["String"];
+};
+
+export type ResponseSpecSheet = {
+  __typename?: "ResponseSpecSheet";
+  node?: Maybe<SpecSheet>;
+  status: Scalars["String"];
+};
+
+export type ResponseSpecTechInfo = {
+  __typename?: "ResponseSpecTechInfo";
+  node?: Maybe<SpecTechInfoSheet>;
+  status: Scalars["String"];
+};
+
+export type ResponseSpecUserInfo = {
+  __typename?: "ResponseSpecUserInfo";
+  node?: Maybe<SpecUserInfoSheet>;
+  status: Scalars["String"];
+};
+
 export type ResponseStudyStack = {
   __typename?: "ResponseStudyStack";
   node?: Maybe<StudyStack>;
@@ -224,6 +272,106 @@ export type ResponseUserUrls = {
   status: Scalars["String"];
 };
 
+export type SpecProjectSheet = {
+  __typename?: "SpecProjectSheet";
+  OtherTools: Array<Scalars["String"]>;
+  content: Scalars["String"];
+  devRoles: Array<Scalars["String"]>;
+  finishedAt: Scalars["String"];
+  frameworks: Array<Scalars["String"]>;
+  languages: Array<Scalars["String"]>;
+  libraries: Array<Scalars["String"]>;
+  memberCount: Scalars["Int"];
+  name: Scalars["String"];
+  operationEnvs: Array<Scalars["String"]>;
+  roleSharing: Scalars["String"];
+  specSheetId: Scalars["String"];
+  startedAt: Scalars["String"];
+};
+
+export type SpecProjectUpdateInput = {
+  OtherTools: Array<Scalars["String"]>;
+  content: Scalars["String"];
+  devRoles: Array<Scalars["String"]>;
+  finishedAt: Scalars["String"];
+  frameworks: Array<Scalars["String"]>;
+  languages: Array<Scalars["String"]>;
+  libraries: Array<Scalars["String"]>;
+  name: Scalars["String"];
+  operationEnvs: Array<Scalars["String"]>;
+  roleSharing: Scalars["String"];
+  specProjectId: Scalars["String"];
+  specSheetId: Scalars["String"];
+  startedAt: Scalars["String"];
+};
+
+export type SpecSheet = {
+  __typename?: "SpecSheet";
+  certification: Scalars["String"];
+  id: Scalars["String"];
+  prevJobs: Array<PrevJobsContent>;
+  selfIntro: Scalars["String"];
+  studyOnOwnTime: Scalars["String"];
+  userId: Scalars["String"];
+};
+
+export type SpecSheetUpdateInput = {
+  certification: Scalars["String"];
+  prevJobs: Array<Scalars["String"]>;
+  selfIntro: Scalars["String"];
+  specSheetId: Scalars["String"];
+  studyOnOwnTime: Scalars["String"];
+  userId: Scalars["String"];
+};
+
+export type SpecTechInfoSheet = {
+  __typename?: "SpecTechInfoSheet";
+  OtherTools: Array<Scalars["String"]>;
+  devRoles: Array<Scalars["String"]>;
+  frameworks: Array<Scalars["String"]>;
+  languages: Array<Scalars["String"]>;
+  libraries: Array<Scalars["String"]>;
+  operationEnvs: Array<Scalars["String"]>;
+  specSheetId: Scalars["String"];
+};
+
+export type SpecTechInfoUpdateInput = {
+  OtherTools: Array<Scalars["String"]>;
+  devRoles: Array<Scalars["String"]>;
+  frameworks: Array<Scalars["String"]>;
+  languages: Array<Scalars["String"]>;
+  libraries: Array<Scalars["String"]>;
+  operationEnvs: Array<Scalars["String"]>;
+  specSheetId: Scalars["String"];
+  specTechInfoId: Scalars["String"];
+};
+
+export type SpecUserInfoSheet = {
+  __typename?: "SpecUserInfoSheet";
+  age: Scalars["Int"];
+  gender: Scalars["String"];
+  itExpAmount: Scalars["Int"];
+  nearestStation: Scalars["String"];
+  pgExpAmount: Scalars["Int"];
+  seExpAmount: Scalars["Int"];
+  specSheetId: Scalars["String"];
+  startWorkDate: Scalars["String"];
+  stuffID: Scalars["String"];
+};
+
+export type SpecUserInfoUpdateInput = {
+  age: Scalars["Int"];
+  gender: Scalars["String"];
+  itExpAmount: Scalars["Int"];
+  nearestStation: Scalars["String"];
+  pgExpAmount: Scalars["Int"];
+  seExpAmount: Scalars["Int"];
+  specSheetId: Scalars["String"];
+  specUserInfoId: Scalars["String"];
+  startWorkDate: Scalars["String"];
+  stuffID: Scalars["String"];
+};
+
 export type StudyStack = {
   __typename?: "StudyStack";
   content: Scalars["String"];
@@ -248,7 +396,6 @@ export type StudyStackUpdateInput = {
   skillTagId: Scalars["String"];
   studyStackId: Scalars["String"];
   timeStack: Scalars["Int"];
-  userId: Scalars["String"];
 };
 
 export type TechArea = {
@@ -403,6 +550,11 @@ export type LeafInfo = {
   techTreeId: Scalars["String"];
 };
 
+export type PrevJobsContent = {
+  __typename?: "prevJobsContent";
+  content: Scalars["String"];
+};
+
 export type GetAllStudyStackQueryVariables = Exact<{
   userId?: InputMaybe<Scalars["String"]>;
 }>;
@@ -451,6 +603,23 @@ export type GetAllTodoByUserQuery = {
     finishedAt: string;
     isStatus: boolean;
   }>;
+};
+
+export type GetTodoByIdQueryVariables = Exact<{
+  todoId?: InputMaybe<Scalars["String"]>;
+}>;
+
+export type GetTodoByIdQuery = {
+  __typename?: "Query";
+  todo: {
+    __typename?: "Todo";
+    id: string;
+    title: string;
+    description: string;
+    startedAt: string;
+    finishedAt: string;
+    isStatus: boolean;
+  };
 };
 
 export const GetAllStudyStackDocument = gql`
@@ -640,4 +809,65 @@ export type GetAllTodoByUserLazyQueryHookResult = ReturnType<
 export type GetAllTodoByUserQueryResult = Apollo.QueryResult<
   GetAllTodoByUserQuery,
   GetAllTodoByUserQueryVariables
+>;
+export const GetTodoByIdDocument = gql`
+  query GetTodoById($todoId: String) {
+    todo: getTodoById(todoId: $todoId) {
+      id
+      title
+      description
+      startedAt
+      finishedAt
+      isStatus
+    }
+  }
+`;
+
+/**
+ * __useGetTodoByIdQuery__
+ *
+ * To run a query within a React component, call `useGetTodoByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTodoByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTodoByIdQuery({
+ *   variables: {
+ *      todoId: // value for 'todoId'
+ *   },
+ * });
+ */
+export function useGetTodoByIdQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetTodoByIdQuery,
+    GetTodoByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetTodoByIdQuery, GetTodoByIdQueryVariables>(
+    GetTodoByIdDocument,
+    options,
+  );
+}
+export function useGetTodoByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetTodoByIdQuery,
+    GetTodoByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetTodoByIdQuery, GetTodoByIdQueryVariables>(
+    GetTodoByIdDocument,
+    options,
+  );
+}
+export type GetTodoByIdQueryHookResult = ReturnType<typeof useGetTodoByIdQuery>;
+export type GetTodoByIdLazyQueryHookResult = ReturnType<
+  typeof useGetTodoByIdLazyQuery
+>;
+export type GetTodoByIdQueryResult = Apollo.QueryResult<
+  GetTodoByIdQuery,
+  GetTodoByIdQueryVariables
 >;
