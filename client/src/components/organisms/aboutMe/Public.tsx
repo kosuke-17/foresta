@@ -25,7 +25,7 @@ export const Public: FC = memo(() => {
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
   const user = data?.user;
 
-  const siteData = [
+  const siteData: Array<{ siteName: string; imageUrl: string }> = [
     {
       siteName: "ほげほげサイト",
       imageUrl: "http://kansetsu-life.com/common/img/header_image.jpg",
@@ -39,7 +39,21 @@ export const Public: FC = memo(() => {
       siteName: "ほげほげサイト",
       imageUrl: "https://bit.ly/dan-abramov",
     },
+    {
+      siteName: "ほげほげサイト",
+      imageUrl: "https://bit.ly/dan-abramov",
+    },
+    {
+      siteName: "ほげほげサイト",
+      imageUrl: "https://bit.ly/dan-abramov",
+    },
+    {
+      siteName: "ほげほげサイト",
+      imageUrl: "https://bit.ly/dan-abramov",
+    },
   ];
+
+  // const siteData: Array<{ siteName: string; imageUrl: string }> = [];
 
   //読み込み中時の表示
   if (loading) {
@@ -93,7 +107,7 @@ export const Public: FC = memo(() => {
               />
             </_Content>
             {/* 制作物 */}
-            {siteData && (
+            {siteData.length != 0 && (
               <>
                 <Box backgroundColor="white" pb={10} mb={10}>
                   <Box
