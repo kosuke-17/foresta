@@ -4,26 +4,28 @@ import { Box, Flex } from "@chakra-ui/react";
 import { useModal } from "../../../hooks/useModal";
 import { ModalSet } from "../../molucules/ModalSet";
 import { SiteDetail } from "./SiteDetail";
+import { SiteType } from "../../../types/UserType";
 
 type Props = {
-  siteData: Array<{
-    title: string;
-    description: string;
-    img: string;
-    portfolioURL: string;
-  }>;
+  siteData: Array<SiteType>; //制作物のデータ
 };
 
 /**
  * 制作物一覧画面.
  */
 export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
+  //モーダル使用のhooks
   const modalStore = useModal();
   const { onOpen, isOpen, onClose } = modalStore;
-  const [modalTitle, setModalTitle] = useState("");
+  const [siteItem, setSiteItem] = useState<SiteType>();
 
-  const openModal = (e: any, siteName: string) => {
-    setModalTitle(siteName);
+  /**
+   *モーダルを開く.
+   * @param e 親への伝搬を防ぐため渡す
+   * @param siteName 制作物データ
+   */
+  const openModal = (e: any, siteItem: SiteType) => {
+    setSiteItem(siteItem);
     onOpen(e);
   };
 
@@ -45,7 +47,7 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
         <ModalSet
           isOpen={isOpen}
           onClose={onClose}
-          modalTitle={modalTitle}
+          modalTitle={siteItem?.title}
           contents={<SiteDetail />}
         />
         <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
@@ -54,7 +56,7 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
               <Flex
                 direction="column"
                 cursor="pointer"
-                onClick={(e) => openModal(e, siteItem.title)}
+                onClick={(e) => openModal(e, siteItem)}
               >
                 <SiteImage siteName={siteItem.title} imageUrl={siteItem.img} />
               </Flex>
