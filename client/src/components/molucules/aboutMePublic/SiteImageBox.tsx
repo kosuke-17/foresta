@@ -18,7 +18,12 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
   //モーダル使用のhooks
   const modalStore = useModal();
   const { onOpen, isOpen, onClose } = modalStore;
-  const [siteItem, setSiteItem] = useState<SiteType>();
+  const [siteItem, setSiteItem] = useState<SiteType>({
+    title: "読み込み中",
+    description: "",
+    img: "",
+    portfolioURL: "",
+  });
 
   /**
    *モーダルを開く.
@@ -49,7 +54,7 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
           isOpen={isOpen}
           onClose={onClose}
           modalTitle={siteItem?.title}
-          contents={<SiteDetail />}
+          contents={<SiteDetail siteItem={siteItem} />}
         />
         <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
           {siteData.map((siteItem, i) => (

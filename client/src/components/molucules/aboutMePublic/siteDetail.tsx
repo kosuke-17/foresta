@@ -1,17 +1,31 @@
 import { memo, FC } from "react";
+import { SiteType } from "../../../types/UserType";
+import { Image } from "@chakra-ui/react";
+
+type Props = {
+  siteItem?: SiteType; //制作物のデータ
+};
 
 /**
  * 制作物詳細画面.
  */
-export const SiteDetail: FC = memo(() => {
+export const SiteDetail: FC<Props> = memo(({ siteItem }) => {
   return (
     <>
-      詳細内容
-      <a href="">画像</a>
-      <div>使用技術</div>
-      <div>
-        URL: <a href="">url</a>
-      </div>
+      {siteItem && (
+        <>
+          {siteItem.title}
+          {siteItem.description}
+          <a href={siteItem.portfolioURL}>
+            <Image
+              src={siteItem.img}
+              alt={siteItem.title}
+              width="auto"
+              maxH={200}
+            />
+          </a>
+        </>
+      )}
     </>
   );
 });
