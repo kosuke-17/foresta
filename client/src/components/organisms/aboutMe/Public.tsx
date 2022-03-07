@@ -9,6 +9,7 @@ import { MenuBar } from "../../molucules/MenuBar";
 import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 import { UrlList } from "../../molucules/aboutMePublic/UrlList";
+import { Portfolio } from "../../../types/generated/graphql";
 
 export const Public: FC = memo(() => {
   /**
@@ -17,13 +18,17 @@ export const Public: FC = memo(() => {
    */
   const { loading, error, data } = useGetUserByIdQuery({
     //idは実際cookieから取得
-    // variables: { id: "621c786c7ca77263e67c88d0" }, //川島
     variables: { id: "621b15dd3200d51bb64b2d42" }, //田中
-    // variables: { id: "62214f1765bb91cc3f60e92f" }, //aaa
   });
 
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
   const user = data?.user;
+  //制作物部分
+  const portfolio: Array<
+    Pick<Portfolio, "img" | "title" | "description" | "portfolioURL">
+  > = user?.portfolio as Array<
+    Pick<Portfolio, "img" | "title" | "description" | "portfolioURL">
+  >;
 
   //読み込み中時の表示
   if (loading) {
@@ -79,9 +84,7 @@ export const Public: FC = memo(() => {
               />
             </_Content>
             {/* 制作物 */}
-            {user.portfolio && user.portfolio?.length != 0 && (
-              <SiteImageBox siteData={user.portfolio} />
-            )}
+            {portfolio && <SiteImageBox siteData={portfolio} />}
             {/* URL */}
             {user.userUrls && <UrlList urlData={user.userUrls.user_urls} />}
           </>

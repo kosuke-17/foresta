@@ -4,7 +4,6 @@ import { gql } from "@apollo/client";
 gql`
   query GetUserById($id: String!) {
     user: getUserById(_id: $id) {
-      id
       name
       jobType
       email

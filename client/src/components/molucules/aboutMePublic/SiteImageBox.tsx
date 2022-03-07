@@ -9,7 +9,7 @@ import { Portfolio } from "../../../types/generated/graphql";
 
 // 自動生成したPortfolioの型から使用したいプロパティ名だけを指定
 type Props = {
-  siteData: Array<
+  siteData?: Array<
     Pick<Portfolio, "title" | "description" | "img" | "portfolioURL">
   >;
 };
@@ -62,18 +62,22 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
           contents={<SiteDetail siteItem={siteItem} />}
         />
         <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
-          {siteData.map((siteItem, i) => (
-            <div key={i}>
-              <Flex
-                direction="column"
-                cursor="pointer"
-                outline="none"
-                onClick={(e) => openModal(e, siteItem)}
-              >
-                <SiteImage siteName={siteItem.title} imageUrl={siteItem.img} />
-              </Flex>
-            </div>
-          ))}
+          {siteData &&
+            siteData.map((siteItem, i) => (
+              <div key={i}>
+                <Flex
+                  direction="column"
+                  cursor="pointer"
+                  outline="none"
+                  onClick={(e) => openModal(e, siteItem)}
+                >
+                  <SiteImage
+                    siteName={siteItem.title}
+                    imageUrl={siteItem.img}
+                  />
+                </Flex>
+              </div>
+            ))}
         </Flex>
       </Box>
     </>

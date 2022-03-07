@@ -201,7 +201,7 @@
         "fields": [
           {
             "name": "addSpecProject",
-            "description": "開発経験情報を追加する",
+            "description": "開発経験情報を追加.",
             "args": [
               {
                 "name": "specProject",
@@ -234,7 +234,7 @@
           },
           {
             "name": "addStudyStack",
-            "description": "ユーザーの学習記録を追加する",
+            "description": "ユーザーの学習記録を追加.",
             "args": [
               {
                 "name": "stack",
@@ -267,7 +267,7 @@
           },
           {
             "name": "addTodo",
-            "description": "Todoを追加する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)",
+            "description": "Todoを追加.",
             "args": [
               {
                 "name": "todo",
@@ -329,7 +329,7 @@
           },
           {
             "name": "changeTodoStatus",
-            "description": "Todo状態をtrueまたはfalseにする：引数(todoId)",
+            "description": "Todo状態をtrueまたはfalse.",
             "args": [
               {
                 "name": "todoId",
@@ -358,7 +358,7 @@
           },
           {
             "name": "createPortfolio",
-            "description": "ポートフォリオを作成する",
+            "description": "ポートフォリオを作成.",
             "args": [
               {
                 "name": "portfolio",
@@ -457,7 +457,7 @@
           },
           {
             "name": "createTechLeaf",
-            "description": "Techを追加する：引数(Leaf名 or Branch名 or Tree名)",
+            "description": "Techを追加.",
             "args": [
               {
                 "name": "techLeaf",
@@ -523,7 +523,7 @@
           },
           {
             "name": "createUser",
-            "description": "ユーザーを追加する：引数(ユーザー名、エンジニアタイプ、GithubURL?)",
+            "description": "ユーザーを追加.",
             "args": [
               {
                 "name": "user",
@@ -556,7 +556,7 @@
           },
           {
             "name": "createUserUrls",
-            "description": "ユーザーの持つUrlを作成する：引数(ユーザーID, TechLeafID)",
+            "description": "ユーザーの持つUrlを作成.",
             "args": [
               {
                 "name": "urlData",
@@ -589,7 +589,7 @@
           },
           {
             "name": "removePortfolio",
-            "description": "ポートフォリオを削除する",
+            "description": "ポートフォリオを削除.",
             "args": [
               {
                 "name": "portfolioId",
@@ -622,7 +622,7 @@
           },
           {
             "name": "removeSpecProject",
-            "description": "開発経験情報を削除する",
+            "description": "開発経験情報を削除.",
             "args": [
               {
                 "name": "specProjectId",
@@ -655,7 +655,7 @@
           },
           {
             "name": "removeStudyStack",
-            "description": "ユーザーの学習記録を削除する",
+            "description": "ユーザーの学習記録を削除.",
             "args": [
               {
                 "name": "studyStackId",
@@ -688,7 +688,7 @@
           },
           {
             "name": "removeTodo",
-            "description": "Todoを削除する：引数(todoId)",
+            "description": "Todoを削除.",
             "args": [
               {
                 "name": "todoId",
@@ -750,7 +750,7 @@
           },
           {
             "name": "updatePortfolio",
-            "description": "ポートフォリオを更新する",
+            "description": "ポートフォリオを更新.",
             "args": [
               {
                 "name": "portfolio",
@@ -783,7 +783,7 @@
           },
           {
             "name": "updateSpecProject",
-            "description": "開発経験情報を更新する",
+            "description": "開発経験情報を更新.",
             "args": [
               {
                 "name": "specProject",
@@ -816,7 +816,7 @@
           },
           {
             "name": "updateSpecSheet",
-            "description": "スペックシート情報を更新する",
+            "description": "スペックシート情報を更新.",
             "args": [
               {
                 "name": "specSheet",
@@ -845,7 +845,7 @@
           },
           {
             "name": "updateSpecTechInfo",
-            "description": "スキル要約情報を更新する",
+            "description": "スキル要約情報を更新.",
             "args": [
               {
                 "name": "specTechInfo",
@@ -878,7 +878,7 @@
           },
           {
             "name": "updateSpecUserInfo",
-            "description": "基本情報を更新する",
+            "description": "基本情報を更新.",
             "args": [
               {
                 "name": "specUserInfo",
@@ -911,7 +911,7 @@
           },
           {
             "name": "updateStudyStack",
-            "description": "ユーザーの学習記録を更新する",
+            "description": "ユーザーの学習記録を更新.",
             "args": [
               {
                 "name": "stack",
@@ -944,7 +944,7 @@
           },
           {
             "name": "updateTodo",
-            "description": "Todoを更新する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)",
+            "description": "Todoを更新.",
             "args": [
               {
                 "name": "todo",
@@ -972,8 +972,41 @@
             "deprecationReason": null
           },
           {
+            "name": "updateUser",
+            "description": "ユーザーを編集.",
+            "args": [
+              {
+                "name": "user",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "UserUpdateInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ResponseUser",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "updateUserTechLeafs",
-            "description": "ユーザー習得技術を更新する：引数(ユーザーID, TechLeafID)",
+            "description": "ユーザー習得技術を更新.",
             "args": [
               {
                 "name": "techLeaf",
@@ -1006,7 +1039,7 @@
           },
           {
             "name": "userLogin",
-            "description": "ユーザーがログインする：引数(ユーザーID, email, password)",
+            "description": "ユーザーがログイン.",
             "args": [
               {
                 "name": "user",
@@ -1557,7 +1590,7 @@
           },
           {
             "name": "getFrameworks",
-            "description": null,
+            "description": "フレームワーク取得",
             "args": [
               {
                 "name": "_id",
@@ -1586,7 +1619,7 @@
           },
           {
             "name": "getLanguages",
-            "description": null,
+            "description": "言語取得",
             "args": [
               {
                 "name": "_id",
@@ -1615,7 +1648,7 @@
           },
           {
             "name": "getLibraries",
-            "description": null,
+            "description": "ライブラリ取得",
             "args": [
               {
                 "name": "_id",
@@ -1644,7 +1677,7 @@
           },
           {
             "name": "getOperationEnvs",
-            "description": null,
+            "description": "動作環境取得",
             "args": [
               {
                 "name": "_id",
@@ -1673,7 +1706,7 @@
           },
           {
             "name": "getOtherTools",
-            "description": null,
+            "description": "その他のツール取得",
             "args": [
               {
                 "name": "_id",
@@ -2233,7 +2266,7 @@
         "description": null,
         "fields": [
           {
-            "name": "message",
+            "name": "msg",
             "description": null,
             "args": [],
             "type": {
@@ -5378,13 +5411,25 @@
               "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Portfolio",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "Portfolio",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "spreadSheetID",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -5395,13 +5440,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "UserLeafs",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "UserLeafs",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5505,6 +5546,18 @@
                 "name": "String",
                 "ofType": null
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "spreadSheetID",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -5694,6 +5747,101 @@
                 "name": "ID",
                 "ofType": null
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "UserUpdateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "email",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "githubURL",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "jobType",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "password",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "spreadSheetID",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userId",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
