@@ -1,4 +1,4 @@
-export type UserType = {
+export type UserCreateType = {
   user: {
     name: string;
     jobType: string;
@@ -6,7 +6,17 @@ export type UserType = {
     password: string;
     spreadSheetID: string;
     githubURL?: string;
-    have_techLeafs?: string[];
+  };
+};
+export type UserUpdateType = {
+  user: {
+    userId: string;
+    name: string;
+    jobType: string;
+    email: string;
+    password: string;
+    spreadSheetID: string;
+    githubURL?: string;
   };
 };
 
