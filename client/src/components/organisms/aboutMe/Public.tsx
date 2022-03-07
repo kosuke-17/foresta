@@ -109,33 +109,7 @@ export const Public: FC = memo(() => {
             {/* 制作物 */}
             {siteData.length != 0 && (
               <>
-                <Box backgroundColor="white" pb={10} mb={10}>
-                  <Box
-                    width="full"
-                    textAlign="center"
-                    textColor="white"
-                    backgroundColor="gray.400"
-                    fontWeight="bold"
-                    p={3}
-                    mt={5}
-                    fontSize={20}
-                  >
-                    制作物一覧
-                  </Box>
-                  <Flex gap={4} justifyContent="center">
-                    {siteData.map((siteItem, i) => (
-                      <div key={i}>
-                        <Flex direction="column">
-                          <SiteImageBox
-                            siteName={siteItem.siteName}
-                            onOpen={onOpen}
-                            imageUrl={siteItem.imageUrl}
-                          />
-                        </Flex>
-                      </div>
-                    ))}
-                  </Flex>
-                </Box>
+                <SiteImageBox siteData={siteData} onOpen={onOpen} />
               </>
             )}
             {/* ここまで */}
