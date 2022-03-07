@@ -40,4 +40,5 @@ const _SiteImage = styled.a`
   :focus {
     box-shadow: "none";
   }
+  outline: none;
 `;
