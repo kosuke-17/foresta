@@ -1,5 +1,9 @@
-import { FC, memo } from "react";
-import FullCalendar, { addDays, EventInput } from "@fullcalendar/react";
+import { Dispatch, FC, memo, SetStateAction } from "react";
+import FullCalendar, {
+  addDays,
+  EventClickArg,
+  EventInput,
+} from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Box } from "@chakra-ui/react";
@@ -8,6 +12,8 @@ import type { TodoData } from "../../types/types";
 
 type Props = {
   todos: Array<TodoData> | undefined;
+  onOpen: (e: any) => void;
+  setTodoId: Dispatch<SetStateAction<string>>;
 };
 
 /**
@@ -16,17 +22,24 @@ type Props = {
  * @param todos Todoの配列
  */
 export const Calendar: FC<Props> = memo((props) => {
-  const { todos } = props;
+  const { todos, onOpen, setTodoId } = props;
 
   // propsで渡ってきたtodoデータからeventデータを作成
   const events = todos?.map((todo) => {
     return {
+      id: todo.id,
       title: todo.title,
       start: todo.startedAt,
       end: todo.finishedAt ? addDays(new Date(todo.finishedAt), 1) : null,
       allDay: true,
     } as EventInput; // fullcalendarのEvent用の型に変換
   });
+
+  const onEventClick = (info: EventClickArg) => {
+    setTodoId(info.event.id);
+    onOpen(info.jsEvent); // info.jsEventでクリックしたイベントのDOMを取得できる
+    console.log(info);
+  };
 
   return (
     <Box
@@ -46,6 +59,7 @@ export const Calendar: FC<Props> = memo((props) => {
         contentHeight="auto" // カレンダーの高さ
         dayMaxEvents={3} // 1日に表示できるイベント数
         events={events || []} // イベントを設定
+        eventClick={(info) => onEventClick(info)} // イベントをクリックした時に呼ばれる
       />
     </Box>
   );

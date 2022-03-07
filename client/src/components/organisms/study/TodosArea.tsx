@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, useState } from "react";
 import {
   Tabs,
   TabList,
@@ -13,6 +13,9 @@ import {
 import { Calendar } from "../../molucules/Calendar";
 import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
 import { TodoList } from "./TodoList";
+import { TodoDetail } from "./TodoDetail";
+
+import { useModal } from "../../../hooks/useModal";
 
 // タブのタイプ
 const tabs = ["全て", "今日", "期限切れ"] as const; //as const をつけてreadonlyにする
@@ -22,6 +25,9 @@ const tabs = ["全て", "今日", "期限切れ"] as const; //as const をつけ
  */
 export const TodosArea: FC = memo(() => {
   const userId = "621f1cba386085f036353ecd";
+  const { isOpen, onOpen, onClose } = useModal();
+
+  const [todoId, setTodoId] = useState("");
 
   const { data, error, loading } = useGetAllTodoByUserQuery({
     variables: {
@@ -60,7 +66,13 @@ export const TodosArea: FC = memo(() => {
           >
             {tabs.map((tab, index) => (
               <TabPanel key={index}>
-                <TodoList todos={data?.todos} loading={loading} tabType={tab} />
+                <TodoList
+                  todos={data?.todos}
+                  loading={loading}
+                  tabType={tab}
+                  onOpen={onOpen}
+                  setTodoId={setTodoId}
+                />
               </TabPanel>
             ))}
           </TabPanels>
@@ -68,7 +80,10 @@ export const TodosArea: FC = memo(() => {
       </Box>
 
       {/* カレンダーエリア */}
-      <Calendar todos={data?.todos} />
+      <Calendar todos={data?.todos} onOpen={onOpen} setTodoId={setTodoId}/>
+
+      {/* Todo詳細 */}
+      <TodoDetail todoId={todoId} isOpen={isOpen} onClose={onClose} />
     </Container>
   );
 });

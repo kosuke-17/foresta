@@ -1,59 +1,49 @@
-import { FC, memo } from "react";
+import { FC, memo, Dispatch, SetStateAction, MouseEventHandler } from "react";
 import { Checkbox, Flex } from "@chakra-ui/react";
 import styled from "styled-components";
-import {
-  getFormattedDate,
-  getFormattedDateWithoutYear,
-} from "../../utils/methods";
+import { getformattedTodoDate } from "../../utils/methods";
 
 import type { TodoData } from "../../types/types";
 
 // 自動生成したTodoの型から使用したいプロパティ名だけを指定
-type Props = TodoData;
+type Props = TodoData & {
+  onOpen: (e: any) => void;
+  setTodoId: Dispatch<SetStateAction<string>>;
+};
 
 /**
  * Todoリストの一つのTodoを表示するコンポーネント.
  */
 export const TodoWithCheck: FC<Props> = memo((props) => {
-  const { id, title, startedAt, finishedAt, isStatus } = props;
+  const { id, title, startedAt, finishedAt, isStatus, onOpen, setTodoId } =
+    props;
 
-  /**
-   * Todo用にフォーマットされた日付を返すメソッド.
-   *
-   * @remarks
-   * 終了日が設定されている場合とされてない場合で場合分け
-   * @returns フォーマットされた日付
-   */
-  const getformattedTodoDate = () => {
-    if (startedAt && finishedAt) {
-      return `${getFormattedDate(
-        new Date(startedAt),
-      )}-${getFormattedDateWithoutYear(new Date(finishedAt))}`;
-    } else if (startedAt) {
-      return `${getFormattedDate(new Date(startedAt))}`;
-    } else {
-      return "未定";
-    }
+  const onOpenTodoDetail: MouseEventHandler<HTMLDivElement> = (e) => {
+    setTodoId(id);
+    onOpen(e);
   };
 
   return (
-    <Flex
-      align="center"
-      justify="space-between"
-      _hover={{ backgroundColor: "#f5f5f5", cursor: "pointer" }}
-    >
-      <Flex align="center" overflow="hidden" white-space="nowrap">
-        <Checkbox
-          isChecked={isStatus}
-          colorScheme="teal"
-          size="lg"
-          onChange={() => alert("toggle")}
-          padding="5px"
-        />
-        <_Title>{title}</_Title>
+    <>
+      <Flex
+        align="center"
+        justify="space-between"
+        _hover={{ backgroundColor: "#f5f5f5", cursor: "pointer" }}
+        onClick={(e) => onOpenTodoDetail(e)}
+      >
+        <Flex align="center" overflow="hidden" white-space="nowrap">
+          <Checkbox
+            isChecked={isStatus}
+            colorScheme="teal"
+            size="lg"
+            onChange={() => alert("toggle")}
+            padding="5px"
+          />
+          <_Title>{title}</_Title>
+        </Flex>
+        <_Date>{getformattedTodoDate(startedAt, finishedAt)}</_Date>
       </Flex>
-      <_Date>{getformattedTodoDate()}</_Date>
-    </Flex>
+    </>
   );
 });
 

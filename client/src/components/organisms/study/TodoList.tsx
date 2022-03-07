@@ -1,22 +1,23 @@
-import { FC, memo } from "react";
+import { FC, memo, Dispatch, SetStateAction } from "react";
 import { List, ListItem } from "@chakra-ui/react";
 import { isWithinInterval, isToday, isBefore, addDays } from "date-fns";
 
 import { TodoWithCheck } from "../../molucules/TodoWithCheck";
 import type { TodoData } from "../../../types/types";
-// import { TodoDetail } from './TodoDetail';
 
 type Props = {
   todos: Array<TodoData> | undefined;
   loading: boolean;
   tabType: "全て" | "今日" | "期限切れ";
+  onOpen: (e: any) => void;
+  setTodoId: Dispatch<SetStateAction<string>>;
 };
 
 /**
  * Todoリストを表示するコンポーネント.
  */
 export const TodoList: FC<Props> = memo((props) => {
-  const { todos, loading, tabType } = props;
+  const { todos, loading, tabType, onOpen, setTodoId } = props;
 
   /**
    * Todoをタブのタイプに応じてフィルタリングする.
@@ -85,14 +86,13 @@ export const TodoList: FC<Props> = memo((props) => {
         <List>
           {getFilteredTodos()?.map((todo) => (
             <ListItem key={todo.id}>
-              <TodoWithCheck {...todo} />
+              <TodoWithCheck {...todo} onOpen={onOpen} setTodoId={setTodoId} />
             </ListItem>
           ))}
         </List>
       ) : (
         <p>該当のTodoが存在しません</p>
       )}
-      {/* <TodoDetail /> */}
     </>
   );
 });
