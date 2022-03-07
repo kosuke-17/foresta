@@ -22,7 +22,6 @@ export type SpecUserInfoType = {
     seExpAmount: number;
     pgExpAmount: number;
     itExpAmount: number;
-    specSheetId: string;
   };
 };
 
@@ -35,11 +34,28 @@ export type SpecTechInfoType = {
     libraries: string[];
     otherTools: string[];
     devRoles: string[];
-    specSheetId: string;
   };
 };
 
 export type SpecProjectType = {
+  specProject: {
+    specProjectId?: string;
+    name: string;
+    startedAt: string;
+    finishedAt: string;
+    roleSharing: string;
+    memberCount: number;
+    content: string;
+    operationEnvs: string[];
+    languages: string[];
+    frameworks: string[];
+    libraries: string[];
+    otherTools: string[];
+    devRoles: string[];
+  };
+};
+
+export type SpecProjectAddType = {
   specProject: {
     specProjectId?: string;
     name: string;

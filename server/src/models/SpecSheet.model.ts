@@ -29,7 +29,7 @@ const SpecTechInfoSheetSchema = new mongoose.Schema({
   languages: { type: [String] },
   frameworks: { type: [String] },
   libraries: { type: [String] },
-  OtherTools: { type: [String] },
+  otherTools: { type: [String] },
   devRoles: { type: [String] },
   specSheetId: { type: String, required: true },
 });
