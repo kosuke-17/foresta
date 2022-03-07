@@ -1,11 +1,12 @@
 import { memo, FC } from "react";
-import { Button, Box, Flex } from "@chakra-ui/react";
-import { useGetUserByIdQuery } from "../../../types/generated/graphql";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Button, Box, Flex } from "@chakra-ui/react";
 import { MarkGithubIcon } from "@primer/octicons-react";
+import styled from "styled-components";
+
 import { AccordionContent } from "../../molucules/AccordionContent";
 import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
+import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 import { Url } from "../../molucules/aboutMePublic/Url";
 
 export const Public: FC = memo(() => {
@@ -15,8 +16,8 @@ export const Public: FC = memo(() => {
    */
   const { loading, error, data } = useGetUserByIdQuery({
     //idは実際cookieから取得
-    // variables: { id: "621c786c7ca77263e67c88d0" }, //川島
-    variables: { id: "621b15dd3200d51bb64b2d42" }, //山田
+    variables: { id: "621c786c7ca77263e67c88d0" }, //川島
+    // variables: { id: "621b15dd3200d51bb64b2d42" }, //山田
     // variables: { id: "62214f1765bb91cc3f60e92f" }, //aaa
   });
 
@@ -69,7 +70,9 @@ export const Public: FC = memo(() => {
               />
             </_Content>
             {/* 制作物 */}
-            {user.portfolio && <SiteImageBox siteData={user.portfolio} />}
+            {user.portfolio && user.portfolio?.length != 0 && (
+              <SiteImageBox siteData={user.portfolio} />
+            )}
             {/* URL */}
             {user.userUrls && <Url urlData={user.userUrls.user_urls} />}
           </>
@@ -79,11 +82,13 @@ export const Public: FC = memo(() => {
   );
 });
 
+//氏名
 const _Name = styled.div`
   font-weight: bold;
   font-size: 25px;
 `;
 
+//githubアイコン
 const _Icon = styled.div`
   margin-top: 5px;
   margin-left: 5px;
@@ -92,10 +97,12 @@ const _Icon = styled.div`
   }
 `;
 
+//バブリックゾーン上半分
 const _User = styled.div`
   text-align: center;
 `;
 
+//技術進捗ツリー
 const _Content = styled.div`
   margin-top: 10px;
 `;

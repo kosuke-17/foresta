@@ -1,15 +1,16 @@
-import { memo, FC, useState } from "react";
+import { memo, FC } from "react";
+import { Flex } from "@chakra-ui/react";
 import styled from "styled-components";
-import { Button, Box, Flex } from "@chakra-ui/react";
 
-/**
- * 制作物一覧画面.
- */
+import { UrlType } from "../../../types/UserType";
 
 type Props = {
-  urlData: Array<{ urlName: string; url: string }>;
+  urlData: Array<UrlType>; //URL情報
 };
 
+/**
+ * URL一覧画面.
+ */
 export const Url: FC<Props> = memo(({ urlData }) => {
   return (
     <>
@@ -37,10 +38,12 @@ const _Title = styled.div`
   margin: 40px 0px 10px 0px;
 `;
 
+//URLタイトル
 const _UrlTitle = styled.div`
   width: 400px;
 `;
 
+//URL本体
 const _UrlContent = styled.div`
   width: 1000px;
 `;

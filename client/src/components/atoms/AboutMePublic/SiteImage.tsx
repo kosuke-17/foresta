@@ -2,13 +2,12 @@ import { memo, FC } from "react";
 import { Image, Box, Flex } from "@chakra-ui/react";
 
 type Props = {
-  //後で?外す
-  imageUrl?: string;
-  siteName: string;
+  imageUrl: string; //画像のURL
+  siteName: string; //制作物の名前
 };
 
 /**
- * サイト画面表示用.
+ * 個々の制作物画面.
  */
 export const SiteImage: FC<Props> = memo(({ imageUrl, siteName }) => {
   return (

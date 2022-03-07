@@ -1,9 +1,10 @@
 import { memo, FC, useState } from "react";
-import { SiteImage } from "../../atoms/AboutMePublic/SiteImage";
 import { Box, Flex } from "@chakra-ui/react";
-import { useModal } from "../../../hooks/useModal";
-import { ModalSet } from "../../molucules/ModalSet";
+
 import { SiteDetail } from "./SiteDetail";
+import { ModalSet } from "../../molucules/ModalSet";
+import { SiteImage } from "../../atoms/AboutMePublic/SiteImage";
+import { useModal } from "../../../hooks/useModal";
 import { SiteType } from "../../../types/UserType";
 
 type Props = {
@@ -22,7 +23,7 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
   /**
    *モーダルを開く.
    * @param e 親への伝搬を防ぐため渡す
-   * @param siteName 制作物データ
+   * @param siteItem - 制作物データ
    */
   const openModal = (e: any, siteItem: SiteType) => {
     setSiteItem(siteItem);
