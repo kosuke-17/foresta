@@ -22,10 +22,10 @@ export const SiteImage: FC<Props> = memo(({ imageUrl, siteName }) => {
           alignItems="center"
           justifyContent="center"
           borderStyle="solid"
-          borderColor="black"
+          borderColor="gray"
           borderWidth="1px"
         >
-          <Image src={imageUrl} alt={siteName} width="auto" maxH={200} />
+          <Image src={imageUrl} alt={siteName} width="auto" maxH={198} />
         </Box>
         {siteName}
       </Flex>

@@ -60,7 +60,12 @@ export const Public: FC = memo(() => {
               </Flex>
               <_Content>{user.jobType}</_Content>
               <_Content>
-                <Button backgroundColor="green.400" size="md" textColor="white">
+                <Button
+                  backgroundColor="green.400"
+                  size="md"
+                  textColor="white"
+                  _hover={{ backgroundColor: "green.300" }}
+                >
                   {/* 仮のリンク */}
                   <Link to={"/study"}>このユーザの学習記録</Link>
                 </Button>
