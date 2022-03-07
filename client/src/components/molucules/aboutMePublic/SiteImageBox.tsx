@@ -27,18 +27,16 @@ export const SiteImageBox: FC<Props> = memo(({ siteData, onOpen }) => {
         >
           制作物一覧
         </Box>
-        <Flex gap={4} justifyContent="center">
+        <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
           {siteData.map((siteItem, i) => (
             <div key={i}>
-              <_SiteImage>
-                <Flex direction="column">
-                  <SiteImage
-                    siteName={siteItem.siteName}
-                    onOpen={onOpen}
-                    imageUrl={siteItem.imageUrl}
-                  />
-                </Flex>
-              </_SiteImage>
+              <Flex direction="column">
+                <SiteImage
+                  siteName={siteItem.siteName}
+                  onOpen={onOpen}
+                  imageUrl={siteItem.imageUrl}
+                />
+              </Flex>
             </div>
           ))}
         </Flex>
@@ -46,8 +44,3 @@ export const SiteImageBox: FC<Props> = memo(({ siteData, onOpen }) => {
     </>
   );
 });
-
-const _SiteImage = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;

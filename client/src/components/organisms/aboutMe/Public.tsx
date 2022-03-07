@@ -51,6 +51,10 @@ export const Public: FC = memo(() => {
       siteName: "ほげほげサイト",
       imageUrl: "https://bit.ly/dan-abramov",
     },
+    {
+      siteName: "ほげほげサイト",
+      imageUrl: "https://bit.ly/dan-abramov",
+    },
   ];
 
   // const siteData: Array<{ siteName: string; imageUrl: string }> = [];
