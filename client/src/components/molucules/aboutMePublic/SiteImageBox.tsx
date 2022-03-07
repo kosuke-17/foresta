@@ -5,10 +5,13 @@ import { SiteDetail } from "./SiteDetail";
 import { ModalSet } from "../../molucules/ModalSet";
 import { SiteImage } from "../../atoms/AboutMePublic/SiteImage";
 import { useModal } from "../../../hooks/useModal";
-import { SiteType } from "../../../types/UserType";
+import { Portfolio } from "../../../types/generated/graphql";
 
+// 自動生成したPortfolioの型から使用したいプロパティ名だけを指定
 type Props = {
-  siteData: Array<SiteType>; //制作物のデータ
+  siteData: Array<
+    Pick<Portfolio, "title" | "description" | "img" | "portfolioURL">
+  >;
 };
 
 /**
@@ -18,19 +21,20 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
   //モーダル使用のhooks
   const modalStore = useModal();
   const { onOpen, isOpen, onClose } = modalStore;
-  const [siteItem, setSiteItem] = useState<SiteType>({
-    title: "読み込み中",
-    description: "",
-    img: "",
-    portfolioURL: "",
-  });
+  const [siteItem, setSiteItem] =
+    useState<
+      Pick<Portfolio, "title" | "description" | "img" | "portfolioURL">
+    >();
 
   /**
    *モーダルを開く.
    * @param e 親への伝搬を防ぐため渡す
    * @param siteItem - 制作物データ
    */
-  const openModal = (e: any, siteItem: SiteType) => {
+  const openModal = (
+    e: any,
+    siteItem: Pick<Portfolio, "title" | "description" | "img" | "portfolioURL">,
+  ) => {
     setSiteItem(siteItem);
     onOpen(e);
   };
@@ -50,6 +54,7 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
         >
           制作物一覧
         </Box>
+
         <ModalSet
           isOpen={isOpen}
           onClose={onClose}

@@ -1,12 +1,13 @@
 import { memo, FC } from "react";
-import { SiteType } from "../../../types/UserType";
 import { SiteImage } from "../../atoms/AboutMePublic/SiteImage";
 import styled from "styled-components";
 import { TableFlexItem } from "../../atoms/TableFlexItem";
 import { Flex } from "@chakra-ui/react";
+import { Portfolio } from "../../../types/generated/graphql";
 
+// 自動生成したPortfolioの型から使用したいプロパティ名だけを指定
 type Props = {
-  siteItem?: SiteType; //制作物のデータ
+  siteItem?: Pick<Portfolio, "title" | "description" | "img" | "portfolioURL">;
 };
 
 /**
@@ -18,10 +19,8 @@ export const SiteDetail: FC<Props> = memo(({ siteItem }) => {
       {siteItem && (
         <>
           <div>{siteItem.description}</div>
-          <_SiteImage>
-            <a href={siteItem.portfolioURL}>
-              <SiteImage imageUrl={siteItem.img} />
-            </a>
+          <_SiteImage href={siteItem.portfolioURL}>
+            <SiteImage imageUrl={siteItem.img} />
           </_SiteImage>
           <Flex justifyContent="center" my={2}>
             使用スキル:
@@ -35,7 +34,10 @@ export const SiteDetail: FC<Props> = memo(({ siteItem }) => {
 });
 
 //サイト画像を中央に持ってくるCSS
-const _SiteImage = styled.div`
+const _SiteImage = styled.a`
   display: flex;
   justify-content: center;
+  :focus {
+    box-shadow: "none";
+  }
 `;

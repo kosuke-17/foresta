@@ -1,17 +1,16 @@
 import { memo, FC } from "react";
 import { Flex } from "@chakra-ui/react";
 import styled from "styled-components";
-
-import { UrlType } from "../../../types/UserType";
+import { Url } from "../../../types/generated/graphql";
 
 type Props = {
-  urlData: Array<UrlType>; //URL情報
+  urlData: Array<Url>; //URL情報
 };
 
 /**
  * URL一覧画面.
  */
-export const Url: FC<Props> = memo(({ urlData }) => {
+export const UrlList: FC<Props> = memo(({ urlData }) => {
   return (
     <>
       <_Title>■その他URL</_Title>

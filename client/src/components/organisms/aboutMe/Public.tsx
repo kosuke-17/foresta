@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { AccordionContent } from "../../molucules/AccordionContent";
 import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 import { useGetUserByIdQuery } from "../../../types/generated/graphql";
-import { Url } from "../../molucules/aboutMePublic/Url";
+import { UrlList } from "../../molucules/aboutMePublic/UrlList";
 
 export const Public: FC = memo(() => {
   /**
@@ -16,9 +16,9 @@ export const Public: FC = memo(() => {
    */
   const { loading, error, data } = useGetUserByIdQuery({
     //idは実際cookieから取得
-    // variables: { id: "621c786c7ca77263e67c88d0" }, //川島
-    // variables: { id: "621b15dd3200d51bb64b2d42" }, //山田
-    variables: { id: "62214f1765bb91cc3f60e92f" }, //aaa
+    variables: { id: "621c786c7ca77263e67c88d0" }, //川島
+    // variables: { id: "621b15dd3200d51bb64b2d42" }, //田中
+    // variables: { id: "62214f1765bb91cc3f60e92f" }, //aaa
   });
 
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
@@ -74,7 +74,7 @@ export const Public: FC = memo(() => {
               <SiteImageBox siteData={user.portfolio} />
             )}
             {/* URL */}
-            {user.userUrls && <Url urlData={user.userUrls.user_urls} />}
+            {user.userUrls && <UrlList urlData={user.userUrls.user_urls} />}
           </>
         )}
       </Box>
