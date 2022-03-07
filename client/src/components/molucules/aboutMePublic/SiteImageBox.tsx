@@ -1,17 +1,26 @@
-import { memo, FC } from "react";
+import { memo, FC, useState } from "react";
 import { SiteImage } from "../../atoms/AboutMePublic/SiteImage";
 import { Box, Flex } from "@chakra-ui/react";
-import styled from "styled-components";
+import { useModal } from "../../../hooks/useModal";
+import { ModalSet } from "../../molucules/ModalSet";
 
 type Props = {
   siteData: Array<{ siteName: string; imageUrl: string }>;
-  onOpen?: (e: any) => void;
 };
 
 /**
  * 制作物一覧画面.
  */
-export const SiteImageBox: FC<Props> = memo(({ siteData, onOpen }) => {
+export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
+  const modalStore = useModal();
+  const { onOpen, isOpen, onClose } = modalStore;
+  const [modalTitle, setModalTitle] = useState("");
+
+  const openModal = (e: any, siteName: string) => {
+    setModalTitle(siteName);
+    onOpen(e);
+  };
+
   return (
     <>
       <Box backgroundColor="white" pb={10} mb={10}>
@@ -27,13 +36,22 @@ export const SiteImageBox: FC<Props> = memo(({ siteData, onOpen }) => {
         >
           制作物一覧
         </Box>
+        <ModalSet
+          isOpen={isOpen}
+          onClose={onClose}
+          modalTitle={modalTitle}
+          contents={<p>コンテンツ</p>}
+        />
         <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
           {siteData.map((siteItem, i) => (
             <div key={i}>
-              <Flex direction="column">
+              <Flex
+                direction="column"
+                cursor="pointer"
+                onClick={(e) => openModal(e, siteItem.siteName)}
+              >
                 <SiteImage
                   siteName={siteItem.siteName}
-                  onOpen={onOpen}
                   imageUrl={siteItem.imageUrl}
                 />
               </Flex>

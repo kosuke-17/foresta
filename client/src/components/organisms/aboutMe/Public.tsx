@@ -5,14 +5,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { MarkGithubIcon } from "@primer/octicons-react";
 import { AccordionContent } from "../../molucules/AccordionContent";
-import { ModalSet } from "../../molucules/ModalSet";
-import { useModal } from "../../../hooks/useModal";
 import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 
 export const Public: FC = memo(() => {
-  const modalStore = useModal();
-  const { onOpen, isOpen, onClose } = modalStore;
-
   /**
    * ユーザ情報の取得.
    * @remarks 取得情報:名前、職種、GitHub
@@ -27,32 +22,32 @@ export const Public: FC = memo(() => {
 
   const siteData: Array<{ siteName: string; imageUrl: string }> = [
     {
-      siteName: "ほげほげサイト",
+      siteName: "ほげほげサイト1",
       imageUrl: "http://kansetsu-life.com/common/img/header_image.jpg",
     },
     {
-      siteName: "ほげほげサイト",
+      siteName: "ほげほげサイト2",
       imageUrl:
         "https://pbs.twimg.com/media/E0sy6v2VUAEm6Y4?format=jpg&name=4096x4096",
     },
     {
-      siteName: "ほげほげサイト",
+      siteName: "ほげほげサイト3",
       imageUrl: "https://bit.ly/dan-abramov",
     },
     {
-      siteName: "ほげほげサイト",
+      siteName: "ほげほげサイト4",
       imageUrl: "https://bit.ly/dan-abramov",
     },
     {
-      siteName: "ほげほげサイト",
+      siteName: "ほげほげサイト5",
       imageUrl: "https://bit.ly/dan-abramov",
     },
     {
-      siteName: "ほげほげサイト",
+      siteName: "ほげほげサイト6",
       imageUrl: "https://bit.ly/dan-abramov",
     },
     {
-      siteName: "ほげほげサイト",
+      siteName: "ほげほげサイト7",
       imageUrl: "https://bit.ly/dan-abramov",
     },
   ];
@@ -75,12 +70,6 @@ export const Public: FC = memo(() => {
       <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">
         {user && (
           <>
-            <ModalSet
-              isOpen={isOpen}
-              onClose={onClose}
-              modalTitle="ほげほげサイト"
-              contents={<p>コンテンツ</p>}
-            />
             <_User>
               <Flex justifyContent="center">
                 <_Name>氏名:{user.name}</_Name>
@@ -113,7 +102,7 @@ export const Public: FC = memo(() => {
             {/* 制作物 */}
             {siteData.length != 0 && (
               <>
-                <SiteImageBox siteData={siteData} onOpen={onOpen} />
+                <SiteImageBox siteData={siteData} />
               </>
             )}
             {/* ここまで */}

@@ -5,19 +5,16 @@ type Props = {
   //後で?外す
   imageUrl?: string;
   siteName: string;
-  onOpen?: (e: any) => void; //モーダルを開く際に必要
 };
 
 /**
  * サイト画面表示用.
  */
-export const SiteImage: FC<Props> = memo(({ imageUrl, siteName, onOpen }) => {
+export const SiteImage: FC<Props> = memo(({ imageUrl, siteName }) => {
   return (
     <>
       <Flex direction="column">
         <Box
-          cursor="pointer"
-          onClick={onOpen}
           backgroundColor="white"
           mt={30}
           width={300}
