@@ -31,7 +31,7 @@ export const LOGIN_QUERY = gql`
 `;
 
 //学習リスト全件表示
-gql`
+export const ALL_STUDYSTACK_QUERY= gql`
   query GetAllStudyStack($userId: String) {
     getAllStudyStack(userId: $userId) {
       id
@@ -54,6 +54,21 @@ gql`
       createdAt
       skillTagId
       userId
+    }
+  }
+`;
+//学習を記録する
+gql`
+  mutation addStudyStack($stack: StudyStackAddInput!) {
+    addStudyStack(stack: $stack) {
+      status
+      node {
+        content
+        timeStack
+        createdAt
+        skillTagId
+        userId
+      }
     }
   }
 `;
