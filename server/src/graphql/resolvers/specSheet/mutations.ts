@@ -13,6 +13,8 @@ import {
   SpecSheetType,
   SpecTechInfoType,
   SpecUserInfoType,
+  PortfolioUpdateType,
+  SpecProjectAddType,
 } from "../../../types";
 import { error, success } from "../responseStatus";
 
@@ -29,11 +31,15 @@ const specSheetMutations = {
   updateSpecSheet: async (_: any, { specSheet }: SpecSheetType) => {
     const { specSheetId, selfIntro, studyOnOwnTime, certification, prevJobs } =
       specSheet;
-    // argsバリデーション
+    // スペックシートIDが""だったらエラー
     if (!specSheetId) {
       return error("スペックシートIDを入力してください。");
     }
-    // DBに該当のデータが存在するかチェック
+    // スペックシートIDが24文字でなければエラー
+    if (specSheetId.length !== 24) {
+      return error("スペックシートIDが24文字ではありませんでした。");
+    }
+
     try {
       // 前職内容をアップデートするオブジェクト生成
       const updatePrevJobs = new Array();
@@ -57,8 +63,11 @@ const specSheetMutations = {
           new: true,
         }
       );
+      // 該当のIDが存在したかのチェック
+      if (result === null) return error("該当のIDが存在しません。");
+
       return success(result, "更新に成功しました。");
-    } catch (e) {
+    } catch {
       return error("更新に失敗しました。");
     }
   },
@@ -79,8 +88,28 @@ const specSheetMutations = {
       seExpAmount,
       pgExpAmount,
       itExpAmount,
-      specSheetId,
     } = specUserInfo;
+
+    // 基本情報IDが""だったらエラー
+    if (!specUserInfoId) return error("基本情報IDを入力してください。");
+    // 基本情報IDが24文字でなければエラー
+    if (specUserInfoId.length !== 24) {
+      return error("基本情報IDが24文字ではありませんでした。");
+    }
+    // stuffIDはFR-XXX-XXXXでないとエラー
+    const regexStuffId = /^[A-Z]{2,3}\-(\d{3})-(\d{4})$/;
+    if (!regexStuffId.test(stuffID)) {
+      return error(
+        "スタッフIDは「 FR-XXX-XXXX 」のフォーマットにしてください。"
+      );
+    }
+    // startWorkDateはyyyy-mm-dd出ないとエラー
+    const regexDate = /^[0-9]{4}\-(0[1-9]|1[0-2])\-(0[1-9]|[12][0-9]|3[01])$/;
+    if (!regexDate.test(startWorkDate)) {
+      return error(
+        "稼働開始日は「 yyyy-mm-dd 」のフォーマットにしてください。"
+      );
+    }
 
     try {
       const result = await SpecUserInfoSheet.findByIdAndUpdate(
@@ -94,15 +123,13 @@ const specSheetMutations = {
           seExpAmount,
           pgExpAmount,
           itExpAmount,
-          specSheetId,
         },
-        { new: true }
+        { new: true, runValidators: true }
       );
 
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
     }
   },
   /**
@@ -120,29 +147,32 @@ const specSheetMutations = {
       libraries,
       otherTools,
       devRoles,
-      specSheetId,
     } = specTechInfo;
+    // スキル要約IDが""だったらエラー
+    if (!specTechInfoId) return error("スキル要約IDを入力してください。");
+
     try {
       const result = await SpecTechInfoSheet.findOneAndUpdate(
-        { _id: specTechInfoId, specSheetId: specSheetId },
+        { _id: specTechInfoId },
         {
           $set: {
             operationEnvs: [...operationEnvs],
             languages: [...languages],
             frameworks: [...frameworks],
             libraries: [...libraries],
-            oherTools: [...otherTools],
+            otherTools: [...otherTools],
             devRoles: [...devRoles],
           },
         },
         { new: true }
       );
 
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      // modelの型とsetしてるデータの方が違うとエラーを返す
-      return { status: "error" };
+      // 該当のIDが存在したかのチェック
+      if (result === null) return error("該当のIDが存在しません。");
+
+      return success(result, "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
     }
   },
   /**
@@ -166,11 +196,10 @@ const specSheetMutations = {
       libraries,
       otherTools,
       devRoles,
-      specSheetId,
     } = specProject;
     try {
       const result = await SpecProjectSheet.findOneAndUpdate(
-        { _id: specProjectId, specSheetId: specSheetId },
+        { _id: specProjectId },
         {
           $set: {
             name: name,
@@ -203,7 +232,7 @@ const specSheetMutations = {
    * @param specProject - 追加プロジェクト情報
    * @returns 追加したプロジェクト情報
    */
-  addSpecProject: async (_: any, { specProject }: SpecProjectType) => {
+  addSpecProject: async (_: any, { specProject }: SpecProjectAddType) => {
     const {
       name,
       startedAt,
@@ -287,7 +316,7 @@ const specSheetMutations = {
    * @param portfolio - 編集ポートフォリオ情報
    * @returns 編集したポートフォリオ情報
    */
-  updatePortfolio: async (_: any, { portfolio }: PortfolioType) => {
+  updatePortfolio: async (_: any, { portfolio }: PortfolioUpdateType) => {
     const { portfolioId, title, description, img, portfolioURL } = portfolio;
     try {
       const result = await Portfolio.findByIdAndUpdate(

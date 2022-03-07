@@ -12,3 +12,13 @@ export type PortfolioType = {
     specSheetId: string;
   };
 };
+export type PortfolioUpdateType = {
+  portfolio: {
+    portfolioId?: string;
+    title: string;
+    description: string;
+    img: string;
+    portfolioURL: string;
+    userId: string;
+  };
+};
