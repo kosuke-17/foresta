@@ -67,6 +67,7 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
               <Flex
                 direction="column"
                 cursor="pointer"
+                outline="none"
                 onClick={(e) => openModal(e, siteItem)}
               >
                 <SiteImage siteName={siteItem.title} imageUrl={siteItem.img} />
