@@ -3,7 +3,7 @@ import { SiteImage } from "../../atoms/AboutMePublic/SiteImage";
 import { Box, Flex } from "@chakra-ui/react";
 import { useModal } from "../../../hooks/useModal";
 import { ModalSet } from "../../molucules/ModalSet";
-import { SiteDetail } from "./siteDetail";
+import { SiteDetail } from "./SiteDetail";
 
 type Props = {
   siteData: Array<{ siteName: string; imageUrl: string }>;

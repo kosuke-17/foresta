@@ -8,6 +8,12 @@ gql`
       name
       jobType
       githubURL
+      userUrls {
+        user_urls {
+          urlName
+          url
+        }
+      }
     }
   }
 `;

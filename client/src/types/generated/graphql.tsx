@@ -702,6 +702,10 @@ export type GetUserByIdQuery = {
     name: string;
     jobType: string;
     githubURL: string;
+    userUrls: {
+      __typename?: "UserUrls";
+      user_urls: Array<{ __typename?: "URL"; urlName: string; url: string }>;
+    };
   };
 };
 
@@ -783,6 +787,12 @@ export const GetUserByIdDocument = gql`
       name
       jobType
       githubURL
+      userUrls {
+        user_urls {
+          urlName
+          url
+        }
+      }
     }
   }
 `;

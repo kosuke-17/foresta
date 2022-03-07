@@ -20,6 +20,10 @@ export const Public: FC = memo(() => {
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
   const user = data?.user;
 
+  //urlName
+  //url
+  //data?.user.userUrls.user_urls
+
   const siteData: Array<{ siteName: string; imageUrl: string }> = [
     {
       siteName: "ほげほげサイト1",
@@ -106,13 +110,13 @@ export const Public: FC = memo(() => {
               </>
             )}
             {/* ここまで */}
-
-            <div>ほげほげサイト</div>
-            <div>
-              <div>■その他URL</div>
-              <div>ほげほげ</div>
-              <div>hogehoge.com</div>
-            </div>
+            <div>■その他URL</div>
+            {user.userUrls.user_urls.map((urlItem, i) => (
+              <div key={i}>
+                <div>{urlItem.urlName}</div>
+                <div>{urlItem.url}</div>
+              </div>
+            ))}
           </>
         )}
       </Box>
