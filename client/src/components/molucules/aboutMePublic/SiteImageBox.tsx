@@ -3,6 +3,7 @@ import { SiteImage } from "../../atoms/AboutMePublic/SiteImage";
 import { Box, Flex } from "@chakra-ui/react";
 import { useModal } from "../../../hooks/useModal";
 import { ModalSet } from "../../molucules/ModalSet";
+import { SiteDetail } from "./siteDetail";
 
 type Props = {
   siteData: Array<{ siteName: string; imageUrl: string }>;
@@ -40,7 +41,7 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
           isOpen={isOpen}
           onClose={onClose}
           modalTitle={modalTitle}
-          contents={<p>コンテンツ</p>}
+          contents={<SiteDetail />}
         />
         <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
           {siteData.map((siteItem, i) => (
