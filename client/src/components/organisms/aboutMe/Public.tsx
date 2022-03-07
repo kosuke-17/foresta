@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { MarkGithubIcon } from "@primer/octicons-react";
 import { AccordionContent } from "../../molucules/AccordionContent";
 import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
+import { Url } from "../../molucules/aboutMePublic/Url";
 
 export const Public: FC = memo(() => {
   /**
@@ -14,7 +15,8 @@ export const Public: FC = memo(() => {
    */
   const { loading, error, data } = useGetUserByIdQuery({
     //idは実際cookieから取得
-    variables: { id: "621b15dd3200d51bb64b2d42" },
+    variables: { id: "621c786c7ca77263e67c88d0" },
+    // variables: { id: "621b15dd3200d51bb64b2d42" },
   });
 
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
@@ -103,20 +105,7 @@ export const Public: FC = memo(() => {
                 <SiteImageBox siteData={siteData} />
               </>
             )}
-            {/* ここまで */}
-            <_Title>■その他URL</_Title>
-            {user.userUrls.user_urls.map((urlItem, i) => (
-              <div key={i}>
-                <Flex>
-                  <_UrlTitle>『{urlItem.urlName}』</_UrlTitle>
-                  <_UrlContent>
-                    <a href={urlItem.url} target="blank">
-                      {urlItem.url}
-                    </a>
-                  </_UrlContent>
-                </Flex>
-              </div>
-            ))}
+            {user.userUrls && <Url urlData={user.userUrls.user_urls} />}
           </>
         )}
       </Box>
@@ -143,19 +132,4 @@ const _User = styled.div`
 
 const _Content = styled.div`
   margin-top: 10px;
-`;
-
-//項目タイトル
-const _Title = styled.div`
-  font-weight: bold;
-  font-size: 30px;
-  margin: 40px 0px 10px 0px;
-`;
-
-const _UrlTitle = styled.div`
-  width: 400px;
-`;
-
-const _UrlContent = styled.div`
-  width: 1000px;
 `;
