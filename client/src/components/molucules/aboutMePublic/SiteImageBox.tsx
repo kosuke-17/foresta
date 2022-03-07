@@ -1,6 +1,5 @@
 import { memo, FC, useState } from "react";
-import { Box, Flex, Button } from "@chakra-ui/react";
-import styled from "styled-components";
+import { Box, Flex } from "@chakra-ui/react";
 
 import { SiteDetail } from "./SiteDetail";
 import { ModalSet } from "../../molucules/ModalSet";
@@ -53,21 +52,7 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
           mt={5}
           fontSize={20}
         >
-          <Flex alignItems="center" justifyContent="right">
-            <_Title>制作物一覧</_Title>
-
-            <_Btn>
-              <Button
-                backgroundColor="green.400"
-                size="md"
-                textColor="white"
-                width={200}
-                _hover={{ backgroundColor: "green.300" }}
-              >
-                制作物を追加
-              </Button>
-            </_Btn>
-          </Flex>
+          制作物一覧
         </Box>
 
         <ModalSet
@@ -93,12 +78,3 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
     </>
   );
 });
-
-//制作物一覧の文字
-const _Title = styled.div`
-  margin: 0 auto 0 45%;
-`;
-
-const _Btn = styled.div`
-  justify-content: right;
-`;
