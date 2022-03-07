@@ -1,7 +1,7 @@
 import { memo, FC, useState } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 
-import { TableFlexItem } from "../../atoms/AboutMePrivate/TableFlexItem";
+import { TableFlexItem } from "../../atoms/TableFlexItem";
 
 /**
  * スキル要約.

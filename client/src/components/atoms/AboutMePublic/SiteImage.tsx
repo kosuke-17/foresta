@@ -3,7 +3,7 @@ import { Image, Box, Flex } from "@chakra-ui/react";
 
 type Props = {
   imageUrl: string; //画像のURL
-  siteName: string; //制作物の名前
+  siteName?: string; //制作物の名前
 };
 
 /**
