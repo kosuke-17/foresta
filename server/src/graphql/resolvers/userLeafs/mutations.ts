@@ -1,8 +1,10 @@
 import { UserLeafs } from "../../../models/User.model";
 import { TechLeafUpdateType } from "../../../types";
 import { success } from "../responseStatus";
-
-const userLeafsMutation = {
+/**
+ * ## 習得技術の変更処理
+ */
+const userLeafsMutations = {
   /**
    * 習得技術更新.
    *
@@ -37,4 +39,4 @@ const userLeafsMutation = {
   },
 };
 
-export default userLeafsMutation;
+export default userLeafsMutations;

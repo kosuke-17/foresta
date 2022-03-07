@@ -9,13 +9,9 @@ import {
   Container,
   Heading,
 } from "@chakra-ui/react";
-
-import { Calendar } from "../../molucules/Calendar";
-import {
-  Todo,
-  useGetAllTodoByUserQuery,
-} from "../../../types/generated/graphql";
 import { TodoList } from "./TodoList";
+import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
+import { Calendar } from "../../molucules/Calendar";
 
 // タブのタイプ
 const tabs = ["全て", "今日", "期限切れ"] as const; //as const をつけてreadonlyにする
@@ -31,9 +27,6 @@ export const TodosArea: FC = memo(() => {
       userId,
     },
   });
-
-  //すみません、エラーになるので一旦足しました。(codegenミスったかも。。)
-  const todos = data?.todos as Array<Todo>;
 
   if (error) {
     return <div>エラー</div>;
@@ -66,7 +59,7 @@ export const TodosArea: FC = memo(() => {
           >
             {tabs.map((tab, index) => (
               <TabPanel key={index}>
-                <TodoList todos={todos} loading={loading} tabType={tab} />
+                {/* <TodoList todos={data?.todos} loading={loading} tabType={tab} /> */}
               </TabPanel>
             ))}
           </TabPanels>

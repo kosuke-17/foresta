@@ -2,7 +2,15 @@ import { TechTree } from "../../../models/TechForest.model";
 import { Users, UserLeafs } from "../../../models/User.model";
 import { success } from "../responseStatus";
 import { UserType, UserLoginType } from "../../../types";
+import {
+  SpecSheet,
+  SpecTechInfoSheet,
+  SpecUserInfoSheet,
+} from "../../../models/SpecSheet.model";
 
+/**
+ * ## ユーザーの変更処理
+ */
 const userMutations = {
   /**
    * ユーザー追加.
@@ -21,7 +29,7 @@ const userMutations = {
     }
 
     try {
-      // ここでobj_idが生成される
+      // ユーザーオブジェクト生成
       const createUser = new Users({
         name,
         jobType,
@@ -44,8 +52,44 @@ const userMutations = {
           techLeafInfo.techLeafs.push(userTechInfo);
         }
         const createdTechLeafs = new UserLeafs({ ...techLeafInfo });
+
+        // スペックシートオブジェクト作成
+        const createdSpecSheet = new SpecSheet({
+          selfIntro: "",
+          studyOnOwnTime: "",
+          certification: "",
+          prevJobs: [],
+          userId: createUser._id,
+        });
+
+        // スペックシートユーザー基本情報オブジェクト作成
+        const createdSpecUserInfoSheet = new SpecUserInfoSheet({
+          stuffID: "",
+          age: 0,
+          gender: "",
+          nearestStation: "",
+          startWorkDate: "",
+          seExpAmount: 0,
+          pgExpAmount: 0,
+          itExpAmount: 0,
+          specSheetId: createdSpecSheet._id,
+        });
+        // スペックシート技術情報オブジェクト作成
+        const createdSpecTechInfoSheet = new SpecTechInfoSheet({
+          operationEnvs: [],
+          languages: [],
+          frameworks: [],
+          libraries: [],
+          otherTools: [],
+          devRoles: [],
+          specSheetId: createdSpecSheet._id,
+        });
         // ユーザーの技術オブジェクトを保存
-        createdTechLeafs.save();
+        await createdTechLeafs.save();
+        // スペックシート関連のオブジェクト保存
+        await createdSpecSheet.save();
+        await createdSpecUserInfoSheet.save();
+        await createdSpecTechInfoSheet.save();
       }
 
       return success(result);

@@ -4,15 +4,34 @@ import { TodosArea } from "./components/organisms/study/TodosArea";
 import { NotFound } from "./container/pages/NotFound";
 import { Study } from "./container/templates/Study";
 import { AboutMe } from "./container/templates/AboutMe";
+import { Login } from "./container/templates/Login";
+import { Auth } from "./components/atoms/auth/Auth";
 
 export const Router: React.VFC = () => {
   return (
     <>
       <BrowserRouter>
+        {/* cookieに値が入っていない場合(ログインしてない場合は)ログイン画面に遷移する。 */}
+        {/* ログイン画面を表示させるには、下記のように<Route>を<Route>で囲む */}
         <Routes>
-          {/* <Route index element={< />} /> */}
+          <Route path="/" element={<Auth />}>
+            <Route path={"/"} element={<TodosArea />} />
+          </Route>
+
+          <Route path="/todos" element={<Auth />}>
+            <Route path={"/todos"} element={<TodosArea />} />
+          </Route>
+
+          <Route path="/study" element={<Auth />}>
+            <Route path={"/study"} element={<Study />} />
+          </Route>
+
+          <Route path="/aboutme" element={<Auth />}>
+            <Route path={"/aboutme"} element={<AboutMe />} />
+          </Route>
+
           <Route path="study" element={<Study />} />
-          {/* Todo用仮ページ */}
+          <Route path="login" element={<Login />} />
           <Route path="todos" element={<TodosArea />} />
           <Route path="aboutme" element={<AboutMe />} />
           <Route path="*" element={<NotFound />} />

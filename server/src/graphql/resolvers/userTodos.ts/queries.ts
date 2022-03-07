@@ -1,6 +1,8 @@
 import { UserTodos } from "../../../models/User.model";
 import { TodoIdType, UserIdType } from "../../../types";
-
+/**
+ * ## todoの取得
+ */
 const userTodosQueries = {
   /**
    * ユーザーのTodo一覧情報を取得する

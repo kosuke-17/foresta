@@ -1,11 +1,14 @@
 # ユーザー情報
 type User {
-  id: String!
+  id: ID!
   name: String!
   jobType: String!
   email: String!
   password: String!
   githubURL: String!
+  userLeafs: UserLeafs!
+  userUrls: UserUrls!
+  portfolio: [Portfolio!]
 }
 
 ################

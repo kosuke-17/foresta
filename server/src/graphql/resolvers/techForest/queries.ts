@@ -4,7 +4,9 @@ import {
   TechLeaf,
   TechTree,
 } from "../../../models/TechForest.model";
-
+/**
+ * ## 技術ツリーの取得
+ */
 const techForestQueries = {
   /**
    * それぞれtech一覧情報を取得する.

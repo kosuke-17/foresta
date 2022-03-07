@@ -9,25 +9,11 @@ import mongoose from "mongoose";
  *  - 習得技術情報 : obj
  */
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  jobType: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  githubURL: {
-    type: String,
-  },
+  name: { type: String, required: true },
+  jobType: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  githubURL: { type: String, required: true },
 });
 
 /**
@@ -45,7 +31,7 @@ const UserUrlsSchema = new mongoose.Schema({
       url: { type: String },
     },
   ],
-  userId: { type: String },
+  userId: { type: String, required: true },
 });
 
 /**
@@ -60,12 +46,12 @@ const UserUrlsSchema = new mongoose.Schema({
  *    - ユーザーID : string
  */
 const UseTodoSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  startedAt: String,
-  finishedAt: String,
-  isStatus: Boolean,
-  userId: String,
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  startedAt: { type: String, required: true },
+  finishedAt: { type: String, required: true },
+  isStatus: { type: Boolean, required: true },
+  userId: { type: String, required: true },
 });
 
 /**
@@ -80,12 +66,12 @@ const UseTodoSchema = new mongoose.Schema({
 const UserLeafsSchema = new mongoose.Schema({
   techLeafs: [
     {
-      techTreeId: String,
-      achievementRate: Number,
-      techLeafIds: [String],
+      techTreeId: { type: String, required: true },
+      achievementRate: { type: Number, required: true },
+      techLeafIds: { type: [String], required: true },
     },
   ],
-  userId: String,
+  userId: { type: String, required: true },
 });
 
 export const Users = mongoose.model("user", UserSchema);

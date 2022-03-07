@@ -11,8 +11,7 @@ export type UserType = {
 
 // ユーザーIDは受け取り方が２種類ある
 export type UserIdType = {
-  _id?: string;
-  userId?: string;
+  userId: string;
 };
 
 export type UserTechLeafsType = {

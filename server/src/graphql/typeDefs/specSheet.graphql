@@ -1,0 +1,190 @@
+# スペックシート
+type SpecSheet {
+  id: ID!
+  selfIntro: String!
+  studyOnOwnTime: String!
+  certification: String!
+  prevJobs: [prevJobsContent!]!
+  userId: ID!
+  userInfo: SpecUserInfoSheet!
+  techInfo: SpecTechInfoSheet!
+  project: [SpecProjectSheet!]
+}
+# 前職経験情報
+type prevJobsContent {
+  content: String!
+}
+# スペックシートユーザー基本情報
+type SpecUserInfoSheet {
+  stuffID: ID!
+  age: Int!
+  gender: String!
+  nearestStation: String!
+  startWorkDate: String!
+  seExpAmount: Int!
+  pgExpAmount: Int!
+  itExpAmount: Int!
+  specSheetId: ID!
+}
+# スペックシート技術情報
+type SpecTechInfoSheet {
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  otherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: ID!
+}
+
+# スペックシートプロジェクト
+type SpecProjectSheet {
+  name: String!
+  startedAt: String!
+  finishedAt: String!
+  roleSharing: String!
+  memberCount: Int!
+  content: String!
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  otherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: ID!
+}
+# ポートフォリオ
+type Portfolio {
+  id: ID
+  title: String!
+  description: String!
+  img: String!
+  portfolioURL: String!
+  userId: ID!
+  specSheetId: ID!
+}
+# 開発経験のスキル
+type Skill {
+  id: ID
+  name: String
+  data: [String]
+}
+
+################
+#リクエストボディ
+
+# スペックシート
+input SpecSheetUpdateInput {
+  specSheetId: ID!
+  selfIntro: String!
+  studyOnOwnTime: String!
+  certification: String!
+  prevJobs: [String!]!
+}
+# スペックシートユーザー基本情報
+input SpecUserInfoUpdateInput {
+  specUserInfoId: ID!
+  stuffID: ID!
+  age: Int!
+  gender: String!
+  nearestStation: String!
+  startWorkDate: String!
+  seExpAmount: Int!
+  pgExpAmount: Int!
+  itExpAmount: Int!
+}
+# スキル要約更新
+input SpecTechInfoUpdateInput {
+  specTechInfoId: ID!
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  otherTools: [String!]!
+  devRoles: [String!]!
+}
+# 開発経験更新
+input SpecProjectUpdateInput {
+  specProjectId: ID!
+  name: String!
+  startedAt: String!
+  finishedAt: String!
+  roleSharing: String!
+  memberCount: Int!
+  content: String!
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  otherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: ID!
+}
+# 開発経験追加
+input SpecProjectAddInput {
+  name: String!
+  startedAt: String!
+  finishedAt: String!
+  roleSharing: String!
+  memberCount: Int!
+  content: String!
+  operationEnvs: [String!]!
+  languages: [String!]!
+  frameworks: [String!]!
+  libraries: [String!]!
+  otherTools: [String!]!
+  devRoles: [String!]!
+  specSheetId: ID!
+}
+# ポートフォリオ作成情報
+input PortfolioCreateInput {
+  title: String!
+  description: String!
+  img: String
+  portfolioURL: String
+  userId: ID!
+  specSheetId: ID!
+}
+# ポートフォリオ更新
+input PortfolioUpdateInput {
+  portfolioId: ID!
+  title: String!
+  description: String!
+  img: String
+  portfolioURL: String
+}
+
+################
+#レスポンス
+
+type ResponseSpecSheet {
+  status: String!
+  node: SpecSheet
+  msg: String
+}
+type ResponseSpecUserInfo {
+  status: String!
+  node: SpecUserInfoSheet
+  msg: String
+}
+type ResponseSpecTechInfo {
+  status: String!
+  node: SpecTechInfoSheet
+  msg: String
+}
+type ResponseSpecProject {
+  status: String!
+  node: SpecProjectSheet
+  msg: String
+}
+
+type ResponsePortfolio {
+  status: String!
+  node: Portfolio
+  message: String
+}
+
+type ResponseRemove {
+  status: String!
+  msg: String
+}

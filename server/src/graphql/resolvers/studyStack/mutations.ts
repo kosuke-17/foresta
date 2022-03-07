@@ -6,6 +6,9 @@ import {
 } from "../../../types/studyStack";
 import { success } from "../responseStatus";
 
+/**
+ * ## 学習記録の変更処理
+ */
 const studyStackMutations = {
   /**
    * 学習記録を追加する.
