@@ -6,7 +6,12 @@ import { ModalSet } from "../../molucules/ModalSet";
 import { SiteDetail } from "./SiteDetail";
 
 type Props = {
-  siteData: Array<{ siteName: string; imageUrl: string }>;
+  siteData: Array<{
+    title: string;
+    description: string;
+    img: string;
+    portfolioURL: string;
+  }>;
 };
 
 /**
@@ -49,12 +54,9 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
               <Flex
                 direction="column"
                 cursor="pointer"
-                onClick={(e) => openModal(e, siteItem.siteName)}
+                onClick={(e) => openModal(e, siteItem.title)}
               >
-                <SiteImage
-                  siteName={siteItem.siteName}
-                  imageUrl={siteItem.imageUrl}
-                />
+                <SiteImage siteName={siteItem.title} imageUrl={siteItem.img} />
               </Flex>
             </div>
           ))}

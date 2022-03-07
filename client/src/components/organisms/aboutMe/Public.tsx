@@ -15,44 +15,13 @@ export const Public: FC = memo(() => {
    */
   const { loading, error, data } = useGetUserByIdQuery({
     //idは実際cookieから取得
-    variables: { id: "621c786c7ca77263e67c88d0" },
-    // variables: { id: "621b15dd3200d51bb64b2d42" },
+    // variables: { id: "621c786c7ca77263e67c88d0" }, //川島
+    variables: { id: "621b15dd3200d51bb64b2d42" }, //山田
+    // variables: { id: "62214f1765bb91cc3f60e92f" }, //aaa
   });
 
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
   const user = data?.user;
-
-  const siteData: Array<{ siteName: string; imageUrl: string }> = [
-    {
-      siteName: "ほげほげサイト1",
-      imageUrl: "http://kansetsu-life.com/common/img/header_image.jpg",
-    },
-    {
-      siteName: "ほげほげサイト2",
-      imageUrl:
-        "https://pbs.twimg.com/media/E0sy6v2VUAEm6Y4?format=jpg&name=4096x4096",
-    },
-    {
-      siteName: "ほげほげサイト3",
-      imageUrl: "https://bit.ly/dan-abramov",
-    },
-    {
-      siteName: "ほげほげサイト4",
-      imageUrl: "https://bit.ly/dan-abramov",
-    },
-    {
-      siteName: "ほげほげサイト5",
-      imageUrl: "https://bit.ly/dan-abramov",
-    },
-    {
-      siteName: "ほげほげサイト6",
-      imageUrl: "https://bit.ly/dan-abramov",
-    },
-    {
-      siteName: "ほげほげサイト7",
-      imageUrl: "https://bit.ly/dan-abramov",
-    },
-  ];
 
   //読み込み中時の表示
   if (loading) {
@@ -100,11 +69,8 @@ export const Public: FC = memo(() => {
               />
             </_Content>
             {/* 制作物 */}
-            {siteData.length != 0 && (
-              <>
-                <SiteImageBox siteData={siteData} />
-              </>
-            )}
+            {user.portfolio && <SiteImageBox siteData={user.portfolio} />}
+            {/* URL */}
             {user.userUrls && <Url urlData={user.userUrls.user_urls} />}
           </>
         )}

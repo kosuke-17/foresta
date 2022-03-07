@@ -7,12 +7,20 @@ gql`
       id
       name
       jobType
+      email
+      password
       githubURL
       userUrls {
         user_urls {
-          urlName
           url
+          urlName
         }
+      }
+      portfolio {
+        title
+        description
+        img
+        portfolioURL
       }
     }
   }

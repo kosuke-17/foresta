@@ -625,7 +625,7 @@ export type User = {
   password: Scalars["String"];
   portfolio?: Maybe<Array<Portfolio>>;
   userLeafs: UserLeafs;
-  userUrls: UserUrls;
+  userUrls?: Maybe<UserUrls>;
 };
 
 export type UserCreateInput = {
@@ -701,11 +701,20 @@ export type GetUserByIdQuery = {
     id: string;
     name: string;
     jobType: string;
+    email: string;
+    password: string;
     githubURL: string;
-    userUrls: {
+    userUrls?: {
       __typename?: "UserUrls";
-      user_urls: Array<{ __typename?: "URL"; urlName: string; url: string }>;
-    };
+      user_urls: Array<{ __typename?: "URL"; url: string; urlName: string }>;
+    } | null;
+    portfolio?: Array<{
+      __typename?: "Portfolio";
+      title: string;
+      description: string;
+      img: string;
+      portfolioURL: string;
+    }> | null;
   };
 };
 
@@ -786,12 +795,20 @@ export const GetUserByIdDocument = gql`
       id
       name
       jobType
+      email
+      password
       githubURL
       userUrls {
         user_urls {
-          urlName
           url
+          urlName
         }
+      }
+      portfolio {
+        title
+        description
+        img
+        portfolioURL
       }
     }
   }
