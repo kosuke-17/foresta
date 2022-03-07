@@ -1,13 +1,13 @@
 # ユーザー習得技術情報
 type UserLeafs {
-  id: String!
+  id: ID!
   techLeafs: [leafInfo!]!
-  userId: String!
+  userId: ID!
 }
 type leafInfo {
-  techTreeId: String!
+  techTreeId: ID!
   achievementRate: Int!
-  techLeafIds: [String!]!
+  techLeafIds: [ID!]!
 }
 
 ################
@@ -15,10 +15,10 @@ type leafInfo {
 
 # TechLeaf情報
 input UserTechLeafUpdateInput {
-  techTreeId: String!
+  techTreeId: ID!
   achievementRate: Int!
   techLeafIds: [String]!
-  userId: String!
+  userId: ID!
 }
 
 ################################
