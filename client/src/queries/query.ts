@@ -13,6 +13,23 @@ import { gql } from "@apollo/client";
 //   }
 // `;
 
+// ログイン処理
+export const LOGIN_QUERY = gql`
+  mutation UserLogin($user: UserLoginInput!) {
+    userLogin(user: $user) {
+      status
+      node {
+        id
+        name
+        jobType
+        email
+        password
+        githubURL
+      }
+    }
+  }
+`;
+
 //学習リスト全件表示
 gql`
   query GetAllStudyStack($userId: String) {
