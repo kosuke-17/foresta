@@ -1,7 +1,7 @@
 import { TechTree } from "../../../models/TechForest.model";
 import { Users, UserLeafs } from "../../../models/User.model";
-import { success } from "../responseStatus";
-import { UserType, UserLoginType } from "../../../types";
+import { error, success } from "../responseStatus";
+import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
 import {
   SpecSheet,
   SpecTechInfoSheet,
@@ -21,9 +21,9 @@ const userMutations = {
    * @returns success : successステータス,作成したユーザー
    * @returns error : errorステータス
    */
-  createUser: async (_: any, { user }: UserType) => {
+  createUser: async (_: any, { user }: UserCreateType) => {
     // user_paramを分割代入
-    let { name, jobType, email, password, githubURL } = user;
+    let { name, jobType, email, password, spreadSheetID, githubURL } = user;
     if (githubURL == null) {
       githubURL = "";
     }
@@ -35,6 +35,7 @@ const userMutations = {
         jobType,
         email,
         password,
+        spreadSheetID,
         githubURL,
       });
       const result = await createUser.save();
@@ -92,10 +93,9 @@ const userMutations = {
         await createdSpecTechInfoSheet.save();
       }
 
-      return success(result);
-    } catch (e) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "作成に成功しました。");
+    } catch {
+      return error("作成に失敗しました。");
     }
   },
   /**
@@ -121,8 +121,26 @@ const userMutations = {
 
       return success(result);
     } catch (error) {
-      // 必須のデータがnullだとエラーを返す
       return { status: "error" };
+    }
+  },
+  updateUser: (_: any, { user }: UserUpdateType) => {
+    const { userId, name, jobType, email, password, spreadSheetID, githubURL } =
+      user;
+    try {
+      const result = Users.findOneAndUpdate(
+        { _id: userId },
+        { name, jobType, email, password, spreadSheetID, githubURL },
+        { new: true }
+      );
+
+      // 該当のIDが存在したかのチェック
+      if (result === null) return error("該当のユーザーが存在しません。");
+      console.log(result);
+
+      return success(result, "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
     }
   },
 };

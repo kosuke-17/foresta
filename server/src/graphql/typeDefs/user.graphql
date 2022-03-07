@@ -5,10 +5,11 @@ type User {
   jobType: String!
   email: String!
   password: String!
+  spreadSheetID: String!
   githubURL: String!
-  userLeafs: UserLeafs!
+  userLeafs: UserLeafs
   userUrls: UserUrls
-  portfolio: [Portfolio!]
+  portfolio: [Portfolio]
 }
 
 ################
@@ -20,7 +21,17 @@ input UserCreateInput {
   jobType: String!
   email: String!
   password: String!
+  spreadSheetID: String
   githubURL: String!
+}
+input UserUpdateInput {
+  userId: String
+  name: String
+  jobType: String
+  email: String
+  password: String
+  spreadSheetID: String
+  githubURL: String
 }
 
 # ログインユーザー情報
@@ -35,5 +46,5 @@ input UserLoginInput {
 type ResponseUser {
   status: String!
   node: User
-  message: String
+  msg: String
 }
