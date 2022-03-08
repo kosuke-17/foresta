@@ -1,5 +1,6 @@
 import { memo, FC } from "react";
 import { TextInput } from "../../atoms/editMe/TextInput";
+import { SelectInput } from "../../atoms/editMe/SelectInput";
 import { useUserInfo } from "../../../hooks/editMe/useUserInfo";
 import { Button } from "@chakra-ui/react";
 
@@ -16,6 +17,15 @@ export const UserInfo: FC = memo(() => {
       <TextInput
         registers={register("name")}
         errorMessage={errors.name?.message}
+      />
+      <TextInput
+        registers={register("GithubURL")}
+        errorMessage={errors.GithubURL?.message}
+      />
+      <SelectInput
+        options={["フロントエンド", "バックエンド", "営業"]}
+        registers={register("jobType")}
+        errorMessage={errors.jobType?.message}
       />
       <Button onClick={handleSubmit(onSubmit)}>送信</Button>
       <Button onClick={cancel}>キャンセル</Button>

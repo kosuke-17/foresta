@@ -4,12 +4,20 @@ import * as yup from "yup";
 
 //バリデーションチェック
 const schema = yup.object().shape({
-  //姓のバリデーション
+  //氏名のバリデーション
   name: yup
     .string()
     .trim()
-    .required("姓名を入力してください")
-    .max(15, "姓名は15文字以内で入力してください"),
+    .required("氏名を入力してください")
+    .max(15, "氏名は15文字以内で入力してください"),
+  //職種のバリデーション
+  jobType: yup.string().required("職種を入力して下さい"),
+  //Githubアカウントのバリデーション
+  GithubURL: yup
+    .string()
+    .trim()
+    .required("GitHubアカウント名を入力して下さい")
+    .max(39, "39文字以内で入力して下さい"),
 });
 
 /**
@@ -32,6 +40,8 @@ export const useUserInfo = (userData: any) => {
     //初期値はログインしている人のデータを入れる
     defaultValues: {
       name: userData,
+      jobType: userData,
+      GithubURL: userData,
     },
   });
 
@@ -41,7 +51,7 @@ export const useUserInfo = (userData: any) => {
    */
   const onSubmit = async (data: any) => {
     try {
-      alert("データ:" + data.name);
+      console.dir("データ" + JSON.stringify(data));
     } catch (error) {
       console.log(error);
     }
