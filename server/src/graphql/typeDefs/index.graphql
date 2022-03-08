@@ -160,6 +160,10 @@ type Mutation {
   removePortfolio(portfolioId: String!): ResponseRemove!
 
   """
+  スペックシートを
+  """
+  getSpreadSheet(userId: String): Res
+  """
   Techを追加.
   """
   createTechLeaf(techLeaf: TechLeafCreateInput!): CreatedTechLeaf!
