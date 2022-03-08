@@ -30,7 +30,7 @@ export const getFormattedDateWithoutYear = (date: Date) => {
   * @param finishedAt - 対象のTodoの終了日
   * @returns フォーマットされた日付
   */
-export const getformattedTodoDate = (startedAt: string, finishedAt: string): string => {
+export const getformattedTodoDate = (startedAt: string, finishedAt: string | null | undefined): string => {
   if (startedAt && finishedAt) {
     return `${getFormattedDate(
       new Date(startedAt),
