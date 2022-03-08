@@ -56,6 +56,10 @@ type Query {
   """
   getOtherTools(_id: String): Skill!
   """
+  スプレッドシートを取得
+  """
+  getSpreadSheet(userId: String): Res
+  """
   それぞれのTechを取得.
   """
   getAllTechLeaf: [TechLeaf!]!
@@ -159,10 +163,6 @@ type Mutation {
   """
   removePortfolio(portfolioId: String!): ResponseRemove!
 
-  """
-  スペックシートを
-  """
-  getSpreadSheet(userId: String): Res
   """
   Techを追加.
   """
