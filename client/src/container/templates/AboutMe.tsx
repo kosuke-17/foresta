@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { EditMe } from "../../components/organisms/aboutMe/EditMe";
 import { Private } from "../../components/organisms/aboutMe/Private";
 import { Public } from "../../components/organisms/aboutMe/Public";
 
@@ -10,6 +11,7 @@ export const AboutMe: FC = () => {
     <>
       <Public />
       <Private />
+      <EditMe />
     </>
   );
 };
