@@ -1,18 +1,28 @@
-export type UserType = {
+export type UserCreateType = {
   user: {
     name: string;
     jobType: string;
     email: string;
     password: string;
+    spreadSheetID: string;
     githubURL?: string;
-    have_techLeafs?: string[];
+  };
+};
+export type UserUpdateType = {
+  user: {
+    userId: string;
+    name: string;
+    jobType: string;
+    email: string;
+    password: string;
+    spreadSheetID: string;
+    githubURL?: string;
   };
 };
 
 // ユーザーIDは受け取り方が２種類ある
 export type UserIdType = {
-  _id?: string;
-  userId?: string;
+  userId: string;
 };
 
 export type UserTechLeafsType = {

@@ -4,7 +4,7 @@ type URL {
 }
 type UserUrls {
   user_urls: [URL!]!
-  userId: String!
+  userId: ID!
 }
 
 ################
@@ -12,20 +12,20 @@ type UserUrls {
 
 # ユーザーに紐づくurlを作成する
 input UserUrlsCreateInput {
-  userId: String!
+  userId: ID!
   urlName: String!
   url: String!
 }
 # ユーザーに紐づくurlを追加する
 input UserUrlsAddInput {
-  urlId: String!
+  urlId: ID!
   urlName: String!
   url: String!
 }
 # ユーザーに紐づくurlを削除する
 input UserUrlsRemoveInput {
-  urlId: String!
-  userUrlsId: String!
+  urlId: ID!
+  userUrlsId: ID!
 }
 
 ################################

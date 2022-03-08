@@ -1,6 +1,13 @@
+import {
+  Portfolio,
+  SpecProjectSheet,
+  SpecTechInfoSheet,
+  SpecUserInfoSheet,
+} from "../../models/SpecSheet.model";
 import { TechBranch, TechLeaf, TechTree } from "../../models/TechForest.model";
-import { TechIdType } from "../../types/techForest";
-import { specSheetMutations } from "./specSheet";
+import { UserLeafs, UserUrls } from "../../models/User.model";
+import { IdType } from "../../types";
+import { specSheetMutations, specSheetQueries } from "./specSheet";
 import { studyStackMutations, studyStackQueries } from "./studyStack";
 import { techForestMutations, techForestQueries } from "./techForest";
 import { userMutations, userQueries } from "./user";
@@ -14,6 +21,7 @@ const resolvers = {
     ...userTodosQueries,
     ...techForestQueries,
     ...studyStackQueries,
+    ...specSheetQueries,
   },
   Mutation: {
     ...userMutations,
@@ -25,16 +33,31 @@ const resolvers = {
     ...specSheetMutations,
   },
   TechBranch: {
-    techLeafs: async ({ _id }: TechIdType) =>
+    techLeafs: async ({ _id }: IdType) =>
       await TechLeaf.find({ techBranch_id: _id }),
   },
   TechTree: {
-    techBranches: async ({ _id }: TechIdType) =>
+    techBranches: async ({ _id }: IdType) =>
       await TechBranch.find({ techTree_id: _id }),
   },
   TechArea: {
-    techTrees: async ({ _id }: TechIdType) =>
+    techTrees: async ({ _id }: IdType) =>
       await TechTree.find({ techArea_id: _id }),
+  },
+  SpecSheet: {
+    userInfo: async ({ _id }: IdType) =>
+      await SpecUserInfoSheet.findOne({ specSheetId: _id }),
+    techInfo: async ({ _id }: IdType) =>
+      await SpecTechInfoSheet.findOne({ specSheetId: _id }),
+    project: async ({ _id }: IdType) =>
+      await SpecProjectSheet.find({ specSheetId: _id }),
+  },
+  User: {
+    userLeafs: async ({ _id }: IdType) =>
+      await UserLeafs.findOne({ userId: _id }),
+    userUrls: async ({ _id }: IdType) =>
+      await UserUrls.findOne({ userId: _id }),
+    portfolio: async ({ _id }: IdType) => await Portfolio.find({ userId: _id }),
   },
 };
 

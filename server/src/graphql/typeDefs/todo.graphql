@@ -1,12 +1,12 @@
 # ユーザーのtodo情報
 type Todo {
-  id: String!
+  id: ID!
   title: String!
-  description: String!
+  description: String
   startedAt: String!
-  finishedAt: String!
+  finishedAt: String
   isStatus: Boolean!
-  userId: String!
+  userId: ID!
 }
 
 ################################
@@ -19,16 +19,16 @@ input TodoAddInput {
   startedAt: String!
   finishedAt: String!
   isStatus: Boolean!
-  userId: String!
+  userId: ID!
 }
 input TodoUpdateInput {
-  todoId: String!
+  todoId: ID!
   title: String!
   description: String!
   startedAt: String!
   finishedAt: String!
   isStatus: Boolean!
-  userId: String!
+  userId: ID!
 }
 
 ################################

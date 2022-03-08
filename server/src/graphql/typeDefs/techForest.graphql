@@ -1,26 +1,26 @@
 type TechLeaf {
-  id: String!
+  id: ID!
   name: String!
-  techBranch_id: String!
+  techBranch_id: ID!
 }
 
 # id,name,techTree_idは子リゾルバのtechLeafsに渡る
 type TechBranch {
-  id: String!
+  id: ID!
   name: String!
-  techTree_id: String!
+  techTree_id: ID!
   techLeafs: [TechLeaf!]
 }
 # id,name,techArea_idは子リゾルバのtechBranchesに渡る
 type TechTree {
-  id: String!
+  id: ID!
   name: String!
-  techArea_id: String!
+  techArea_id: ID!
   techBranches: [TechBranch!]!
 }
 # id,nameは子リゾルバのtechTreeに渡る
 type TechArea {
-  id: String!
+  id: ID!
   name: String!
   techTrees: [TechTree!]
 }
@@ -30,15 +30,15 @@ type TechArea {
 
 input TechLeafCreateInput {
   name: String!
-  techBranch_id: String!
+  techBranch_id: ID!
 }
 input TechBranchCreateInput {
   name: String!
-  techTree_id: String!
+  techTree_id: ID!
 }
 input TechTreeCreateInput {
   name: String!
-  techArea_id: String!
+  techArea_id: ID!
 }
 input TechAreaCreateInput {
   name: String!

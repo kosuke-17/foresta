@@ -1,6 +1,3 @@
-export type TechIdType = {
-  _id: string;
-};
 export type TechLeafType = {
   techLeaf: {
     name: string;

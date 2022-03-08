@@ -1,17 +1,46 @@
 import { gql } from "@apollo/client";
 
-/**
- * 見本.
- */
-// gql`
-//   query todos {
-//     getAllTodo {
-//       id
-//       title
-//       finish
-//     }
-//   }
-// `;
+//ユーザ情報取得.
+gql`
+  query GetUserById($id: String!) {
+    user: getUserById(_id: $id) {
+      name
+      jobType
+      email
+      password
+      githubURL
+      userUrls {
+        user_urls {
+          url
+          urlName
+        }
+      }
+      portfolio {
+        title
+        description
+        img
+        portfolioURL
+      }
+    }
+  }
+`;
+
+// ログイン処理
+export const LOGIN_QUERY = gql`
+  mutation UserLogin($user: UserLoginInput!) {
+    userLogin(user: $user) {
+      status
+      node {
+        id
+        name
+        jobType
+        email
+        password
+        githubURL
+      }
+    }
+  }
+`;
 
 //学習リスト全件表示
 gql`

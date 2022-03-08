@@ -1,7 +1,9 @@
 import { UserTodos } from "../../../models/User.model";
 import { TodoAddType, TodoIdType, TodoUpdateType } from "../../../types";
 import { success } from "../responseStatus";
-
+/**
+ * ## todoの変更処理
+ */
 const userTodosMutations = {
   /**
    * todoの追加.
@@ -76,36 +78,19 @@ const userTodosMutations = {
     }
   },
   /**
-   * todoの状態をtrueにする
+   * todoの状態をtrueまたはfalseにする
    *
    * @param todoId - todoID
    * @returns success : successステータス,更新したtodo情報
    * @returns error : errorステータス
    */
-  chekedTodoStatus: async (_: any, { todoId }: TodoIdType) => {
+  changeTodoStatus: async (_: any, { todoId }: TodoIdType) => {
+    const userTodo = await UserTodos.findById({ _id: todoId });
+    const updateStatus = !userTodo.isStatus;
     try {
       const result = await UserTodos.findByIdAndUpdate(
         { _id: todoId },
-        { $set: { isStatus: true } }
-      );
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
-    }
-  },
-  /**
-   * todoの状態をfalseにする
-   *
-   * @param todoId - todoID
-   * @returns success : successステータス,更新したtodo情報
-   * @returns error : errorステータス
-   */
-  unChekedTodoStatus: async (_: any, { todoId }: TodoIdType) => {
-    try {
-      const result = await UserTodos.findByIdAndUpdate(
-        { _id: todoId },
-        { $set: { isStatus: false } }
+        { $set: { isStatus: updateStatus } }
       );
       return success(result);
     } catch (error) {

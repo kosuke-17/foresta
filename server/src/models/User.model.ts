@@ -5,14 +5,16 @@ import mongoose from "mongoose";
  *  @remarks
  *  - ユーザー名 : string
  *  - 職業タイプ : string
+ *  - スプレッドシートURL : string
  *  - GithubURL : string
- *  - 習得技術情報 : obj
  */
 const UserSchema = new mongoose.Schema({
+  id: { type: String },
   name: { type: String, required: true },
   jobType: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  spreadSheetID: { type: String },
   githubURL: { type: String, required: true },
 });
 
@@ -27,8 +29,8 @@ const UserSchema = new mongoose.Schema({
 const UserUrlsSchema = new mongoose.Schema({
   user_urls: [
     {
-      urlName: { type: String, required: true },
-      url: { type: String, required: true },
+      urlName: { type: String },
+      url: { type: String },
     },
   ],
   userId: { type: String, required: true },

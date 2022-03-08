@@ -29,7 +29,7 @@ const SpecTechInfoSheetSchema = new mongoose.Schema({
   languages: { type: [String] },
   frameworks: { type: [String] },
   libraries: { type: [String] },
-  OtherTools: { type: [String] },
+  otherTools: { type: [String] },
   devRoles: { type: [String] },
   specSheetId: { type: String, required: true },
 });
@@ -39,14 +39,29 @@ const SpecProjectSheetSchema = new mongoose.Schema({
   startedAt: { type: String },
   finishedAt: { type: String },
   roleSharing: { type: String },
+  memberCount: { type: Number },
   content: { type: String },
   operationEnvs: { type: [String] },
   languages: { type: [String] },
   frameworks: { type: [String] },
   libraries: { type: [String] },
-  OtherTools: { type: [String] },
+  otherTools: { type: [String] },
   devRoles: { type: [String] },
   specSheetId: { type: String, required: true },
+});
+
+const PortfolioSchema = new mongoose.Schema({
+  title: { type: String },
+  description: { type: String },
+  img: { type: String },
+  portfolioURL: { type: String },
+  userId: { type: String, required: true },
+  specSheetId: { type: String, required: true },
+});
+
+const SkillSchema = new mongoose.Schema({
+  name: { type: String },
+  data: { type: [String] },
 });
 
 export const SpecSheet = mongoose.model("specsheet", SpecSheetSchema);
@@ -64,3 +79,6 @@ export const SpecProjectSheet = mongoose.model(
   "specprojectsheet",
   SpecProjectSheetSchema
 );
+export const Portfolio = mongoose.model("portfolio", PortfolioSchema);
+
+export const Skill = mongoose.model("skill", SkillSchema);

@@ -1,24 +1,28 @@
 // レスポンスで返すステータス
 export enum QueryStatus {
   success = "success",
-  // notFound = "NOT_FOUND",
-  // error = "ERROR",
+  error = "error",
 }
 /**
  *
  * @param node - リターンするデータ
- * @returns - successの文字列
- * @returns - nodeData
+ * @param msg - メッセージ
+ * @returns success
+ * @returns オブジェクトまたは配列
+ * @returns サクセスメッセージ
  */
-export const success = (node: any) => ({
+export const success = (node: any, msg?: string) => ({
   status: QueryStatus.success,
   node,
+  msg,
 });
-// export const notFound = (message: string) => ({
-//   status: QueryStatus.notFound,
-//   message,
-// });
-// export const error = (message: string) => ({
-//   status: QueryStatus.error,
-//   message,
-// });
+/**
+ *
+ * @param msg - メッセージ
+ * @returns error
+ * @returns エラーメッセージ
+ */
+export const error = (msg: string) => ({
+  status: QueryStatus.error,
+  msg,
+});

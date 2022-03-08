@@ -1,10 +1,10 @@
 type StudyStack {
-  id: String!
+  id: ID!
   content: String!
   timeStack: Int!
   createdAt: String!
-  skillTagId: String!
-  userId: String!
+  skillTagId: ID!
+  userId: ID!
 }
 
 ################
@@ -14,15 +14,15 @@ input StudyStackAddInput {
   content: String!
   timeStack: Int!
   createdAt: String!
-  skillTagId: String!
-  userId: String!
+  skillTagId: ID!
+  userId: ID!
 }
 input StudyStackUpdateInput {
-  studyStackId: String!
+  studyStackId: ID!
   content: String!
   timeStack: Int!
   createdAt: String!
-  skillTagId: String!
+  skillTagId: ID!
 }
 
 ################
