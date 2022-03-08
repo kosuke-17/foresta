@@ -31,13 +31,25 @@ export const LOGIN_QUERY = gql`
     userLogin(user: $user) {
       status
       node {
-        id
         name
         jobType
         email
         password
         githubURL
       }
+    }
+  }
+`;
+
+// エンジニアリスト全件表示
+gql`
+  query GetAllUser {
+    getAllUser {
+      name
+      jobType
+      email
+      password
+      githubURL
     }
   }
 `;
