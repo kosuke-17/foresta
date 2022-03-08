@@ -762,6 +762,49 @@ export type AddStudyStackMutation = {
     status: string;
     node?: {
       __typename?: "StudyStack";
+      id: string;
+      content: string;
+      timeStack: number;
+      createdAt: string;
+      skillTagId: string;
+      userId: string;
+    } | null;
+  };
+};
+
+export type UpdateStudyStackMutationVariables = Exact<{
+  stack: StudyStackUpdateInput;
+}>;
+
+export type UpdateStudyStackMutation = {
+  __typename?: "Mutation";
+  updateStudyStack: {
+    __typename?: "ResponseStudyStack";
+    status: string;
+    node?: {
+      __typename?: "StudyStack";
+      id: string;
+      content: string;
+      timeStack: number;
+      createdAt: string;
+      skillTagId: string;
+      userId: string;
+    } | null;
+  };
+};
+
+export type RemoveStudyStackMutationVariables = Exact<{
+  studyStackId: Scalars["String"];
+}>;
+
+export type RemoveStudyStackMutation = {
+  __typename?: "Mutation";
+  removeStudyStack: {
+    __typename?: "ResponseStudyStack";
+    status: string;
+    node?: {
+      __typename?: "StudyStack";
+      id: string;
       content: string;
       timeStack: number;
       createdAt: string;
@@ -971,10 +1014,11 @@ export type GetStudyStackByIdQueryResult = Apollo.QueryResult<
   GetStudyStackByIdQueryVariables
 >;
 export const AddStudyStackDocument = gql`
-  mutation addStudyStack($stack: StudyStackAddInput!) {
+  mutation AddStudyStack($stack: StudyStackAddInput!) {
     addStudyStack(stack: $stack) {
       status
       node {
+        id
         content
         timeStack
         createdAt
@@ -1026,6 +1070,122 @@ export type AddStudyStackMutationResult =
 export type AddStudyStackMutationOptions = Apollo.BaseMutationOptions<
   AddStudyStackMutation,
   AddStudyStackMutationVariables
+>;
+export const UpdateStudyStackDocument = gql`
+  mutation UpdateStudyStack($stack: StudyStackUpdateInput!) {
+    updateStudyStack(stack: $stack) {
+      status
+      node {
+        id
+        content
+        timeStack
+        createdAt
+        skillTagId
+        userId
+      }
+    }
+  }
+`;
+export type UpdateStudyStackMutationFn = Apollo.MutationFunction<
+  UpdateStudyStackMutation,
+  UpdateStudyStackMutationVariables
+>;
+
+/**
+ * __useUpdateStudyStackMutation__
+ *
+ * To run a mutation, you first call `useUpdateStudyStackMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateStudyStackMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateStudyStackMutation, { data, loading, error }] = useUpdateStudyStackMutation({
+ *   variables: {
+ *      stack: // value for 'stack'
+ *   },
+ * });
+ */
+export function useUpdateStudyStackMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateStudyStackMutation,
+    UpdateStudyStackMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateStudyStackMutation,
+    UpdateStudyStackMutationVariables
+  >(UpdateStudyStackDocument, options);
+}
+export type UpdateStudyStackMutationHookResult = ReturnType<
+  typeof useUpdateStudyStackMutation
+>;
+export type UpdateStudyStackMutationResult =
+  Apollo.MutationResult<UpdateStudyStackMutation>;
+export type UpdateStudyStackMutationOptions = Apollo.BaseMutationOptions<
+  UpdateStudyStackMutation,
+  UpdateStudyStackMutationVariables
+>;
+export const RemoveStudyStackDocument = gql`
+  mutation RemoveStudyStack($studyStackId: String!) {
+    removeStudyStack(studyStackId: $studyStackId) {
+      status
+      node {
+        id
+        content
+        timeStack
+        createdAt
+        skillTagId
+        userId
+      }
+    }
+  }
+`;
+export type RemoveStudyStackMutationFn = Apollo.MutationFunction<
+  RemoveStudyStackMutation,
+  RemoveStudyStackMutationVariables
+>;
+
+/**
+ * __useRemoveStudyStackMutation__
+ *
+ * To run a mutation, you first call `useRemoveStudyStackMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveStudyStackMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeStudyStackMutation, { data, loading, error }] = useRemoveStudyStackMutation({
+ *   variables: {
+ *      studyStackId: // value for 'studyStackId'
+ *   },
+ * });
+ */
+export function useRemoveStudyStackMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemoveStudyStackMutation,
+    RemoveStudyStackMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    RemoveStudyStackMutation,
+    RemoveStudyStackMutationVariables
+  >(RemoveStudyStackDocument, options);
+}
+export type RemoveStudyStackMutationHookResult = ReturnType<
+  typeof useRemoveStudyStackMutation
+>;
+export type RemoveStudyStackMutationResult =
+  Apollo.MutationResult<RemoveStudyStackMutation>;
+export type RemoveStudyStackMutationOptions = Apollo.BaseMutationOptions<
+  RemoveStudyStackMutation,
+  RemoveStudyStackMutationVariables
 >;
 export const GetAllTodoByUserDocument = gql`
   query GetAllTodoByUser($userId: String) {
