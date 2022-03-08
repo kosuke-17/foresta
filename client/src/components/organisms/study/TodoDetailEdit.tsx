@@ -11,11 +11,10 @@ import {
 import styled from "styled-components";
 
 import { getformattedTodoDate } from "../../../utils/methods";
+import type { TodoDetail } from "../../../types/types";
 
 type Props = {
-  todo: any;
-  isEditing: boolean;
-  setIsEditing: (isEditing: boolean) => void;
+  todo: TodoDetail;
 };
 
 /**
