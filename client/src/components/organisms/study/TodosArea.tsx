@@ -13,8 +13,7 @@ import { TodoList } from "./TodoList";
 import { TodoDetail } from "./TodoDetail";
 import { useModal } from "../../../hooks/useModal";
 import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
-import { Calendar } from "../../molucules/Calendar";
-
+import { Calendar } from "../../molucules/todos/Calendar";
 
 // タブのタイプ
 const tabs = ["全て", "今日", "期限切れ"] as const; //as const をつけてreadonlyにする
@@ -79,7 +78,7 @@ export const TodosArea: FC = memo(() => {
       </Box>
 
       {/* カレンダーエリア */}
-      <Calendar todos={data?.todos} onOpen={onOpen} setTodoId={setTodoId}/>
+      <Calendar todos={data?.todos} onOpen={onOpen} setTodoId={setTodoId} />
 
       {/* Todo詳細 */}
       <TodoDetail todoId={todoId} isOpen={isOpen} onClose={onClose} />

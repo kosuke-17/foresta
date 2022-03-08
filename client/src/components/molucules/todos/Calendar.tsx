@@ -8,7 +8,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Box } from "@chakra-ui/react";
 
-import type { TodoData } from "../../types/types";
+import type { TodoData } from "../../../types/types";
 
 type Props = {
   todos: Array<TodoData> | undefined;

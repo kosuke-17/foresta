@@ -2,7 +2,7 @@ import { FC, memo, Dispatch, SetStateAction } from "react";
 import { List, ListItem } from "@chakra-ui/react";
 import { isWithinInterval, isToday, isBefore, addDays } from "date-fns";
 
-import { TodoWithCheck } from "../../molucules/TodoWithCheck";
+import { TodoWithCheck } from "../../molucules/todos/TodoWithCheck";
 import type { TodoData } from "../../../types/types";
 
 type Props = {
