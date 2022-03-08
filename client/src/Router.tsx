@@ -6,6 +6,7 @@ import { Study } from "./container/templates/Study";
 import { AboutMe } from "./container/templates/AboutMe";
 import { Login } from "./container/templates/Login";
 import { Auth } from "./components/atoms/auth/Auth";
+import { EngineerList } from "./container/templates/EngineerList";
 
 export const Router: React.VFC = () => {
   return (
@@ -30,10 +31,15 @@ export const Router: React.VFC = () => {
             <Route path={"/aboutme"} element={<AboutMe />} />
           </Route>
 
+          <Route path="/engineerlist" element={<Auth />}>
+            <Route path={"/engineerlist"} element={<EngineerList />} />
+          </Route>
+
           <Route path="study" element={<Study />} />
           <Route path="login" element={<Login />} />
           <Route path="todos" element={<TodosArea />} />
           <Route path="aboutme" element={<AboutMe />} />
+          <Route path="engineerlist" element={<EngineerList />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

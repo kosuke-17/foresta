@@ -186,6 +186,26 @@ export type MutationUpdateSpecUserInfoArgs = {
   specUserInfo: SpecUserInfoUpdateInput;
 };
 
+export type MutationUpdatePortfolioArgs = {
+  portfolio: PortfolioUpdateInput;
+};
+
+export type MutationUpdateSpecProjectArgs = {
+  specProject: SpecProjectUpdateInput;
+};
+
+export type MutationUpdateSpecSheetArgs = {
+  specSheet?: InputMaybe<SpecSheetUpdateInput>;
+};
+
+export type MutationUpdateSpecTechInfoArgs = {
+  specTechInfo: SpecTechInfoUpdateInput;
+};
+
+export type MutationUpdateSpecUserInfoArgs = {
+  specUserInfo: SpecUserInfoUpdateInput;
+};
+
 export type MutationUpdateStudyStackArgs = {
   stack: StudyStackUpdateInput;
 };
@@ -761,6 +781,21 @@ export type UserLoginMutation = {
   };
 };
 
+export type GetAllUserQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllUserQuery = {
+  __typename?: "Query";
+  getAllUser?: Array<{
+    __typename?: "User";
+    id: string;
+    name: string;
+    jobType: string;
+    email: string;
+    password: string;
+    githubURL: string;
+  }> | null;
+};
+
 export type GetAllStudyStackQueryVariables = Exact<{
   userId?: InputMaybe<Scalars["String"]>;
 }>;
@@ -941,6 +976,68 @@ export type UserLoginMutationOptions = Apollo.BaseMutationOptions<
   UserLoginMutation,
   UserLoginMutationVariables
 >;
+
+export const GetAllUserDocument = gql`
+  query GetAllUser {
+    getAllUser {
+      id
+      name
+      jobType
+      email
+      password
+      githubURL
+    }
+  }
+`;
+
+/**
+ * __useGetAllUserQuery__
+ *
+ * To run a query within a React component, call `useGetAllUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllUserQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllUserQuery,
+    GetAllUserQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAllUserQuery, GetAllUserQueryVariables>(
+    GetAllUserDocument,
+    options,
+  );
+}
+export function useGetAllUserLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllUserQuery,
+    GetAllUserQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAllUserQuery, GetAllUserQueryVariables>(
+    GetAllUserDocument,
+    options,
+  );
+}
+export type GetAllUserQueryHookResult = ReturnType<typeof useGetAllUserQuery>;
+export type GetAllUserLazyQueryHookResult = ReturnType<
+  typeof useGetAllUserLazyQuery
+>;
+export type GetAllUserQueryResult = Apollo.QueryResult<
+  GetAllUserQuery,
+  GetAllUserQueryVariables
+>;
+
 export const GetAllStudyStackDocument = gql`
   query GetAllStudyStack($userId: String) {
     getAllStudyStack(userId: $userId) {
