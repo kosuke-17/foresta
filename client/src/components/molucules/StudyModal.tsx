@@ -10,65 +10,77 @@ import {
   ModalOverlay,
   Textarea,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { FC } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { StackList } from "../../hooks/study/useStackList";
-import { ALL_STUDYSTACK_QUERY } from "../../queries/query";
-import { useAddStudyStackMutation } from "../../types/generated/graphql";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { ChangeEvent, FC, memo, useState } from "react";
+import {
+  GetAllStudyStackDocument,
+  useAddStudyStackMutation,
+} from "../../types/generated/graphql";
+// import { yupResolver } from "@hookform/resolvers/yup";
+// import * as yup from "yup";
+import { AddStackButton } from "../atoms/study/AddStackBotton";
 
 type Props = {
   title: string;
   buttonTitle: string;
 };
 
-const schema = yup.object().shape({
-  createdAt: yup.string().required(),
-  skillTagId: yup.string().required(),
-  timeStack: yup.number().required(),
-  content: yup.string().required(),
-});
-
-export const StudyModal: FC<Props> = (props) => {
+export const StudyModal: FC<Props> = memo((props) => {
   //モーダルの開閉
   const { isOpen, onOpen, onClose } = useDisclosure();
   //propsでもらうもの
   const { title, buttonTitle } = props;
+  //トーストアラート
+  const toast = useToast();
 
-  const { register, handleSubmit, reset } = useForm<StackList>({
-    mode: "onSubmit",
-    //エラーのある入力が再度バリデーションされるタイミングを設定
-    reValidateMode: "onChange",
-    //外部のバリデーションメソッドを実行
-    resolver: yupResolver(schema),
-  });
+  //記録日
+  const [createdAt, setCreatedAt] = useState<string>("");
+  const onChangeCreatedAt = (e: ChangeEvent<HTMLInputElement>) =>
+    setCreatedAt(e.target.value);
+  //学習技術
+  const [skillTagId, setSkillTagId] = useState<string>("");
+  const onChangeSkillTagId = (e: ChangeEvent<HTMLInputElement>) =>
+    setSkillTagId(e.target.value);
+  //学習時間
+  const [timeStack, setTimeStack] = useState<number>(0);
+  const onChangeTimeStack = (e: ChangeEvent<HTMLInputElement>) =>
+    setTimeStack(Number(e.target.value));
+  //メモ
+  const [content, setContent] = useState<string>("");
+  const onChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) =>
+    setContent(e.target.value);
+  //ユーザーID
 
+  //記録追加メソッド（リフェッチ機能）
   const [addStudyStack] = useAddStudyStackMutation({
-    //refetch機能を追加
-    refetchQueries: [{ query: ALL_STUDYSTACK_QUERY }],
-    awaitRefetchQueries: true,
+    variables: {
+      stack: {
+        createdAt,
+        skillTagId,
+        timeStack,
+        content,
+        //一旦指定のユーザー
+        userId: "621c795fea18ffdb80e66462",
+      },
+    },
+    refetchQueries: [GetAllStudyStackDocument],
   });
 
   //記録追加
-  const onSubmit: SubmitHandler<StackList> = (data) => {
-    console.log("記録追加");
-    addStudyStack({
-      variables: {
-        stack: {
-          createdAt: data.createdAtStart,
-          skillTagId: data.skillTagId,
-          timeStack: data.timeStack,
-          content: data.content,
-          //一旦指定のユーザー
-          userId: "621c795fea18ffdb80e66462",
-        },
-      },
-    });
-    //入力値リセット
-    reset();
+  const addStack = async () => {
+    const addStackData = await addStudyStack();
+    if (addStackData.data?.addStudyStack.status === "success") {
+      toast({ title: "学習を記録しました", status: "success" });
+      onClose();
+    } else if (addStackData.data?.addStudyStack.status === "error") {
+      toast({ title: "記録に失敗しました", status: "error" });
+      onClose();
+    }
   };
+
+
+  
 
   return (
     <>
@@ -77,6 +89,7 @@ export const StudyModal: FC<Props> = (props) => {
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
+        {/* <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered> */}
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{title}</ModalHeader>
@@ -84,43 +97,88 @@ export const StudyModal: FC<Props> = (props) => {
           {title === "記録削除" && (
             <ModalBody>この記事を削除しますか</ModalBody>
           )}
-          {title === "記録編集" ||
-            ("記録追加" && (
-              <ModalBody>
-                日付:
-                <Input
-                  variant="outline"
-                  placeholder="日付"
-                  type="date"
-                  {...register("createdAtStart")}
-                />
-                技術:
-                <Input
-                  variant="outline"
-                  placeholder="技術"
-                  type="text"
-                  {...register("skillTagId")}
-                />
-                時間:
-                <Input
-                  variant="outline"
-                  placeholder="時間"
-                  type="number"
-                  {...register("timeStack")}
-                />
-                メモ:
-                <Textarea placeholder="メモ" {...register("content")} />
-              </ModalBody>
-            ))}
+          {title === "記録追加" && (
+            <ModalBody>
+              日付:
+              <Input
+                variant="outline"
+                placeholder="日付"
+                type="date"
+                value={createdAt}
+                onChange={(e) => onChangeCreatedAt(e)}
+                // {...register("createdAtStart")}
+              />
+              技術:
+              <Input
+                variant="outline"
+                placeholder="技術"
+                type="text"
+                value={skillTagId}
+                onChange={(e) => onChangeSkillTagId(e)}
+                // {...register("skillTagId")}
+              />
+              時間:
+              <Input
+                variant="outline"
+                placeholder="時間"
+                type="number"
+                value={timeStack}
+                onChange={(e) => onChangeTimeStack(e)}
+                // {...register("timeStack")}
+              />
+              メモ:
+              <Textarea
+                placeholder="メモ"
+                value={content}
+                onChange={(e) => onChangeContent(e)}
+                // {...register("content")}
+              />
+            </ModalBody>
+          )}
+          {title === "記録編集" && (
+            <ModalBody>
+              日付:
+              <Input
+                variant="outline"
+                placeholder="日付"
+                type="date"
+                value={createdAt}
+                onChange={(e) => onChangeCreatedAt(e)}
+                // {...register("createdAtStart")}
+              />
+              技術:
+              <Input
+                variant="outline"
+                placeholder="技術"
+                type="text"
+                value={skillTagId}
+                onChange={(e) => onChangeSkillTagId(e)}
+                // {...register("skillTagId")}
+              />
+              時間:
+              <Input
+                variant="outline"
+                placeholder="時間"
+                type="number"
+                value={timeStack}
+                onChange={(e) => onChangeTimeStack(e)}
+                // {...register("timeStack")}
+              />
+              メモ:
+              <Textarea
+                placeholder="メモ"
+                value={content}
+                onChange={(e) => onChangeContent(e)}
+                // {...register("content")}
+              />
+            </ModalBody>
+          )}
 
           <ModalFooter>
-            <Button
-              variant="ghost"
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-            >
-              {buttonTitle}する
-            </Button>
+            {title === "記録追加" && <AddStackButton addStack={addStack} />}
+            {/* {title === "記録編集" && <AddStackButton addStack={editStack} />}
+            {title === "記録削除" && <AddStackButton addStack={deleteStack} />} */}
+
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               キャンセル
             </Button>
@@ -129,4 +187,4 @@ export const StudyModal: FC<Props> = (props) => {
       </Modal>
     </>
   );
-};
+});
