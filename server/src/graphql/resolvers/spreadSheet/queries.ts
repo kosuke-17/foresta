@@ -14,8 +14,7 @@ const sepreadSheetQueries = {
   getSpreadSheet: async (_: any, { userId }: UserIdType) => {
     const user = await Users.findById({ _id: userId });
     if (user === null) {
-      return console.error();
-      ("該当のユーザーがいませんでした。");
+      return error("該当のユーザーがいませんでした。");
     }
     // スプレッドシートのIDを取得
     const spreadsheetId = user.spreadSheetID;
