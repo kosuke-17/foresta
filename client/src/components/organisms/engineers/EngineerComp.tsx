@@ -36,7 +36,7 @@ export const EngineerComp: FC<Engineer> = (props) => {
           <Spacer />
           <Center>
             <Link to="/aboutme" state={{ userID: engineerData.id }}>
-              <Avatar src="https://bit.ly/broken-link" size="2xl" />
+              <Avatar size="2xl" />
             </Link>
           </Center>
           <Center>
