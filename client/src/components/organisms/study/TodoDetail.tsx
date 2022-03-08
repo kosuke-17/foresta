@@ -54,39 +54,54 @@ export const TodoDetail: FC<Props> = memo((props) => {
       <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size="xl">
         <ModalOverlay />
         <ModalContent bg="green.50">
-          {isEditing ? (
-            // 編集モード
-            <TodoDetailEdit
-              todo={todo}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-            />
-          ) : (
-            <>
-              <ModalHeader>
-                <Flex justify="space-between">
-                  <CloseButton onClick={onClose} />
-                  <Flex gap={1}>
-                    <>
-                      <Button
-                        colorScheme="green"
-                        size="sm"
-                        onClick={() => setIsEditing(true)}
-                      >
-                        <EditIcon />
-                        編集
-                      </Button>
-                      <Button colorScheme="green" size="sm">
-                        <DeleteIcon />
-                        削除
-                      </Button>
-                    </>
-                  </Flex>
-                </Flex>
-              </ModalHeader>
+          <ModalHeader>
+            <Flex justify="space-between">
+              <CloseButton onClick={onClose} />
+              <Flex gap={1}>
+                {isEditing ? (
+                  <>
+                    <Button
+                      colorScheme="green"
+                      size="sm"
+                      onClick={() => alert("編集完了")}
+                    >
+                      保存
+                    </Button>
+                    <Button
+                      colorScheme="green"
+                      size="sm"
+                      onClick={() => setIsEditing(false)}
+                    >
+                      キャンセル
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      colorScheme="green"
+                      size="sm"
+                      onClick={() => setIsEditing(true)}
+                    >
+                      <EditIcon />
+                      編集
+                    </Button>
+                    <Button colorScheme="green" size="sm">
+                      <DeleteIcon />
+                      削除
+                    </Button>
+                  </>
+                )}
+              </Flex>
+            </Flex>
+          </ModalHeader>
 
-              <ModalBody padding="0 4rem">
-                {todo && (
+          <ModalBody padding="0 4rem">
+            {todo && (
+              <>
+                {isEditing ? (
+                  // 編集モード
+                  <TodoDetailEdit todo={todo} />
+                ) : (
                   <>
                     <Heading as="h2" size="lg" mb={5}>
                       {todo.title}
@@ -109,9 +124,9 @@ export const TodoDetail: FC<Props> = memo((props) => {
                     </Box>
                   </>
                 )}
-              </ModalBody>
-            </>
-          )}
+              </>
+            )}
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>
@@ -128,4 +143,5 @@ const _MemoContent = styled.div`
   padding: 10px;
   margin-bottom: 40px;
   border-radius: 10px;
+  min-height: 50px;
 `;

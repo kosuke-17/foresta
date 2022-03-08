@@ -1,7 +1,5 @@
 import { FC, memo, useCallback, useState } from "react";
 import {
-  Button,
-  ModalHeader,
   ModalBody,
   Heading,
   Flex,
@@ -24,14 +22,14 @@ type Props = {
  * Todoの詳細を編集するコンポーネント.
  */
 export const TodoDetailEdit: FC<Props> = memo((props) => {
-  const { todo, setIsEditing } = props;
+  const { todo } = props;
 
   // Todoのタイトル
   const [title, setTitle] = useState(todo.title);
 
   // Todoのメモ
   const [description, setDescription] = useState(todo.description || " ");
-  
+
   // Todoのステータス
   const [isStatus, setIsStatus] = useState(todo.isStatus);
 
@@ -58,75 +56,49 @@ export const TodoDetailEdit: FC<Props> = memo((props) => {
 
   return (
     <>
-      <ModalHeader>
-        <Flex justify="end">
-          <Flex gap={1}>
-            <>
-              <Button
-                colorScheme="green"
-                size="sm"
-                onClick={() => alert("編集完了")}
-              >
-                保存
-              </Button>
-              <Button
-                colorScheme="green"
-                size="sm"
-                onClick={() => setIsEditing(false)}
-              >
-                キャンセル
-              </Button>
-            </>
-          </Flex>
-        </Flex>
-      </ModalHeader>
+      {todo && (
+        <>
+          <Heading as="h2" size="lg" mb={5}>
+            <Input
+              value={title}
+              onChange={inputTitle}
+              focusBorderColor="green.200"
+              bg="white"
+            />
+          </Heading>
+          <div>
+            <_Label>日付: </_Label>
 
-      <ModalBody padding="0 4rem">
-        {todo && (
-          <>
-            <Heading as="h2" size="lg" mb={5}>
-              <Input
-                value={title}
-                onChange={inputTitle}
-                focusBorderColor="green.200"
-                bg="white"
-              />
-            </Heading>
+            {getformattedTodoDate(todo.startedAt, todo.finishedAt)}
+          </div>
+          <Flex alignItems="center">
             <div>
-              <_Label>日付: </_Label>
-
-              {getformattedTodoDate(todo.startedAt, todo.finishedAt)}
+              <_Label>ステータス: </_Label>
+              {isStatus ? "完了" : "未完了"}
             </div>
-            <Flex alignItems="center">
-              <div>
-                <_Label>ステータス: </_Label>
-                {isStatus ? "完了" : "未完了"}
-              </div>
-              <Checkbox
-                isChecked={isStatus}
-                onChange={onToggleStatus}
-                size="lg"
-                colorScheme="teal"
-                bg="white"
-                ml={1}
-              />
-            </Flex>
+            <Checkbox
+              isChecked={isStatus}
+              onChange={onToggleStatus}
+              size="lg"
+              colorScheme="teal"
+              bg="white"
+              ml={1}
+            />
+          </Flex>
 
-            <Box mt={5}>
-              <_Label>メモ</_Label>
+          <Box mt={5}>
+            <_Label>メモ</_Label>
 
-              <Textarea
-                value={description}
-                onChange={inputDescription}
-                size="sm"
-                mb={5}
-                bg="white"
-                focusBorderColor="green.200"
-              />
-            </Box>
-          </>
-        )}
-      </ModalBody>
+            <Textarea
+              value={description}
+              onChange={inputDescription}
+              mb={5}
+              bg="white"
+              focusBorderColor="green.200"
+            />
+          </Box>
+        </>
+      )}
     </>
   );
 });
