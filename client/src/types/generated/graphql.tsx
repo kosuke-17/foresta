@@ -186,26 +186,6 @@ export type MutationUpdateSpecUserInfoArgs = {
   specUserInfo: SpecUserInfoUpdateInput;
 };
 
-export type MutationUpdatePortfolioArgs = {
-  portfolio: PortfolioUpdateInput;
-};
-
-export type MutationUpdateSpecProjectArgs = {
-  specProject: SpecProjectUpdateInput;
-};
-
-export type MutationUpdateSpecSheetArgs = {
-  specSheet?: InputMaybe<SpecSheetUpdateInput>;
-};
-
-export type MutationUpdateSpecTechInfoArgs = {
-  specTechInfo: SpecTechInfoUpdateInput;
-};
-
-export type MutationUpdateSpecUserInfoArgs = {
-  specUserInfo: SpecUserInfoUpdateInput;
-};
-
 export type MutationUpdateStudyStackArgs = {
   stack: StudyStackUpdateInput;
 };
@@ -771,7 +751,6 @@ export type UserLoginMutation = {
     status: string;
     node?: {
       __typename?: "User";
-      id: string;
       name: string;
       jobType: string;
       email: string;
@@ -787,7 +766,6 @@ export type GetAllUserQuery = {
   __typename?: "Query";
   getAllUser?: Array<{
     __typename?: "User";
-    id: string;
     name: string;
     jobType: string;
     email: string;
@@ -918,13 +896,11 @@ export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserByIdQuery,
   GetUserByIdQueryVariables
 >;
-
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
       status
       node {
-        id
         name
         jobType
         email
@@ -976,11 +952,9 @@ export type UserLoginMutationOptions = Apollo.BaseMutationOptions<
   UserLoginMutation,
   UserLoginMutationVariables
 >;
-
 export const GetAllUserDocument = gql`
   query GetAllUser {
     getAllUser {
-      id
       name
       jobType
       email
@@ -1037,7 +1011,6 @@ export type GetAllUserQueryResult = Apollo.QueryResult<
   GetAllUserQuery,
   GetAllUserQueryVariables
 >;
-
 export const GetAllStudyStackDocument = gql`
   query GetAllStudyStack($userId: String) {
     getAllStudyStack(userId: $userId) {
