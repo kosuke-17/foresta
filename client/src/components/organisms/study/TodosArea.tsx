@@ -59,7 +59,7 @@ export const TodosArea: FC = memo(() => {
           >
             {tabs.map((tab, index) => (
               <TabPanel key={index}>
-                {/* <TodoList todos={data?.todos} loading={loading} tabType={tab} /> */}
+                <TodoList todos={data?.todos} loading={loading} tabType={tab} />
               </TabPanel>
             ))}
           </TabPanels>

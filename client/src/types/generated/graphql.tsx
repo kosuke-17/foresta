@@ -883,6 +883,7 @@ export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserByIdQuery,
   GetUserByIdQueryVariables
 >;
+
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
