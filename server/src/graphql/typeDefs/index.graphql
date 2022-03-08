@@ -35,10 +35,25 @@ type Query {
   スキル取得.
   """
   getAllSkill: [Skill]
+  """
+  動作環境取得
+  """
   getOperationEnvs(_id: String): Skill!
+  """
+  言語取得
+  """
   getLanguages(_id: String): Skill!
+  """
+  フレームワーク取得
+  """
   getFrameworks(_id: String): Skill!
+  """
+  ライブラリ取得
+  """
   getLibraries(_id: String): Skill!
+  """
+  その他のツール取得
+  """
   getOtherTools(_id: String): Skill!
   """
   それぞれのTechを取得.
@@ -51,101 +66,101 @@ type Query {
 
 type Mutation {
   """
-  ユーザーを追加する：引数(ユーザー名、エンジニアタイプ、GithubURL?)
+  ユーザーを追加.
   """
   createUser(user: UserCreateInput!): ResponseUser!
+  """
+  ユーザーを編集.
+  """
+  updateUser(user: UserUpdateInput!): ResponseUser!
 
   """
-  ユーザー習得技術を更新する：引数(ユーザーID, TechLeafID)
+  ユーザー習得技術を更新.
   """
   updateUserTechLeafs(techLeaf: UserTechLeafUpdateInput!): ResponseUserTechLeaf!
   """
-  ユーザーの持つUrlを作成する：引数(ユーザーID, TechLeafID)
+  ユーザーの持つUrlを作成.
   """
   createUserUrls(urlData: UserUrlsCreateInput!): ResponseUserUrls!
   addUserUrls(urlData: UserUrlsAddInput!): ResponseUserUrls!
   removeUserUrls(urlData: UserUrlsRemoveInput!): ResponseUserUrls!
 
   """
-  Todoを追加する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)
+  Todoを追加.
   """
   addTodo(todo: TodoAddInput): ResponseTodo!
   """
-  Todoを削除する：引数(todoId)
+  Todoを削除.
   """
   removeTodo(todoId: String): ResponseTodo!
   """
-  Todoを更新する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)
+  Todoを更新.
   """
   updateTodo(todo: TodoUpdateInput): ResponseTodo!
   """
-  Todo状態をtrueにする：引数(todoId)
+  Todo状態をtrueまたはfalse.
   """
-  chekedTodoStatus(todoId: String): ResponseTodo!
+  changeTodoStatus(todoId: String): ResponseTodo!
   """
-  Todo状態をfalseにする：引数(todoId)
-  """
-  unChekedTodoStatus(todoId: String): ResponseTodo!
-  """
-  ユーザーがログインする：引数(ユーザーID, email, password)
+  ユーザーがログイン.
   """
   userLogin(user: UserLoginInput!): ResponseUser!
   """
-  ユーザーの学習記録を追加する
+  ユーザーの学習記録を追加.
   """
   addStudyStack(stack: StudyStackAddInput!): ResponseStudyStack!
   """
-  ユーザーの学習記録を削除する
+  ユーザーの学習記録を削除.
   """
   removeStudyStack(studyStackId: String!): ResponseStudyStack!
   """
-  ユーザーの学習記録を更新する
+  ユーザーの学習記録を更新.
   """
   updateStudyStack(stack: StudyStackUpdateInput!): ResponseStudyStack!
   """
-  スペックシート情報を更新する
+  スペックシート情報を更新.
   """
   updateSpecSheet(specSheet: SpecSheetUpdateInput): ResponseSpecSheet!
   """
-  基本情報を更新する
+  基本情報を更新.
   """
   updateSpecUserInfo(
     specUserInfo: SpecUserInfoUpdateInput!
   ): ResponseSpecUserInfo!
   """
-  スキル要約情報を更新する
+  スキル要約情報を更新.
   """
   updateSpecTechInfo(
     specTechInfo: SpecTechInfoUpdateInput!
   ): ResponseSpecTechInfo!
   """
-  開発経験情報を更新する
+  開発経験情報を更新.
   """
   updateSpecProject(specProject: SpecProjectUpdateInput!): ResponseSpecProject!
   """
-  開発経験情報を追加する
+  開発経験情報を追加.
   """
   addSpecProject(specProject: SpecProjectAddInput!): ResponseSpecProject!
   """
-  開発経験情報を削除する
+  開発経験情報を削除.
   """
   removeSpecProject(specProjectId: String!): ResponseRemove!
 
   """
-  ポートフォリオを作成する
+  ポートフォリオを作成.
   """
   createPortfolio(portfolio: PortfolioCreateInput!): ResponsePortfolio!
   """
-  ポートフォリオを更新する
+  ポートフォリオを更新.
   """
   updatePortfolio(portfolio: PortfolioUpdateInput!): ResponsePortfolio!
   """
-  ポートフォリオを削除する
+  ポートフォリオを削除.
   """
   removePortfolio(portfolioId: String!): ResponseRemove!
 
   """
-  Techを追加する：引数(Leaf名 or Branch名 or Tree名)
+  Techを追加.
   """
   createTechLeaf(techLeaf: TechLeafCreateInput!): CreatedTechLeaf!
   createTechBranch(techBranch: TechBranchCreateInput!): CreatedTechBranch!
