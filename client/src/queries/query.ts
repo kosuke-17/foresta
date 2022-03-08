@@ -31,7 +31,6 @@ export const LOGIN_QUERY = gql`
     userLogin(user: $user) {
       status
       node {
-        id
         name
         jobType
         email
@@ -46,7 +45,6 @@ export const LOGIN_QUERY = gql`
 gql`
   query GetAllUser {
     getAllUser {
-      id
       name
       jobType
       email
