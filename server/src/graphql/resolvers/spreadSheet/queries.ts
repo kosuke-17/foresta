@@ -1,6 +1,6 @@
 import { google } from "googleapis";
 import { GoogleAuth } from "google-auth-library";
-import { Users } from "../../../models/User.model";
+import { Users } from "../../../models";
 import { UserIdType } from "../../../types";
 import { error, success } from "../responseStatus";
 

@@ -1,4 +1,4 @@
-import { StudyStack } from "../../../models/StudyStack.model";
+import { StudyStack } from "../../../models";
 import { StudyStackIdType, UserIdType } from "../../../types";
 /**
  * ## 学習記録の取得

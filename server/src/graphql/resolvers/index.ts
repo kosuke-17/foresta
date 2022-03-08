@@ -3,9 +3,12 @@ import {
   SpecProjectSheet,
   SpecTechInfoSheet,
   SpecUserInfoSheet,
-} from "../../models/SpecSheet.model";
-import { TechBranch, TechLeaf, TechTree } from "../../models/TechForest.model";
-import { UserLeafs, UserUrls } from "../../models/User.model";
+  UserLeafs,
+  UserUrls,
+  TechBranch,
+  TechLeaf,
+  TechTree,
+} from "../../models";
 import { IdType } from "../../types";
 import { specSheetMutations, specSheetQueries } from "./specSheet";
 import { sepreadSheetQueries, spreadSheetMutations } from "./spreadSheet";

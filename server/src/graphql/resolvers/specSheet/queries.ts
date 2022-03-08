@@ -1,4 +1,4 @@
-import { Portfolio, Skill, SpecSheet } from "../../../models/SpecSheet.model";
+import { Portfolio, Skill, SpecSheet } from "../../../models";
 import { IdType, UserIdType } from "../../../types";
 import { success } from "../responseStatus";
 

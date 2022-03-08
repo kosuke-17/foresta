@@ -1,4 +1,4 @@
-import { StudyStack } from "../../../models/StudyStack.model";
+import { StudyStack } from "../../../models";
 import {
   StudyStackIdType,
   StackAddType,

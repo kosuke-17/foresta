@@ -1,4 +1,4 @@
-import { UserTodos } from "../../../models/User.model";
+import { UserTodos } from "../../../models";
 import { TodoAddType, TodoIdType, TodoUpdateType } from "../../../types";
 import { success } from "../responseStatus";
 /**

@@ -1,10 +1,5 @@
-import {
-  Portfolio,
-  SpecProjectSheet,
-  SpecSheet,
-  SpecTechInfoSheet,
-  SpecUserInfoSheet,
-} from "../../../models/SpecSheet.model";
+
+import { Portfolio, SpecProjectSheet, SpecSheet, SpecTechInfoSheet, SpecUserInfoSheet } from "../../../models";
 import {
   PortfolioIdType,
   PortfolioType,

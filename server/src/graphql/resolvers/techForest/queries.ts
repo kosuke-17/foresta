@@ -1,9 +1,4 @@
-import {
-  TechArea,
-  TechBranch,
-  TechLeaf,
-  TechTree,
-} from "../../../models/TechForest.model";
+import { TechArea, TechBranch, TechLeaf, TechTree } from "../../../models";
 /**
  * ## 技術ツリーの取得
  */
