@@ -1,16 +1,16 @@
-import { FC, memo } from "react";
+import { FC, memo, useCallback, useState } from "react";
 import {
   Button,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   Heading,
   CloseButton,
   Flex,
   Box,
+  Input,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import styled from "styled-components";
@@ -26,11 +26,16 @@ type Props = {
 export const TodoDetail: FC<Props> = memo((props) => {
   const { todoId, isOpen, onClose } = props;
 
+  const [isEditing, setIsEditing] = useState(false);
+
   const { data, error, loading } = useGetTodoByIdQuery({
     variables: {
       todoId,
     },
+    fetchPolicy: "cache-and-network"
   });
+
+  const [title, setTitle] = useState(data?.todo.title);
 
   if (error) {
     return <div>{error.message}</div>;
@@ -45,21 +50,46 @@ export const TodoDetail: FC<Props> = memo((props) => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size="xl">
         <ModalOverlay />
         <ModalContent bg="green.50">
           <ModalHeader>
             <Flex justify="space-between">
               <CloseButton />
               <Flex gap={1}>
-                <Button colorScheme="green" size="sm">
-                  <EditIcon />
-                  編集
-                </Button>
-                <Button colorScheme="green" size="sm">
-                  <DeleteIcon />
-                  削除
-                </Button>
+                {isEditing ? (
+                  <>
+                    <Button
+                      colorScheme="green"
+                      size="sm"
+                      onClick={() => alert("編集完了")}
+                    >
+                      保存
+                    </Button>
+                    <Button
+                      colorScheme="green"
+                      size="sm"
+                      onClick={() => setIsEditing(false)}
+                    >
+                      キャンセル
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      colorScheme="green"
+                      size="sm"
+                      onClick={() => setIsEditing(true)}
+                    >
+                      <EditIcon />
+                      編集
+                    </Button>
+                    <Button colorScheme="green" size="sm">
+                      <DeleteIcon />
+                      削除
+                    </Button>
+                  </>
+                )}
               </Flex>
             </Flex>
           </ModalHeader>
@@ -68,7 +98,16 @@ export const TodoDetail: FC<Props> = memo((props) => {
             {todo && (
               <>
                 <Heading as="h2" size="lg" mb={5}>
-                  {todo?.title}
+                  {isEditing ? (
+                    <>
+                      <Input
+                        focusBorderColor="green.200"
+                        value={todo.title}
+                      />
+                    </>
+                  ) : (
+                    <>{todo.title}</>
+                  )}
                 </Heading>
                 <div>
                   <_Label>日付: </_Label>
@@ -89,13 +128,6 @@ export const TodoDetail: FC<Props> = memo((props) => {
               </>
             )}
           </ModalBody>
-
-          {/* <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter> */}
         </ModalContent>
       </Modal>
     </>
