@@ -713,6 +713,33 @@ export type PrevJobsContent = {
   content: Scalars["String"];
 };
 
+export type GetUserByIdQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type GetUserByIdQuery = {
+  __typename?: "Query";
+  user: {
+    __typename?: "User";
+    name: string;
+    jobType: string;
+    email: string;
+    password: string;
+    githubURL: string;
+    userUrls?: {
+      __typename?: "UserUrls";
+      user_urls: Array<{ __typename?: "URL"; url: string; urlName: string }>;
+    } | null;
+    portfolio?: Array<{
+      __typename?: "Portfolio";
+      title: string;
+      description: string;
+      img: string;
+      portfolioURL: string;
+    } | null> | null;
+  };
+};
+
 export type UserLoginMutationVariables = Exact<{
   user: UserLoginInput;
 }>;
@@ -783,6 +810,79 @@ export type GetAllTodoByUserQuery = {
     isStatus: boolean;
   }>;
 };
+
+export const GetUserByIdDocument = gql`
+  query GetUserById($id: String!) {
+    user: getUserById(_id: $id) {
+      name
+      jobType
+      email
+      password
+      githubURL
+      userUrls {
+        user_urls {
+          url
+          urlName
+        }
+      }
+      portfolio {
+        title
+        description
+        img
+        portfolioURL
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUserByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserByIdQuery,
+    GetUserByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(
+    GetUserByIdDocument,
+    options,
+  );
+}
+export function useGetUserByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserByIdQuery,
+    GetUserByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(
+    GetUserByIdDocument,
+    options,
+  );
+}
+export type GetUserByIdQueryHookResult = ReturnType<typeof useGetUserByIdQuery>;
+export type GetUserByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserByIdLazyQuery
+>;
+export type GetUserByIdQueryResult = Apollo.QueryResult<
+  GetUserByIdQuery,
+  GetUserByIdQueryVariables
+>;
 
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {

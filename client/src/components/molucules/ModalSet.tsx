@@ -43,13 +43,7 @@ export const ModalSet: FC<Props> = memo((props) => {
       {/* モーダル本体 */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent
-          position="fixed"
-          top={150}
-          width="auto"
-          minWidth={500}
-          maxWidth="none"
-        >
+        <ModalContent width="auto" minWidth={500} maxWidth="none">
           {modalTitle ? (
             <ModalHeader textAlign="center">{modalTitle}</ModalHeader>
           ) : (

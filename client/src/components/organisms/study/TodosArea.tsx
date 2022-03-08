@@ -9,10 +9,9 @@ import {
   Container,
   Heading,
 } from "@chakra-ui/react";
-
-import { Calendar } from "../../molucules/calendar";
-import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
 import { TodoList } from "./TodoList";
+import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
+import { Calendar } from "../../molucules/Calendar";
 
 // タブのタイプ
 const tabs = ["全て", "今日", "期限切れ"] as const; //as const をつけてreadonlyにする
