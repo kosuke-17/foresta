@@ -17,13 +17,11 @@ export const SelectInput: FC<Props> = memo((props) => {
   return (
     <>
       {errorMessage}
-      <Select>
+      <Select {...registers}>
         {options.map((optionItem, index) => (
-          <div key={index}>
-            <option value={optionItem} {...registers}>
-              {optionItem}
-            </option>
-          </div>
+          <option key={index} value={optionItem}>
+            {optionItem}
+          </option>
         ))}
       </Select>
     </>
