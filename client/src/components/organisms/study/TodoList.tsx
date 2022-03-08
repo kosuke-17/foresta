@@ -7,7 +7,7 @@ import { Todo } from "../../../types/generated/graphql";
 // import { TodoDetail } from './TodoDetail';
 
 type Props = {
-  todos: Array<Todo> | undefined;
+  todos: Array<Omit<Todo, "userId">> | undefined;
   loading: boolean;
   tabType: "全て" | "今日" | "期限切れ";
 };

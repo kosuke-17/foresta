@@ -1,36 +1,120 @@
 import { memo, FC } from "react";
-import { Button, Box } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import { Button, Box, Flex } from "@chakra-ui/react";
+import { MarkGithubIcon } from "@primer/octicons-react";
+import styled from "styled-components";
+
+import { AccordionContent } from "../../molucules/AccordionContent";
+import { MenuBar } from "../../molucules/MenuBar";
+import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
+import { useGetUserByIdQuery } from "../../../types/generated/graphql";
+import { UrlList } from "../../molucules/aboutMePublic/UrlList";
+import { Portfolio } from "../../../types/generated/graphql";
 
 export const Public: FC = memo(() => {
   /**
-   * AboutMeプライベートゾーン.
+   * ユーザ情報の取得.
+   * @remarks 取得情報:名前、職種、GitHub
+   */
+  const { loading, error, data } = useGetUserByIdQuery({
+    //idは実際cookieから取得
+    variables: { id: "621b15dd3200d51bb64b2d42" }, //田中
+  });
+
+  //useState付けるとデータ入る前にレンダリングされて終わるみたい
+  const user = data?.user;
+  //制作物部分
+  const portfolio: Array<
+    Pick<Portfolio, "img" | "title" | "description" | "portfolioURL">
+  > = user?.portfolio as Array<
+    Pick<Portfolio, "img" | "title" | "description" | "portfolioURL">
+  >;
+
+  //読み込み中時の表示
+  if (loading) {
+    return <p>loding…</p>;
+  }
+  //エラー時の表示
+  if (error) {
+    return <p>Error</p>;
+  }
+  /**
+   * AboutMeパブリックゾーン.
    */
   return (
     <>
       <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">
-        <div>氏名:山田太郎</div>
-        <div>フロントエンドエンジニア</div>
-        <div>
-          <Button colorScheme="teal" size="sm">
-            このユーザの学習記録
-          </Button>
-        </div>
-        <div>
-          <Button colorScheme="teal" size="sm">
-            GitHubアカウント
-          </Button>
-        </div>
-        <div>技術進捗ツリーチェック項目</div>
-        <div>制作物一覧</div>
-        <div>ほげほげサイト</div>
-        <div>ほげほげサイト</div>
-        <div>ほげほげサイト</div>
-        <div>
-          <div>■その他URL</div>
-          <div>ほげほげ</div>
-          <div>hogehoge.com</div>
-        </div>
+        {user && (
+          <>
+            <Flex justifyContent="right">
+              <MenuBar />
+            </Flex>
+            <_User>
+              <Flex justifyContent="center">
+                <_Name>氏名:{user.name}</_Name>
+                {user.githubURL && (
+                  <_Icon>
+                    <a
+                      href={`https://github.com/${user.githubURL}`}
+                      target="blank"
+                    >
+                      <MarkGithubIcon size={16} />
+                    </a>
+                  </_Icon>
+                )}
+              </Flex>
+              <_Content>{user.jobType}</_Content>
+              <_Content>
+                <Button
+                  backgroundColor="green.400"
+                  size="md"
+                  textColor="white"
+                  _hover={{ backgroundColor: "green.300" }}
+                >
+                  {/* 仮のリンク */}
+                  <Link to={"/study"}>このユーザの学習記録</Link>
+                </Button>
+              </_Content>
+            </_User>
+            <_Content>
+              <AccordionContent
+                title="技術進捗ツリーチェック項目"
+                content={<p>技術ツリー</p>}
+                size="sm"
+              />
+            </_Content>
+            {/* 制作物 */}
+            {portfolio && <SiteImageBox siteData={portfolio} />}
+            {/* URL */}
+            {user.userUrls && <UrlList urlData={user.userUrls.user_urls} />}
+          </>
+        )}
       </Box>
     </>
   );
 });
+
+//氏名
+const _Name = styled.div`
+  font-weight: bold;
+  font-size: 25px;
+`;
+
+//githubアイコン
+const _Icon = styled.div`
+  margin-top: 5px;
+  margin-left: 5px;
+  :hover {
+    color: gray;
+  }
+`;
+
+//パブリックゾーン上半分
+const _User = styled.div`
+  text-align: center;
+`;
+
+//技術進捗ツリー
+const _Content = styled.div`
+  margin-top: 10px;
+`;

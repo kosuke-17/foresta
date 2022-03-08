@@ -1,17 +1,29 @@
 import { gql } from "@apollo/client";
 
-/**
- * 見本.
- */
-// gql`
-//   query todos {
-//     getAllTodo {
-//       id
-//       title
-//       finish
-//     }
-//   }
-// `;
+//ユーザ情報取得.
+gql`
+  query GetUserById($id: String!) {
+    user: getUserById(_id: $id) {
+      name
+      jobType
+      email
+      password
+      githubURL
+      userUrls {
+        user_urls {
+          url
+          urlName
+        }
+      }
+      portfolio {
+        title
+        description
+        img
+        portfolioURL
+      }
+    }
+  }
+`;
 
 // ログイン処理
 export const LOGIN_QUERY = gql`
@@ -26,6 +38,20 @@ export const LOGIN_QUERY = gql`
         password
         githubURL
       }
+    }
+  }
+`;
+
+// エンジニアリスト全件表示
+gql`
+  query GetAllUser {
+    getAllUser {
+      id
+      name
+      jobType
+      email
+      password
+      githubURL
     }
   }
 `;
