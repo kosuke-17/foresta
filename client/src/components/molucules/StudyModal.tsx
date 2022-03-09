@@ -13,6 +13,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { ChangeEvent, FC, memo, useState } from "react";
+import { useCookies } from "react-cookie";
 import {
   GetAllStudyStackDocument,
   useAddStudyStackMutation,
@@ -36,6 +37,8 @@ export const StudyModal: FC<Props> = memo((props) => {
   const { title, buttonTitle } = props;
   //トーストアラート
   const toast = useToast();
+  //クッキー情報取得
+  const [cookies] = useCookies();
 
   //記録日
   const [createdAt, setCreatedAt] = useState<string>("");
@@ -63,7 +66,7 @@ export const StudyModal: FC<Props> = memo((props) => {
         timeStack,
         content,
         //一旦指定のユーザー
-        userId: "621c795fea18ffdb80e66462",
+        userId: cookies.ForestaID,
       },
     },
     refetchQueries: [GetAllStudyStackDocument], //データを表示するクエリーのDocument

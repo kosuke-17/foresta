@@ -21,8 +21,8 @@ export type StackList = {
 export const useStackList = () => {
   //userIdから学習記録データを取得する
   const { loading, data, error } = useGetAllStudyStackQuery({
-    //仮のユーザーID
-    variables: { userId: "621c795fea18ffdb80e66462" },
+    //仮のユーザーID（ゆくゆくはURLのidを取得？）
+    variables: { userId: "621b15dd3200d51bb64b2d42" },
   });
 
   //学習リストの詳細内容一つ一つを格納する新しい配列を作成

@@ -7,6 +7,7 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import { memo } from "react";
+import { useCookies } from "react-cookie";
 
 import { useStackList } from "../../../hooks/study/useStackList";
 import { LogListTable } from "../../molucules/stackList/LogListTable";
@@ -21,6 +22,8 @@ const tabNames = ["学習リスト", "更新情報"] as const;
  * @returns 学習リストと更新情報
  */
 export const StackList = memo(() => {
+  const [cookies] = useCookies();
+  console.log(cookies.ForestaID);
   //カスタムフックから学習リストデータ取得
   const { error, loading, data, stackSumList } = useStackList();
 
