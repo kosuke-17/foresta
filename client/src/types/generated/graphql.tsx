@@ -718,7 +718,7 @@ export type UserLoginMutation = {
 };
 
 export type GetAllStudyStackQueryVariables = Exact<{
-  userId?: InputMaybe<Scalars["String"]>;
+  userId: Scalars["String"];
 }>;
 
 export type GetAllStudyStackQuery = {
@@ -735,7 +735,7 @@ export type GetAllStudyStackQuery = {
 };
 
 export type GetStudyStackByIdQueryVariables = Exact<{
-  studyStackId?: InputMaybe<Scalars["String"]>;
+  studyStackId: Scalars["String"];
 }>;
 
 export type GetStudyStackByIdQuery = {
@@ -815,7 +815,7 @@ export type RemoveStudyStackMutation = {
 };
 
 export type GetAllTodoByUserQueryVariables = Exact<{
-  userId?: InputMaybe<Scalars["String"]>;
+  userId: Scalars["String"];
 }>;
 
 export type GetAllTodoByUserQuery = {
@@ -888,7 +888,7 @@ export type UserLoginMutationOptions = Apollo.BaseMutationOptions<
   UserLoginMutationVariables
 >;
 export const GetAllStudyStackDocument = gql`
-  query GetAllStudyStack($userId: String) {
+  query GetAllStudyStack($userId: String!) {
     getAllStudyStack(userId: $userId) {
       id
       timeStack
@@ -917,7 +917,7 @@ export const GetAllStudyStackDocument = gql`
  * });
  */
 export function useGetAllStudyStackQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     GetAllStudyStackQuery,
     GetAllStudyStackQueryVariables
   >,
@@ -951,7 +951,7 @@ export type GetAllStudyStackQueryResult = Apollo.QueryResult<
   GetAllStudyStackQueryVariables
 >;
 export const GetStudyStackByIdDocument = gql`
-  query GetStudyStackById($studyStackId: String) {
+  query GetStudyStackById($studyStackId: String!) {
     getStudyStackById(studyStackId: $studyStackId) {
       id
       content
@@ -980,7 +980,7 @@ export const GetStudyStackByIdDocument = gql`
  * });
  */
 export function useGetStudyStackByIdQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     GetStudyStackByIdQuery,
     GetStudyStackByIdQueryVariables
   >,
@@ -1188,7 +1188,7 @@ export type RemoveStudyStackMutationOptions = Apollo.BaseMutationOptions<
   RemoveStudyStackMutationVariables
 >;
 export const GetAllTodoByUserDocument = gql`
-  query GetAllTodoByUser($userId: String) {
+  query GetAllTodoByUser($userId: String!) {
     todos: getAllTodoByUser(userId: $userId) {
       id
       title
@@ -1216,7 +1216,7 @@ export const GetAllTodoByUserDocument = gql`
  * });
  */
 export function useGetAllTodoByUserQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     GetAllTodoByUserQuery,
     GetAllTodoByUserQueryVariables
   >,

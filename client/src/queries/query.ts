@@ -32,7 +32,7 @@ export const LOGIN_QUERY = gql`
 
 //学習リスト全件表示
 gql`
-  query GetAllStudyStack($userId: String) {
+  query GetAllStudyStack($userId: String!) {
     getAllStudyStack(userId: $userId) {
       id
       timeStack
@@ -46,7 +46,7 @@ gql`
 
 //学習リスト１件取得
 gql`
-  query GetStudyStackById($studyStackId: String) {
+  query GetStudyStackById($studyStackId: String!) {
     getStudyStackById(studyStackId: $studyStackId) {
       id
       content
@@ -109,7 +109,7 @@ gql`
 `;
 
 gql`
-  query GetAllTodoByUser($userId: String) {
+  query GetAllTodoByUser($userId: String!) {
     todos: getAllTodoByUser(userId: $userId) {
       id
       title
