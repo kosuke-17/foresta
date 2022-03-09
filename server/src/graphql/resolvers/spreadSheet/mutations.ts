@@ -1,5 +1,3 @@
-import { google } from "googleapis";
-import { GoogleAuth } from "google-auth-library";
 import {
   SpecSheet,
   SpecTechInfoSheet,
@@ -8,6 +6,7 @@ import {
   UserUrls,
 } from "../../../models";
 import { UserIdType } from "../../../types";
+import { getGoogleAuth } from "../../../utli/googleUtil";
 import { error, success } from "../responseStatus";
 
 const spreadSheetMutations = {
@@ -50,15 +49,8 @@ const spreadSheetMutations = {
     }
     // スプレッドシートのシート名を指定
     const sheetRange = "スペックシート!B4:BB6";
+    const { client, googleSheets } = await getGoogleAuth();
 
-    const auth = new GoogleAuth({
-      keyFile: "credentials.json",
-      scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-    // 認証のためのクライアント作成
-    const client = await auth.getClient();
-    // Google Sheets APIのインスタンス作成
-    const googleSheets = google.sheets({ version: "v4", auth: client });
     const request = {
       spreadsheetId: spreadsheetId,
       requestBody: {
@@ -225,14 +217,8 @@ const spreadSheetMutations = {
     // スプレッドシートのシート名を指定
     const sheetRange = "スペックシート!B9";
 
-    const auth = new GoogleAuth({
-      keyFile: "credentials.json",
-      scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-    // 認証のためのクライアント作成
-    const client = await auth.getClient();
-    // Google Sheets APIのインスタンス作成
-    const googleSheets = google.sheets({ version: "v4", auth: client });
+    const { client, googleSheets } = await getGoogleAuth();
+
     const request = {
       spreadsheetId: spreadsheetId,
       requestBody: {
@@ -279,14 +265,7 @@ const spreadSheetMutations = {
     if (!spreadsheetId) {
       return error("該当のスプレッドシートIDがありませんでした");
     }
-    const auth = new GoogleAuth({
-      keyFile: "credentials.json",
-      scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-    // 認証のためのクライアント作成
-    const client = await auth.getClient();
-    // Google Sheets APIのインスタンス作成
-    const googleSheets = google.sheets({ version: "v4", auth: client });
+    const { client, googleSheets } = await getGoogleAuth();
 
     const request = {
       spreadsheetId: spreadsheetId,
@@ -346,14 +325,8 @@ const spreadSheetMutations = {
     if (!spreadsheetId) {
       return error("該当のスプレッドシートIDがありませんでした");
     }
-    const auth = new GoogleAuth({
-      keyFile: "credentials.json",
-      scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-    // 認証のためのクライアント作成
-    const client = await auth.getClient();
-    // Google Sheets APIのインスタンス作成
-    const googleSheets = google.sheets({ version: "v4", auth: client });
+
+    const { client, googleSheets } = await getGoogleAuth();
 
     const request = {
       spreadsheetId: spreadsheetId,
