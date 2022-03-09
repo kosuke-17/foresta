@@ -9,6 +9,7 @@ import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 import { UrlList } from "../../molucules/aboutMePublic/UrlList";
 import { Portfolio } from "../../../types/generated/graphql";
+import { MenuBar } from "../../organisms/aboutMe/MenuBar";
 
 export const Public: FC = memo(() => {
   /**
@@ -44,6 +45,9 @@ export const Public: FC = memo(() => {
       <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">
         {user && (
           <>
+            <Flex justifyContent="right">
+              <MenuBar />
+            </Flex>
             <_User>
               <Flex justifyContent="center">
                 <_Name>氏名:{user.name}</_Name>
