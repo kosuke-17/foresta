@@ -910,6 +910,31 @@
             "deprecationReason": null
           },
           {
+            "name": "updateSpreadSheet",
+            "description": null,
+            "args": [
+              {
+                "name": "userId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Res",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "updateStudyStack",
             "description": "ユーザーの学習記録を更新.",
             "args": [
@@ -1593,7 +1618,7 @@
             "description": "フレームワーク取得",
             "args": [
               {
-                "name": "_id",
+                "name": "name",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -1622,7 +1647,7 @@
             "description": "言語取得",
             "args": [
               {
-                "name": "_id",
+                "name": "name",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -1651,7 +1676,7 @@
             "description": "ライブラリ取得",
             "args": [
               {
-                "name": "_id",
+                "name": "name",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -1680,7 +1705,7 @@
             "description": "動作環境取得",
             "args": [
               {
-                "name": "_id",
+                "name": "name",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -1709,7 +1734,7 @@
             "description": "その他のツール取得",
             "args": [
               {
-                "name": "_id",
+                "name": "name",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -1787,6 +1812,31 @@
                 "name": "ResponseSpecSheet",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "getSpreadSheet",
+            "description": "スプレッドシートを取得",
+            "args": [
+              {
+                "name": "userId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Res",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1878,6 +1928,41 @@
                 "name": "User",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Res",
+        "description": null,
+        "fields": [
+          {
+            "name": "msg",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
