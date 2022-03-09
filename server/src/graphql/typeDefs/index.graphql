@@ -136,6 +136,11 @@ type Mutation {
   """
   updateSpreadUserInfo(userId: String!): Res!
   """
+  スプレッドシートのポートフォリオURLを更新する
+  """
+  updateSpreadPortfolioUrl(userId: String!): Res!
+
+  """
   基本情報を更新.
   """
   updateSpecUserInfo(

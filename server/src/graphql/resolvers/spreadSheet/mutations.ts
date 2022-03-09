@@ -1,12 +1,12 @@
 import { google } from "googleapis";
 import { GoogleAuth } from "google-auth-library";
-import { SpecSheet, SpecUserInfoSheet, Users } from "../../../models";
+import { SpecSheet, SpecUserInfoSheet, Users, UserUrls } from "../../../models";
 import { UserIdType } from "../../../types";
 import { error, success } from "../responseStatus";
 
 const spreadSheetMutations = {
   /**
-   * スプレッドシートにデータを追加する.
+   * スプレッドシートに基本情報データを追加する.
    *
    * @param userId - ユーザーID
    * @returns 処理ステータス
@@ -189,9 +189,65 @@ const spreadSheetMutations = {
     };
     try {
       await googleSheets.spreadsheets.values.batchUpdate(request);
-      return success("", "スプレッドシートを更新しました。");
+      return success("", "更新に成功しました。");
     } catch {
-      error("スプレッドシートを更新できませんでした。");
+      error("更新に失敗しました。");
+    }
+  },
+  /**
+   * ポートフォリオのためのUrlデータを出力する.
+   *
+   * @param userID - ユーザーID
+   * @returns 処理のステータス
+   */
+  updateSpreadPortfolioUrl: async (_: any, { userId }: UserIdType) => {
+    const userUrls = await UserUrls.findOne({ userId: userId });
+    if (!userUrls) {
+      return error("該当のユーザーURLsがありませんでした");
+    }
+    const portfolioData = userUrls.user_urls.map(
+      (urlData: any) => `${urlData.urlName} : ${urlData.url}`
+    );
+    const JoinedData = portfolioData.join("\n");
+
+    const user = await Users.findById({ _id: userId });
+    // スプレッドシートのIDを取得
+    const spreadsheetId = user.spreadSheetID;
+    if (!spreadsheetId) {
+      return error("該当のスプレッドシートIDがありませんでした");
+    }
+    // スプレッドシートのシート名を指定
+    const sheetRange = "スペックシート!B9";
+
+    const auth = new GoogleAuth({
+      keyFile: "credentials.json",
+      scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
+    // 認証のためのクライアント作成
+    const client = await auth.getClient();
+    // Google Sheets APIのインスタンス作成
+    const googleSheets = google.sheets({ version: "v4", auth: client });
+    const request = {
+      spreadsheetId: spreadsheetId,
+      requestBody: {
+        valueInputOption: "USER_ENTERED",
+        data: [
+          {
+            range: sheetRange,
+            majorDimension: "ROWS",
+            values: [[JoinedData]],
+          },
+        ],
+      },
+
+      auth: client,
+    };
+
+    try {
+      await googleSheets.spreadsheets.values.batchUpdate(request);
+      return success("", "更新に成功しました。");
+    } catch {
+      error("更新に失敗しました。");
     }
   },
 };
