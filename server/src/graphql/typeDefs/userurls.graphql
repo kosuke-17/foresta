@@ -34,4 +34,5 @@ input UserUrlsRemoveInput {
 type ResponseUserUrls {
   status: String!
   node: UserUrls
+  msg: String
 }

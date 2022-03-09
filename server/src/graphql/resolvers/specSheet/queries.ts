@@ -17,7 +17,7 @@ const specSheetQueries = {
       if (result === null) {
         return error("該当のスペックシートが見つかりません。");
       }
-      return success(result);
+      return success(result, "取得に成功しました。");
     } catch {
       return error("取得に失敗しました。");
     }
@@ -34,7 +34,7 @@ const specSheetQueries = {
       if (result === null) {
         return error("該当のポートフォリオが見つかりません。");
       }
-      return success(result);
+      return success(result, "取得に成功しました。");
     } catch {
       return error("取得に失敗しました。");
     }

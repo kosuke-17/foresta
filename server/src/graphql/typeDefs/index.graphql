@@ -9,15 +9,15 @@ type Query {
   """
   ユーザーidに紐づくユーザー情報を取得.
   """
-  getUserById(_id: String!): User!
+  getUserById(_id: String!): ResponseUser!
   """
   ユーザーのTodo一覧情報を取得.
   """
-  getAllTodoByUser(userId: String!): [Todo!]!
+  getAllTodoByUser(userId: String!): ResponseTodoArr!
   """
   TodoIdに紐づいたTodo情報を取得.
   """
-  getTodoById(todoId: String!): Todo!
+  getTodoById(todoId: String!): ResponseTodo!
   """
   ユーザーのTodo一覧情報を取得.
   """
