@@ -10,7 +10,7 @@ export const AddStackButton: FC<AddStack> = memo(({ addStack }) => {
   return (
     <Center>
       <SimpleGrid columns={1}>
-        <Button w={36} colorScheme="green" variant="solid" onClick={addStack}>
+        <Button w={32} colorScheme="green" variant="solid" onClick={addStack}>
           記録する
         </Button>
       </SimpleGrid>
