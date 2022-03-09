@@ -132,15 +132,21 @@ type Mutation {
   """
   updateSpecSheet(specSheet: SpecSheetUpdateInput!): ResponseSpecSheet!
   """
-  スプレッドシートの基本情報を更新する
+  スプレッドシートの自己PRなどを更新.
+  """
+  updateSpeadSelfPR(userId: String!): Res!
+  """
+  スプレッドシートのポートフォリオURLを更新.
+  """
+  updateSpreadPortfolioUrl(userId: String!): Res!
+  """
+  スプレッドシートの基本情報を更新.
   """
   updateSpreadUserInfo(userId: String!): Res!
   """
-  スプレッドシートのポートフォリオURLを更新する
+  スプレッドシートのスキル要約を更新.
   """
-  updateSpreadPortfolioUrl(userId: String!): Res!
-
-  updateSpeadSelfPR(userId: String!): Res!
+  updateSpeadTechInfo(userId: String!): Res!
 
   """
   基本情報を更新.

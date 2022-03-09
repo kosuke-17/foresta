@@ -1,6 +1,12 @@
 import { google } from "googleapis";
 import { GoogleAuth } from "google-auth-library";
-import { SpecSheet, SpecUserInfoSheet, Users, UserUrls } from "../../../models";
+import {
+  SpecSheet,
+  SpecTechInfoSheet,
+  SpecUserInfoSheet,
+  Users,
+  UserUrls,
+} from "../../../models";
 import { UserIdType } from "../../../types";
 import { error, success } from "../responseStatus";
 
@@ -307,6 +313,70 @@ const spreadSheetMutations = {
       auth: client,
     };
 
+    try {
+      await googleSheets.spreadsheets.values.batchUpdate(request);
+      return success("", "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
+    }
+  },
+  updateSpeadTechInfo: async (_: any, { userId }: UserIdType) => {
+    const user = await Users.findById({ _id: userId });
+    const {
+      operationEnvs,
+      languages,
+      frameworks,
+      libraries,
+      otherTools,
+      devRoles,
+    } = await SpecTechInfoSheet.findOne({
+      userId: userId,
+    });
+    const operationEnvsData = operationEnvs.join(", ");
+    const languagesData = languages.join(", ");
+    const frameworksData = frameworks.join(", ");
+    const librariesData = libraries.join(", ");
+    const otherToolsData = otherTools.join(", ");
+    const devRolesData = devRoles.join(", ");
+
+    // スプレッドシートのシート名を指定
+    const sheetRange = "スペックシート!J11:BB16";
+    // スプレッドシートのIDを取得(必須)
+    const spreadsheetId = user.spreadSheetID;
+    if (!spreadsheetId) {
+      return error("該当のスプレッドシートIDがありませんでした");
+    }
+    const auth = new GoogleAuth({
+      keyFile: "credentials.json",
+      scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
+    // 認証のためのクライアント作成
+    const client = await auth.getClient();
+    // Google Sheets APIのインスタンス作成
+    const googleSheets = google.sheets({ version: "v4", auth: client });
+
+    const request = {
+      spreadsheetId: spreadsheetId,
+      requestBody: {
+        valueInputOption: "USER_ENTERED",
+        data: [
+          {
+            range: sheetRange,
+            majorDimension: "ROWS",
+            values: [
+              [operationEnvsData],
+              [languagesData],
+              [frameworksData],
+              [librariesData],
+              [otherToolsData],
+              [devRolesData],
+            ],
+          },
+        ],
+      },
+
+      auth: client,
+    };
     try {
       await googleSheets.spreadsheets.values.batchUpdate(request);
       return success("", "更新に成功しました。");
