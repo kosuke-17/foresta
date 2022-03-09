@@ -86,6 +86,7 @@ export type Mutation = {
   updateSpecTechInfo: ResponseSpecTechInfo;
   /** 基本情報を更新. */
   updateSpecUserInfo: ResponseSpecUserInfo;
+  updateSpreadSheet?: Maybe<Res>;
   /** ユーザーの学習記録を更新. */
   updateStudyStack: ResponseStudyStack;
   /** Todoを更新. */
@@ -186,6 +187,10 @@ export type MutationUpdateSpecUserInfoArgs = {
   specUserInfo: SpecUserInfoUpdateInput;
 };
 
+export type MutationUpdateSpreadSheetArgs = {
+  userId?: InputMaybe<Scalars["String"]>;
+};
+
 export type MutationUpdateStudyStackArgs = {
   stack: StudyStackUpdateInput;
 };
@@ -263,6 +268,8 @@ export type Query = {
   getPortfolioByUserId: ResponsePortfolio;
   /** ユーザーIDに紐づくスペックシート情報を取得. */
   getSheetByUserId: ResponseSpecSheet;
+  /** スプレッドシートを取得 */
+  getSpreadSheet?: Maybe<Res>;
   /** StudyStackIdに紐づいたStudyStack情報を取得. */
   getStudyStackById: StudyStack;
   /** TodoIdに紐づいたTodo情報を取得. */
@@ -280,23 +287,23 @@ export type QueryGetAllTodoByUserArgs = {
 };
 
 export type QueryGetFrameworksArgs = {
-  _id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryGetLanguagesArgs = {
-  _id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryGetLibrariesArgs = {
-  _id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryGetOperationEnvsArgs = {
-  _id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryGetOtherToolsArgs = {
-  _id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryGetPortfolioByUserIdArgs = {
@@ -304,6 +311,10 @@ export type QueryGetPortfolioByUserIdArgs = {
 };
 
 export type QueryGetSheetByUserIdArgs = {
+  userId?: InputMaybe<Scalars["String"]>;
+};
+
+export type QueryGetSpreadSheetArgs = {
   userId?: InputMaybe<Scalars["String"]>;
 };
 
@@ -317,6 +328,12 @@ export type QueryGetTodoByIdArgs = {
 
 export type QueryGetUserByIdArgs = {
   _id: Scalars["String"];
+};
+
+export type Res = {
+  __typename?: "Res";
+  msg?: Maybe<Scalars["String"]>;
+  status?: Maybe<Scalars["String"]>;
 };
 
 export type ResponsePortfolio = {

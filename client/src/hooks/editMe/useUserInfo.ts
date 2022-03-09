@@ -7,7 +7,7 @@ import {
   useUpdateUserMutation,
 } from "../../types/generated/graphql";
 import { useMutation } from "@apollo/client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 //バリデーションチェック
 const schema = yup.object().shape({
@@ -36,7 +36,10 @@ const schema = yup.object().shape({
  * - onSubmit:更新ボタンを押した時のメソッド
  * @params userData - 初期表示用データ
  */
-export const useUserInfo = (userData: any) => {
+export const useUserInfo = (
+  userData: any,
+  setMenuItem: Dispatch<SetStateAction<string>>,
+) => {
   // バリデーション機能を呼び出し
   const {
     register,
@@ -56,7 +59,7 @@ export const useUserInfo = (userData: any) => {
    * キャンセルボタンを押した時に呼ばれる
    */
   const cancel = () => {
-    alert("キャンセル");
+    setMenuItem("");
   };
 
   /**
@@ -73,7 +76,7 @@ export const useUserInfo = (userData: any) => {
    */
   const onSubmit = async (data: any) => {
     try {
-      updateUserInfo({
+      await updateUserInfo({
         variables: {
           user: {
             userId: "621b4b55e9204efe7d8f594a",
@@ -83,10 +86,9 @@ export const useUserInfo = (userData: any) => {
           },
         },
       });
-      // reset({ todoTitle: "", categoryId: "" });
-      // cancel();
+      cancel();
     } catch (error) {
-      console.log("エラーちゃん:" + error);
+      console.log(error);
     }
   };
 

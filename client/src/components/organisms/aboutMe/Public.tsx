@@ -1,11 +1,10 @@
-import { memo, FC } from "react";
+import { memo, FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Box, Flex } from "@chakra-ui/react";
 import { MarkGithubIcon } from "@primer/octicons-react";
 import styled from "styled-components";
 
 import { AccordionContent } from "../../molucules/AccordionContent";
-import { MenuBar } from "../../molucules/MenuBar";
 import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 import { UrlList } from "../../molucules/aboutMePublic/UrlList";
@@ -25,9 +24,7 @@ export const Public: FC = memo(() => {
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
   const user = data?.user;
   //制作物部分
-  const portfolio: Array<
-    Pick<Portfolio, "img" | "title" | "description" | "portfolioURL">
-  > = user?.portfolio as Array<
+  const portfolio = user?.portfolio as Array<
     Pick<Portfolio, "img" | "title" | "description" | "portfolioURL">
   >;
 
@@ -47,9 +44,6 @@ export const Public: FC = memo(() => {
       <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">
         {user && (
           <>
-            <Flex justifyContent="right">
-              <MenuBar />
-            </Flex>
             <_User>
               <Flex justifyContent="center">
                 <_Name>氏名:{user.name}</_Name>

@@ -1,7 +1,9 @@
-import { FC, memo } from "react";
+import { Dispatch, FC, memo, SetStateAction } from "react";
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 
-export const MenuBar: FC = memo(() => {
+type Props = { setMenuItem: Dispatch<SetStateAction<string>> };
+
+export const MenuBar: FC<Props> = memo(({ setMenuItem }) => {
   return (
     <>
       <Menu>
@@ -33,7 +35,9 @@ export const MenuBar: FC = memo(() => {
           </svg>
         </MenuButton>
         <MenuList>
-          <MenuItem>ユーザ情報</MenuItem>
+          <MenuItem onClick={() => setMenuItem("userInfo")}>
+            ユーザ情報
+          </MenuItem>
           <MenuItem>制作物</MenuItem>
           <MenuItem>URL</MenuItem>
           <MenuItem>基本情報</MenuItem>
