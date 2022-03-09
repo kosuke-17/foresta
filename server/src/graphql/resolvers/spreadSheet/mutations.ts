@@ -39,6 +39,9 @@ const spreadSheetMutations = {
     }
     // スプレッドシートのIDを取得
     const spreadsheetId = user.spreadSheetID;
+    if (!spreadsheetId) {
+      return error("該当のスプレッドシートIDがありませんでした");
+    }
     // スプレッドシートのシート名を指定
     const sheetRange = "スペックシート!B4:BB6";
 
@@ -185,7 +188,8 @@ const spreadSheetMutations = {
       auth: client,
     };
     try {
-      await googleSheets.spreadsheets.values.batchUpdate(request);
+      const res = await googleSheets.spreadsheets.values.batchUpdate(request);
+
       return success("", "スプレッドシートを更新しました。");
     } catch {
       error("スプレッドシートを更新できませんでした。");

@@ -18,6 +18,9 @@ const sepreadSheetQueries = {
     }
     // スプレッドシートのIDを取得
     const spreadsheetId = user.spreadSheetID;
+    if (!spreadsheetId) {
+      return error("該当のスプレッドシートIDがありませんでした");
+    }
     // スプレッドシートのシート名を指定
     const sheetRange = "スペックシート";
 

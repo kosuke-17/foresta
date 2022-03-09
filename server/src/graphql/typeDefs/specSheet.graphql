@@ -8,7 +8,7 @@ type SpecSheet {
   userId: ID!
   userInfo: SpecUserInfoSheet!
   techInfo: SpecTechInfoSheet!
-  project: [SpecProjectSheet!]
+  project: [SpecProjectSheet!]!
 }
 # 前職経験情報
 type prevJobsContent {
@@ -55,7 +55,7 @@ type SpecProjectSheet {
 }
 # ポートフォリオ
 type Portfolio {
-  id: ID
+  id: ID!
   title: String!
   description: String!
   img: String!
@@ -65,9 +65,9 @@ type Portfolio {
 }
 # 開発経験のスキル
 type Skill {
-  id: ID
-  name: String
-  data: [String]
+  id: ID!
+  name: String!
+  data: [String!]!
 }
 
 ################

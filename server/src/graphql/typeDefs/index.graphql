@@ -2,7 +2,7 @@ type Query {
   """
   全てのユーザー情報を取得.
   """
-  getAllUser: [User!]
+  getAllUser: [User!]!
   """
   ユーザーidに紐づくユーザー情報を取得.
   """
@@ -10,55 +10,55 @@ type Query {
   """
   ユーザーのTodo一覧情報を取得.
   """
-  getAllTodoByUser(userId: String): [Todo!]!
+  getAllTodoByUser(userId: String!): [Todo!]!
   """
   TodoIdに紐づいたTodo情報を取得.
   """
-  getTodoById(todoId: String): Todo!
+  getTodoById(todoId: String!): Todo!
   """
   ユーザーのTodo一覧情報を取得.
   """
-  getAllStudyStack(userId: String): [StudyStack!]!
+  getAllStudyStack(userId: String!): [StudyStack!]!
   """
   StudyStackIdに紐づいたStudyStack情報を取得.
   """
-  getStudyStackById(studyStackId: String): StudyStack!
+  getStudyStackById(studyStackId: String!): StudyStack!
   """
   ユーザーIDに紐づくスペックシート情報を取得.
   """
-  getSheetByUserId(userId: String): ResponseSpecSheet!
+  getSheetByUserId(userId: String!): ResponseSpecSheet!
   """
   ユーザーIDに紐づくポートフォリオ情報を取得.
   """
-  getPortfolioByUserId(userId: String): ResponsePortfolio!
+  getPortfolioByUserId(userId: String!): ResponsePortfolio!
   """
   スキル取得.
   """
-  getAllSkill: [Skill]
+  getAllSkill: [Skill!]!
   """
   動作環境取得
   """
-  getOperationEnvs(name: String): Skill!
+  getOperationEnvs(name: String!): Skill!
   """
   言語取得
   """
-  getLanguages(name: String): Skill!
+  getLanguages(name: String!): Skill!
   """
   フレームワーク取得
   """
-  getFrameworks(name: String): Skill!
+  getFrameworks(name: String!): Skill!
   """
   ライブラリ取得
   """
-  getLibraries(name: String): Skill!
+  getLibraries(name: String!): Skill!
   """
   その他のツール取得
   """
-  getOtherTools(name: String): Skill!
+  getOtherTools(name: String!): Skill!
   """
   スプレッドシートを取得
   """
-  getSpreadSheet(userId: String): Res
+  getSpreadSheet(userId: String!): Res!
   """
   それぞれのTechを取得.
   """
@@ -92,19 +92,19 @@ type Mutation {
   """
   Todoを追加.
   """
-  addTodo(todo: TodoAddInput): ResponseTodo!
+  addTodo(todo: TodoAddInput!): ResponseTodo!
   """
   Todoを削除.
   """
-  removeTodo(todoId: String): ResponseTodo!
+  removeTodo(todoId: String!): ResponseTodo!
   """
   Todoを更新.
   """
-  updateTodo(todo: TodoUpdateInput): ResponseTodo!
+  updateTodo(todo: TodoUpdateInput!): ResponseTodo!
   """
   Todo状態をtrueまたはfalse.
   """
-  changeTodoStatus(todoId: String): ResponseTodo!
+  changeTodoStatus(todoId: String!): ResponseTodo!
   """
   ユーザーがログイン.
   """
@@ -124,8 +124,8 @@ type Mutation {
   """
   スペックシート情報を更新.
   """
-  updateSpecSheet(specSheet: SpecSheetUpdateInput): ResponseSpecSheet!
-  updateSpreadSheet(userId: String): Res
+  updateSpecSheet(specSheet: SpecSheetUpdateInput!): ResponseSpecSheet!
+  updateSpreadSheet(userId: String!): Res!
   """
   基本情報を更新.
   """
@@ -149,7 +149,7 @@ type Mutation {
   """
   開発経験情報を削除.
   """
-  removeSpecProject(specProjectId: String!): ResponseRemove!
+  removeSpecProject(specProjectId: String!): Res!
 
   """
   ポートフォリオを作成.
@@ -162,7 +162,7 @@ type Mutation {
   """
   ポートフォリオを削除.
   """
-  removePortfolio(portfolioId: String!): ResponseRemove!
+  removePortfolio(portfolioId: String!): Res!
 
   """
   Techを追加.
