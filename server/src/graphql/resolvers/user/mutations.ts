@@ -125,11 +125,11 @@ const userMutations = {
       return { status: "error" };
     }
   },
-  updateUser: (_: any, { user }: UserUpdateType) => {
+  updateUser: async (_: any, { user }: UserUpdateType) => {
     const { userId, name, jobType, email, password, spreadSheetID, githubURL } =
       user;
     try {
-      const result = Users.findOneAndUpdate(
+      const result = await Users.findOneAndUpdate(
         { _id: userId },
         { name, jobType, email, password, spreadSheetID, githubURL },
         { new: true }
