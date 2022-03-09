@@ -191,7 +191,7 @@ const spreadSheetMutations = {
       await googleSheets.spreadsheets.values.batchUpdate(request);
       return success("", "更新に成功しました。");
     } catch {
-      error("更新に失敗しました。");
+      return error("更新に失敗しました。");
     }
   },
   /**
@@ -201,6 +201,7 @@ const spreadSheetMutations = {
    * @returns 処理のステータス
    */
   updateSpreadPortfolioUrl: async (_: any, { userId }: UserIdType) => {
+    const user = await Users.findById({ _id: userId });
     const userUrls = await UserUrls.findOne({ userId: userId });
     if (!userUrls) {
       return error("該当のユーザーURLsがありませんでした");
@@ -210,7 +211,6 @@ const spreadSheetMutations = {
     );
     const JoinedData = portfolioData.join("\n");
 
-    const user = await Users.findById({ _id: userId });
     // スプレッドシートのIDを取得
     const spreadsheetId = user.spreadSheetID;
     if (!spreadsheetId) {
@@ -247,7 +247,71 @@ const spreadSheetMutations = {
       await googleSheets.spreadsheets.values.batchUpdate(request);
       return success("", "更新に成功しました。");
     } catch {
-      error("更新に失敗しました。");
+      return error("更新に失敗しました。");
+    }
+  },
+  /**
+   * 自己PR、勤務時間外の学習、資格、前職経験を出力する.
+   *
+   * @param userID - ユーザーID
+   * @returns 処理のステータス
+   */
+  updateSpeadSelfPR: async (_: any, { userId }: UserIdType) => {
+    const user = await Users.findById({ _id: userId });
+    const { selfIntro, studyOnOwnTime, certification, prevJobs } =
+      await SpecSheet.findOne({
+        userId: userId,
+      });
+
+    const jobsData = prevJobs.map((prevJob: any) => prevJob.content);
+    const JoinedData = jobsData.join("\n\n");
+
+    // スプレッドシートのシート名を指定
+    const sheetRange = "スペックシート!B18:BB25";
+    // スプレッドシートのIDを取得(必須)
+    const spreadsheetId = user.spreadSheetID;
+    if (!spreadsheetId) {
+      return error("該当のスプレッドシートIDがありませんでした");
+    }
+    const auth = new GoogleAuth({
+      keyFile: "credentials.json",
+      scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
+    // 認証のためのクライアント作成
+    const client = await auth.getClient();
+    // Google Sheets APIのインスタンス作成
+    const googleSheets = google.sheets({ version: "v4", auth: client });
+
+    const request = {
+      spreadsheetId: spreadsheetId,
+      requestBody: {
+        valueInputOption: "USER_ENTERED",
+        data: [
+          {
+            range: sheetRange,
+            majorDimension: "ROWS",
+            values: [
+              ["アピールポイント・前職経験"],
+              [selfIntro],
+              ["業務外に取り組んでいること"],
+              [studyOnOwnTime],
+              ["資格"],
+              [certification],
+              ["前職経験"],
+              [JoinedData],
+            ],
+          },
+        ],
+      },
+
+      auth: client,
+    };
+
+    try {
+      await googleSheets.spreadsheets.values.batchUpdate(request);
+      return success("", "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
     }
   },
 };
