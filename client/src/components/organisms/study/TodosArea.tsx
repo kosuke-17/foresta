@@ -10,17 +10,11 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
-<<<<<<< HEAD
-import { Calendar } from "../../molucules/Calendar";
-import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
-import { TodoList } from "./TodoList";
-=======
 import { TodoList } from "./TodoList";
 import { TodoDetail } from "./TodoDetail";
 import { Calendar } from "../../molucules/todos/Calendar";
 import { useModal } from "../../../hooks/useModal";
 import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
->>>>>>> develop
 
 // タブのタイプ
 const tabs = ["全て", "今日", "期限切れ"] as const; //as const をつけてreadonlyにする
