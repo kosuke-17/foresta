@@ -86,6 +86,7 @@ export type Mutation = {
   updateSpecTechInfo: ResponseSpecTechInfo;
   /** 基本情報を更新. */
   updateSpecUserInfo: ResponseSpecUserInfo;
+  updateSpreadSheet?: Maybe<Res>;
   /** ユーザーの学習記録を更新. */
   updateStudyStack: ResponseStudyStack;
   /** Todoを更新. */
@@ -186,6 +187,10 @@ export type MutationUpdateSpecUserInfoArgs = {
   specUserInfo: SpecUserInfoUpdateInput;
 };
 
+export type MutationUpdateSpreadSheetArgs = {
+  userId?: InputMaybe<Scalars["String"]>;
+};
+
 export type MutationUpdateStudyStackArgs = {
   stack: StudyStackUpdateInput;
 };
@@ -263,6 +268,8 @@ export type Query = {
   getPortfolioByUserId: ResponsePortfolio;
   /** ユーザーIDに紐づくスペックシート情報を取得. */
   getSheetByUserId: ResponseSpecSheet;
+  /** スプレッドシートを取得 */
+  getSpreadSheet?: Maybe<Res>;
   /** StudyStackIdに紐づいたStudyStack情報を取得. */
   getStudyStackById: StudyStack;
   /** TodoIdに紐づいたTodo情報を取得. */
@@ -280,23 +287,23 @@ export type QueryGetAllTodoByUserArgs = {
 };
 
 export type QueryGetFrameworksArgs = {
-  _id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryGetLanguagesArgs = {
-  _id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryGetLibrariesArgs = {
-  _id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryGetOperationEnvsArgs = {
-  _id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryGetOtherToolsArgs = {
-  _id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryGetPortfolioByUserIdArgs = {
@@ -304,6 +311,10 @@ export type QueryGetPortfolioByUserIdArgs = {
 };
 
 export type QueryGetSheetByUserIdArgs = {
+  userId?: InputMaybe<Scalars["String"]>;
+};
+
+export type QueryGetSpreadSheetArgs = {
   userId?: InputMaybe<Scalars["String"]>;
 };
 
@@ -317,6 +328,12 @@ export type QueryGetTodoByIdArgs = {
 
 export type QueryGetUserByIdArgs = {
   _id: Scalars["String"];
+};
+
+export type Res = {
+  __typename?: "Res";
+  msg?: Maybe<Scalars["String"]>;
+  status?: Maybe<Scalars["String"]>;
 };
 
 export type ResponsePortfolio = {
@@ -723,8 +740,6 @@ export type GetUserByIdQuery = {
     __typename?: "User";
     name: string;
     jobType: string;
-    email: string;
-    password: string;
     githubURL: string;
     userUrls?: {
       __typename?: "UserUrls";
@@ -737,6 +752,30 @@ export type GetUserByIdQuery = {
       img: string;
       portfolioURL: string;
     } | null> | null;
+  };
+};
+
+export type UpdateUserMutationVariables = Exact<{
+  user: UserUpdateInput;
+}>;
+
+export type UpdateUserMutation = {
+  __typename?: "Mutation";
+  updateUser: {
+    __typename?: "ResponseUser";
+    status: string;
+    msg?: string | null;
+  };
+};
+
+export type GetLanguagesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetLanguagesQuery = {
+  __typename?: "Query";
+  getLanguages: {
+    __typename?: "Skill";
+    name?: string | null;
+    data?: Array<string | null> | null;
   };
 };
 
@@ -846,8 +885,6 @@ export const GetUserByIdDocument = gql`
     user: getUserById(_id: $id) {
       name
       jobType
-      email
-      password
       githubURL
       userUrls {
         user_urls {
@@ -913,6 +950,115 @@ export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserByIdQuery,
   GetUserByIdQueryVariables
 >;
+export const UpdateUserDocument = gql`
+  mutation UpdateUser($user: UserUpdateInput!) {
+    updateUser(user: $user) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateUserMutationFn = Apollo.MutationFunction<
+  UpdateUserMutation,
+  UpdateUserMutationVariables
+>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      user: // value for 'user'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateUserMutation,
+    UpdateUserMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
+    UpdateUserDocument,
+    options,
+  );
+}
+export type UpdateUserMutationHookResult = ReturnType<
+  typeof useUpdateUserMutation
+>;
+export type UpdateUserMutationResult =
+  Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
+  UpdateUserMutation,
+  UpdateUserMutationVariables
+>;
+export const GetLanguagesDocument = gql`
+  query GetLanguages {
+    getLanguages(name: "languages") {
+      name
+      data
+    }
+  }
+`;
+
+/**
+ * __useGetLanguagesQuery__
+ *
+ * To run a query within a React component, call `useGetLanguagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLanguagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLanguagesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetLanguagesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetLanguagesQuery,
+    GetLanguagesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetLanguagesQuery, GetLanguagesQueryVariables>(
+    GetLanguagesDocument,
+    options,
+  );
+}
+export function useGetLanguagesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetLanguagesQuery,
+    GetLanguagesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetLanguagesQuery, GetLanguagesQueryVariables>(
+    GetLanguagesDocument,
+    options,
+  );
+}
+export type GetLanguagesQueryHookResult = ReturnType<
+  typeof useGetLanguagesQuery
+>;
+export type GetLanguagesLazyQueryHookResult = ReturnType<
+  typeof useGetLanguagesLazyQuery
+>;
+export type GetLanguagesQueryResult = Apollo.QueryResult<
+  GetLanguagesQuery,
+  GetLanguagesQueryVariables
+>;
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
@@ -965,7 +1111,6 @@ export type UserLoginMutationHookResult = ReturnType<
   typeof useUserLoginMutation
 >;
 export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
-
 export type UserLoginMutationOptions = Apollo.BaseMutationOptions<
   UserLoginMutation,
   UserLoginMutationVariables
@@ -1029,7 +1174,6 @@ export type GetAllUserQueryResult = Apollo.QueryResult<
   GetAllUserQuery,
   GetAllUserQueryVariables
 >;
-
 export const GetAllStudyStackDocument = gql`
   query GetAllStudyStack($userId: String) {
     getAllStudyStack(userId: $userId) {

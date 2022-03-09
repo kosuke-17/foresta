@@ -6,8 +6,6 @@ gql`
     user: getUserById(_id: $id) {
       name
       jobType
-      email
-      password
       githubURL
       userUrls {
         user_urls {
@@ -21,6 +19,26 @@ gql`
         img
         portfolioURL
       }
+    }
+  }
+`;
+
+//ユーザ情報(public基本情報)編集
+gql`
+  mutation UpdateUser($user: UserUpdateInput!) {
+    updateUser(user: $user) {
+      status
+      msg
+    }
+  }
+`;
+
+//言語情報取得
+gql`
+  query GetLanguages {
+    getLanguages(name: "languages") {
+      name
+      data
     }
   }
 `;

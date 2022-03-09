@@ -5,11 +5,11 @@ import { MarkGithubIcon } from "@primer/octicons-react";
 import styled from "styled-components";
 
 import { AccordionContent } from "../../molucules/AccordionContent";
-import { MenuBar } from "../../molucules/MenuBar";
 import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 import { UrlList } from "../../molucules/aboutMePublic/UrlList";
 import { Portfolio } from "../../../types/generated/graphql";
+import { MenuBar } from "../../organisms/aboutMe/MenuBar";
 
 export const Public: FC = memo(() => {
   /**
@@ -18,15 +18,14 @@ export const Public: FC = memo(() => {
    */
   const { loading, error, data } = useGetUserByIdQuery({
     //idは実際cookieから取得
-    variables: { id: "621b15dd3200d51bb64b2d42" }, //田中
+    variables: { id: "621b4b55e9204efe7d8f594a" }, //花子
+    // variables: { id: "621b15dd3200d51bb64b2d42" }, //田中
   });
 
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
   const user = data?.user;
   //制作物部分
-  const portfolio: Array<
-    Pick<Portfolio, "img" | "title" | "description" | "portfolioURL">
-  > = user?.portfolio as Array<
+  const portfolio = user?.portfolio as Array<
     Pick<Portfolio, "img" | "title" | "description" | "portfolioURL">
   >;
 
