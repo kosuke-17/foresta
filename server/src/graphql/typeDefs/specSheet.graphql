@@ -188,3 +188,8 @@ type ResponseRemove {
   status: String!
   msg: String
 }
+
+type Res {
+  status: String
+  msg: String
+}

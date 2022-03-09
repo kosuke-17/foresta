@@ -1,10 +1,5 @@
-import {
-  Portfolio,
-  SpecProjectSheet,
-  SpecSheet,
-  SpecTechInfoSheet,
-  SpecUserInfoSheet,
-} from "../../../models/SpecSheet.model";
+
+import { Portfolio, SpecProjectSheet, SpecSheet, SpecTechInfoSheet, SpecUserInfoSheet } from "../../../models";
 import {
   PortfolioIdType,
   PortfolioType,
@@ -286,7 +281,7 @@ const specSheetMutations = {
     }
   },
   /**
-   * ポートフォリオの作成
+   * ポートフォリオの作成.
    *
    * @param portfolio - 作成ポートフォリオ情報
    * @returns 作成したポートフォリオ情報
@@ -311,7 +306,7 @@ const specSheetMutations = {
     }
   },
   /**
-   * ポートフォリオの編集
+   * ポートフォリオの編集.
    *
    * @param portfolio - 編集ポートフォリオ情報
    * @returns 編集したポートフォリオ情報
@@ -331,7 +326,7 @@ const specSheetMutations = {
     }
   },
   /**
-   * ポートフォリオの削除
+   * ポートフォリオの削除.
    *
    * @param portfolioID - ポートフォリオID
    * @returns 削除処理ステータス

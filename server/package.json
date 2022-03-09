@@ -23,6 +23,7 @@
     "apollo-server-express": "^3.6.3",
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "googleapis": "^95.0.0",
     "graphql": "^16.3.0",
     "mongoose": "^6.2.3",
     "uuid": "^8.3.2"
