@@ -137,7 +137,6 @@ const userMutations = {
 
       // 該当のIDが存在したかのチェック
       if (result === null) return error("該当のユーザーが存在しません。");
-      console.log(result);
 
       return success(result, "更新に成功しました。");
     } catch {
