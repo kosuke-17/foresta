@@ -38,23 +38,23 @@ type Query {
   """
   動作環境取得
   """
-  getOperationEnvs(_id: String): Skill!
+  getOperationEnvs(name: String): Skill!
   """
   言語取得
   """
-  getLanguages(_id: String): Skill!
+  getLanguages(name: String): Skill!
   """
   フレームワーク取得
   """
-  getFrameworks(_id: String): Skill!
+  getFrameworks(name: String): Skill!
   """
   ライブラリ取得
   """
-  getLibraries(_id: String): Skill!
+  getLibraries(name: String): Skill!
   """
   その他のツール取得
   """
-  getOtherTools(_id: String): Skill!
+  getOtherTools(name: String): Skill!
   """
   スプレッドシートを取得
   """

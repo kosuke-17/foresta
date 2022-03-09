@@ -1,5 +1,5 @@
 import { Portfolio, Skill, SpecSheet } from "../../../models";
-import { IdType, UserIdType } from "../../../types";
+import { NameType, UserIdType } from "../../../types";
 import { success } from "../responseStatus";
 
 /**
@@ -52,20 +52,20 @@ const specSheetQueries = {
   getAllSkill: async () => {
     return await Skill.find({});
   },
-  getOperationEnvs: async (_: any, { _id }: IdType) => {
-    return await Skill.findById({ _id: _id });
+  getOperationEnvs: async (_: any, { name }: NameType) => {
+    return await Skill.findOne({ name: name });
   },
-  getLanguages: async (_: any, { _id }: IdType) => {
-    return await Skill.findById({ _id: _id });
+  getLanguages: async (_: any, { name }: NameType) => {
+    return await Skill.findOne({ name: name });
   },
-  getFrameworks: async (_: any, { _id }: IdType) => {
-    return await Skill.findById({ _id: _id });
+  getFrameworks: async (_: any, { name }: NameType) => {
+    return await Skill.findOne({ name: name });
   },
-  getLibraries: async (_: any, { _id }: IdType) => {
-    return await Skill.findById({ _id: _id });
+  getLibraries: async (_: any, { name }: NameType) => {
+    return await Skill.findOne({ name: name });
   },
-  getOtherTools: async (_: any, { _id }: IdType) => {
-    return await Skill.findById({ _id: _id });
+  getOtherTools: async (_: any, { name }: NameType) => {
+    return await Skill.findOne({ name: name });
   },
 };
 
