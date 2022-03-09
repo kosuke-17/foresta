@@ -1,17 +1,29 @@
 import { gql } from "@apollo/client";
 
-/**
- * 見本.
- */
-// gql`
-//   query todos {
-//     getAllTodo {
-//       id
-//       title
-//       finish
-//     }
-//   }
-// `;
+//ユーザ情報取得.
+gql`
+  query GetUserById($id: String!) {
+    user: getUserById(_id: $id) {
+      name
+      jobType
+      email
+      password
+      githubURL
+      userUrls {
+        user_urls {
+          url
+          urlName
+        }
+      }
+      portfolio {
+        title
+        description
+        img
+        portfolioURL
+      }
+    }
+  }
+`;
 
 // ログイン処理
 export const LOGIN_QUERY = gql`
@@ -19,13 +31,25 @@ export const LOGIN_QUERY = gql`
     userLogin(user: $user) {
       status
       node {
-        id
         name
         jobType
         email
         password
         githubURL
       }
+    }
+  }
+`;
+
+// エンジニアリスト全件表示
+gql`
+  query GetAllUser {
+    getAllUser {
+      name
+      jobType
+      email
+      password
+      githubURL
     }
   }
 `;
@@ -58,11 +82,26 @@ gql`
   }
 `;
 
+// Todoリストの取得
 gql`
   query GetAllTodoByUser($userId: String) {
     todos: getAllTodoByUser(userId: $userId) {
       id
       title
+      startedAt
+      finishedAt
+      isStatus
+    }
+  }
+`;
+
+// Todo一件取得
+gql`
+  query GetTodoById($todoId: String) {
+    todo: getTodoById(todoId: $todoId) {
+      id
+      title
+      description
       startedAt
       finishedAt
       isStatus
