@@ -18,7 +18,8 @@ export const Public: FC = memo(() => {
    */
   const { loading, error, data } = useGetUserByIdQuery({
     //idは実際cookieから取得
-    variables: { id: "621b15dd3200d51bb64b2d42" }, //田中
+    variables: { id: "621b4b55e9204efe7d8f594a" }, //花子
+    // variables: { id: "621b15dd3200d51bb64b2d42" }, //田中
   });
 
   //useState付けるとデータ入る前にレンダリングされて終わるみたい

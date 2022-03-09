@@ -1,6 +1,13 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import {
+  GetUserByIdDocument,
+  useGetUserByIdQuery,
+  useUpdateUserMutation,
+} from "../../types/generated/graphql";
+import { useMutation } from "@apollo/client";
+import { useState } from "react";
 
 //バリデーションチェック
 const schema = yup.object().shape({
@@ -46,30 +53,52 @@ export const useUserInfo = (userData: any) => {
   });
 
   /**
-   * 更新ボタンを押した時に呼ばれる
-   * @param data - 入力したデータ
-   */
-  const onSubmit = async (data: any) => {
-    try {
-      console.dir("データ" + JSON.stringify(data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  /**
    * キャンセルボタンを押した時に呼ばれる
    */
   const cancel = () => {
     alert("キャンセル");
   };
 
+  /**
+   * ユーザ情報更新.（リフェッチ機能）
+   */
+  const [updateUserInfo] = useUpdateUserMutation({
+    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
+    awaitRefetchQueries: true,
+  });
+
+  /**
+   * 更新ボタンを押した時に呼ばれる
+   * @param data - 入力したデータ
+   */
+  const onSubmit = async (data: any) => {
+    try {
+      updateUserInfo({
+        variables: {
+          user: {
+            userId: "621b4b55e9204efe7d8f594a",
+            name: data.name,
+            jobType: data.jobType,
+            githubURL: data.githubURL,
+          },
+        },
+      });
+      // reset({ todoTitle: "", categoryId: "" });
+      // cancel();
+    } catch (error) {
+      console.log("エラーちゃん:" + error);
+    }
+  };
+
   return {
+    useUpdateUserMutation,
     handleSubmit,
     cancel,
     register,
     errors,
     onSubmit,
     userData,
+    GetUserByIdDocument,
+    updateUserInfo,
   };
 };

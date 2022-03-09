@@ -25,6 +25,16 @@ gql`
   }
 `;
 
+//ユーザ情報(public基本情報)編集
+gql`
+  mutation UpdateUser($user: UserUpdateInput!) {
+    updateUser(user: $user) {
+      status
+      msg
+    }
+  }
+`;
+
 // ログイン処理
 export const LOGIN_QUERY = gql`
   mutation UserLogin($user: UserLoginInput!) {
