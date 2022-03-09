@@ -147,7 +147,7 @@ gql`
 
 // Todo一件取得
 gql`
-  query GetTodoById($todoId: String) {
+  query GetTodoById($todoId: String!) {
     todo: getTodoById(todoId: $todoId) {
       id
       title
