@@ -21,11 +21,11 @@ type Query {
   """
   ユーザーのTodo一覧情報を取得.
   """
-  getAllStudyStack(userId: String!): [StudyStack!]!
+  getAllStudyStack(userId: String!): ResponseStudyStackArr!
   """
   StudyStackIdに紐づいたStudyStack情報を取得.
   """
-  getStudyStackById(studyStackId: String!): StudyStack!
+  getStudyStackById(studyStackId: String!): ResponseStudyStack!
   """
   ユーザーIDに紐づくスペックシート情報を取得.
   """
