@@ -11,7 +11,7 @@ const spreadSheetMutations = {
    * @param userId - ユーザーID
    * @returns 処理ステータス
    */
-  updateSpreadSheet: async (_: any, { userId }: UserIdType) => {
+  updateSpreadUserInfo: async (_: any, { userId }: UserIdType) => {
     const user = await Users.findById({ _id: userId });
     const specSheet = await SpecSheet.findOne({ userId: userId });
     const specSheetUserInfo = await SpecUserInfoSheet.findOne({
@@ -188,8 +188,7 @@ const spreadSheetMutations = {
       auth: client,
     };
     try {
-      const res = await googleSheets.spreadsheets.values.batchUpdate(request);
-
+      await googleSheets.spreadsheets.values.batchUpdate(request);
       return success("", "スプレッドシートを更新しました。");
     } catch {
       error("スプレッドシートを更新できませんでした。");

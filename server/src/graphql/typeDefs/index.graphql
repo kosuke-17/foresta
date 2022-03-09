@@ -1,3 +1,6 @@
+"""
+データを取得する
+"""
 type Query {
   """
   全てのユーザー情報を取得.
@@ -68,6 +71,9 @@ type Query {
   getAllTechArea: [TechArea!]!
 }
 
+"""
+データを変更する
+"""
 type Mutation {
   """
   ユーザーを追加.
@@ -125,7 +131,10 @@ type Mutation {
   スペックシート情報を更新.
   """
   updateSpecSheet(specSheet: SpecSheetUpdateInput!): ResponseSpecSheet!
-  updateSpreadSheet(userId: String!): Res!
+  """
+  スプレッドシートの基本情報を更新する
+  """
+  updateSpreadUserInfo(userId: String!): Res!
   """
   基本情報を更新.
   """
