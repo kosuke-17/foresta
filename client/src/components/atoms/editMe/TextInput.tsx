@@ -4,7 +4,7 @@ import { Input } from "@chakra-ui/react";
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   registers: any; //value(テキストボックスの値と紐づけ用)
-  errorMessage: string | undefined; //エラーメッセージ(errors.registers?.messageの形で渡す)
+  errorMessage?: string | undefined; //エラーメッセージ(errors.registers?.messageの形で渡す)
 };
 
 /**

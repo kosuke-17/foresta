@@ -18,7 +18,7 @@ const schema = yup.object().shape({
   //職種のバリデーション
   jobType: yup.string().required("職種を入力して下さい"),
   //Githubアカウントのバリデーション
-  GithubURL: yup
+  githubURL: yup
     .string()
     .trim()
     .required("GitHubアカウント名を入力して下さい")
@@ -35,7 +35,11 @@ const schema = yup.object().shape({
  * @params userData - 初期表示用データ
  */
 export const useUserInfo = (
-  userData: any,
+  userData: {
+    name: string | undefined;
+    jobType: string | undefined;
+    github: string | undefined;
+  },
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
@@ -48,9 +52,9 @@ export const useUserInfo = (
     resolver: yupResolver(schema),
     //初期値はログインしている人のデータを入れる
     defaultValues: {
-      name: userData,
-      jobType: userData,
-      GithubURL: userData,
+      name: userData.name,
+      jobType: userData.jobType,
+      githubURL: userData.github,
     },
   });
 
