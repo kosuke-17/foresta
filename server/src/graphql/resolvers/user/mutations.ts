@@ -114,17 +114,20 @@ const userMutations = {
         password: password,
       });
       if (result === null) {
-        return {
-          status: "error",
-          message: "該当のユーザーが見つかりませんでした",
-        };
+        return error("該当のユーザーが見つかりませんでした");
       }
 
-      return success(result);
-    } catch (error) {
-      return { status: "error" };
+      return success(result, "ログインできました。");
+    } catch {
+      return error("ログインできませんでした。");
     }
   },
+  /**
+   * ユーザー情報を更新する.
+   *
+   * @param user - 更新ユーザー情報
+   * @returns ステータス 更新ユーザーの情報
+   */
   updateUser: async (_: any, { user }: UserUpdateType) => {
     const { userId, name, jobType, email, password, spreadSheetID, githubURL } =
       user;

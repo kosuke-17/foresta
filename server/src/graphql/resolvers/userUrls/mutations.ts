@@ -4,7 +4,7 @@ import {
   UrlDataCreateType,
   UrlDataRemoveType,
 } from "../../../types";
-import { success } from "../responseStatus";
+import { error, success } from "../responseStatus";
 
 const userUrlsMutations = {
   /**
@@ -29,9 +29,9 @@ const userUrlsMutations = {
       });
 
       const result = await createUserUrls.save();
-      return success(result);
-    } catch (error) {
-      return { status: "error" };
+      return success(result, "作成に成功しました。");
+    } catch {
+      return error("作成に失敗しました。");
     }
   },
   /**
@@ -47,9 +47,9 @@ const userUrlsMutations = {
         { _id: urlData.urlId },
         { $addToSet: { user_urls: urlData } }
       );
-      return success(result);
-    } catch (error) {
-      return { status: "error" };
+      return success(result, "追加に成功しました。");
+    } catch {
+      return error("追加に失敗しました。");
     }
   },
   /**
@@ -74,9 +74,9 @@ const userUrlsMutations = {
         },
         { new: true }
       );
-      return success(result);
-    } catch (error) {
-      return { status: "error" };
+      return success(result, "削除に成功しました。");
+    } catch {
+      return error("削除に失敗しました。");
     }
   },
 };
