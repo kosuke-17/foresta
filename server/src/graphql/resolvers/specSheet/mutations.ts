@@ -1,5 +1,10 @@
-
-import { Portfolio, SpecProjectSheet, SpecSheet, SpecTechInfoSheet, SpecUserInfoSheet } from "../../../models";
+import {
+  Portfolio,
+  SpecProjectSheet,
+  SpecSheet,
+  SpecTechInfoSheet,
+  SpecUserInfoSheet,
+} from "../../../models";
 import {
   PortfolioIdType,
   PortfolioType,
@@ -214,11 +219,9 @@ const specSheetMutations = {
         { new: true }
       );
 
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      // modelの型とsetしてるデータの方が違うとエラーを返す
-      return { status: "error" };
+      return success(result, "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
     }
   },
   /**
@@ -261,23 +264,24 @@ const specSheetMutations = {
     });
 
     try {
-      const result = createProject.save();
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      // modelの型とsetしてるデータの方が違うとエラーを返す
-      return { status: "error" };
+      const result = await createProject.save();
+      return success(result, "追加に成功しました。");
+    } catch {
+      return error("追加に失敗しました。");
     }
   },
+  /**
+   * 開発経験の削除.
+   *
+   * @param specProjectId - 開発経験ID
+   * @returns 削除処理ステータス
+   */
   removeSpecProject: async (_: any, { specProjectId }: SpecSheetIdType) => {
     try {
-      const result = await SpecProjectSheet.findByIdAndRemove({
-        _id: specProjectId,
-      });
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      await SpecProjectSheet.findByIdAndRemove({ _id: specProjectId });
+      return success("", "削除に成功しました。");
+    } catch {
+      return error("削除に失敗しました。");
     }
   },
   /**
@@ -299,10 +303,9 @@ const specSheetMutations = {
     });
     try {
       const result = await newPortfolio.save();
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "作成に成功しました。");
+    } catch {
+      return error("作成に失敗しました。");
     }
   },
   /**
@@ -319,10 +322,9 @@ const specSheetMutations = {
         { $set: { title, description, img, portfolioURL } },
         { new: true }
       );
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
     }
   },
   /**
@@ -333,11 +335,10 @@ const specSheetMutations = {
    */
   removePortfolio: async (_: any, { portfolioId }: PortfolioIdType) => {
     try {
-      const result = await Portfolio.findByIdAndRemove({ _id: portfolioId });
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      await Portfolio.findByIdAndRemove({ _id: portfolioId });
+      return success("", "削除に成功しました。");
+    } catch {
+      return error("削除に失敗しました。");
     }
   },
 };
