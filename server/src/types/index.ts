@@ -1,4 +1,4 @@
-export { IdType } from "./common";
+export { IdType, NameType } from "./common";
 export {
   PortfolioIdType,
   PortfolioType,

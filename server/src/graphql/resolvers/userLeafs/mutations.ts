@@ -1,4 +1,4 @@
-import { UserLeafs } from "../../../models/User.model";
+import { UserLeafs } from "../../../models";
 import { TechLeafUpdateType } from "../../../types";
 import { success } from "../responseStatus";
 /**

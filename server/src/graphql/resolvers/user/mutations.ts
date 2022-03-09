@@ -1,12 +1,13 @@
-import { TechTree } from "../../../models/TechForest.model";
-import { Users, UserLeafs } from "../../../models/User.model";
-import { error, success } from "../responseStatus";
-import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
 import {
+  Users,
+  UserLeafs,
   SpecSheet,
   SpecTechInfoSheet,
   SpecUserInfoSheet,
-} from "../../../models/SpecSheet.model";
+  TechTree,
+} from "../../../models";
+import { error, success } from "../responseStatus";
+import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
 
 /**
  * ## ユーザーの変更処理
@@ -124,11 +125,11 @@ const userMutations = {
       return { status: "error" };
     }
   },
-  updateUser: (_: any, { user }: UserUpdateType) => {
+  updateUser: async (_: any, { user }: UserUpdateType) => {
     const { userId, name, jobType, email, password, spreadSheetID, githubURL } =
       user;
     try {
-      const result = Users.findOneAndUpdate(
+      const result = await Users.findOneAndUpdate(
         { _id: userId },
         { name, jobType, email, password, spreadSheetID, githubURL },
         { new: true }
@@ -136,7 +137,6 @@ const userMutations = {
 
       // 該当のIDが存在したかのチェック
       if (result === null) return error("該当のユーザーが存在しません。");
-      console.log(result);
 
       return success(result, "更新に成功しました。");
     } catch {

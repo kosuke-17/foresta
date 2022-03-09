@@ -1,9 +1,4 @@
-import {
-  TechArea,
-  TechBranch,
-  TechLeaf,
-  TechTree,
-} from "../../../models/TechForest.model";
+import { TechArea, TechBranch, TechLeaf, TechTree } from "../../../models";
 import { success } from "../responseStatus";
 import {
   TechAreaType,

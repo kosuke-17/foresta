@@ -1,4 +1,4 @@
-import { Users } from "../../../models/User.model";
+import { Users } from "../../../models";
 import { IdType } from "../../../types";
 /**
  * ## ユーザーの取得

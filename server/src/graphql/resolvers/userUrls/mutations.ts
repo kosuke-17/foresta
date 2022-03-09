@@ -1,4 +1,4 @@
-import { UserUrls } from "../../../models/User.model";
+import { UserUrls } from "../../../models";
 import {
   UrlDataAddType,
   UrlDataCreateType,

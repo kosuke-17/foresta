@@ -1,4 +1,4 @@
-import { UserTodos } from "../../../models/User.model";
+import { UserTodos } from "../../../models";
 import { TodoIdType, UserIdType } from "../../../types";
 /**
  * ## todoの取得
