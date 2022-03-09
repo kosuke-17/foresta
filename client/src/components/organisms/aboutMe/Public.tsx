@@ -1,4 +1,4 @@
-import { memo, FC, useState } from "react";
+import { memo, FC } from "react";
 import { Link } from "react-router-dom";
 import { Button, Box, Flex } from "@chakra-ui/react";
 import { MarkGithubIcon } from "@primer/octicons-react";

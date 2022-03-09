@@ -3,11 +3,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {
   GetUserByIdDocument,
-  useGetUserByIdQuery,
   useUpdateUserMutation,
 } from "../../types/generated/graphql";
-import { useMutation } from "@apollo/client";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 //バリデーションチェック
 const schema = yup.object().shape({
@@ -39,6 +37,7 @@ const schema = yup.object().shape({
 export const useUserInfo = (
   userData: any,
   setMenuItem: Dispatch<SetStateAction<string>>,
+  onClose: () => void,
 ) => {
   // バリデーション機能を呼び出し
   const {
@@ -86,7 +85,8 @@ export const useUserInfo = (
           },
         },
       });
-      cancel();
+      onClose();
+      // cancel();
     } catch (error) {
       console.log(error);
     }

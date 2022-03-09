@@ -1,11 +1,31 @@
-import { Dispatch, FC, memo, SetStateAction } from "react";
+import { Dispatch, FC, memo, ReactNode, SetStateAction, useState } from "react";
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
+import { useModal } from "../../../hooks/useModal";
+import { ModalSet } from "../../molucules/ModalSet";
+import { EditMe } from "./EditMe";
 
-type Props = { setMenuItem: Dispatch<SetStateAction<string>> };
+// type Props = { setMenuItem: Dispatch<SetStateAction<string>> };
 
-export const MenuBar: FC<Props> = memo(({ setMenuItem }) => {
+export const MenuBar: FC = memo(() => {
+  //モーダル使用のhooks
+  const modalStore = useModal();
+  const { onOpen, isOpen, onClose } = modalStore;
+  const [menuItem, setMenuItem] = useState("");
+
   return (
     <>
+      <ModalSet
+        isOpen={isOpen}
+        onClose={onClose}
+        modalTitle={menuItem}
+        contents={
+          <EditMe
+            menuItem={menuItem}
+            setMenuItem={setMenuItem}
+            onClose={onClose}
+          />
+        }
+      />
       <Menu>
         <MenuButton
           _focus={{ boxShadow: "none" }}
@@ -35,7 +55,12 @@ export const MenuBar: FC<Props> = memo(({ setMenuItem }) => {
           </svg>
         </MenuButton>
         <MenuList>
-          <MenuItem onClick={() => setMenuItem("userInfo")}>
+          <MenuItem
+            onClick={(e) => {
+              setMenuItem("userInfo");
+              onOpen(e);
+            }}
+          >
             ユーザ情報
           </MenuItem>
           <MenuItem>制作物</MenuItem>
