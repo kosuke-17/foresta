@@ -41,7 +41,10 @@ export const LogListTable: FC<Props> = memo((props) => {
               <Td>{stackList.skillTagId}</Td>
               <Td>{stackList.timeStack}分</Td>
               <Td>
-                <StudyModal title="記録編集" buttonTitle="編集" />
+                <StudyModal
+                  title="記録編集"
+                  buttonTitle="編集"
+                />
               </Td>
               <Td>
                 <StudyModal title="記録削除" buttonTitle="削除" />

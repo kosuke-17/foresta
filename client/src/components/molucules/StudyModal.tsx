@@ -16,16 +16,17 @@ import { ChangeEvent, FC, memo, useState } from "react";
 import {
   GetAllStudyStackDocument,
   useAddStudyStackMutation,
+  useUpdateStudyStackMutation,
   useRemoveStudyStackMutation,
 } from "../../types/generated/graphql";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import * as yup from "yup";
 import { AddStackButton } from "../atoms/study/AddStackBotton";
 import { RemoveStackButton } from "../atoms/study/RemoveStackBotton";
+import { UpdateStackButton } from "../atoms/study/updateStackBotton";
 
 type Props = {
   title: string;
   buttonTitle: string;
+  // onClick?: (id: string) => void;
 };
 
 export const StudyModal: FC<Props> = memo((props) => {
@@ -101,6 +102,32 @@ export const StudyModal: FC<Props> = memo((props) => {
     }
   };
 
+  //記録編集メソッド
+  const [updateMutation] = useUpdateStudyStackMutation({
+    variables: {
+      stack: {
+        createdAt,
+        skillTagId,
+        timeStack,
+        content,
+        //一旦指定の記録ID
+        studyStackId: "621d896369e1c1468c1eda9d",
+      },
+    },
+    refetchQueries: [GetAllStudyStackDocument],
+  });
+
+  //記録編集
+  const updateStack = async () => {
+    const updateStackData = await updateMutation();
+    if (updateStackData.data?.updateStudyStack.status === "success") {
+      toast({ title: "学習記録を編集しました", status: "success" });
+      onClose();
+    } else if (updateStackData.data?.updateStudyStack.status === "error") {
+      toast({ title: "編集に失敗しました", status: "error" });
+      onClose();
+    }
+  };
 
   return (
     <>
@@ -109,7 +136,6 @@ export const StudyModal: FC<Props> = memo((props) => {
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
-        {/* <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered> */}
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{title}</ModalHeader>
@@ -196,6 +222,9 @@ export const StudyModal: FC<Props> = memo((props) => {
 
           <ModalFooter>
             {title === "記録追加" && <AddStackButton addStack={addStack} />}
+            {title === "記録編集" && (
+              <UpdateStackButton updateStack={updateStack} />
+            )}
             {title === "記録削除" && (
               <RemoveStackButton removeStack={removeStack} />
             )}
