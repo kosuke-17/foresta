@@ -1,13 +1,16 @@
+import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
 import {
   GetUserByIdDocument,
   useUpdateUserMutation,
 } from "../../types/generated/graphql";
-import { Dispatch, SetStateAction } from "react";
 
-//バリデーションチェック
+/**
+ * バリデーションチェック.
+ */
 const schema = yup.object().shape({
   //氏名のバリデーション
   name: yup
@@ -62,6 +65,7 @@ export const useUserInfo = (
    * キャンセルボタンを押した時に呼ばれる
    */
   const cancel = () => {
+    onClose();
     setMenuItem("");
   };
 
@@ -90,7 +94,7 @@ export const useUserInfo = (
         },
       });
       onClose();
-      // cancel();
+      setMenuItem("");
     } catch (error) {
       console.log(error);
     }

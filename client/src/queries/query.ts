@@ -6,8 +6,6 @@ gql`
     user: getUserById(_id: $id) {
       name
       jobType
-      email
-      password
       githubURL
       userUrls {
         user_urls {
@@ -31,6 +29,16 @@ gql`
     updateUser(user: $user) {
       status
       msg
+    }
+  }
+`;
+
+//言語情報取得
+gql`
+  query GetLanguages {
+    getLanguages(name: "languages") {
+      name
+      data
     }
   }
 `;
