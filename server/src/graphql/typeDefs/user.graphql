@@ -7,7 +7,7 @@ type User {
   password: String!
   spreadSheetID: String!
   githubURL: String!
-  userLeafs: UserLeafs
+  userLeafs: UserLeafs!
   userUrls: UserUrls
   portfolio: [Portfolio]
 }

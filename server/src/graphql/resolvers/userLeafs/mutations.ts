@@ -1,6 +1,6 @@
 import { UserLeafs } from "../../../models";
 import { TechLeafUpdateType } from "../../../types";
-import { success } from "../responseStatus";
+import { error, success } from "../responseStatus";
 /**
  * ## 習得技術の変更処理
  */
@@ -31,10 +31,9 @@ const userLeafsMutations = {
           new: true,
         }
       );
-      return success(result);
-    } catch (e) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
     }
   },
 };
