@@ -16,10 +16,12 @@ import { ChangeEvent, FC, memo, useState } from "react";
 import {
   GetAllStudyStackDocument,
   useAddStudyStackMutation,
+  useRemoveStudyStackMutation,
 } from "../../types/generated/graphql";
 // import { yupResolver } from "@hookform/resolvers/yup";
 // import * as yup from "yup";
 import { AddStackButton } from "../atoms/study/AddStackBotton";
+import { RemoveStackButton } from "../atoms/study/RemoveStackBotton";
 
 type Props = {
   title: string;
@@ -50,7 +52,6 @@ export const StudyModal: FC<Props> = memo((props) => {
   const [content, setContent] = useState<string>("");
   const onChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setContent(e.target.value);
-  //ユーザーID
 
   //記録追加メソッド（リフェッチ機能）
   const [addStudyStack] = useAddStudyStackMutation({
@@ -64,7 +65,7 @@ export const StudyModal: FC<Props> = memo((props) => {
         userId: "621c795fea18ffdb80e66462",
       },
     },
-    refetchQueries: [GetAllStudyStackDocument],
+    refetchQueries: [GetAllStudyStackDocument], //データを表示するクエリーのDocument
   });
 
   //記録追加
@@ -79,8 +80,27 @@ export const StudyModal: FC<Props> = memo((props) => {
     }
   };
 
+  //記録削除メソッド
+  const [removeStudyStack] = useRemoveStudyStackMutation({
+    variables: {
+      //一旦指定の記録ID
+      studyStackId: "621d887069e1c1468c1eda99",
+    },
+    refetchQueries: [GetAllStudyStackDocument],
+  });
 
-  
+  //記録削除
+  const removeStack = async () => {
+    const removeStackData = await removeStudyStack();
+    if (removeStackData.data?.removeStudyStack.status === "success") {
+      toast({ title: "学習を削除しました", status: "success" });
+      onClose();
+    } else if (removeStackData.data?.removeStudyStack.status === "error") {
+      toast({ title: "削除に失敗しました", status: "error" });
+      onClose();
+    }
+  };
+
 
   return (
     <>
@@ -176,8 +196,9 @@ export const StudyModal: FC<Props> = memo((props) => {
 
           <ModalFooter>
             {title === "記録追加" && <AddStackButton addStack={addStack} />}
-            {/* {title === "記録編集" && <AddStackButton addStack={editStack} />}
-            {title === "記録削除" && <AddStackButton addStack={deleteStack} />} */}
+            {title === "記録削除" && (
+              <RemoveStackButton removeStack={removeStack} />
+            )}
 
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               キャンセル
