@@ -70,7 +70,7 @@ export const StackList = memo(() => {
         </Tabs>
       </Center>
       {/* 仮の学習記録ボタン */}
-      <StudyModal title="記録追加" buttonTitle="記録" />
+      <StudyModal title="記録追加" buttonTitle="記録" stackId="" />
     </div>
   );
 });

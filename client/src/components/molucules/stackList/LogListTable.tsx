@@ -44,10 +44,15 @@ export const LogListTable: FC<Props> = memo((props) => {
                 <StudyModal
                   title="記録編集"
                   buttonTitle="編集"
+                  stackId={stackList.id}
                 />
               </Td>
               <Td>
-                <StudyModal title="記録削除" buttonTitle="削除" />
+                <StudyModal
+                  title="記録削除"
+                  buttonTitle="削除"
+                  stackId={stackList.id}
+                />
               </Td>
             </Tr>
           ))}

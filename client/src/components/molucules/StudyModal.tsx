@@ -27,14 +27,14 @@ import { UpdateStackButton } from "../atoms/study/updateStackBotton";
 type Props = {
   title: string;
   buttonTitle: string;
-  // onClick?: (id: string) => void;
+  stackId: string;
 };
 
 export const StudyModal: FC<Props> = memo((props) => {
   //モーダルの開閉
   const { isOpen, onOpen, onClose } = useDisclosure();
   //propsでもらうもの
-  const { title, buttonTitle } = props;
+  const { title, buttonTitle, stackId } = props;
   //トーストアラート
   const toast = useToast();
   //クッキー情報取得
@@ -88,7 +88,7 @@ export const StudyModal: FC<Props> = memo((props) => {
   const [removeStudyStack] = useRemoveStudyStackMutation({
     variables: {
       //一旦指定の記録ID
-      studyStackId: "621d887069e1c1468c1eda99",
+      studyStackId: stackId,
     },
     refetchQueries: [GetAllStudyStackDocument],
   });
@@ -114,7 +114,7 @@ export const StudyModal: FC<Props> = memo((props) => {
         timeStack,
         content,
         //一旦指定の記録ID
-        studyStackId: "621d896369e1c1468c1eda9d",
+        studyStackId: stackId,
       },
     },
     refetchQueries: [GetAllStudyStackDocument],
