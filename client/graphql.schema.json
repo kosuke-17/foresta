@@ -201,7 +201,7 @@
         "fields": [
           {
             "name": "addSpecProject",
-            "description": "開発経験情報を追加する",
+            "description": "開発経験情報を追加.",
             "args": [
               {
                 "name": "specProject",
@@ -234,7 +234,7 @@
           },
           {
             "name": "addStudyStack",
-            "description": "ユーザーの学習記録を追加する",
+            "description": "ユーザーの学習記録を追加.",
             "args": [
               {
                 "name": "stack",
@@ -267,15 +267,19 @@
           },
           {
             "name": "addTodo",
-            "description": "Todoを追加する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)",
+            "description": "Todoを追加.",
             "args": [
               {
                 "name": "todo",
                 "description": null,
                 "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "TodoAddInput",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "TodoAddInput",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -328,16 +332,20 @@
             "deprecationReason": null
           },
           {
-            "name": "chekedTodoStatus",
-            "description": "Todo状態をtrueにする：引数(todoId)",
+            "name": "changeTodoStatus",
+            "description": "Todo状態をtrueまたはfalse.",
             "args": [
               {
                 "name": "todoId",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -358,7 +366,7 @@
           },
           {
             "name": "createPortfolio",
-            "description": "ポートフォリオを作成する",
+            "description": "ポートフォリオを作成.",
             "args": [
               {
                 "name": "portfolio",
@@ -457,7 +465,7 @@
           },
           {
             "name": "createTechLeaf",
-            "description": "Techを追加する：引数(Leaf名 or Branch名 or Tree名)",
+            "description": "Techを追加.",
             "args": [
               {
                 "name": "techLeaf",
@@ -523,7 +531,7 @@
           },
           {
             "name": "createUser",
-            "description": "ユーザーを追加する：引数(ユーザー名、エンジニアタイプ、GithubURL?)",
+            "description": "ユーザーを追加.",
             "args": [
               {
                 "name": "user",
@@ -556,7 +564,7 @@
           },
           {
             "name": "createUserUrls",
-            "description": "ユーザーの持つUrlを作成する：引数(ユーザーID, TechLeafID)",
+            "description": "ユーザーの持つUrlを作成.",
             "args": [
               {
                 "name": "urlData",
@@ -589,7 +597,7 @@
           },
           {
             "name": "removePortfolio",
-            "description": "ポートフォリオを削除する",
+            "description": "ポートフォリオを削除.",
             "args": [
               {
                 "name": "portfolioId",
@@ -613,7 +621,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "ResponseRemove",
+                "name": "Res",
                 "ofType": null
               }
             },
@@ -622,7 +630,7 @@
           },
           {
             "name": "removeSpecProject",
-            "description": "開発経験情報を削除する",
+            "description": "開発経験情報を削除.",
             "args": [
               {
                 "name": "specProjectId",
@@ -646,7 +654,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "ResponseRemove",
+                "name": "Res",
                 "ofType": null
               }
             },
@@ -655,7 +663,7 @@
           },
           {
             "name": "removeStudyStack",
-            "description": "ユーザーの学習記録を削除する",
+            "description": "ユーザーの学習記録を削除.",
             "args": [
               {
                 "name": "studyStackId",
@@ -688,15 +696,19 @@
           },
           {
             "name": "removeTodo",
-            "description": "Todoを削除する：引数(todoId)",
+            "description": "Todoを削除.",
             "args": [
               {
                 "name": "todoId",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -749,37 +761,8 @@
             "deprecationReason": null
           },
           {
-            "name": "unChekedTodoStatus",
-            "description": "Todo状態をfalseにする：引数(todoId)",
-            "args": [
-              {
-                "name": "todoId",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "ResponseTodo",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "updatePortfolio",
-            "description": "ポートフォリオを更新する",
+            "description": "ポートフォリオを更新.",
             "args": [
               {
                 "name": "portfolio",
@@ -812,7 +795,7 @@
           },
           {
             "name": "updateSpecProject",
-            "description": "開発経験情報を更新する",
+            "description": "開発経験情報を更新.",
             "args": [
               {
                 "name": "specProject",
@@ -845,15 +828,19 @@
           },
           {
             "name": "updateSpecSheet",
-            "description": "スペックシート情報を更新する",
+            "description": "スペックシート情報を更新.",
             "args": [
               {
                 "name": "specSheet",
                 "description": null,
                 "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "SpecSheetUpdateInput",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "SpecSheetUpdateInput",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -874,7 +861,7 @@
           },
           {
             "name": "updateSpecTechInfo",
-            "description": "スキル要約情報を更新する",
+            "description": "スキル要約情報を更新.",
             "args": [
               {
                 "name": "specTechInfo",
@@ -907,7 +894,7 @@
           },
           {
             "name": "updateSpecUserInfo",
-            "description": "基本情報を更新する",
+            "description": "基本情報を更新.",
             "args": [
               {
                 "name": "specUserInfo",
@@ -939,8 +926,41 @@
             "deprecationReason": null
           },
           {
+            "name": "updateSpreadSheet",
+            "description": null,
+            "args": [
+              {
+                "name": "userId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Res",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "updateStudyStack",
-            "description": "ユーザーの学習記録を更新する",
+            "description": "ユーザーの学習記録を更新.",
             "args": [
               {
                 "name": "stack",
@@ -973,15 +993,19 @@
           },
           {
             "name": "updateTodo",
-            "description": "Todoを更新する：引数(タイトル,説明,開始日,終了日,todo状態,ユーザーID)",
+            "description": "Todoを更新.",
             "args": [
               {
                 "name": "todo",
                 "description": null,
                 "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "TodoUpdateInput",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "TodoUpdateInput",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1001,8 +1025,41 @@
             "deprecationReason": null
           },
           {
+            "name": "updateUser",
+            "description": "ユーザーを編集.",
+            "args": [
+              {
+                "name": "user",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "UserUpdateInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ResponseUser",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "updateUserTechLeafs",
-            "description": "ユーザー習得技術を更新する：引数(ユーザーID, TechLeafID)",
+            "description": "ユーザー習得技術を更新.",
             "args": [
               {
                 "name": "techLeaf",
@@ -1035,7 +1092,7 @@
           },
           {
             "name": "userLogin",
-            "description": "ユーザーがログインする：引数(ユーザーID, email, password)",
+            "description": "ユーザーがログイン.",
             "args": [
               {
                 "name": "user",
@@ -1098,9 +1155,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "ID",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1383,12 +1444,20 @@
             "description": "スキル取得.",
             "args": [],
             "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "OBJECT",
-                "name": "Skill",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Skill",
+                    "ofType": null
+                  }
+                }
               }
             },
             "isDeprecated": false,
@@ -1402,9 +1471,13 @@
                 "name": "userId",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1535,9 +1608,13 @@
                 "name": "userId",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1569,15 +1646,19 @@
             "description": "全てのユーザー情報を取得.",
             "args": [],
             "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "NON_NULL",
+                "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "User",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "User",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -1586,15 +1667,19 @@
           },
           {
             "name": "getFrameworks",
-            "description": null,
+            "description": "フレームワーク取得",
             "args": [
               {
-                "name": "_id",
+                "name": "name",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1615,15 +1700,19 @@
           },
           {
             "name": "getLanguages",
-            "description": null,
+            "description": "言語取得",
             "args": [
               {
-                "name": "_id",
+                "name": "name",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1644,15 +1733,19 @@
           },
           {
             "name": "getLibraries",
-            "description": null,
+            "description": "ライブラリ取得",
             "args": [
               {
-                "name": "_id",
+                "name": "name",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1673,15 +1766,19 @@
           },
           {
             "name": "getOperationEnvs",
-            "description": null,
+            "description": "動作環境取得",
             "args": [
               {
-                "name": "_id",
+                "name": "name",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1702,15 +1799,19 @@
           },
           {
             "name": "getOtherTools",
-            "description": null,
+            "description": "その他のツール取得",
             "args": [
               {
-                "name": "_id",
+                "name": "name",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1737,9 +1838,13 @@
                 "name": "userId",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1766,9 +1871,13 @@
                 "name": "userId",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1788,6 +1897,39 @@
             "deprecationReason": null
           },
           {
+            "name": "getSpreadSheet",
+            "description": "スプレッドシートを取得",
+            "args": [
+              {
+                "name": "userId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Res",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getStudyStackById",
             "description": "StudyStackIdに紐づいたStudyStack情報を取得.",
             "args": [
@@ -1795,9 +1937,13 @@
                 "name": "studyStackId",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1824,9 +1970,13 @@
                 "name": "todoId",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1874,6 +2024,41 @@
                 "name": "User",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Res",
+        "description": null,
+        "fields": [
+          {
+            "name": "msg",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2262,7 +2447,7 @@
         "description": null,
         "fields": [
           {
-            "name": "message",
+            "name": "msg",
             "description": null,
             "args": [],
             "type": {
@@ -2395,12 +2580,20 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
               }
             },
             "isDeprecated": false,
@@ -2411,9 +2604,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "ID",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2423,9 +2620,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3319,15 +3520,19 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "NON_NULL",
+                "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "SpecProjectSheet",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "SpecProjectSheet",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -4512,15 +4717,19 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "NON_NULL",
+                "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "TechTree",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TechTree",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -4602,15 +4811,19 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "NON_NULL",
+                "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "TechLeaf",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TechLeaf",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -5404,16 +5617,32 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "NON_NULL",
+                "kind": "LIST",
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "Portfolio",
                   "ofType": null
                 }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "spreadSheetID",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -5529,6 +5758,22 @@
           },
           {
             "name": "password",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "spreadSheetID",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -5727,6 +5972,105 @@
                 "name": "ID",
                 "ofType": null
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "UserUpdateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "email",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "githubURL",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "jobType",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "password",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "spreadSheetID",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userId",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,

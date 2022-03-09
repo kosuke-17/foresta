@@ -1,10 +1,5 @@
-import {
-  TechArea,
-  TechBranch,
-  TechLeaf,
-  TechTree,
-} from "../../../models/TechForest.model";
-import { success } from "../responseStatus";
+import { TechArea, TechBranch, TechLeaf, TechTree } from "../../../models";
+import { error, success } from "../responseStatus";
 import {
   TechAreaType,
   TechBranchType,
@@ -29,10 +24,9 @@ const techForestMutations = {
     try {
       const createTechLeaf = new TechLeaf({ name });
       const result = await createTechLeaf.save();
-      return success(result);
-    } catch (e) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "作成に成功しました。");
+    } catch {
+      return error("作成に失敗しました。");
     }
   },
   /**
@@ -48,10 +42,9 @@ const techForestMutations = {
     try {
       const createTechBranch = new TechBranch({ name });
       const result = await createTechBranch.save();
-      return success(result);
-    } catch (e) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "追加に成功しました。");
+    } catch {
+      return error("追加に失敗しました。");
     }
   },
   /**
@@ -67,10 +60,9 @@ const techForestMutations = {
     try {
       const createTechTree = new TechTree({ name });
       const result = await createTechTree.save();
-      return success(result);
-    } catch (e) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "作成に成功しました。");
+    } catch {
+      return error("作成に失敗しました。");
     }
   },
   /**
@@ -86,10 +78,9 @@ const techForestMutations = {
     try {
       const createTechArea = new TechArea({ name });
       const result = await createTechArea.save();
-      return success(result);
-    } catch (e) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "作成に成功しました。");
+    } catch {
+      return error("作成に失敗しました。");
     }
   },
 };

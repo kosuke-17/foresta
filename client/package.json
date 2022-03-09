@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.9",
+    "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.8.5",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
@@ -12,6 +13,7 @@
     "@fullcalendar/react": "^5.10.1",
     "@graphql-codegen/cli": "^2.6.2",
     "@hookform/resolvers": "^2.8.8",
+    "@primer/octicons-react": "^16.3.1",
     "@types/node": "^16.11.26",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
@@ -42,7 +44,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom --verbose",
+    "test": "jest --verbose",
     "eject": "react-scripts eject",
     "codegen": "graphql-codegen --config codegen.yml",
     "storybook": "start-storybook -p 6006 -s public",
@@ -62,7 +64,10 @@
     ],
     "moduleNameMapper": {
       "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
-    }
+    },
+    "testMatch": [
+      "**/__tests__/**/*.test.(ts|tsx)"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -93,6 +98,10 @@
     ]
   },
   "devDependencies": {
+    "@apollo/react-testing": "^4.0.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
     "@graphql-codegen/cli": "2.6.2",
     "@graphql-codegen/introspection": "2.1.1",
     "@graphql-codegen/typescript": "^2.4.5",
@@ -120,6 +129,7 @@
     "eslint-plugin-storybook": "^0.5.7",
     "jest": "^27.5.1",
     "jest-css-modules": "^2.1.0",
+    "ts-jest": "^27.1.3",
     "webpack": "^5.69.1"
   }
 }

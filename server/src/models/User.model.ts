@@ -5,15 +5,16 @@ import mongoose from "mongoose";
  *  @remarks
  *  - ユーザー名 : string
  *  - 職業タイプ : string
+ *  - スプレッドシートURL : string
  *  - GithubURL : string
- *  - 習得技術情報 : obj
  */
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   jobType: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  githubURL: { type: String, required: true },
+  spreadSheetID: { type: String },
+  githubURL: { type: String },
 });
 
 /**

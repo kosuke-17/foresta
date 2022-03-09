@@ -1,10 +1,10 @@
-import { StudyStack } from "../../../models/StudyStack.model";
+import { StudyStack } from "../../../models";
 import {
   StudyStackIdType,
   StackAddType,
   StackUpdateType,
 } from "../../../types/studyStack";
-import { success } from "../responseStatus";
+import { success, error } from "../responseStatus";
 
 /**
  * ## 学習記録の変更処理
@@ -17,7 +17,7 @@ const studyStackMutations = {
    * @returns successステータス, 作成した学習記録の情報
    * @returns errorステータス
    */
-  addStudyStack: (_: any, { stack }: StackAddType) => {
+  addStudyStack: async (_: any, { stack }: StackAddType) => {
     const { content, timeStack, createdAt, skillTagId, userId } = stack;
     try {
       const newStudyStack = new StudyStack({
@@ -27,11 +27,10 @@ const studyStackMutations = {
         skillTagId,
         userId,
       });
-      const result = newStudyStack.save();
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      const result = await newStudyStack.save();
+      return success(result, "追加に成功しました");
+    } catch {
+      return error("追加に失敗しました");
     }
   },
   /**
@@ -43,10 +42,9 @@ const studyStackMutations = {
   removeStudyStack: async (_: any, { studyStackId }: StudyStackIdType) => {
     try {
       await StudyStack.deleteOne({ _id: studyStackId });
-      return { status: "success" };
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success("", "削除に成功しました");
+    } catch {
+      return error("削除に失敗しました");
     }
   },
   /**
@@ -73,10 +71,9 @@ const studyStackMutations = {
         },
         { new: true }
       );
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "更新に成功しました");
+    } catch {
+      return error("更新に失敗しました");
     }
   },
 };

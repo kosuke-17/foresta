@@ -1,12 +1,13 @@
-import { TechTree } from "../../../models/TechForest.model";
-import { Users, UserLeafs } from "../../../models/User.model";
-import { success } from "../responseStatus";
-import { UserType, UserLoginType } from "../../../types";
 import {
+  Users,
+  UserLeafs,
   SpecSheet,
   SpecTechInfoSheet,
   SpecUserInfoSheet,
-} from "../../../models/SpecSheet.model";
+  TechTree,
+} from "../../../models";
+import { error, success } from "../responseStatus";
+import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
 
 /**
  * ## ユーザーの変更処理
@@ -21,9 +22,9 @@ const userMutations = {
    * @returns success : successステータス,作成したユーザー
    * @returns error : errorステータス
    */
-  createUser: async (_: any, { user }: UserType) => {
+  createUser: async (_: any, { user }: UserCreateType) => {
     // user_paramを分割代入
-    let { name, jobType, email, password, githubURL } = user;
+    let { name, jobType, email, password, spreadSheetID, githubURL } = user;
     if (githubURL == null) {
       githubURL = "";
     }
@@ -35,6 +36,7 @@ const userMutations = {
         jobType,
         email,
         password,
+        spreadSheetID,
         githubURL,
       });
       const result = await createUser.save();
@@ -92,10 +94,9 @@ const userMutations = {
         await createdSpecTechInfoSheet.save();
       }
 
-      return success(result);
-    } catch (e) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "作成に成功しました。");
+    } catch {
+      return error("作成に失敗しました。");
     }
   },
   /**
@@ -113,16 +114,36 @@ const userMutations = {
         password: password,
       });
       if (result === null) {
-        return {
-          status: "error",
-          message: "該当のユーザーが見つかりませんでした",
-        };
+        return error("該当のユーザーが見つかりませんでした");
       }
 
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "ログインできました。");
+    } catch {
+      return error("ログインできませんでした。");
+    }
+  },
+  /**
+   * ユーザー情報を更新する.
+   *
+   * @param user - 更新ユーザー情報
+   * @returns ステータス 更新ユーザーの情報
+   */
+  updateUser: async (_: any, { user }: UserUpdateType) => {
+    const { userId, name, jobType, email, password, spreadSheetID, githubURL } =
+      user;
+    try {
+      const result = await Users.findOneAndUpdate(
+        { _id: userId },
+        { name, jobType, email, password, spreadSheetID, githubURL },
+        { new: true }
+      );
+
+      // 該当のIDが存在したかのチェック
+      if (result === null) return error("該当のユーザーが存在しません。");
+
+      return success(result, "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
     }
   },
 };
