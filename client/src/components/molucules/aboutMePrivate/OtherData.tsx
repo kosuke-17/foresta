@@ -4,6 +4,7 @@ import { UnorderedList, ListItem } from "@chakra-ui/react";
 
 import { TitleAndContent } from "../../atoms/aboutMePrivate/TitleAndContent";
 
+
 /**
  * その他のデータ.
  * @remarks - 業務外、資格、前職について
