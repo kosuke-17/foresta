@@ -48,6 +48,8 @@ export const StackList = memo(() => {
           </TabList>
           {loading ? (
             <p>Loading...</p>
+          ) : error ? (
+            <p>Error...</p>
           ) : data?.getAllStudyStack.length ? (
             <TabPanels overflow="auto" height="250px">
               <TabPanel>
@@ -60,7 +62,6 @@ export const StackList = memo(() => {
           ) : (
             <p>学習記録が1件もありません</p>
           )}
-          {error ? <p>Error</p> : <p>読み込みに失敗しました</p>}
         </Tabs>
       </Center>
       {/* 仮の学習記録ボタン */}
