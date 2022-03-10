@@ -9,6 +9,7 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "@storybook/preset-create-react-app",
+    "storybook-addon-apollo-client", // StorybookでApollo Clinetを使っているComponentを登録するためのアドオン
   ],
   framework: "@storybook/react",
   core: {
