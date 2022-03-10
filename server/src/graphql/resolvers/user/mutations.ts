@@ -5,6 +5,7 @@ import {
   SpecTechInfoSheet,
   SpecUserInfoSheet,
   TechTree,
+  SpecProjectSheet,
 } from "../../../models";
 import { error, success } from "../responseStatus";
 import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
@@ -86,6 +87,27 @@ const userMutations = {
           devRoles: [],
           specSheetId: createdSpecSheet._id,
         });
+
+        // ユーザーの開発経験(3つ)のオブジェクト作成・保存
+        for (let i = 0; i < 3; i++) {
+          const createdSpecProjectSheet = new SpecProjectSheet({
+            name: "",
+            startedAt: "",
+            finishedAt: "",
+            roleSharing: "",
+            memberCount: 0,
+            content: "",
+            operationEnvs: [],
+            languages: [],
+            frameworks: [],
+            libraries: [],
+            otherTools: [],
+            devRoles: [],
+            specSheetId: createdSpecSheet._id,
+          });
+          await createdSpecProjectSheet.save();
+        }
+
         // ユーザーの技術オブジェクトを保存
         await createdTechLeafs.save();
         // スペックシート関連のオブジェクト保存

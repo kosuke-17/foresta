@@ -39,6 +39,7 @@ type SpecTechInfoSheet {
 
 # スペックシートプロジェクト
 type SpecProjectSheet {
+  id: String!
   name: String!
   startedAt: String!
   finishedAt: String!
@@ -121,21 +122,21 @@ input SpecProjectUpdateInput {
   specSheetId: ID!
 }
 # 開発経験追加
-input SpecProjectAddInput {
-  name: String!
-  startedAt: String!
-  finishedAt: String!
-  roleSharing: String!
-  memberCount: Int!
-  content: String!
-  operationEnvs: [String!]!
-  languages: [String!]!
-  frameworks: [String!]!
-  libraries: [String!]!
-  otherTools: [String!]!
-  devRoles: [String!]!
-  specSheetId: ID!
-}
+# input SpecProjectAddInput {
+#   name: String!
+#   startedAt: String!
+#   finishedAt: String!
+#   roleSharing: String!
+#   memberCount: Int!
+#   content: String!
+#   operationEnvs: [String!]!
+#   languages: [String!]!
+#   frameworks: [String!]!
+#   libraries: [String!]!
+#   otherTools: [String!]!
+#   devRoles: [String!]!
+#   specSheetId: ID!
+# }
 # ポートフォリオ作成情報
 input PortfolioCreateInput {
   title: String!

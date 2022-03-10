@@ -230,60 +230,60 @@ const specSheetMutations = {
    * @param specProject - 追加プロジェクト情報
    * @returns 追加したプロジェクト情報
    */
-  addSpecProject: async (_: any, { specProject }: SpecProjectAddType) => {
-    const {
-      name,
-      startedAt,
-      finishedAt,
-      roleSharing,
-      memberCount,
-      content,
-      operationEnvs,
-      languages,
-      frameworks,
-      libraries,
-      otherTools,
-      devRoles,
-      specSheetId,
-    } = specProject;
+  // addSpecProject: async (_: any, { specProject }: SpecProjectAddType) => {
+  //   const {
+  //     name,
+  //     startedAt,
+  //     finishedAt,
+  //     roleSharing,
+  //     memberCount,
+  //     content,
+  //     operationEnvs,
+  //     languages,
+  //     frameworks,
+  //     libraries,
+  //     otherTools,
+  //     devRoles,
+  //     specSheetId,
+  //   } = specProject;
 
-    const createProject = new SpecProjectSheet({
-      name,
-      startedAt,
-      finishedAt,
-      roleSharing,
-      memberCount,
-      content,
-      operationEnvs: [...operationEnvs],
-      languages: [...languages],
-      frameworks: [...frameworks],
-      libraries: [...libraries],
-      otherTools: [...otherTools],
-      devRoles: [...devRoles],
-      specSheetId,
-    });
+  //   const createProject = new SpecProjectSheet({
+  //     name,
+  //     startedAt,
+  //     finishedAt,
+  //     roleSharing,
+  //     memberCount,
+  //     content,
+  //     operationEnvs: [...operationEnvs],
+  //     languages: [...languages],
+  //     frameworks: [...frameworks],
+  //     libraries: [...libraries],
+  //     otherTools: [...otherTools],
+  //     devRoles: [...devRoles],
+  //     specSheetId,
+  //   });
 
-    try {
-      const result = await createProject.save();
-      return success(result, "追加に成功しました。");
-    } catch {
-      return error("追加に失敗しました。");
-    }
-  },
+  //   try {
+  //     const result = await createProject.save();
+  //     return success(result, "追加に成功しました。");
+  //   } catch {
+  //     return error("追加に失敗しました。");
+  //   }
+  // },
   /**
    * 開発経験の削除.
    *
    * @param specProjectId - 開発経験ID
    * @returns 削除処理ステータス
    */
-  removeSpecProject: async (_: any, { specProjectId }: SpecSheetIdType) => {
-    try {
-      await SpecProjectSheet.findByIdAndRemove({ _id: specProjectId });
-      return success("", "削除に成功しました。");
-    } catch {
-      return error("削除に失敗しました。");
-    }
-  },
+  // removeSpecProject: async (_: any, { specProjectId }: SpecSheetIdType) => {
+  //   try {
+  //     await SpecProjectSheet.findByIdAndRemove({ _id: specProjectId });
+  //     return success("", "削除に成功しました。");
+  //   } catch {
+  //     return error("削除に失敗しました。");
+  //   }
+  // },
   /**
    * ポートフォリオの作成.
    *
