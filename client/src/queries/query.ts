@@ -145,14 +145,6 @@ gql`
   mutation RemoveStudyStack($studyStackId: String!) {
     removeStudyStack(studyStackId: $studyStackId) {
       status
-      node {
-        id
-        content
-        timeStack
-        createdAt
-        skillTagId
-        userId
-      }
     }
   }
 `;
