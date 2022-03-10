@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { memo } from "react";
 
-
 import { useStackList } from "../../../hooks/study/useStackList";
 import { LogListTable } from "../../molucules/stackList/LogListTable";
 import { StudyListTable } from "../../molucules/stackList/StudyListTable";
@@ -22,13 +21,8 @@ const tabNames = ["学習リスト", "更新情報"] as const;
  * @returns 学習リストと更新情報
  */
 export const StackList = memo(() => {
-
   //カスタムフックから学習リストデータ取得
-  const { error, loading, data, stackSumList} = useStackList();
-
-  if (error) {
-    return <p>Error!</p>;
-  }
+  const { error, loading, data, stackSumList } = useStackList();
 
   return (
     <div>
@@ -66,6 +60,7 @@ export const StackList = memo(() => {
           ) : (
             <p>学習記録が1件もありません</p>
           )}
+          {error ? <p>Error</p> : <p>読み込みに失敗しました</p>}
         </Tabs>
       </Center>
       {/* 仮の学習記録ボタン */}
