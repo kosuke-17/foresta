@@ -1,12 +1,13 @@
-import { TechTree } from "../../../models/TechForest.model";
-import { Users, UserLeafs } from "../../../models/User.model";
-import { error, success } from "../responseStatus";
-import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
 import {
+  Users,
+  UserLeafs,
   SpecSheet,
   SpecTechInfoSheet,
   SpecUserInfoSheet,
-} from "../../../models/SpecSheet.model";
+  TechTree,
+} from "../../../models";
+import { error, success } from "../responseStatus";
+import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
 
 /**
  * ## ユーザーの変更処理
@@ -113,22 +114,25 @@ const userMutations = {
         password: password,
       });
       if (result === null) {
-        return {
-          status: "error",
-          message: "該当のユーザーが見つかりませんでした",
-        };
+        return error("該当のユーザーが見つかりませんでした");
       }
 
-      return success(result);
-    } catch (error) {
-      return { status: "error" };
+      return success(result, "ログインできました。");
+    } catch {
+      return error("ログインできませんでした。");
     }
   },
-  updateUser: (_: any, { user }: UserUpdateType) => {
+  /**
+   * ユーザー情報を更新する.
+   *
+   * @param user - 更新ユーザー情報
+   * @returns ステータス 更新ユーザーの情報
+   */
+  updateUser: async (_: any, { user }: UserUpdateType) => {
     const { userId, name, jobType, email, password, spreadSheetID, githubURL } =
       user;
     try {
-      const result = Users.findOneAndUpdate(
+      const result = await Users.findOneAndUpdate(
         { _id: userId },
         { name, jobType, email, password, spreadSheetID, githubURL },
         { new: true }
@@ -136,7 +140,6 @@ const userMutations = {
 
       // 該当のIDが存在したかのチェック
       if (result === null) return error("該当のユーザーが存在しません。");
-      console.log(result);
 
       return success(result, "更新に成功しました。");
     } catch {

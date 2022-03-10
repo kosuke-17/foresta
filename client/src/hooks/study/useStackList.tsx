@@ -1,3 +1,4 @@
+import { useCookies } from "react-cookie";
 import { useGetAllStudyStackQuery } from "../../types/generated/graphql";
 
 //学習リスト表示用の型定義
@@ -12,17 +13,20 @@ export type StackList = {
 
 /**
  * 学習リスト表示用のデータを取得する
- * @returns 
+ * @returns
  * - error:データ取得ができなかった場合
  * - loading:データ取得中の状態
  * - data:データベースから取得したデータ
  * - stackSumList:DBから取得したデータをフロント側で技術ごとに学習時間を合算したデータ
  */
 export const useStackList = () => {
+  const [cookies] = useCookies();
+  console.log(cookies.ForestaID);
+
   //userIdから学習記録データを取得する
   const { loading, data, error } = useGetAllStudyStackQuery({
-    //仮のユーザーID
-    variables: { userId: "621c795fea18ffdb80e66462" },
+    //クッキーからユーザーID取得
+    variables: { userId: cookies.ForestaID },
   });
 
   //学習リストの詳細内容一つ一つを格納する新しい配列を作成
@@ -83,5 +87,5 @@ export const useStackList = () => {
     }
   }
 
-  return { error, loading, data, stackSumList };
+  return { error, loading, data, stackSumList, cookies };
 };

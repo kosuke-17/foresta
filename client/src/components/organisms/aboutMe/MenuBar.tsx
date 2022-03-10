@@ -1,9 +1,35 @@
-import { FC, memo } from "react";
+import { FC, memo, useState } from "react";
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 
+import { useModal } from "../../../hooks/useModal";
+import { ModalSet } from "../../molucules/ModalSet";
+import { EditMe } from "./EditMe";
+
+/**
+ * 編集メニューバーコンポーネント
+ */
 export const MenuBar: FC = memo(() => {
+  //モーダル使用のhooks
+  const modalStore = useModal();
+  const { onOpen, isOpen, onClose } = modalStore;
+
+  //メニューのどれを選んだか
+  const [menuItem, setMenuItem] = useState("");
+
   return (
     <>
+      <ModalSet
+        isOpen={isOpen}
+        onClose={onClose}
+        modalTitle={menuItem}
+        contents={
+          <EditMe
+            menuItem={menuItem}
+            setMenuItem={setMenuItem}
+            onClose={onClose}
+          />
+        }
+      />
       <Menu>
         <MenuButton
           _focus={{ boxShadow: "none" }}
@@ -33,7 +59,14 @@ export const MenuBar: FC = memo(() => {
           </svg>
         </MenuButton>
         <MenuList>
-          <MenuItem>ユーザ情報</MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              setMenuItem("ユーザ情報");
+              onOpen(e);
+            }}
+          >
+            ユーザ情報
+          </MenuItem>
           <MenuItem>制作物</MenuItem>
           <MenuItem>URL</MenuItem>
           <MenuItem>基本情報</MenuItem>

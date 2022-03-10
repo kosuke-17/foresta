@@ -9,7 +9,7 @@ type TechBranch {
   id: ID!
   name: String!
   techTree_id: ID!
-  techLeafs: [TechLeaf!]
+  techLeafs: [TechLeaf!]!
 }
 # id,name,techArea_idは子リゾルバのtechBranchesに渡る
 type TechTree {
@@ -22,7 +22,7 @@ type TechTree {
 type TechArea {
   id: ID!
   name: String!
-  techTrees: [TechTree!]
+  techTrees: [TechTree!]!
 }
 
 ################

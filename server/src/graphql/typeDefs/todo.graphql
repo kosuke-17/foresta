@@ -35,7 +35,13 @@ input TodoUpdateInput {
 #レスポンス
 
 # 追加したTodo情報
+type ResponseTodoArr {
+  status: String!
+  node: [Todo]
+  msg: String
+}
 type ResponseTodo {
   status: String!
   node: Todo
+  msg: String
 }

@@ -9,13 +9,12 @@ import mongoose from "mongoose";
  *  - GithubURL : string
  */
 const UserSchema = new mongoose.Schema({
-  id: { type: String },
   name: { type: String, required: true },
   jobType: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
   spreadSheetID: { type: String },
-  githubURL: { type: String, required: true },
+  githubURL: { type: String },
 });
 
 /**

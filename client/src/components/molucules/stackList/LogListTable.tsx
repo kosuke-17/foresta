@@ -16,7 +16,7 @@ type Props = {
 };
 
 /**
- * 記録情報テーブルモーダル
+ * 記録情報テーブル
  */
 export const LogListTable: FC<Props> = memo((props) => {
   const { data } = props;
@@ -41,10 +41,18 @@ export const LogListTable: FC<Props> = memo((props) => {
               <Td>{stackList.skillTagId}</Td>
               <Td>{stackList.timeStack}分</Td>
               <Td>
-                <StudyModal title="記録編集" buttonTitle="編集" />
+                <StudyModal
+                  title="記録編集"
+                  buttonTitle="編集"
+                  stackId={stackList.id}
+                />
               </Td>
               <Td>
-                <StudyModal title="記録削除" buttonTitle="削除" />
+                <StudyModal
+                  title="記録削除"
+                  buttonTitle="削除"
+                  stackId={stackList.id}
+                />
               </Td>
             </Tr>
           ))}

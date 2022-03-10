@@ -28,4 +28,5 @@ input UserTechLeafUpdateInput {
 type ResponseUserTechLeaf {
   status: String!
   node: UserLeafs
+  msg: String
 }

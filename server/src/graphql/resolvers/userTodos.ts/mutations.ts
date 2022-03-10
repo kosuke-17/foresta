@@ -1,6 +1,6 @@
-import { UserTodos } from "../../../models/User.model";
+import { UserTodos } from "../../../models";
 import { TodoAddType, TodoIdType, TodoUpdateType } from "../../../types";
-import { success } from "../responseStatus";
+import { error, success } from "../responseStatus";
 /**
  * ## todoの変更処理
  */
@@ -26,10 +26,9 @@ const userTodosMutations = {
       });
 
       const result = await newTodo.save();
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "追加に成功しました。");
+    } catch {
+      return error("追加に失敗しました。");
     }
   },
   /**
@@ -42,14 +41,13 @@ const userTodosMutations = {
   removeTodo: async (_: any, { todoId }: TodoIdType) => {
     try {
       const result = await UserTodos.deleteOne({ _id: todoId });
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "削除に成功しました。");
+    } catch {
+      return error("削除に失敗しました。");
     }
   },
   /**
-   * todoの編集.
+   * todoの更新.
    *
    * @param todo - todo情報
    * @returns success : successステータス,更新したtodo情報
@@ -71,10 +69,9 @@ const userTodosMutations = {
           },
         }
       );
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
     }
   },
   /**
@@ -92,10 +89,9 @@ const userTodosMutations = {
         { _id: todoId },
         { $set: { isStatus: updateStatus } }
       );
-      return success(result);
-    } catch (error) {
-      // 必須のデータがnullだとエラーを返す
-      return { status: "error" };
+      return success(result, "更新に成功しました。");
+    } catch {
+      return error("更新に失敗しました。");
     }
   },
 };

@@ -7,9 +7,9 @@ type User {
   password: String!
   spreadSheetID: String!
   githubURL: String!
-  userLeafs: UserLeafs
-  userUrls: UserUrls
-  portfolio: [Portfolio]
+  userLeafs: UserLeafs!
+  userUrls: UserUrls!
+  portfolio: [Portfolio]!
 }
 
 ################
@@ -21,7 +21,7 @@ input UserCreateInput {
   jobType: String!
   email: String!
   password: String!
-  spreadSheetID: String
+  spreadSheetID: String!
   githubURL: String!
 }
 input UserUpdateInput {
@@ -30,7 +30,7 @@ input UserUpdateInput {
   jobType: String
   email: String
   password: String
-  spreadSheetID: String
+  spreadSheetID: String!
   githubURL: String
 }
 

@@ -1,6 +1,6 @@
-import { Portfolio, Skill, SpecSheet } from "../../../models/SpecSheet.model";
-import { IdType, UserIdType } from "../../../types";
-import { success } from "../responseStatus";
+import { Portfolio, Skill, SpecSheet } from "../../../models";
+import { NameType, UserIdType } from "../../../types";
+import { error, success } from "../responseStatus";
 
 /**
  *  ## スペックシート・ポートフォリオの取得
@@ -15,16 +15,11 @@ const specSheetQueries = {
     try {
       const result = await SpecSheet.findOne({ userId: userId });
       if (result === null) {
-        return {
-          status: "error",
-          message: "該当のスペックシートが見つかりません。",
-        };
+        return error("該当のスペックシートが見つかりません。");
       }
-      return success(result);
-    } catch (error) {
-      return {
-        status: "error",
-      };
+      return success(result, "取得に成功しました。");
+    } catch {
+      return error("取得に失敗しました。");
     }
   },
   /**
@@ -37,35 +32,30 @@ const specSheetQueries = {
     try {
       const result = await Portfolio.findOne({ userId: userId });
       if (result === null) {
-        return {
-          status: "error",
-          message: "該当のポートフォリオが見つかりません。",
-        };
+        return error("該当のポートフォリオが見つかりません。");
       }
-      return success(result);
-    } catch (error) {
-      return {
-        status: "error",
-      };
+      return success(result, "取得に成功しました。");
+    } catch {
+      return error("取得に失敗しました。");
     }
   },
   getAllSkill: async () => {
     return await Skill.find({});
   },
-  getOperationEnvs: async (_: any, { _id }: IdType) => {
-    return await Skill.findById({ _id: _id });
+  getOperationEnvs: async (_: any, { name }: NameType) => {
+    return await Skill.findOne({ name: name });
   },
-  getLanguages: async (_: any, { _id }: IdType) => {
-    return await Skill.findById({ _id: _id });
+  getLanguages: async (_: any, { name }: NameType) => {
+    return await Skill.findOne({ name: name });
   },
-  getFrameworks: async (_: any, { _id }: IdType) => {
-    return await Skill.findById({ _id: _id });
+  getFrameworks: async (_: any, { name }: NameType) => {
+    return await Skill.findOne({ name: name });
   },
-  getLibraries: async (_: any, { _id }: IdType) => {
-    return await Skill.findById({ _id: _id });
+  getLibraries: async (_: any, { name }: NameType) => {
+    return await Skill.findOne({ name: name });
   },
-  getOtherTools: async (_: any, { _id }: IdType) => {
-    return await Skill.findById({ _id: _id });
+  getOtherTools: async (_: any, { name }: NameType) => {
+    return await Skill.findOne({ name: name });
   },
 };
 

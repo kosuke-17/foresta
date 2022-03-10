@@ -18,7 +18,7 @@ type Props = {
   contents: any; //モーダルの中身
   closeBtnName?: string; //モーダルを閉じるボタンの名前(デフォルトあり)
   //メソッドを含めたボタンを作成したい場合:[{name:hoge,action:method},{…}]の形で渡してください
-  actionBtnArray?: Array<{ name: string; action: () => void }>;
+  actionBtnArray?: Array<{ name: string; action: () => void }> | undefined;
 };
 
 /**
