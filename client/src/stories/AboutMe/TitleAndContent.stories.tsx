@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
-import { TitleAndContent } from "../components/atoms/aboutMePrivate/TitleAndContent";
+import { TitleAndContent } from "../../components/atoms/aboutMePrivate/TitleAndContent";
 
 export default {
   component: TitleAndContent,

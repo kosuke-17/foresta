@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
-import { SiteImage } from "../components/atoms/aboutMePublic/SiteImage";
+import { SiteImage } from "../../components/atoms/aboutMePublic/SiteImage";
 
 export default {
   component: SiteImage,

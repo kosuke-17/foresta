@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
-import { SiteDetail } from "../components/molucules/aboutMePublic/SiteDetail";
+import { SiteDetail } from "../../components/molucules/aboutMePublic/SiteDetail";
 
 export default {
   component: SiteDetail,

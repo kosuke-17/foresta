@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
-import { AccordionContent } from "../components/molucules/AccordionContent";
+import { AccordionContent } from "../../components/molucules/AccordionContent";
 
 export default {
   component: AccordionContent,

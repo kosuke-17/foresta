@@ -1,5 +1,5 @@
 import type { ComponentStoryObj, ComponentMeta } from "@storybook/react";
-import { Project } from "../components/molucules/aboutMePrivate/Project";
+import { Project } from "../../components/molucules/aboutMePrivate/Project";
 
 export default {
   component: Project,
