@@ -2,7 +2,8 @@ import { memo, FC } from "react";
 import styled from "styled-components";
 import { UnorderedList, ListItem } from "@chakra-ui/react";
 
-import { TitleAndContent } from "../../atoms/aboutMePrivate/TitelAndContent";
+import { TitleAndContent } from "../../atoms/aboutMePrivate/TitleAndContent";
+
 
 /**
  * その他のデータ.

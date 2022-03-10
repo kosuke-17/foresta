@@ -60,6 +60,7 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
           onClose={onClose}
           modalTitle={siteItem?.title}
           contents={<SiteDetail siteItem={siteItem} />}
+          closeBtnName="とじる"
         />
         <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
           {siteData &&

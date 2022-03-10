@@ -740,8 +740,6 @@ export type GetUserByIdQuery = {
     __typename?: "User";
     name: string;
     jobType: string;
-    email: string;
-    password: string;
     githubURL: string;
     userUrls: {
       __typename?: "UserUrls";
@@ -755,6 +753,26 @@ export type GetUserByIdQuery = {
       portfolioURL: string;
     } | null>;
   };
+};
+
+export type UpdateUserMutationVariables = Exact<{
+  user: UserUpdateInput;
+}>;
+
+export type UpdateUserMutation = {
+  __typename?: "Mutation";
+  updateUser: {
+    __typename?: "ResponseUser";
+    status: string;
+    msg?: string | null;
+  };
+};
+
+export type GetLanguagesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetLanguagesQuery = {
+  __typename?: "Query";
+  getLanguages: { __typename?: "Skill"; name: string; data: Array<string> };
 };
 
 export type UserLoginMutationVariables = Exact<{
@@ -926,8 +944,6 @@ export const GetUserByIdDocument = gql`
     user: getUserById(_id: $id) {
       name
       jobType
-      email
-      password
       githubURL
       userUrls {
         user_urls {
@@ -992,6 +1008,115 @@ export type GetUserByIdLazyQueryHookResult = ReturnType<
 export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserByIdQuery,
   GetUserByIdQueryVariables
+>;
+export const UpdateUserDocument = gql`
+  mutation UpdateUser($user: UserUpdateInput!) {
+    updateUser(user: $user) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateUserMutationFn = Apollo.MutationFunction<
+  UpdateUserMutation,
+  UpdateUserMutationVariables
+>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      user: // value for 'user'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateUserMutation,
+    UpdateUserMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
+    UpdateUserDocument,
+    options,
+  );
+}
+export type UpdateUserMutationHookResult = ReturnType<
+  typeof useUpdateUserMutation
+>;
+export type UpdateUserMutationResult =
+  Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
+  UpdateUserMutation,
+  UpdateUserMutationVariables
+>;
+export const GetLanguagesDocument = gql`
+  query GetLanguages {
+    getLanguages(name: "languages") {
+      name
+      data
+    }
+  }
+`;
+
+/**
+ * __useGetLanguagesQuery__
+ *
+ * To run a query within a React component, call `useGetLanguagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLanguagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLanguagesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetLanguagesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetLanguagesQuery,
+    GetLanguagesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetLanguagesQuery, GetLanguagesQueryVariables>(
+    GetLanguagesDocument,
+    options,
+  );
+}
+export function useGetLanguagesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetLanguagesQuery,
+    GetLanguagesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetLanguagesQuery, GetLanguagesQueryVariables>(
+    GetLanguagesDocument,
+    options,
+  );
+}
+export type GetLanguagesQueryHookResult = ReturnType<
+  typeof useGetLanguagesQuery
+>;
+export type GetLanguagesLazyQueryHookResult = ReturnType<
+  typeof useGetLanguagesLazyQuery
+>;
+export type GetLanguagesQueryResult = Apollo.QueryResult<
+  GetLanguagesQuery,
+  GetLanguagesQueryVariables
 >;
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
