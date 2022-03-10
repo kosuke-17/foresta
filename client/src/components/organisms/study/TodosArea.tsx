@@ -1,13 +1,6 @@
 import { FC, memo, useState } from "react";
 import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Box,
   Container,
-  Heading,
 } from "@chakra-ui/react";
 
 import { TodoList } from "./TodoList";
@@ -15,9 +8,6 @@ import { TodoDetail } from "./TodoDetail";
 import { Calendar } from "../../molucules/todos/Calendar";
 import { useModal } from "../../../hooks/useModal";
 import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
-
-// タブのタイプ
-const tabs = ["全て", "今日", "期限切れ"] as const; //as const をつけてreadonlyにする
 
 /**
  * Todoを表示するエリアのコンポーネント.
@@ -34,49 +24,16 @@ export const TodosArea: FC = memo(() => {
     },
   });
 
-  if (error) {
-    return <div>エラー</div>;
-  }
-
   return (
     <Container maxW="5xl">
-      <Heading as="h2" size="lg">
-        Todoリスト
-      </Heading>
-      <Box bg="#f5f5f5" padding="5px 24px 10px 24px">
-        <Tabs variant="soft-rounded" isLazy>
-          <TabList>
-            {tabs.map((tab, index) => (
-              <Tab
-                key={index}
-                _focus={{ boxShadow: "none" }}
-                _selected={{ pointerEvents: "none", bg: "green.200" }}
-                _hover={{ backgroundColor: "green.50" }}
-              >
-                {tab}
-              </Tab>
-            ))}
-          </TabList>
-          <TabPanels
-            bg="white"
-            padding="10px 40px"
-            overflow="auto"
-            height="180px"
-          >
-            {tabs.map((tab, index) => (
-              <TabPanel key={index}>
-                <TodoList
-                  todos={data?.todos}
-                  loading={loading}
-                  tabType={tab}
-                  onOpen={onOpen}
-                  setTodoId={setTodoId}
-                />
-              </TabPanel>
-            ))}
-          </TabPanels>
-        </Tabs>
-      </Box>
+      {/* Todoリストエリア */}
+      <TodoList
+        todos={data?.todos}
+        loading={loading}
+        error={error}
+        onOpen={onOpen}
+        setTodoId={setTodoId}
+      />
 
       {/* カレンダーエリア */}
       <Calendar todos={data?.todos} onOpen={onOpen} setTodoId={setTodoId} />
