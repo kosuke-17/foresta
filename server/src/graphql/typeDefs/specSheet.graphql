@@ -39,6 +39,7 @@ type SpecTechInfoSheet {
 
 # スペックシートプロジェクト
 type SpecProjectSheet {
+  id: String!
   name: String!
   startedAt: String!
   finishedAt: String!
