@@ -4,20 +4,23 @@ import { gql } from "@apollo/client";
 gql`
   query GetUserById($id: String!) {
     user: getUserById(_id: $id) {
-      name
-      jobType
-      githubURL
-      userUrls {
-        user_urls {
-          url
-          urlName
+      node {
+        name
+        jobType
+        spreadSheetID
+        githubURL
+        portfolio {
+          title
+          description
+          img
+          portfolioURL
         }
-      }
-      portfolio {
-        title
-        description
-        img
-        portfolioURL
+        userUrls {
+          user_urls {
+            urlName
+            url
+          }
+        }
       }
     }
   }
@@ -34,14 +37,14 @@ gql`
 `;
 
 //言語情報取得
-gql`
-  query GetLanguages {
-    getLanguages(name: "languages") {
-      name
-      data
-    }
-  }
-`;
+// gql`
+//   query GetLanguages {
+//     getLanguages(name: "languages") {
+//       name
+//       data
+//     }
+//   }
+// `;
 
 // ログイン処理
 export const LOGIN_QUERY = gql`
