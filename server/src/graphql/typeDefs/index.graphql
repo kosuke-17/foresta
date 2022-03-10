@@ -1,3 +1,6 @@
+"""
+データを取得する
+"""
 type Query {
   """
   全てのユーザー情報を取得.
@@ -6,23 +9,23 @@ type Query {
   """
   ユーザーidに紐づくユーザー情報を取得.
   """
-  getUserById(_id: String!): User!
+  getUserById(_id: String!): ResponseUser!
   """
   ユーザーのTodo一覧情報を取得.
   """
-  getAllTodoByUser(userId: String!): [Todo!]!
+  getAllTodoByUser(userId: String!): ResponseTodoArr!
   """
   TodoIdに紐づいたTodo情報を取得.
   """
-  getTodoById(todoId: String!): Todo!
+  getTodoById(todoId: String!): ResponseTodo!
   """
   ユーザーのTodo一覧情報を取得.
   """
-  getAllStudyStack(userId: String!): [StudyStack!]!
+  getAllStudyStack(userId: String!): ResponseStudyStackArr!
   """
   StudyStackIdに紐づいたStudyStack情報を取得.
   """
-  getStudyStackById(studyStackId: String!): StudyStack!
+  getStudyStackById(studyStackId: String!): ResponseStudyStack!
   """
   ユーザーIDに紐づくスペックシート情報を取得.
   """
@@ -68,6 +71,9 @@ type Query {
   getAllTechArea: [TechArea!]!
 }
 
+"""
+データを変更する
+"""
 type Mutation {
   """
   ユーザーを追加.
@@ -125,7 +131,23 @@ type Mutation {
   スペックシート情報を更新.
   """
   updateSpecSheet(specSheet: SpecSheetUpdateInput!): ResponseSpecSheet!
-  updateSpreadSheet(userId: String!): Res!
+  """
+  スプレッドシートの自己PRなどを更新.
+  """
+  updateSpeadSelfPR(userId: String!): Res!
+  """
+  スプレッドシートのポートフォリオURLを更新.
+  """
+  updateSpreadPortfolioUrl(userId: String!): Res!
+  """
+  スプレッドシートの基本情報を更新.
+  """
+  updateSpreadUserInfo(userId: String!): Res!
+  """
+  スプレッドシートのスキル要約を更新.
+  """
+  updateSpeadTechInfo(userId: String!): Res!
+
   """
   基本情報を更新.
   """
