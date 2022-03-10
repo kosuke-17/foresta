@@ -76,12 +76,16 @@ gql`
 gql`
   query GetAllStudyStack($userId: String!) {
     getAllStudyStack(userId: $userId) {
-      id
-      timeStack
-      content
-      createdAt
-      skillTagId
-      userId
+      status
+      node {
+        id
+        content
+        timeStack
+        createdAt
+        skillTagId
+        userId
+      }
+      msg
     }
   }
 `;
@@ -90,12 +94,15 @@ gql`
 gql`
   query GetStudyStackById($studyStackId: String!) {
     getStudyStackById(studyStackId: $studyStackId) {
-      id
-      content
-      timeStack
-      createdAt
-      skillTagId
-      userId
+      status
+      node {
+        id
+        content
+        timeStack
+        createdAt
+        skillTagId
+        userId
+      }
     }
   }
 `;
