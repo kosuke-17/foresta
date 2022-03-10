@@ -14,11 +14,11 @@ import {
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import styled from "styled-components";
 import { useGetTodoByIdQuery } from "../../../types/generated/graphql";
-import { getformattedTodoDate } from "../../../utils/methods";
+import { getformattedTodoDate, returnCodeToBr } from "../../../utils/methods";
 import { TodoDetailEdit } from "./TodoDetailEdit";
 
 type Props = {
-  todoId: string; 
+  todoId: string;
   isOpen: boolean;
   onClose: () => void;
 };
@@ -119,7 +119,9 @@ export const TodoDetail: FC<Props> = memo((props) => {
                     <Box mt={5}>
                       <_Label>メモ</_Label>
                       <_MemoContent>
-                        {todo.description ? todo.description : " "}
+                        {todo.description
+                          ? returnCodeToBr(todo.description)
+                          : " "}
                       </_MemoContent>
                     </Box>
                   </>
