@@ -9,7 +9,7 @@ import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 import { UrlList } from "../../molucules/aboutMePublic/UrlList";
 import { Portfolio } from "../../../types/generated/graphql";
-import { MenuBar } from "../../organisms/aboutMe/MenuBar";
+import { MenuBar } from "./MenuBar";
 
 export const Public: FC = memo(() => {
   /**
