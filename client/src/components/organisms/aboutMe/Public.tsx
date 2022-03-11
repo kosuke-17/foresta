@@ -23,7 +23,7 @@ export const Public: FC = memo(() => {
   });
 
   //useState付けるとデータ入る前にレンダリングされて終わるみたい
-  const user = data?.user;
+  const user = data?.user.node;
   //制作物部分
   const portfolio = user?.portfolio as Array<
     Pick<Portfolio, "img" | "title" | "description" | "portfolioURL">

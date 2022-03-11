@@ -23,7 +23,7 @@ export const UserInfo: FC<Props> = memo(({ setMenuItem, onClose }) => {
     //idは実際cookieから取得
     variables: { id: "621b4b55e9204efe7d8f594a" }, //花子
   });
-  const user = data?.user;
+  const user = data?.user.node;
 
   //こんな感じで職種のセレクトoptionも取得
   // const { data: lang } = useGetLanguagesQuery();
