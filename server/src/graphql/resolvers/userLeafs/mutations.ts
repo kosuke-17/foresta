@@ -1,5 +1,5 @@
 import { UserLeafs } from "../../../models";
-import { TechLeafUpdateType } from "../../../types";
+import { ChangeLeafInfoType } from "../../../types";
 import { error, success } from "../responseStatus";
 /**
  * ## 習得技術の変更処理
@@ -14,23 +14,12 @@ const userLeafsMutations = {
    * @returns success : successステータス,技術を習得したユーザー
    * @returns error : errorステータス
    */
-  updateUserTechLeafs: async (_: any, { techLeaf }: TechLeafUpdateType) => {
-    const { techTreeId, achievementRate, techLeafIds, userId } = techLeaf;
+  changeLeafStatus: async (_: any, { techLeaf }: ChangeLeafInfoType) => {
+    const { userLeafsId, treeId, achievementRate, leafId, currentStatus } =
+      techLeaf;
+    const changedStatus = !currentStatus;
     try {
-      const result = await UserLeafs.findOneAndUpdate(
-        { userId: userId, "techLeafs.techTreeId": techTreeId },
-        {
-          $set: {
-            "techLeafs.$[techLeafInfo].techLeafIds": [...techLeafIds],
-            "techLeafs.$[techLeafInfo].achievementRate": achievementRate,
-          },
-        },
-        {
-          arrayFilters: [{ "techLeafInfo.techTreeId": { $eq: techTreeId } }],
-          upsert: true,
-          new: true,
-        }
-      );
+      const result = await UserLeafs.find({});
       return success(result, "更新に成功しました。");
     } catch {
       return error("更新に失敗しました。");
@@ -39,3 +28,16 @@ const userLeafsMutations = {
 };
 
 export default userLeafsMutations;
+
+// { userId: userId, "techLeafs.techTreeId": techTreeId },
+//   {
+//     $set: {
+//       "techLeafs.$[techLeafInfo].techLeafIds": [...techLeafIds],
+//       "techLeafs.$[techLeafInfo].achievementRate": achievementRate,
+//     },
+//   },
+//   {
+//     arrayFilters: [{ "techLeafInfo.techTreeId": { $eq: techTreeId } }],
+//     upsert: true,
+//     new: true,
+//   }
