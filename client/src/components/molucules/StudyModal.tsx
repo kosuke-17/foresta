@@ -10,16 +10,11 @@ import {
   ModalOverlay,
   Textarea,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { ChangeEvent, FC, memo, useState } from "react";
-import { useCookies } from "react-cookie";
-import {
-  GetAllStudyStackDocument,
-  useAddStudyStackMutation,
-  useUpdateStudyStackMutation,
-  useRemoveStudyStackMutation,
-} from "../../types/generated/graphql";
+import { useAddStack } from "../../hooks/study/useAddStack";
+import { useRemoveStack } from "../../hooks/study/useRemoveStack";
+import { useUpdateStack } from "../../hooks/study/useUpdateStack";
 import { AddStackButton } from "../atoms/study/AddStackBotton";
 import { RemoveStackButton } from "../atoms/study/RemoveStackBotton";
 import { UpdateStackButton } from "../atoms/study/updateStackBotton";
@@ -35,10 +30,6 @@ export const StudyModal: FC<Props> = memo((props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   //propsでもらうもの
   const { title, buttonTitle, stackId } = props;
-  //トーストアラート
-  const toast = useToast();
-  //クッキー情報取得
-  const [cookies] = useCookies();
 
   //記録日
   const [createdAt, setCreatedAt] = useState<string>("");
@@ -57,80 +48,27 @@ export const StudyModal: FC<Props> = memo((props) => {
   const onChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setContent(e.target.value);
 
-  //記録追加メソッド（リフェッチ機能）
-  const [addStudyStack] = useAddStudyStackMutation({
-    variables: {
-      stack: {
-        createdAt,
-        skillTagId,
-        timeStack,
-        content,
-        //一旦指定のユーザー
-        userId: cookies.ForestaID,
-      },
-    },
-    refetchQueries: [GetAllStudyStackDocument], //データを表示するクエリーのDocument
-  });
+  //記録追加メソッド呼び出し
+  const { addStack } = useAddStack(
+    createdAt,
+    skillTagId,
+    timeStack,
+    content,
+    onClose,
+  );
 
-  //記録追加
-  const addStack = async () => {
-    const addStackData = await addStudyStack();
-    if (addStackData.data?.addStudyStack.status === "success") {
-      toast({ title: "学習を記録しました", status: "success" });
-      onClose();
-    } else if (addStackData.data?.addStudyStack.status === "error") {
-      toast({ title: "記録に失敗しました", status: "error" });
-      onClose();
-    }
-  };
+  //記録削除メソッド呼び出し
+  const { removeStack } = useRemoveStack(stackId, onClose);
 
-  //記録削除メソッド
-  const [removeStudyStack] = useRemoveStudyStackMutation({
-    variables: {
-      //一旦指定の記録ID
-      studyStackId: stackId,
-    },
-    refetchQueries: [GetAllStudyStackDocument],
-  });
-
-  //記録削除
-  const removeStack = async () => {
-    const removeStackData = await removeStudyStack();
-    if (removeStackData.data?.removeStudyStack.status === "success") {
-      toast({ title: "学習を削除しました", status: "success" });
-      onClose();
-    } else if (removeStackData.data?.removeStudyStack.status === "error") {
-      toast({ title: "削除に失敗しました", status: "error" });
-      onClose();
-    }
-  };
-
-  //記録編集メソッド
-  const [updateMutation] = useUpdateStudyStackMutation({
-    variables: {
-      stack: {
-        createdAt,
-        skillTagId,
-        timeStack,
-        content,
-        //一旦指定の記録ID
-        studyStackId: stackId,
-      },
-    },
-    refetchQueries: [GetAllStudyStackDocument],
-  });
-
-  //記録編集
-  const updateStack = async () => {
-    const updateStackData = await updateMutation();
-    if (updateStackData.data?.updateStudyStack.status === "success") {
-      toast({ title: "学習記録を編集しました", status: "success" });
-      onClose();
-    } else if (updateStackData.data?.updateStudyStack.status === "error") {
-      toast({ title: "編集に失敗しました", status: "error" });
-      onClose();
-    }
-  };
+  //記録編集メソッド呼び出し
+  const { updateStack } = useUpdateStack(
+    createdAt,
+    skillTagId,
+    timeStack,
+    content,
+    stackId,
+    onClose,
+  );
 
   return (
     <>
@@ -140,14 +78,14 @@ export const StudyModal: FC<Props> = memo((props) => {
 
       <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent backgroundColor="green.100">
           <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
           {title === "記録削除" && (
             <ModalBody>この記事を削除しますか</ModalBody>
           )}
           {title === "記録追加" && (
-            <ModalBody>
+            <ModalBody backgroundColor="white" m={3} borderRadius="base">
               日付:
               <Input
                 variant="outline"
@@ -155,7 +93,6 @@ export const StudyModal: FC<Props> = memo((props) => {
                 type="date"
                 value={createdAt}
                 onChange={(e) => onChangeCreatedAt(e)}
-                // {...register("createdAtStart")}
               />
               技術:
               <Input
@@ -164,7 +101,6 @@ export const StudyModal: FC<Props> = memo((props) => {
                 type="text"
                 value={skillTagId}
                 onChange={(e) => onChangeSkillTagId(e)}
-                // {...register("skillTagId")}
               />
               時間:
               <Input
@@ -173,14 +109,12 @@ export const StudyModal: FC<Props> = memo((props) => {
                 type="number"
                 value={timeStack}
                 onChange={(e) => onChangeTimeStack(e)}
-                // {...register("timeStack")}
               />
               メモ:
               <Textarea
                 placeholder="メモ"
                 value={content}
                 onChange={(e) => onChangeContent(e)}
-                // {...register("content")}
               />
             </ModalBody>
           )}
@@ -193,7 +127,6 @@ export const StudyModal: FC<Props> = memo((props) => {
                 type="date"
                 value={createdAt}
                 onChange={(e) => onChangeCreatedAt(e)}
-                // {...register("createdAtStart")}
               />
               技術:
               <Input
@@ -202,7 +135,6 @@ export const StudyModal: FC<Props> = memo((props) => {
                 type="text"
                 value={skillTagId}
                 onChange={(e) => onChangeSkillTagId(e)}
-                // {...register("skillTagId")}
               />
               時間:
               <Input
@@ -211,14 +143,12 @@ export const StudyModal: FC<Props> = memo((props) => {
                 type="number"
                 value={timeStack}
                 onChange={(e) => onChangeTimeStack(e)}
-                // {...register("timeStack")}
               />
               メモ:
               <Textarea
                 placeholder="メモ"
                 value={content}
                 onChange={(e) => onChangeContent(e)}
-                // {...register("content")}
               />
             </ModalBody>
           )}
@@ -232,7 +162,12 @@ export const StudyModal: FC<Props> = memo((props) => {
               <RemoveStackButton removeStack={removeStack} />
             )}
 
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+            <Button
+              colorScheme="gray"
+              mx={3}
+              _focus={{ boxShadow: "none" }}
+              onClick={onClose}
+            >
               キャンセル
             </Button>
           </ModalFooter>

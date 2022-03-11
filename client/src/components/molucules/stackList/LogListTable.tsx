@@ -16,7 +16,7 @@ type Props = {
 };
 
 /**
- * 記録情報テーブルモーダル
+ * 記録情報テーブル
  */
 export const LogListTable: FC<Props> = memo((props) => {
   const { data } = props;
