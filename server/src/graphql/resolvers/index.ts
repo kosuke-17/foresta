@@ -15,7 +15,7 @@ import { sepreadSheetQueries, spreadSheetMutations } from "./spreadSheet";
 import { studyStackMutations, studyStackQueries } from "./studyStack";
 import { techForestMutations, techForestQueries } from "./techForest";
 import { userMutations, userQueries } from "./user";
-import { userLeafsMutations } from "./userLeafs";
+import { userLeafsMutations, userLeafsQueries } from "./userLeafs";
 import { userTodosMutations, userTodosQueries } from "./userTodos.ts";
 import { userUrlsMutations } from "./userUrls";
 
@@ -23,6 +23,7 @@ const resolvers = {
   Query: {
     ...userQueries,
     ...userTodosQueries,
+    ...userLeafsQueries,
     ...techForestQueries,
     ...studyStackQueries,
     ...specSheetQueries,

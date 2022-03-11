@@ -124,7 +124,6 @@ const userMutations = {
       }
 
       return success(result, "作成に成功しました。");
-      // return success("", "作成に成功しました。");
     } catch {
       return error("作成に失敗しました。");
     }
