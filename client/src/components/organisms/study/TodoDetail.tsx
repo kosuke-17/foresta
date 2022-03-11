@@ -39,7 +39,8 @@ export const TodoDetail: FC<Props> = memo((props) => {
     fetchPolicy: "cache-and-network",
   });
 
-  const todo = data?.todo;
+  // todoデータを取得データから抽出
+  const todo = data?.todo.node;
 
   return (
     <>

@@ -1,7 +1,5 @@
 import { FC, memo, useState } from "react";
-import {
-  Container,
-} from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 
 import { TodoList } from "./TodoList";
 import { TodoDetail } from "./TodoDetail";
@@ -16,6 +14,7 @@ export const TodosArea: FC = memo(() => {
   const userId = "621f1cba386085f036353ecd";
   const { isOpen, onOpen, onClose } = useModal();
 
+  // モーダルを開く対象のTodoを取得する
   const [todoId, setTodoId] = useState("");
 
   const { data, error, loading } = useGetAllTodoByUserQuery({
@@ -24,11 +23,14 @@ export const TodosArea: FC = memo(() => {
     },
   });
 
+  // todoの配列をデータから抽出
+  const todos = data?.todos.node;
+
   return (
     <Container maxW="5xl">
       {/* Todoリストエリア */}
       <TodoList
-        todos={data?.todos}
+        todos={todos || []} // todosがなければ空配列を渡す
         loading={loading}
         error={error}
         onOpen={onOpen}
@@ -36,7 +38,12 @@ export const TodosArea: FC = memo(() => {
       />
 
       {/* カレンダーエリア */}
-      <Calendar todos={data?.todos} onOpen={onOpen} setTodoId={setTodoId} />
+      <Calendar
+        todos={todos || []} // todosがなければ空配列を渡す
+        error={error}
+        onOpen={onOpen}
+        setTodoId={setTodoId}
+      />
 
       {/* Todo詳細 */}
       <TodoDetail todoId={todoId} isOpen={isOpen} onClose={onClose} />
