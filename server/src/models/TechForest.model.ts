@@ -10,6 +10,8 @@ import mongoose from "mongoose";
 const TechLeafSchema = new mongoose.Schema({
   name: { type: String, required: true },
   techBranch_id: { type: String, required: true },
+  techTree_id: { type: String, required: true },
+  isStatus: { type: Boolean, required: true },
 });
 
 /**

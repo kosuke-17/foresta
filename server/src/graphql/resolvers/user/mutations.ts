@@ -6,6 +6,7 @@ import {
   SpecUserInfoSheet,
   TechTree,
   SpecProjectSheet,
+  TechLeaf,
 } from "../../../models";
 import { error, success } from "../responseStatus";
 import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
@@ -45,14 +46,20 @@ const userMutations = {
       // ユーザー技術情報オブジェクトを生成
       if (result !== null) {
         const techTrees = await TechTree.find({});
-        const techLeafInfo = { techLeafs: new Array(), userId: createUser._id };
-        for (const tech of techTrees) {
+        const techLeafs = await TechLeaf.find({});
+        const techLeafInfo = { myTech: new Array(), userId: createUser._id };
+        for (const tree of techTrees) {
+          // _idはオブジェクトID、techTree_idはStringのため等価演算字にしてる
+          const tree_leaf = techLeafs.filter(
+            (leaf) => tree._id == leaf.techTree_id
+          );
           const userTechInfo = new Object({
-            techTreeId: tech._id,
+            treeId: tree._id,
+            treeName: tree.name,
             achievementRate: 0,
-            techLeafIds: [],
+            leafs: tree_leaf,
           });
-          techLeafInfo.techLeafs.push(userTechInfo);
+          techLeafInfo.myTech.push(userTechInfo);
         }
         const createdTechLeafs = new UserLeafs({ ...techLeafInfo });
 
@@ -117,6 +124,7 @@ const userMutations = {
       }
 
       return success(result, "作成に成功しました。");
+      // return success("", "作成に成功しました。");
     } catch {
       return error("作成に失敗しました。");
     }
