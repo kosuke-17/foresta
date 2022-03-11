@@ -42,7 +42,7 @@ export const useStackList = () => {
   if (data) {
     //取得したデータを変数に格納
     //スプレッド構文で変数に格納しないと下でdeleteする際に元のオブジェクトにも影響が出てしまうためdeleteができない
-    const stackDatas = [...data.getAllStudyStack];
+    const stackDatas = [...data.getAllStudyStack.node];
     //記録データの数だけfor文を回す
     for (let i = 0; i < stackDatas.length; i++) {
       if (stackDatas[i]) {
