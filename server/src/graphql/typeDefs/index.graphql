@@ -88,7 +88,9 @@ type Mutation {
   """
   ユーザー習得技術を更新.
   """
-  updateUserTechLeafs(techLeaf: UserTechLeafUpdateInput!): ResponseUserTechLeaf!
+  changeLeafStatus(
+    techLeafInfo: UserTechLeafUpdateInput!
+  ): ResponseUserTechLeaf!
   """
   ユーザーの持つUrlを作成.
   """

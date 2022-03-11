@@ -8,14 +8,14 @@ type treeInfo {
   treeId: ID!
   treeName: String!
   achievementRate: Int!
-  leafs: [leafInfo]!
+  leafs: [leafInfo!]!
 }
 
 type leafInfo {
-  name: String
-  techBranch_id: String
-  techTree_id: String
-  isStatus: Boolean
+  name: String!
+  techBranch_id: String!
+  techTree_id: String!
+  isStatus: Boolean!
 }
 
 ################
@@ -23,10 +23,11 @@ type leafInfo {
 
 # TechLeaf情報
 input UserTechLeafUpdateInput {
-  techTreeId: ID!
+  userLeafsId: ID!
+  treeId: ID!
+  leafId: ID!
   achievementRate: Int!
-  techLeafIds: [String]!
-  userId: ID!
+  currentStatus: Boolean!
 }
 
 ################################
@@ -35,6 +36,6 @@ input UserTechLeafUpdateInput {
 # ユーザーの習得技術情報
 type ResponseUserTechLeaf {
   status: String!
-  node: UserLeafs
-  msg: String
+  node: UserLeafs!
+  msg: String!
 }
