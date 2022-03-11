@@ -7,11 +7,13 @@ import FullCalendar, {
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Box } from "@chakra-ui/react";
+import type { ApolloError } from "@apollo/client";
 
 import type { TodoData } from "../../../types/types";
 
 type Props = {
   todos: Array<TodoData> | undefined;
+  error: ApolloError | undefined;
   onOpen: (e: any) => void;
   setTodoId: Dispatch<SetStateAction<string>>;
 };
@@ -22,7 +24,7 @@ type Props = {
  * @param todos Todoの配列
  */
 export const Calendar: FC<Props> = memo((props) => {
-  const { todos, onOpen, setTodoId } = props;
+  const { todos, error, onOpen, setTodoId } = props;
 
   // propsで渡ってきたtodoデータからeventデータを作成
   const events = todos?.map((todo) => {
@@ -61,6 +63,7 @@ export const Calendar: FC<Props> = memo((props) => {
         events={events || []} // イベントを設定
         eventClick={(info) => onEventClick(info)} // イベントをクリックした時に呼ばれる
       />
+      {error && <p>なんらかのエラーが発生してイベントを取得できませんでした。</p>}
     </Box>
   );
 });
