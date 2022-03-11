@@ -45,10 +45,9 @@ export type CreatedTechTree = {
   status: Scalars["String"];
 };
 
+/** データを変更する */
 export type Mutation = {
   __typename?: "Mutation";
-  /** 開発経験情報を追加. */
-  addSpecProject: ResponseSpecProject;
   /** ユーザーの学習記録を追加. */
   addStudyStack: ResponseStudyStack;
   /** Todoを追加. */
@@ -69,8 +68,6 @@ export type Mutation = {
   createUserUrls: ResponseUserUrls;
   /** ポートフォリオを削除. */
   removePortfolio: Res;
-  /** 開発経験情報を削除. */
-  removeSpecProject: Res;
   /** ユーザーの学習記録を削除. */
   removeStudyStack: ResponseStudyStack;
   /** Todoを削除. */
@@ -78,6 +75,8 @@ export type Mutation = {
   removeUserUrls: ResponseUserUrls;
   /** ポートフォリオを更新. */
   updatePortfolio: ResponsePortfolio;
+  /** スプレッドシートの自己PRなどを更新. */
+  updateSpeadSelfPR: Res;
   /** 開発経験情報を更新. */
   updateSpecProject: ResponseSpecProject;
   /** スペックシート情報を更新. */
@@ -86,7 +85,14 @@ export type Mutation = {
   updateSpecTechInfo: ResponseSpecTechInfo;
   /** 基本情報を更新. */
   updateSpecUserInfo: ResponseSpecUserInfo;
-  updateSpreadSheet: Res;
+  /** スプレッドシートのポートフォリオURLを更新. */
+  updateSpreadPortfolioUrl: Res;
+  /** スプレッドシートの開発経験を更新. */
+  updateSpreadProject: Res;
+  /** スプレッドシートのスキル要約を更新. */
+  updateSpreadTechInfo: Res;
+  /** スプレッドシートの基本情報を更新. */
+  updateSpreadUserInfo: Res;
   /** ユーザーの学習記録を更新. */
   updateStudyStack: ResponseStudyStack;
   /** Todoを更新. */
@@ -99,114 +105,153 @@ export type Mutation = {
   userLogin: ResponseUser;
 };
 
-export type MutationAddSpecProjectArgs = {
-  specProject: SpecProjectAddInput;
-};
-
+/** データを変更する */
 export type MutationAddStudyStackArgs = {
   stack: StudyStackAddInput;
 };
 
+/** データを変更する */
 export type MutationAddTodoArgs = {
   todo: TodoAddInput;
 };
 
+/** データを変更する */
 export type MutationAddUserUrlsArgs = {
   urlData: UserUrlsAddInput;
 };
 
+/** データを変更する */
 export type MutationChangeTodoStatusArgs = {
   todoId: Scalars["String"];
 };
 
+/** データを変更する */
 export type MutationCreatePortfolioArgs = {
   portfolio: PortfolioCreateInput;
 };
 
+/** データを変更する */
 export type MutationCreateTechAreaArgs = {
   techArea: TechAreaCreateInput;
 };
 
+/** データを変更する */
 export type MutationCreateTechBranchArgs = {
   techBranch: TechBranchCreateInput;
 };
 
+/** データを変更する */
 export type MutationCreateTechLeafArgs = {
   techLeaf: TechLeafCreateInput;
 };
 
+/** データを変更する */
 export type MutationCreateTechTreeArgs = {
   techTree: TechTreeCreateInput;
 };
 
+/** データを変更する */
 export type MutationCreateUserArgs = {
   user: UserCreateInput;
 };
 
+/** データを変更する */
 export type MutationCreateUserUrlsArgs = {
   urlData: UserUrlsCreateInput;
 };
 
+/** データを変更する */
 export type MutationRemovePortfolioArgs = {
   portfolioId: Scalars["String"];
 };
 
-export type MutationRemoveSpecProjectArgs = {
-  specProjectId: Scalars["String"];
-};
-
+/** データを変更する */
 export type MutationRemoveStudyStackArgs = {
   studyStackId: Scalars["String"];
 };
 
+/** データを変更する */
 export type MutationRemoveTodoArgs = {
   todoId: Scalars["String"];
 };
 
+/** データを変更する */
 export type MutationRemoveUserUrlsArgs = {
   urlData: UserUrlsRemoveInput;
 };
 
+/** データを変更する */
 export type MutationUpdatePortfolioArgs = {
   portfolio: PortfolioUpdateInput;
 };
 
+/** データを変更する */
+export type MutationUpdateSpeadSelfPrArgs = {
+  userId: Scalars["String"];
+};
+
+/** データを変更する */
 export type MutationUpdateSpecProjectArgs = {
   specProject: SpecProjectUpdateInput;
 };
 
+/** データを変更する */
 export type MutationUpdateSpecSheetArgs = {
   specSheet: SpecSheetUpdateInput;
 };
 
+/** データを変更する */
 export type MutationUpdateSpecTechInfoArgs = {
   specTechInfo: SpecTechInfoUpdateInput;
 };
 
+/** データを変更する */
 export type MutationUpdateSpecUserInfoArgs = {
   specUserInfo: SpecUserInfoUpdateInput;
 };
 
-export type MutationUpdateSpreadSheetArgs = {
+/** データを変更する */
+export type MutationUpdateSpreadPortfolioUrlArgs = {
   userId: Scalars["String"];
 };
 
+/** データを変更する */
+export type MutationUpdateSpreadProjectArgs = {
+  projectIndex: Scalars["Int"];
+  userId: Scalars["String"];
+};
+
+/** データを変更する */
+export type MutationUpdateSpreadTechInfoArgs = {
+  userId: Scalars["String"];
+};
+
+/** データを変更する */
+export type MutationUpdateSpreadUserInfoArgs = {
+  userId: Scalars["String"];
+};
+
+/** データを変更する */
 export type MutationUpdateStudyStackArgs = {
   stack: StudyStackUpdateInput;
 };
 
+/** データを変更する */
 export type MutationUpdateTodoArgs = {
   todo: TodoUpdateInput;
 };
 
+/** データを変更する */
 export type MutationUpdateUserArgs = {
   user: UserUpdateInput;
 };
 
+/** データを変更する */
 export type MutationUpdateUserTechLeafsArgs = {
   techLeaf: UserTechLeafUpdateInput;
 };
 
+/** データを変更する */
 export type MutationUserLoginArgs = {
   user: UserLoginInput;
 };
@@ -239,19 +284,20 @@ export type PortfolioUpdateInput = {
   title: Scalars["String"];
 };
 
+/** データを取得する */
 export type Query = {
   __typename?: "Query";
   /** スキル取得. */
   getAllSkill: Array<Skill>;
   /** ユーザーのTodo一覧情報を取得. */
-  getAllStudyStack: Array<StudyStack>;
+  getAllStudyStack: ResponseStudyStackArr;
   getAllTechArea: Array<TechArea>;
   getAllTechBranch: Array<TechBranch>;
   /** それぞれのTechを取得. */
   getAllTechLeaf: Array<TechLeaf>;
   getAllTechTree: Array<TechTree>;
   /** ユーザーのTodo一覧情報を取得. */
-  getAllTodoByUser: Array<Todo>;
+  getAllTodoByUser: ResponseTodoArr;
   /** 全てのユーザー情報を取得. */
   getAllUser: Array<User>;
   /** フレームワーク取得 */
@@ -271,61 +317,74 @@ export type Query = {
   /** スプレッドシートを取得 */
   getSpreadSheet: Res;
   /** StudyStackIdに紐づいたStudyStack情報を取得. */
-  getStudyStackById: StudyStack;
+  getStudyStackById: ResponseStudyStack;
   /** TodoIdに紐づいたTodo情報を取得. */
-  getTodoById: Todo;
+  getTodoById: ResponseTodo;
   /** ユーザーidに紐づくユーザー情報を取得. */
-  getUserById: User;
+  getUserById: ResponseUser;
 };
 
+/** データを取得する */
 export type QueryGetAllStudyStackArgs = {
   userId: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetAllTodoByUserArgs = {
   userId: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetFrameworksArgs = {
   name: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetLanguagesArgs = {
   name: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetLibrariesArgs = {
   name: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetOperationEnvsArgs = {
   name: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetOtherToolsArgs = {
   name: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetPortfolioByUserIdArgs = {
   userId: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetSheetByUserIdArgs = {
   userId: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetSpreadSheetArgs = {
   userId: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetStudyStackByIdArgs = {
   studyStackId: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetTodoByIdArgs = {
   todoId: Scalars["String"];
 };
 
+/** データを取得する */
 export type QueryGetUserByIdArgs = {
   _id: Scalars["String"];
 };
@@ -338,14 +397,8 @@ export type Res = {
 
 export type ResponsePortfolio = {
   __typename?: "ResponsePortfolio";
-  message?: Maybe<Scalars["String"]>;
-  node?: Maybe<Portfolio>;
-  status: Scalars["String"];
-};
-
-export type ResponseRemove = {
-  __typename?: "ResponseRemove";
   msg?: Maybe<Scalars["String"]>;
+  node?: Maybe<Portfolio>;
   status: Scalars["String"];
 };
 
@@ -383,9 +436,24 @@ export type ResponseStudyStack = {
   status: Scalars["String"];
 };
 
+export type ResponseStudyStackArr = {
+  __typename?: "ResponseStudyStackArr";
+  msg?: Maybe<Scalars["String"]>;
+  node?: Maybe<Array<Maybe<StudyStack>>>;
+  status: Scalars["String"];
+};
+
 export type ResponseTodo = {
   __typename?: "ResponseTodo";
+  msg?: Maybe<Scalars["String"]>;
   node?: Maybe<Todo>;
+  status: Scalars["String"];
+};
+
+export type ResponseTodoArr = {
+  __typename?: "ResponseTodoArr";
+  msg?: Maybe<Scalars["String"]>;
+  node?: Maybe<Array<Maybe<Todo>>>;
   status: Scalars["String"];
 };
 
@@ -398,12 +466,14 @@ export type ResponseUser = {
 
 export type ResponseUserTechLeaf = {
   __typename?: "ResponseUserTechLeaf";
+  msg?: Maybe<Scalars["String"]>;
   node?: Maybe<UserLeafs>;
   status: Scalars["String"];
 };
 
 export type ResponseUserUrls = {
   __typename?: "ResponseUserUrls";
+  msg?: Maybe<Scalars["String"]>;
   node?: Maybe<UserUrls>;
   status: Scalars["String"];
 };
@@ -415,28 +485,13 @@ export type Skill = {
   name: Scalars["String"];
 };
 
-export type SpecProjectAddInput = {
-  content: Scalars["String"];
-  devRoles: Array<Scalars["String"]>;
-  finishedAt: Scalars["String"];
-  frameworks: Array<Scalars["String"]>;
-  languages: Array<Scalars["String"]>;
-  libraries: Array<Scalars["String"]>;
-  memberCount: Scalars["Int"];
-  name: Scalars["String"];
-  operationEnvs: Array<Scalars["String"]>;
-  otherTools: Array<Scalars["String"]>;
-  roleSharing: Scalars["String"];
-  specSheetId: Scalars["ID"];
-  startedAt: Scalars["String"];
-};
-
 export type SpecProjectSheet = {
   __typename?: "SpecProjectSheet";
   content: Scalars["String"];
   devRoles: Array<Scalars["String"]>;
   finishedAt: Scalars["String"];
   frameworks: Array<Scalars["String"]>;
+  id: Scalars["String"];
   languages: Array<Scalars["String"]>;
   libraries: Array<Scalars["String"]>;
   memberCount: Scalars["Int"];
@@ -536,7 +591,7 @@ export type StudyStack = {
   __typename?: "StudyStack";
   content: Scalars["String"];
   createdAt: Scalars["String"];
-  id: Scalars["ID"];
+  id?: Maybe<Scalars["ID"]>;
   skillTagId: Scalars["ID"];
   timeStack: Scalars["Int"];
   userId: Scalars["ID"];
@@ -737,21 +792,25 @@ export type GetUserByIdQueryVariables = Exact<{
 export type GetUserByIdQuery = {
   __typename?: "Query";
   user: {
-    __typename?: "User";
-    name: string;
-    jobType: string;
-    githubURL: string;
-    userUrls: {
-      __typename?: "UserUrls";
-      user_urls: Array<{ __typename?: "URL"; url: string; urlName: string }>;
-    };
-    portfolio: Array<{
-      __typename?: "Portfolio";
-      title: string;
-      description: string;
-      img: string;
-      portfolioURL: string;
-    } | null>;
+    __typename?: "ResponseUser";
+    node?: {
+      __typename?: "User";
+      name: string;
+      jobType: string;
+      spreadSheetID: string;
+      githubURL: string;
+      portfolio: Array<{
+        __typename?: "Portfolio";
+        title: string;
+        description: string;
+        img: string;
+        portfolioURL: string;
+      } | null>;
+      userUrls: {
+        __typename?: "UserUrls";
+        user_urls: Array<{ __typename?: "URL"; urlName: string; url: string }>;
+      };
+    } | null;
   };
 };
 
@@ -766,13 +825,6 @@ export type UpdateUserMutation = {
     status: string;
     msg?: string | null;
   };
-};
-
-export type GetLanguagesQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetLanguagesQuery = {
-  __typename?: "Query";
-  getLanguages: { __typename?: "Skill"; name: string; data: Array<string> };
 };
 
 export type UserLoginMutationVariables = Exact<{
@@ -815,15 +867,20 @@ export type GetAllStudyStackQueryVariables = Exact<{
 
 export type GetAllStudyStackQuery = {
   __typename?: "Query";
-  getAllStudyStack: Array<{
-    __typename?: "StudyStack";
-    id: string;
-    timeStack: number;
-    content: string;
-    createdAt: string;
-    skillTagId: string;
-    userId: string;
-  }>;
+  getAllStudyStack: {
+    __typename?: "ResponseStudyStackArr";
+    status: string;
+    msg?: string | null;
+    node?: Array<{
+      __typename?: "StudyStack";
+      id?: string | null;
+      content: string;
+      timeStack: number;
+      createdAt: string;
+      skillTagId: string;
+      userId: string;
+    } | null> | null;
+  };
 };
 
 export type GetStudyStackByIdQueryVariables = Exact<{
@@ -833,13 +890,17 @@ export type GetStudyStackByIdQueryVariables = Exact<{
 export type GetStudyStackByIdQuery = {
   __typename?: "Query";
   getStudyStackById: {
-    __typename?: "StudyStack";
-    id: string;
-    content: string;
-    timeStack: number;
-    createdAt: string;
-    skillTagId: string;
-    userId: string;
+    __typename?: "ResponseStudyStack";
+    status: string;
+    node?: {
+      __typename?: "StudyStack";
+      id?: string | null;
+      content: string;
+      timeStack: number;
+      createdAt: string;
+      skillTagId: string;
+      userId: string;
+    } | null;
   };
 };
 
@@ -854,7 +915,7 @@ export type AddStudyStackMutation = {
     status: string;
     node?: {
       __typename?: "StudyStack";
-      id: string;
+      id?: string | null;
       content: string;
       timeStack: number;
       createdAt: string;
@@ -875,7 +936,7 @@ export type UpdateStudyStackMutation = {
     status: string;
     node?: {
       __typename?: "StudyStack";
-      id: string;
+      id?: string | null;
       content: string;
       timeStack: number;
       createdAt: string;
@@ -891,19 +952,7 @@ export type RemoveStudyStackMutationVariables = Exact<{
 
 export type RemoveStudyStackMutation = {
   __typename?: "Mutation";
-  removeStudyStack: {
-    __typename?: "ResponseStudyStack";
-    status: string;
-    node?: {
-      __typename?: "StudyStack";
-      id: string;
-      content: string;
-      timeStack: number;
-      createdAt: string;
-      skillTagId: string;
-      userId: string;
-    } | null;
-  };
+  removeStudyStack: { __typename?: "ResponseStudyStack"; status: string };
 };
 
 export type GetAllTodoByUserQueryVariables = Exact<{
@@ -912,14 +961,17 @@ export type GetAllTodoByUserQueryVariables = Exact<{
 
 export type GetAllTodoByUserQuery = {
   __typename?: "Query";
-  todos: Array<{
-    __typename?: "Todo";
-    id: string;
-    title: string;
-    startedAt: string;
-    finishedAt?: string | null;
-    isStatus: boolean;
-  }>;
+  todos: {
+    __typename?: "ResponseTodoArr";
+    node?: Array<{
+      __typename?: "Todo";
+      id: string;
+      title: string;
+      startedAt: string;
+      finishedAt?: string | null;
+      isStatus: boolean;
+    } | null> | null;
+  };
 };
 
 export type GetTodoByIdQueryVariables = Exact<{
@@ -929,33 +981,39 @@ export type GetTodoByIdQueryVariables = Exact<{
 export type GetTodoByIdQuery = {
   __typename?: "Query";
   todo: {
-    __typename?: "Todo";
-    id: string;
-    title: string;
-    description?: string | null;
-    startedAt: string;
-    finishedAt?: string | null;
-    isStatus: boolean;
+    __typename?: "ResponseTodo";
+    node?: {
+      __typename?: "Todo";
+      id: string;
+      title: string;
+      description?: string | null;
+      startedAt: string;
+      finishedAt?: string | null;
+      isStatus: boolean;
+    } | null;
   };
 };
 
 export const GetUserByIdDocument = gql`
   query GetUserById($id: String!) {
     user: getUserById(_id: $id) {
-      name
-      jobType
-      githubURL
-      userUrls {
-        user_urls {
-          url
-          urlName
+      node {
+        name
+        jobType
+        spreadSheetID
+        githubURL
+        portfolio {
+          title
+          description
+          img
+          portfolioURL
         }
-      }
-      portfolio {
-        title
-        description
-        img
-        portfolioURL
+        userUrls {
+          user_urls {
+            urlName
+            url
+          }
+        }
       }
     }
   }
@@ -1059,64 +1117,6 @@ export type UpdateUserMutationResult =
 export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
   UpdateUserMutation,
   UpdateUserMutationVariables
->;
-export const GetLanguagesDocument = gql`
-  query GetLanguages {
-    getLanguages(name: "languages") {
-      name
-      data
-    }
-  }
-`;
-
-/**
- * __useGetLanguagesQuery__
- *
- * To run a query within a React component, call `useGetLanguagesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetLanguagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetLanguagesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetLanguagesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetLanguagesQuery,
-    GetLanguagesQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetLanguagesQuery, GetLanguagesQueryVariables>(
-    GetLanguagesDocument,
-    options,
-  );
-}
-export function useGetLanguagesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetLanguagesQuery,
-    GetLanguagesQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetLanguagesQuery, GetLanguagesQueryVariables>(
-    GetLanguagesDocument,
-    options,
-  );
-}
-export type GetLanguagesQueryHookResult = ReturnType<
-  typeof useGetLanguagesQuery
->;
-export type GetLanguagesLazyQueryHookResult = ReturnType<
-  typeof useGetLanguagesLazyQuery
->;
-export type GetLanguagesQueryResult = Apollo.QueryResult<
-  GetLanguagesQuery,
-  GetLanguagesQueryVariables
 >;
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
@@ -1236,12 +1236,16 @@ export type GetAllUserQueryResult = Apollo.QueryResult<
 export const GetAllStudyStackDocument = gql`
   query GetAllStudyStack($userId: String!) {
     getAllStudyStack(userId: $userId) {
-      id
-      timeStack
-      content
-      createdAt
-      skillTagId
-      userId
+      status
+      node {
+        id
+        content
+        timeStack
+        createdAt
+        skillTagId
+        userId
+      }
+      msg
     }
   }
 `;
@@ -1299,12 +1303,15 @@ export type GetAllStudyStackQueryResult = Apollo.QueryResult<
 export const GetStudyStackByIdDocument = gql`
   query GetStudyStackById($studyStackId: String!) {
     getStudyStackById(studyStackId: $studyStackId) {
-      id
-      content
-      timeStack
-      createdAt
-      skillTagId
-      userId
+      status
+      node {
+        id
+        content
+        timeStack
+        createdAt
+        skillTagId
+        userId
+      }
     }
   }
 `;
@@ -1479,14 +1486,6 @@ export const RemoveStudyStackDocument = gql`
   mutation RemoveStudyStack($studyStackId: String!) {
     removeStudyStack(studyStackId: $studyStackId) {
       status
-      node {
-        id
-        content
-        timeStack
-        createdAt
-        skillTagId
-        userId
-      }
     }
   }
 `;
@@ -1536,11 +1535,13 @@ export type RemoveStudyStackMutationOptions = Apollo.BaseMutationOptions<
 export const GetAllTodoByUserDocument = gql`
   query GetAllTodoByUser($userId: String!) {
     todos: getAllTodoByUser(userId: $userId) {
-      id
-      title
-      startedAt
-      finishedAt
-      isStatus
+      node {
+        id
+        title
+        startedAt
+        finishedAt
+        isStatus
+      }
     }
   }
 `;
@@ -1551,6 +1552,7 @@ export const GetAllTodoByUserDocument = gql`
  * To run a query within a React component, call `useGetAllTodoByUserQuery` and pass it any options that fit your needs.
  * When your component renders, `useGetAllTodoByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
+ 
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
@@ -1598,12 +1600,15 @@ export type GetAllTodoByUserQueryResult = Apollo.QueryResult<
 export const GetTodoByIdDocument = gql`
   query GetTodoById($todoId: String!) {
     todo: getTodoById(todoId: $todoId) {
-      id
-      title
-      description
-      startedAt
-      finishedAt
-      isStatus
+      node {
+        id
+        title
+        description
+        
+        startedAt
+        finishedAt
+        isStatus
+      }
     }
   }
 `;
