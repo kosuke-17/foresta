@@ -218,8 +218,6 @@
           {
             "name": "addStudyStack",
             "description": "ユーザーの学習記録を追加.",
-<<<<<<< HEAD
-=======
             "args": [
               {
                 "name": "stack",
@@ -253,7 +251,6 @@
           {
             "name": "addTodo",
             "description": "Todoを追加.",
->>>>>>> develop
             "args": [
               {
                 "name": "todo",
@@ -947,124 +944,6 @@
           {
             "name": "updateSpreadPortfolioUrl",
             "description": "スプレッドシートのポートフォリオURLを更新.",
-<<<<<<< HEAD
-            "args": [
-              {
-                "name": "userId",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Res",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updateSpreadProject",
-            "description": "スプレッドシートの開発経験を更新.",
-            "args": [
-              {
-                "name": "projectIndex",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "userId",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Res",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updateSpreadTechInfo",
-            "description": "スプレッドシートのスキル要約を更新.",
-            "args": [
-              {
-                "name": "userId",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Res",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updateSpreadUserInfo",
-            "description": "スプレッドシートの基本情報を更新.",
-=======
->>>>>>> develop
             "args": [
               {
                 "name": "userId",
@@ -2225,8 +2104,6 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "ResponseUser",
-<<<<<<< HEAD
-=======
                 "ofType": null
               }
             },
@@ -2260,7 +2137,6 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "ResponseUserTechLeaf",
->>>>>>> develop
                 "ofType": null
               }
             },
@@ -2613,37 +2489,6 @@
         "fields": [
           {
             "name": "msg",
-<<<<<<< HEAD
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "node",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "StudyStack",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "status",
-=======
->>>>>>> develop
             "description": null,
             "args": [],
             "type": {
@@ -2657,43 +2502,12 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
-<<<<<<< HEAD
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "ResponseTodo",
-        "description": null,
-        "fields": [
-          {
-            "name": "msg",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-=======
->>>>>>> develop
           },
           {
             "name": "node",
             "description": null,
             "args": [],
             "type": {
-<<<<<<< HEAD
-              "kind": "OBJECT",
-              "name": "Todo",
-              "ofType": null
-=======
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
@@ -2709,7 +2523,6 @@
                   }
                 }
               }
->>>>>>> develop
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2738,45 +2551,24 @@
       },
       {
         "kind": "OBJECT",
-<<<<<<< HEAD
-        "name": "ResponseTodoArr",
-=======
         "name": "ResponseTodo",
->>>>>>> develop
         "description": null,
         "fields": [
           {
             "name": "msg",
-<<<<<<< HEAD
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "node",
-=======
->>>>>>> develop
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "OBJECT",
-                "name": "Todo",
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
             "isDeprecated": false,
             "deprecationReason": null
-<<<<<<< HEAD
-=======
           },
           {
             "name": "node",
@@ -2793,7 +2585,6 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
->>>>>>> develop
           },
           {
             "name": "status",
@@ -2819,11 +2610,7 @@
       },
       {
         "kind": "OBJECT",
-<<<<<<< HEAD
-        "name": "ResponseUser",
-=======
         "name": "ResponseTodoArr",
->>>>>>> develop
         "description": null,
         "fields": [
           {
@@ -2831,11 +2618,6 @@
             "description": null,
             "args": [],
             "type": {
-<<<<<<< HEAD
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-=======
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
@@ -2843,7 +2625,6 @@
                 "name": "String",
                 "ofType": null
               }
->>>>>>> develop
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2853,11 +2634,6 @@
             "description": null,
             "args": [],
             "type": {
-<<<<<<< HEAD
-              "kind": "OBJECT",
-              "name": "User",
-              "ofType": null
-=======
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
@@ -2873,7 +2649,6 @@
                   }
                 }
               }
->>>>>>> develop
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2902,11 +2677,7 @@
       },
       {
         "kind": "OBJECT",
-<<<<<<< HEAD
-        "name": "ResponseUserTechLeaf",
-=======
         "name": "ResponseUser",
->>>>>>> develop
         "description": null,
         "fields": [
           {
@@ -2914,9 +2685,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2926,11 +2701,6 @@
             "description": null,
             "args": [],
             "type": {
-<<<<<<< HEAD
-              "kind": "OBJECT",
-              "name": "UserLeafs",
-              "ofType": null
-=======
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
@@ -2938,7 +2708,6 @@
                 "name": "User",
                 "ofType": null
               }
->>>>>>> develop
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2956,30 +2725,6 @@
                 "ofType": null
               }
             },
-<<<<<<< HEAD
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "ResponseUserUrls",
-        "description": null,
-        "fields": [
-          {
-            "name": "msg",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-=======
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -3038,7 +2783,6 @@
                 "name": "String",
                 "ofType": null
               }
->>>>>>> develop
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3055,15 +2799,6 @@
         "description": null,
         "fields": [
           {
-<<<<<<< HEAD
-            "name": "node",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "UserUrls",
-              "ofType": null
-=======
             "name": "msg",
             "description": null,
             "args": [],
@@ -3075,17 +2810,12 @@
                 "name": "String",
                 "ofType": null
               }
->>>>>>> develop
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-<<<<<<< HEAD
-            "name": "status",
-=======
             "name": "node",
->>>>>>> develop
             "description": null,
             "args": [],
             "type": {
@@ -3097,8 +2827,6 @@
                 "ofType": null
               }
             },
-<<<<<<< HEAD
-=======
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -3115,7 +2843,6 @@
                 "ofType": null
               }
             },
->>>>>>> develop
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -4732,9 +4459,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "ID",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null

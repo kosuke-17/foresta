@@ -121,14 +121,11 @@ export type MutationAddUserUrlsArgs = {
 };
 
 /** データを変更する */
-<<<<<<< HEAD
-=======
 export type MutationChangeLeafStatusArgs = {
   techLeafInfo: UserTechLeafUpdateInput;
 };
 
 /** データを変更する */
->>>>>>> develop
 export type MutationChangeTodoStatusArgs = {
   todoId: Scalars["String"];
 };
@@ -255,14 +252,6 @@ export type MutationUpdateUserArgs = {
 };
 
 /** データを変更する */
-<<<<<<< HEAD
-export type MutationUpdateUserTechLeafsArgs = {
-  techLeaf: UserTechLeafUpdateInput;
-};
-
-/** データを変更する */
-=======
->>>>>>> develop
 export type MutationUserLoginArgs = {
   user: UserLoginInput;
 };
@@ -333,10 +322,7 @@ export type Query = {
   getTodoById: ResponseTodo;
   /** ユーザーidに紐づくユーザー情報を取得. */
   getUserById: ResponseUser;
-<<<<<<< HEAD
-=======
   getUserLeafsById: ResponseUserTechLeaf;
->>>>>>> develop
 };
 
 /** データを取得する */
@@ -463,19 +449,8 @@ export type ResponseStudyStackArr = {
   status: Scalars["String"];
 };
 
-export type ResponseStudyStackArr = {
-  __typename?: "ResponseStudyStackArr";
-  msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<Array<Maybe<StudyStack>>>;
-  status: Scalars["String"];
-};
-
 export type ResponseTodo = {
   __typename?: "ResponseTodo";
-<<<<<<< HEAD
-  msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<Todo>;
-=======
   msg: Scalars["String"];
   node: Todo;
   status: Scalars["String"];
@@ -485,14 +460,6 @@ export type ResponseTodoArr = {
   __typename?: "ResponseTodoArr";
   msg: Scalars["String"];
   node: Array<Todo>;
->>>>>>> develop
-  status: Scalars["String"];
-};
-
-export type ResponseTodoArr = {
-  __typename?: "ResponseTodoArr";
-  msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<Array<Maybe<Todo>>>;
   status: Scalars["String"];
 };
 
@@ -505,25 +472,15 @@ export type ResponseUser = {
 
 export type ResponseUserTechLeaf = {
   __typename?: "ResponseUserTechLeaf";
-<<<<<<< HEAD
-  msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<UserLeafs>;
-=======
   msg: Scalars["String"];
   node: UserLeafs;
->>>>>>> develop
   status: Scalars["String"];
 };
 
 export type ResponseUserUrls = {
   __typename?: "ResponseUserUrls";
-<<<<<<< HEAD
-  msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<UserUrls>;
-=======
   msg: Scalars["String"];
   node: UserUrls;
->>>>>>> develop
   status: Scalars["String"];
 };
 
@@ -640,7 +597,7 @@ export type StudyStack = {
   __typename?: "StudyStack";
   content: Scalars["String"];
   createdAt: Scalars["String"];
-  id?: Maybe<Scalars["ID"]>;
+  id: Scalars["ID"];
   skillTagId: Scalars["ID"];
   timeStack: Scalars["Int"];
   userId: Scalars["ID"];
@@ -852,11 +809,7 @@ export type GetUserByIdQuery = {
   __typename?: "Query";
   user: {
     __typename?: "ResponseUser";
-<<<<<<< HEAD
-    node?: {
-=======
     node: {
->>>>>>> develop
       __typename?: "User";
       name: string;
       jobType: string;
@@ -873,11 +826,7 @@ export type GetUserByIdQuery = {
         __typename?: "UserUrls";
         user_urls: Array<{ __typename?: "URL"; urlName: string; url: string }>;
       };
-<<<<<<< HEAD
-    } | null;
-=======
     };
->>>>>>> develop
   };
 };
 
@@ -887,15 +836,7 @@ export type UpdateUserMutationVariables = Exact<{
 
 export type UpdateUserMutation = {
   __typename?: "Mutation";
-<<<<<<< HEAD
-  updateUser: {
-    __typename?: "ResponseUser";
-    status: string;
-    msg?: string | null;
-  };
-=======
   updateUser: { __typename?: "ResponseUser"; status: string; msg: string };
->>>>>>> develop
 };
 
 export type UserLoginMutationVariables = Exact<{
@@ -942,27 +883,16 @@ export type GetAllStudyStackQuery = {
   getAllStudyStack: {
     __typename?: "ResponseStudyStackArr";
     status: string;
-<<<<<<< HEAD
-    msg?: string | null;
-    node?: Array<{
-      __typename?: "StudyStack";
-      id?: string | null;
-=======
     msg: string;
     node: Array<{
       __typename?: "StudyStack";
       id: string;
->>>>>>> develop
       content: string;
       timeStack: number;
       createdAt: string;
       skillTagId: string;
       userId: string;
-<<<<<<< HEAD
-    } | null> | null;
-=======
     }>;
->>>>>>> develop
   };
 };
 
@@ -975,25 +905,15 @@ export type GetStudyStackByIdQuery = {
   getStudyStackById: {
     __typename?: "ResponseStudyStack";
     status: string;
-<<<<<<< HEAD
-    node?: {
-      __typename?: "StudyStack";
-      id?: string | null;
-=======
     node: {
       __typename?: "StudyStack";
       id: string;
->>>>>>> develop
       content: string;
       timeStack: number;
       createdAt: string;
       skillTagId: string;
       userId: string;
-<<<<<<< HEAD
-    } | null;
-=======
     };
->>>>>>> develop
   };
 };
 
@@ -1008,7 +928,7 @@ export type AddStudyStackMutation = {
     status: string;
     node: {
       __typename?: "StudyStack";
-      id?: string | null;
+      id: string;
       content: string;
       timeStack: number;
       createdAt: string;
@@ -1029,7 +949,7 @@ export type UpdateStudyStackMutation = {
     status: string;
     node: {
       __typename?: "StudyStack";
-      id?: string | null;
+      id: string;
       content: string;
       timeStack: number;
       createdAt: string;
@@ -1056,22 +976,14 @@ export type GetAllTodoByUserQuery = {
   __typename?: "Query";
   todos: {
     __typename?: "ResponseTodoArr";
-<<<<<<< HEAD
-    node?: Array<{
-=======
     node: Array<{
->>>>>>> develop
       __typename?: "Todo";
       id: string;
       title: string;
       startedAt: string;
       finishedAt?: string | null;
       isStatus: boolean;
-<<<<<<< HEAD
-    } | null> | null;
-=======
     }>;
->>>>>>> develop
   };
 };
 
@@ -1083,11 +995,7 @@ export type GetTodoByIdQuery = {
   __typename?: "Query";
   todo: {
     __typename?: "ResponseTodo";
-<<<<<<< HEAD
-    node?: {
-=======
     node: {
->>>>>>> develop
       __typename?: "Todo";
       id: string;
       title: string;
@@ -1095,11 +1003,7 @@ export type GetTodoByIdQuery = {
       startedAt: string;
       finishedAt?: string | null;
       isStatus: boolean;
-<<<<<<< HEAD
-    } | null;
-=======
     };
->>>>>>> develop
   };
 };
 
@@ -1662,7 +1566,6 @@ export const GetAllTodoByUserDocument = gql`
  * To run a query within a React component, call `useGetAllTodoByUserQuery` and pass it any options that fit your needs.
  * When your component renders, `useGetAllTodoByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
- 
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
@@ -1714,10 +1617,6 @@ export const GetTodoByIdDocument = gql`
         id
         title
         description
-<<<<<<< HEAD
-        
-=======
->>>>>>> develop
         startedAt
         finishedAt
         isStatus
