@@ -1,13 +1,21 @@
 # ユーザー習得技術情報
 type UserLeafs {
   id: ID!
-  techLeafs: [leafInfo!]!
+  myTech: [treeInfo!]!
   userId: ID!
 }
-type leafInfo {
-  techTreeId: ID!
+type treeInfo {
+  treeId: ID!
+  treeName: String!
   achievementRate: Int!
-  techLeafIds: [ID!]!
+  leafs: [leafInfo]!
+}
+
+type leafInfo {
+  name: String
+  techBranch_id: String
+  techTree_id: String
+  isStatus: Boolean
 }
 
 ################
