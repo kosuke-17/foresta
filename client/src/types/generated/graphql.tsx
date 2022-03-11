@@ -23,25 +23,25 @@ export type Scalars = {
 
 export type CreatedTechArea = {
   __typename?: "CreatedTechArea";
-  node?: Maybe<TechArea>;
+  node: TechArea;
   status: Scalars["String"];
 };
 
 export type CreatedTechBranch = {
   __typename?: "CreatedTechBranch";
-  node?: Maybe<TechBranch>;
+  node: TechBranch;
   status: Scalars["String"];
 };
 
 export type CreatedTechLeaf = {
   __typename?: "CreatedTechLeaf";
-  node?: Maybe<TechLeaf>;
+  node: TechLeaf;
   status: Scalars["String"];
 };
 
 export type CreatedTechTree = {
   __typename?: "CreatedTechTree";
-  node?: Maybe<TechTree>;
+  node: TechTree;
   status: Scalars["String"];
 };
 
@@ -53,6 +53,8 @@ export type Mutation = {
   /** Todoを追加. */
   addTodo: ResponseTodo;
   addUserUrls: ResponseUserUrls;
+  /** ユーザー習得技術を更新. */
+  changeLeafStatus: ResponseUserTechLeaf;
   /** Todo状態をtrueまたはfalse. */
   changeTodoStatus: ResponseTodo;
   /** ポートフォリオを作成. */
@@ -99,8 +101,6 @@ export type Mutation = {
   updateTodo: ResponseTodo;
   /** ユーザーを編集. */
   updateUser: ResponseUser;
-  /** ユーザー習得技術を更新. */
-  updateUserTechLeafs: ResponseUserTechLeaf;
   /** ユーザーがログイン. */
   userLogin: ResponseUser;
 };
@@ -121,6 +121,14 @@ export type MutationAddUserUrlsArgs = {
 };
 
 /** データを変更する */
+<<<<<<< HEAD
+=======
+export type MutationChangeLeafStatusArgs = {
+  techLeafInfo: UserTechLeafUpdateInput;
+};
+
+/** データを変更する */
+>>>>>>> develop
 export type MutationChangeTodoStatusArgs = {
   todoId: Scalars["String"];
 };
@@ -247,11 +255,14 @@ export type MutationUpdateUserArgs = {
 };
 
 /** データを変更する */
+<<<<<<< HEAD
 export type MutationUpdateUserTechLeafsArgs = {
   techLeaf: UserTechLeafUpdateInput;
 };
 
 /** データを変更する */
+=======
+>>>>>>> develop
 export type MutationUserLoginArgs = {
   user: UserLoginInput;
 };
@@ -322,6 +333,10 @@ export type Query = {
   getTodoById: ResponseTodo;
   /** ユーザーidに紐づくユーザー情報を取得. */
   getUserById: ResponseUser;
+<<<<<<< HEAD
+=======
+  getUserLeafsById: ResponseUserTechLeaf;
+>>>>>>> develop
 };
 
 /** データを取得する */
@@ -389,6 +404,11 @@ export type QueryGetUserByIdArgs = {
   _id: Scalars["String"];
 };
 
+/** データを取得する */
+export type QueryGetUserLeafsByIdArgs = {
+  userId: Scalars["String"];
+};
+
 export type Res = {
   __typename?: "Res";
   msg?: Maybe<Scalars["String"]>;
@@ -432,7 +452,14 @@ export type ResponseSpecUserInfo = {
 
 export type ResponseStudyStack = {
   __typename?: "ResponseStudyStack";
-  node?: Maybe<StudyStack>;
+  node: StudyStack;
+  status: Scalars["String"];
+};
+
+export type ResponseStudyStackArr = {
+  __typename?: "ResponseStudyStackArr";
+  msg: Scalars["String"];
+  node: Array<StudyStack>;
   status: Scalars["String"];
 };
 
@@ -445,8 +472,20 @@ export type ResponseStudyStackArr = {
 
 export type ResponseTodo = {
   __typename?: "ResponseTodo";
+<<<<<<< HEAD
   msg?: Maybe<Scalars["String"]>;
   node?: Maybe<Todo>;
+=======
+  msg: Scalars["String"];
+  node: Todo;
+  status: Scalars["String"];
+};
+
+export type ResponseTodoArr = {
+  __typename?: "ResponseTodoArr";
+  msg: Scalars["String"];
+  node: Array<Todo>;
+>>>>>>> develop
   status: Scalars["String"];
 };
 
@@ -459,22 +498,32 @@ export type ResponseTodoArr = {
 
 export type ResponseUser = {
   __typename?: "ResponseUser";
-  msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<User>;
+  msg: Scalars["String"];
+  node: User;
   status: Scalars["String"];
 };
 
 export type ResponseUserTechLeaf = {
   __typename?: "ResponseUserTechLeaf";
+<<<<<<< HEAD
   msg?: Maybe<Scalars["String"]>;
   node?: Maybe<UserLeafs>;
+=======
+  msg: Scalars["String"];
+  node: UserLeafs;
+>>>>>>> develop
   status: Scalars["String"];
 };
 
 export type ResponseUserUrls = {
   __typename?: "ResponseUserUrls";
+<<<<<<< HEAD
   msg?: Maybe<Scalars["String"]>;
   node?: Maybe<UserUrls>;
+=======
+  msg: Scalars["String"];
+  node: UserUrls;
+>>>>>>> develop
   status: Scalars["String"];
 };
 
@@ -724,7 +773,7 @@ export type UserCreateInput = {
 export type UserLeafs = {
   __typename?: "UserLeafs";
   id: Scalars["ID"];
-  techLeafs: Array<LeafInfo>;
+  myTech: Array<TreeInfo>;
   userId: Scalars["ID"];
 };
 
@@ -735,19 +784,20 @@ export type UserLoginInput = {
 
 export type UserTechLeafUpdateInput = {
   achievementRate: Scalars["Int"];
-  techLeafIds: Array<InputMaybe<Scalars["String"]>>;
-  techTreeId: Scalars["ID"];
-  userId: Scalars["ID"];
+  currentStatus: Scalars["Boolean"];
+  leafId: Scalars["ID"];
+  treeId: Scalars["ID"];
+  userLeafsId: Scalars["ID"];
 };
 
 export type UserUpdateInput = {
-  email?: InputMaybe<Scalars["String"]>;
-  githubURL?: InputMaybe<Scalars["String"]>;
-  jobType?: InputMaybe<Scalars["String"]>;
-  name?: InputMaybe<Scalars["String"]>;
-  password?: InputMaybe<Scalars["String"]>;
+  email: Scalars["String"];
+  githubURL: Scalars["String"];
+  jobType: Scalars["String"];
+  name: Scalars["String"];
+  password: Scalars["String"];
   spreadSheetID: Scalars["String"];
-  userId?: InputMaybe<Scalars["String"]>;
+  userId: Scalars["String"];
 };
 
 export type UserUrls = {
@@ -775,14 +825,23 @@ export type UserUrlsRemoveInput = {
 
 export type LeafInfo = {
   __typename?: "leafInfo";
-  achievementRate: Scalars["Int"];
-  techLeafIds: Array<Scalars["ID"]>;
-  techTreeId: Scalars["ID"];
+  isStatus: Scalars["Boolean"];
+  name: Scalars["String"];
+  techBranch_id: Scalars["String"];
+  techTree_id: Scalars["String"];
 };
 
 export type PrevJobsContent = {
   __typename?: "prevJobsContent";
   content: Scalars["String"];
+};
+
+export type TreeInfo = {
+  __typename?: "treeInfo";
+  achievementRate: Scalars["Int"];
+  leafs: Array<LeafInfo>;
+  treeId: Scalars["ID"];
+  treeName: Scalars["String"];
 };
 
 export type GetUserByIdQueryVariables = Exact<{
@@ -793,7 +852,11 @@ export type GetUserByIdQuery = {
   __typename?: "Query";
   user: {
     __typename?: "ResponseUser";
+<<<<<<< HEAD
     node?: {
+=======
+    node: {
+>>>>>>> develop
       __typename?: "User";
       name: string;
       jobType: string;
@@ -810,7 +873,11 @@ export type GetUserByIdQuery = {
         __typename?: "UserUrls";
         user_urls: Array<{ __typename?: "URL"; urlName: string; url: string }>;
       };
+<<<<<<< HEAD
     } | null;
+=======
+    };
+>>>>>>> develop
   };
 };
 
@@ -820,11 +887,15 @@ export type UpdateUserMutationVariables = Exact<{
 
 export type UpdateUserMutation = {
   __typename?: "Mutation";
+<<<<<<< HEAD
   updateUser: {
     __typename?: "ResponseUser";
     status: string;
     msg?: string | null;
   };
+=======
+  updateUser: { __typename?: "ResponseUser"; status: string; msg: string };
+>>>>>>> develop
 };
 
 export type UserLoginMutationVariables = Exact<{
@@ -836,14 +907,15 @@ export type UserLoginMutation = {
   userLogin: {
     __typename?: "ResponseUser";
     status: string;
-    node?: {
+    node: {
       __typename?: "User";
+      id: string;
       name: string;
       jobType: string;
       email: string;
       password: string;
       githubURL: string;
-    } | null;
+    };
   };
 };
 
@@ -870,16 +942,27 @@ export type GetAllStudyStackQuery = {
   getAllStudyStack: {
     __typename?: "ResponseStudyStackArr";
     status: string;
+<<<<<<< HEAD
     msg?: string | null;
     node?: Array<{
       __typename?: "StudyStack";
       id?: string | null;
+=======
+    msg: string;
+    node: Array<{
+      __typename?: "StudyStack";
+      id: string;
+>>>>>>> develop
       content: string;
       timeStack: number;
       createdAt: string;
       skillTagId: string;
       userId: string;
+<<<<<<< HEAD
     } | null> | null;
+=======
+    }>;
+>>>>>>> develop
   };
 };
 
@@ -892,15 +975,25 @@ export type GetStudyStackByIdQuery = {
   getStudyStackById: {
     __typename?: "ResponseStudyStack";
     status: string;
+<<<<<<< HEAD
     node?: {
       __typename?: "StudyStack";
       id?: string | null;
+=======
+    node: {
+      __typename?: "StudyStack";
+      id: string;
+>>>>>>> develop
       content: string;
       timeStack: number;
       createdAt: string;
       skillTagId: string;
       userId: string;
+<<<<<<< HEAD
     } | null;
+=======
+    };
+>>>>>>> develop
   };
 };
 
@@ -913,7 +1006,7 @@ export type AddStudyStackMutation = {
   addStudyStack: {
     __typename?: "ResponseStudyStack";
     status: string;
-    node?: {
+    node: {
       __typename?: "StudyStack";
       id?: string | null;
       content: string;
@@ -921,7 +1014,7 @@ export type AddStudyStackMutation = {
       createdAt: string;
       skillTagId: string;
       userId: string;
-    } | null;
+    };
   };
 };
 
@@ -934,7 +1027,7 @@ export type UpdateStudyStackMutation = {
   updateStudyStack: {
     __typename?: "ResponseStudyStack";
     status: string;
-    node?: {
+    node: {
       __typename?: "StudyStack";
       id?: string | null;
       content: string;
@@ -942,7 +1035,7 @@ export type UpdateStudyStackMutation = {
       createdAt: string;
       skillTagId: string;
       userId: string;
-    } | null;
+    };
   };
 };
 
@@ -963,14 +1056,22 @@ export type GetAllTodoByUserQuery = {
   __typename?: "Query";
   todos: {
     __typename?: "ResponseTodoArr";
+<<<<<<< HEAD
     node?: Array<{
+=======
+    node: Array<{
+>>>>>>> develop
       __typename?: "Todo";
       id: string;
       title: string;
       startedAt: string;
       finishedAt?: string | null;
       isStatus: boolean;
+<<<<<<< HEAD
     } | null> | null;
+=======
+    }>;
+>>>>>>> develop
   };
 };
 
@@ -982,7 +1083,11 @@ export type GetTodoByIdQuery = {
   __typename?: "Query";
   todo: {
     __typename?: "ResponseTodo";
+<<<<<<< HEAD
     node?: {
+=======
+    node: {
+>>>>>>> develop
       __typename?: "Todo";
       id: string;
       title: string;
@@ -990,7 +1095,11 @@ export type GetTodoByIdQuery = {
       startedAt: string;
       finishedAt?: string | null;
       isStatus: boolean;
+<<<<<<< HEAD
     } | null;
+=======
+    };
+>>>>>>> develop
   };
 };
 
@@ -1123,6 +1232,7 @@ export const UserLoginDocument = gql`
     userLogin(user: $user) {
       status
       node {
+        id
         name
         jobType
         email
@@ -1604,7 +1714,10 @@ export const GetTodoByIdDocument = gql`
         id
         title
         description
+<<<<<<< HEAD
         
+=======
+>>>>>>> develop
         startedAt
         finishedAt
         isStatus

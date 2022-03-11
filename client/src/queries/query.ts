@@ -52,6 +52,7 @@ export const LOGIN_QUERY = gql`
     userLogin(user: $user) {
       status
       node {
+        id
         name
         jobType
         email
@@ -180,5 +181,5 @@ gql`
         isStatus
       }
     }
-  }  
+  }
 `;

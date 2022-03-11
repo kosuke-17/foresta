@@ -35,7 +35,7 @@ export const LogListTable: FC<Props> = memo((props) => {
       </Thead>
       <Tbody>
         {data &&
-          data.getAllStudyStack.map((stackList) => (
+          data.getAllStudyStack.node.map((stackList) => (
             <Tr key={stackList.id}>
               <Td>{stackList.createdAt}</Td>
               <Td>{stackList.skillTagId}</Td>
