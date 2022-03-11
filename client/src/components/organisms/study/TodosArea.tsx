@@ -1,23 +1,11 @@
 import { FC, memo, useState } from "react";
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Box,
-  Container,
-  Heading,
-} from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 
 import { TodoList } from "./TodoList";
 import { TodoDetail } from "./TodoDetail";
 import { Calendar } from "../../molucules/todos/Calendar";
 import { useModal } from "../../../hooks/useModal";
 import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
-
-// タブのタイプ
-const tabs = ["全て", "今日", "期限切れ"] as const; //as const をつけてreadonlyにする
 
 /**
  * Todoを表示するエリアのコンポーネント.
@@ -26,6 +14,7 @@ export const TodosArea: FC = memo(() => {
   const userId = "621f1cba386085f036353ecd";
   const { isOpen, onOpen, onClose } = useModal();
 
+  // モーダルを開く対象のTodoを取得する
   const [todoId, setTodoId] = useState("");
 
   const { data, error, loading } = useGetAllTodoByUserQuery({
@@ -34,52 +23,27 @@ export const TodosArea: FC = memo(() => {
     },
   });
 
-  if (error) {
-    return <div>エラー</div>;
-  }
+  // todoの配列をデータから抽出
+  const todos = data?.todos.node;
 
   return (
     <Container maxW="5xl">
-      <Heading as="h2" size="lg">
-        Todoリスト
-      </Heading>
-      <Box bg="#f5f5f5" padding="5px 24px 10px 24px">
-        <Tabs variant="soft-rounded" isLazy>
-          <TabList>
-            {tabs.map((tab, index) => (
-              <Tab
-                key={index}
-                _focus={{ boxShadow: "none" }}
-                _selected={{ pointerEvents: "none", bg: "green.200" }}
-                _hover={{ backgroundColor: "green.50" }}
-              >
-                {tab}
-              </Tab>
-            ))}
-          </TabList>
-          <TabPanels
-            bg="white"
-            padding="10px 40px"
-            overflow="auto"
-            height="180px"
-          >
-            {tabs.map((tab, index) => (
-              <TabPanel key={index}>
-                <TodoList
-                  todos={data?.todos}
-                  loading={loading}
-                  tabType={tab}
-                  onOpen={onOpen}
-                  setTodoId={setTodoId}
-                />
-              </TabPanel>
-            ))}
-          </TabPanels>
-        </Tabs>
-      </Box>
+      {/* Todoリストエリア */}
+      <TodoList
+        todos={todos || []} // todosがなければ空配列を渡す
+        loading={loading}
+        error={error}
+        onOpen={onOpen}
+        setTodoId={setTodoId}
+      />
 
       {/* カレンダーエリア */}
-      <Calendar todos={data?.todos} onOpen={onOpen} setTodoId={setTodoId} />
+      <Calendar
+        todos={todos || []} // todosがなければ空配列を渡す
+        error={error}
+        onOpen={onOpen}
+        setTodoId={setTodoId}
+      />
 
       {/* Todo詳細 */}
       <TodoDetail todoId={todoId} isOpen={isOpen} onClose={onClose} />
