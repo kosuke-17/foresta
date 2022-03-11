@@ -1,5 +1,6 @@
 
 import { format } from "date-fns";
+import HTMLReactParser from "html-react-parser";
 
 /**
  * 日時データをフォーマットして返すメソッド.
@@ -39,5 +40,22 @@ export const getformattedTodoDate = (startedAt: string, finishedAt: string | nul
     return `${getFormattedDate(new Date(startedAt))}`;
   } else {
     return "未定";
+  }
+};
+
+/**
+ * テキストをHTMLに変換するメソッド.
+ *
+ * @remarks
+ * 改行はbrタグに変換する。
+ *
+ * @param text - HTMLに変換するテキスト
+ * @returns textが空文字列の場合は空文字列。そうでなければHTMLに変換した文字列。
+ */
+export const returnCodeToBr = (text: string) => {
+  if (text === "") {
+    return text;
+  } else {
+    return HTMLReactParser(text.replace(/\r?\n/g, "<br />"));
   }
 };
