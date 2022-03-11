@@ -1,5 +1,5 @@
 import type { ComponentStoryObj, ComponentMeta } from "@storybook/react";
-import { TextBox } from "../components/molucules/aboutMePrivate/TextBox";
+import { TextBox } from "../../components/molucules/aboutMePrivate/TextBox";
 
 export default {
   component: TextBox,
