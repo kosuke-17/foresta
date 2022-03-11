@@ -41,14 +41,6 @@ export const TodoDetail: FC<Props> = memo((props) => {
 
   const todo = data?.todo;
 
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-
-  if (loading) {
-    return <div>loading...</div>;
-  }
-
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size="xl">
