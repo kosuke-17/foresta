@@ -50,7 +50,7 @@ export const StackList = memo(() => {
             <p>Loading...</p>
           ) : error ? (
             <p>Error...</p>
-          ) : data?.getAllStudyStack.length ? (
+          ) : data?.getAllStudyStack.node.length ? (
             <TabPanels overflow="auto" height="250px">
               <TabPanel>
                 <StudyListTable data={data} stackSumList={stackSumList} />
