@@ -13,7 +13,7 @@ type Props = {
 /**
  * 学習リスト用テキストエリアコンポ―ネント.
  */
-export const StackTextare: FC<Props> = memo((props) => {
+export const StackTextarea: FC<Props> = memo((props) => {
   const { registers, errorMessage, placeholder, type, label } = props;
 
   return (
