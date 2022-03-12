@@ -11,7 +11,7 @@ type Props = {
 };
 
 /**
- * テキストボックスコンポ―ネント.
+ * 学習リスト用テキストボックスコンポ―ネント.
  */
 export const StackInput: FC<Props> = memo((props) => {
   const { registers, errorMessage, placeholder, label, type } = props;

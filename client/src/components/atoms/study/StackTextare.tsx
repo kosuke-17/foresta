@@ -11,7 +11,7 @@ type Props = {
 };
 
 /**
- * テキストボックスコンポ―ネント.
+ * 学習リスト用テキストエリアコンポ―ネント.
  */
 export const StackTextare: FC<Props> = memo((props) => {
   const { registers, errorMessage, placeholder, type, label } = props;

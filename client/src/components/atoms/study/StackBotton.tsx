@@ -6,6 +6,9 @@ type StackButton = {
   title: string;
 };
 
+/**
+ *学習リスト用ボタン. 
+ */
 export const StackButton: FC<StackButton> = memo(({ onClick, title }) => {
   return (
     <Button colorScheme="green" variant="solid" onClick={onClick}>
