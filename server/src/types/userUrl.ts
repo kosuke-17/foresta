@@ -19,3 +19,8 @@ export type UrlDataRemoveType = {
     userUrlsId: string;
   };
 };
+
+export type UrlType = {
+  urlName: string;
+  url: string;
+};
