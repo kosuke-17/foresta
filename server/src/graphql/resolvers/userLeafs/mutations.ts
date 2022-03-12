@@ -24,8 +24,8 @@ const userLeafsMutations = {
         { _id: userLeafsId },
         {
           $set: {
-            "myTech.$[treeInfo].achievementRate": achievementRate,
-            "myTech.$[treeInfo].leafs.$[leafInfo].isStatus": changedStatus,
+            "myForest.$[treeInfo].achievementRate": achievementRate,
+            "myForest.$[treeInfo].leafs.$[leafInfo].isStatus": changedStatus,
           },
         },
         {
