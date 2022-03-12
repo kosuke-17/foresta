@@ -291,13 +291,21 @@ const specSheetMutations = {
    * @returns 作成したポートフォリオ情報
    */
   createPortfolio: async (_: any, { portfolio }: PortfolioType) => {
-    const { title, description, img, portfolioURL, userId, specSheetId } =
-      portfolio;
+    const {
+      title,
+      description,
+      img,
+      portfolioURL,
+      skills,
+      userId,
+      specSheetId,
+    } = portfolio;
     const newPortfolio = new Portfolio({
       title,
       description,
       img,
       portfolioURL,
+      skills,
       userId,
       specSheetId,
     });
@@ -315,11 +323,12 @@ const specSheetMutations = {
    * @returns 編集したポートフォリオ情報
    */
   updatePortfolio: async (_: any, { portfolio }: PortfolioUpdateType) => {
-    const { portfolioId, title, description, img, portfolioURL } = portfolio;
+    const { portfolioId, title, description, img, skills, portfolioURL } =
+      portfolio;
     try {
       const result = await Portfolio.findByIdAndUpdate(
         { _id: portfolioId },
-        { $set: { title, description, img, portfolioURL } },
+        { $set: { title, description, img, skills, portfolioURL } },
         { new: true }
       );
       return success(result, "更新に成功しました。");
