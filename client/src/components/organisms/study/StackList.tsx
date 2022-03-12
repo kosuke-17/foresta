@@ -32,7 +32,10 @@ export const StackList = memo(() => {
           isLazy
           variant="soft-rounded"
           colorScheme="green"
-          width="container.xl"
+          width="full"
+          backgroundColor="gray.100"
+          margin="20px"
+          padding="20px"
         >
           <TabList>
             {tabNames.map((tab, index) => (
@@ -41,6 +44,7 @@ export const StackList = memo(() => {
                 _focus={{ boxShadow: "none" }}
                 _selected={{ color: "white", bg: "green.300" }}
                 _hover={{ bg: "gray.300" }}
+                backgroundColor="white"
               >
                 {tab}
               </Tab>
@@ -51,7 +55,14 @@ export const StackList = memo(() => {
           ) : error ? (
             <p>Error...</p>
           ) : data?.getAllStudyStack.node.length ? (
-            <TabPanels overflow="auto" height="250px">
+            <TabPanels
+              overflowY="auto"
+              overflowX="visible"
+              white-space="nowrap"
+              height="300px"
+              backgroundColor="white"
+              margin="30px"
+            >
               <TabPanel>
                 <StudyListTable data={data} stackSumList={stackSumList} />
               </TabPanel>
@@ -65,7 +76,7 @@ export const StackList = memo(() => {
         </Tabs>
       </Center>
       {/* 仮の学習記録ボタン */}
-      <StudyModal title="記録追加" buttonTitle="記録" stackId=""/>
+      <StudyModal title="記録追加" buttonTitle="記録" stackId="" />
     </div>
   );
 });
