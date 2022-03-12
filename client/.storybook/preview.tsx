@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { StoryContext } from "@storybook/react";
+import { MockedProvider } from '@apollo/client/testing';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -9,6 +10,9 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  apolloClient: {
+    MockedProvider,
   },
 };
 
