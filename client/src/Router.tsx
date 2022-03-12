@@ -6,6 +6,7 @@ import { Study } from "./container/templates/Study";
 import { AboutMe } from "./container/templates/AboutMe";
 import { Login } from "./container/templates/Login";
 import { Auth } from "./components/atoms/auth/Auth";
+import { TechForest } from "./container/templates/TechForest";
 import { EngineerList } from "./container/templates/EngineerList";
 
 export const Router: React.VFC = () => {
@@ -33,6 +34,10 @@ export const Router: React.VFC = () => {
 
           <Route path="/engineerlist" element={<Auth />}>
             <Route path={"/engineerlist"} element={<EngineerList />} />
+          </Route>
+
+          <Route path="/techforest" element={<Auth />}>
+            <Route path={"/techforest"} element={<TechForest />} />
           </Route>
 
           <Route path="study" element={<Study />} />
