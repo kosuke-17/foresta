@@ -10,7 +10,10 @@ type Query {
   ユーザーidに紐づくユーザー情報を取得.
   """
   getUserById(_id: String!): ResponseUser!
-  getUserLeafsById(userId: String!): ResponseUserTechLeaf!
+  """
+  エリアidに紐づく技術情報を取得.
+  """
+  getUserLeafsById(userId: String!, areaId: String!): ResponseUserTechLeaf!
   """
   ユーザーのTodo一覧情報を取得.
   """
