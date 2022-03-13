@@ -63,6 +63,58 @@ export const LOGIN_QUERY = gql`
   }
 `;
 
+// DBに保存されている技術を全件取得
+gql`
+  query GetAllTechArea {
+    getAllTechArea {
+      id
+      name
+      techTrees {
+        id
+        name
+        techArea_id
+        techBranches {
+          id
+          name
+          techTree_id
+          techLeafs {
+            id
+            name
+            techBranch_id
+          }
+        }
+      }
+    }
+  }
+`;
+
+// 特定のユーザーが保持している技術を全件取得
+gql`
+  query GetUserLeafsById($userId: String!, $areaId: String!) {
+    getUserLeafsById(userId: $userId, areaId: $areaId) {
+      status
+      node {
+        id
+        myForest {
+          areaId
+          treeId
+          treeName
+          achievementRate
+          branches {
+            name
+            leafs {
+              name
+              techBranch_id
+              techTree_id
+              isStatus
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 // エンジニアリスト全件表示
 gql`
   query GetAllUser {
