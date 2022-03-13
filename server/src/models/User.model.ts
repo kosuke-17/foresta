@@ -66,17 +66,23 @@ const UseTodoSchema = new mongoose.Schema({
  *    - ユーザーID : string
  */
 const UserLeafsSchema = new mongoose.Schema({
-  myTech: [
+  myForest: [
     {
       treeId: { type: String, required: true },
+      areaId: { type: String, required: true },
       treeName: { type: String, required: true },
       achievementRate: { type: Number, required: true },
-      leafs: [
+      branches: [
         {
           name: { type: String },
-          techBranch_id: { type: String },
-          techTree_id: { type: String },
-          isStatus: { type: Boolean },
+          leafs: [
+            {
+              name: { type: String },
+              techBranch_id: { type: String },
+              techTree_id: { type: String },
+              isStatus: { type: Boolean },
+            },
+          ],
         },
       ],
     },

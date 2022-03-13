@@ -7,6 +7,7 @@ import {
   TechTree,
   SpecProjectSheet,
   TechLeaf,
+  TechBranch,
 } from "../../../models";
 import { error, success } from "../responseStatus";
 import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
@@ -47,19 +48,29 @@ const userMutations = {
       if (result !== null) {
         const techTrees = await TechTree.find({});
         const techLeafs = await TechLeaf.find({});
-        const techLeafInfo = { myTech: new Array(), userId: createUser._id };
+        const techLeafInfo = { myForest: new Array(), userId: createUser._id };
         for (const tree of techTrees) {
-          // _idはオブジェクトID、techTree_idはStringのため等価演算字にしてる
-          const tree_leaf = techLeafs.filter(
-            (leaf) => tree._id == leaf.techTree_id
-          );
+          let techBranches = await TechBranch.find({ techTree_id: tree._id });
+          // ブランチオブジェクトにリーフを格納し、代入
+          let branch_leaf = new Array();
+          for (let i = 0; i < techBranches.length; i++) {
+            branch_leaf = techLeafs.filter(
+              (leaf) => techBranches[i]._id == leaf.techBranch_id
+            );
+            const newBranch = new Object({
+              name: techBranches[i].name,
+              leafs: branch_leaf,
+            });
+            techBranches[i] = newBranch;
+          }
           const userTechInfo = new Object({
             treeId: tree._id,
+            areaId: tree.techArea_id,
             treeName: tree.name,
             achievementRate: 0,
-            leafs: tree_leaf,
+            branches: techBranches,
           });
-          techLeafInfo.myTech.push(userTechInfo);
+          techLeafInfo.myForest.push(userTechInfo);
         }
         const createdTechLeafs = new UserLeafs({ ...techLeafInfo });
 
