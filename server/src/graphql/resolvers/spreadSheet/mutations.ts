@@ -6,7 +6,7 @@ import {
   Users,
   UserUrls,
 } from "../../../models";
-import { UserIdType } from "../../../types";
+import { UrlType, UserIdType } from "../../../types";
 import { getGoogleAuth } from "../../../utli/googleUtil";
 import { error, success } from "../responseStatus";
 import { format } from "date-fns";
@@ -207,7 +207,7 @@ const spreadSheetMutations = {
       return error("該当のユーザーURLsがありませんでした");
     }
     const portfolioData = userUrls.user_urls.map(
-      (urlData: any) => `${urlData.urlName} : ${urlData.url}`
+      (urlData: UrlType) => `${urlData.urlName} : ${urlData.url}`
     );
     const JoinedData = portfolioData.join("\n");
 
@@ -257,7 +257,9 @@ const spreadSheetMutations = {
         userId: userId,
       });
 
-    const jobsData = prevJobs.map((prevJob: any) => prevJob.content);
+    const jobsData = prevJobs.map(
+      (prevJob: { content: string }) => prevJob.content
+    );
     const JoinedData = jobsData.join("\n\n");
 
     // スプレッドシートのシート名を指定
