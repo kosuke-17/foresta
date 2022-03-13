@@ -8,6 +8,10 @@ type treeInfo {
   treeId: ID!
   treeName: String!
   achievementRate: Int!
+  branches: [branchInfo!]!
+}
+type branchInfo {
+  name: String!
   leafs: [leafInfo!]!
 }
 # isStatusが!あるとエラー起こる

@@ -7,6 +7,7 @@ import {
   TechTree,
   SpecProjectSheet,
   TechLeaf,
+  TechBranch,
 } from "../../../models";
 import { error, success } from "../responseStatus";
 import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
@@ -49,7 +50,20 @@ const userMutations = {
         const techLeafs = await TechLeaf.find({});
         const techLeafInfo = { myForest: new Array(), userId: createUser._id };
         for (const tree of techTrees) {
-          // _idはオブジェクトID、techTree_idはStringのため等価演算字にしてる
+          let techBranches = await TechBranch.find({ techTree_id: tree._id });
+          // ブランチオブジェクトにリーフを格納し、代入
+          let branch_leaf = new Array();
+          for (let i = 0; i < techBranches.length; i++) {
+            branch_leaf = techLeafs.filter(
+              (leaf) => techBranches[i]._id == leaf.techBranch_id
+            );
+            const newBranch = new Object({
+              name: techBranches[i].name,
+              leafs: branch_leaf,
+            });
+            techBranches[i] = newBranch;
+          }
+          // _idはオブジェクトID、techTree_idはStringのため等価演算子にしてる
           const tree_leaf = techLeafs.filter(
             (leaf) => tree._id == leaf.techTree_id
           );
@@ -57,7 +71,7 @@ const userMutations = {
             treeId: tree._id,
             treeName: tree.name,
             achievementRate: 0,
-            leafs: tree_leaf,
+            branches: techBranches,
           });
           techLeafInfo.myForest.push(userTechInfo);
         }
