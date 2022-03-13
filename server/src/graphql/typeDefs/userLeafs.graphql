@@ -30,6 +30,7 @@ type leafInfo {
 input UserTechLeafUpdateInput {
   userLeafsId: ID!
   treeId: ID!
+  branchId: ID!
   leafId: ID!
   achievementRate: Int!
   currentStatus: Boolean!

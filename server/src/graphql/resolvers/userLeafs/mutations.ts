@@ -15,8 +15,14 @@ const userLeafsMutations = {
    * @returns error : errorステータス
    */
   changeLeafStatus: async (_: any, { techLeafInfo }: ChangeLeafInfoType) => {
-    const { userLeafsId, treeId, achievementRate, leafId, currentStatus } =
-      techLeafInfo;
+    const {
+      userLeafsId,
+      treeId,
+      branchId,
+      achievementRate,
+      leafId,
+      currentStatus,
+    } = techLeafInfo;
 
     const changedStatus = !currentStatus;
     try {
@@ -25,12 +31,14 @@ const userLeafsMutations = {
         {
           $set: {
             "myForest.$[treeInfo].achievementRate": achievementRate,
-            "myForest.$[treeInfo].leafs.$[leafInfo].isStatus": changedStatus,
+            "myForest.$[treeInfo].branches.$[branchInfo].leafs.$[leafInfo].isStatus":
+              changedStatus,
           },
         },
         {
           arrayFilters: [
             { "treeInfo._id": { $eq: treeId } },
+            { "branchInfo._id": { $eq: branchId } },
             { "leafInfo._id": { $eq: leafId } },
           ],
         }
