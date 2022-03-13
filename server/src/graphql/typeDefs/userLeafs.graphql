@@ -10,12 +10,12 @@ type treeInfo {
   achievementRate: Int!
   leafs: [leafInfo!]!
 }
-
+# isStatusが!あるとエラー起こる
 type leafInfo {
   name: String!
   techBranch_id: String!
   techTree_id: String!
-  isStatus: Boolean!
+  isStatus: Boolean
 }
 
 ################
