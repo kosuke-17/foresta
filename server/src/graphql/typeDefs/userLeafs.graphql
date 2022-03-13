@@ -6,6 +6,7 @@ type UserLeafs {
 }
 type treeInfo {
   treeId: ID!
+  areaId: ID!
   treeName: String!
   achievementRate: Int!
   branches: [branchInfo!]!

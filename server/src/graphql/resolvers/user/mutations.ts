@@ -63,12 +63,9 @@ const userMutations = {
             });
             techBranches[i] = newBranch;
           }
-          // _idはオブジェクトID、techTree_idはStringのため等価演算子にしてる
-          const tree_leaf = techLeafs.filter(
-            (leaf) => tree._id == leaf.techTree_id
-          );
           const userTechInfo = new Object({
             treeId: tree._id,
+            areaId: tree.techArea_id,
             treeName: tree.name,
             achievementRate: 0,
             branches: techBranches,
