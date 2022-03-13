@@ -14,11 +14,10 @@ import { FC, memo } from "react";
 import { useForm } from "react-hook-form";
 import { useGetStudyStackByIdQuery } from "../../types/generated/graphql";
 import { StackButton } from "../atoms/study/StackBotton";
-import { StackInput } from "../atoms/study/StackInput";
-import { StackTextarea } from "../atoms/study/StackTextarea";
 import { useAddStack } from "../../hooks/study/useAddStack";
 import { useRemoveStack } from "../../hooks/study/useRemoveStack";
 import { useUpdateStack } from "../../hooks/study/useUpdateStack";
+import { StudyModalInput } from "./stackList/StudyModalInput";
 
 type Props = {
   title: string;
@@ -118,72 +117,7 @@ export const StudyModal: FC<Props> = memo((props) => {
           {title === "記録削除" && (
             <ModalBody>この記事を削除しますか</ModalBody>
           )}
-          {title === "記録追加" && (
-            <ModalBody backgroundColor="white" m={3} borderRadius="base">
-              <StackInput
-                label="日付"
-                type="date"
-                placeholder="日付"
-                registers={register("createdAt")}
-                errorMessage={errors.createdAt?.message}
-              />
-              <StackInput
-                label="技術"
-                type="text"
-                placeholder="技術"
-                registers={register("skillTagId")}
-                errorMessage={errors.skillTagId?.message}
-              />
-              <StackInput
-                label="時間"
-                type="number"
-                placeholder="時間"
-                registers={register("timeStack")}
-                errorMessage={errors.timeStack?.message}
-              />
-              <StackTextarea
-                label="メモ"
-                type="text"
-                placeholder="メモ"
-                registers={register("content")}
-                errorMessage={errors.content?.message}
-              />
-            </ModalBody>
-          )}
-
-          {title === "記録編集" && (
-            <ModalBody backgroundColor="white" m={3} borderRadius="base">
-              <StackInput
-                label="日付"
-                type="date"
-                placeholder="日付"
-                registers={register("createdAt")}
-                errorMessage={errors.createdAt?.message}
-              />
-              <StackInput
-                label="技術"
-                type="text"
-                placeholder="技術"
-                registers={register("skillTagId")}
-                errorMessage={errors.skillTagId?.message}
-              />
-              <StackInput
-                label="時間"
-                type="number"
-                placeholder="時間"
-                registers={register("timeStack")}
-                errorMessage={errors.timeStack?.message}
-              />
-              <StackTextarea
-                label="メモ"
-                type="text"
-                placeholder="メモ"
-                registers={register("content")}
-                errorMessage={errors.content?.message}
-              />
-            </ModalBody>
-          )}
-
+          <StudyModalInput register={register} errors={errors} />
           <ModalFooter>
             {title === "記録追加" && (
               <StackButton onClick={handleSubmit(addStack)} title="追加する" />
