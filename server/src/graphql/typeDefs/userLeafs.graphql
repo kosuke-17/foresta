@@ -1,7 +1,7 @@
 # ユーザー習得技術情報
 type UserLeafs {
   id: ID!
-  myTech: [treeInfo!]!
+  myForest: [treeInfo!]!
   userId: ID!
 }
 type treeInfo {

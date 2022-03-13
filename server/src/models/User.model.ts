@@ -66,7 +66,7 @@ const UseTodoSchema = new mongoose.Schema({
  *    - ユーザーID : string
  */
 const UserLeafsSchema = new mongoose.Schema({
-  myTech: [
+  myForest: [
     {
       treeId: { type: String, required: true },
       treeName: { type: String, required: true },

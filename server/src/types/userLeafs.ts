@@ -1,5 +1,5 @@
 export type ChangeLeafInfoType = {
-  techLeaf: {
+  techLeafInfo: {
     userLeafsId: string;
     treeId: string;
     leafId: string;

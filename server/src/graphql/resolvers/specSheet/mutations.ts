@@ -9,12 +9,10 @@ import {
   PortfolioIdType,
   PortfolioType,
   SpecProjectType,
-  SpecSheetIdType,
   SpecSheetType,
   SpecTechInfoType,
   SpecUserInfoType,
   PortfolioUpdateType,
-  SpecProjectAddType,
 } from "../../../types";
 import { error, success } from "../responseStatus";
 

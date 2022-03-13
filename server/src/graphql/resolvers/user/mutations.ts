@@ -47,7 +47,7 @@ const userMutations = {
       if (result !== null) {
         const techTrees = await TechTree.find({});
         const techLeafs = await TechLeaf.find({});
-        const techLeafInfo = { myTech: new Array(), userId: createUser._id };
+        const techLeafInfo = { myForest: new Array(), userId: createUser._id };
         for (const tree of techTrees) {
           // _idはオブジェクトID、techTree_idはStringのため等価演算字にしてる
           const tree_leaf = techLeafs.filter(
@@ -59,7 +59,7 @@ const userMutations = {
             achievementRate: 0,
             leafs: tree_leaf,
           });
-          techLeafInfo.myTech.push(userTechInfo);
+          techLeafInfo.myForest.push(userTechInfo);
         }
         const createdTechLeafs = new UserLeafs({ ...techLeafInfo });
 
