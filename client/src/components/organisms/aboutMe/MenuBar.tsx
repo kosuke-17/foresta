@@ -22,6 +22,7 @@ export const MenuBar: FC = memo(() => {
         isOpen={isOpen}
         onClose={onClose}
         modalTitle={menuItem}
+        closeBtn={false}
         contents={
           <EditMe
             menuItem={menuItem}
@@ -59,6 +60,7 @@ export const MenuBar: FC = memo(() => {
           </svg>
         </MenuButton>
         <MenuList>
+          {/* ユーザ情報 */}
           <MenuItem
             onClick={(e) => {
               setMenuItem("ユーザ情報");
@@ -67,13 +69,66 @@ export const MenuBar: FC = memo(() => {
           >
             ユーザ情報
           </MenuItem>
-          <MenuItem>制作物</MenuItem>
-          <MenuItem>URL</MenuItem>
-          <MenuItem>基本情報</MenuItem>
-          <MenuItem>スキル要約</MenuItem>
-          <MenuItem>自己PR・前職経験</MenuItem>
-          <MenuItem>その他情報</MenuItem>
-          <MenuItem>開発経験</MenuItem>
+
+          {/* 制作物 */}
+          <MenuItem
+            onClick={(e) => {
+              setMenuItem("制作物");
+              onOpen(e);
+            }}
+          >
+            制作物
+          </MenuItem>
+
+          {/* URL */}
+          <MenuItem
+            onClick={(e) => {
+              setMenuItem("URL");
+              onOpen(e);
+            }}
+          >
+            URL
+          </MenuItem>
+
+          {/* スペックシート基本情報 */}
+          <MenuItem
+            onClick={(e) => {
+              setMenuItem("スペックシート基本情報");
+              onOpen(e);
+            }}
+          >
+            スペックシートスキル要約
+          </MenuItem>
+
+          {/* スペックシートスキル要約 */}
+          <MenuItem
+            onClick={(e) => {
+              setMenuItem("スペックシートスキル要約");
+              onOpen(e);
+            }}
+          >
+            スペックシートスキル要約
+          </MenuItem>
+
+          {/* スペックシートその他情報 */}
+          <MenuItem
+            onClick={(e) => {
+              setMenuItem("スペックシートその他情報");
+              onOpen(e);
+            }}
+          >
+            スペックシートその他情報
+          </MenuItem>
+
+          {/* スペックシート開発経験 */}
+          <MenuItem
+            onClick={(e) => {
+              setMenuItem("スペックシート開発経験");
+              onOpen(e);
+            }}
+          >
+            開発経験
+          </MenuItem>
         </MenuList>
       </Menu>
     </>
