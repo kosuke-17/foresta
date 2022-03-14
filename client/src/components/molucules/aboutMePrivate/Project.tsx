@@ -1,7 +1,6 @@
 import { memo, FC, useState } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 
-import { TextBox } from "./TextBox";
 import { TableFlexItem } from "../../atoms/TableFlexItem";
 
 /**
@@ -72,7 +71,6 @@ export const Project: FC = memo(() => {
         </Tbody>
       </Table>
       <div>プロジェクト詳細</div>
-      <TextBox />
     </>
   );
 });
