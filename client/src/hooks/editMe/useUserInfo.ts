@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -7,6 +7,7 @@ import {
   GetUserByIdDocument,
   useUpdateUserMutation,
 } from "../../types/generated/graphql";
+import { userInfoEditType, UserType } from "../../types/types";
 
 /**
  * バリデーションチェック.
@@ -38,11 +39,7 @@ const schema = yup.object().shape({
  * @params userData - 初期表示用データ
  */
 export const useUserInfo = (
-  userData: {
-    name: string | undefined;
-    jobType: string | undefined;
-    github: string | undefined;
-  },
+  userData: UserType,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
@@ -50,24 +47,36 @@ export const useUserInfo = (
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     //初期値はログインしている人のデータを入れる
     defaultValues: {
-      name: userData.name,
-      jobType: userData.jobType,
-      githubURL: userData.github,
+      name: userData?.name,
+      jobType: userData?.jobType,
+      githubURL: userData?.githubURL,
     },
   });
 
   /**
-   * キャンセルボタンを押した時に呼ばれる
+   * デフォルト値読み込み直し用.
    */
-  const cancel = () => {
+  useEffect(() => {
+    reset({
+      name: userData?.name,
+      jobType: userData?.jobType,
+      githubURL: userData?.githubURL,
+    });
+  }, [reset, userData?.githubURL, userData?.jobType, userData?.name]);
+
+  /**
+   * キャンセルボタンを押した時に呼ばれる.
+   */
+  const cancel = useCallback(() => {
     onClose();
     setMenuItem("");
-  };
+  }, [onClose, setMenuItem]);
 
   /**
    * ユーザ情報更新.（リフェッチ機能）
@@ -81,27 +90,27 @@ export const useUserInfo = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = async (data: any) => {
-    try {
-      await updateUserInfo({
-        variables: {
-          user: {
-            password: "",
-            email: "",
-            userId: "621b4b55e9204efe7d8f594a",
-            name: data.name,
-            jobType: data.jobType,
-            githubURL: data.githubURL,
-            spreadSheetID: "10vrGz168VXtEPCjXv7bvEbz4_TFZhHvo5mu5HUqgXr4",
+  const onSubmit = useCallback(
+    async (data: userInfoEditType) => {
+      try {
+        await updateUserInfo({
+          variables: {
+            user: {
+              userId: userData.id, //受け取ったデータそのまま
+              name: data.name,
+              jobType: data.jobType,
+              githubURL: data.githubURL,
+              spreadSheetID: userData.spreadSheetID, //受け取ったデータそのまま
+            },
           },
-        },
-      });
-      onClose();
-      setMenuItem("");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        });
+        cancel();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [cancel, updateUserInfo, userData],
+  );
 
   return {
     useUpdateUserMutation,
