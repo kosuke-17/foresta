@@ -63,31 +63,6 @@ export const LOGIN_QUERY = gql`
   }
 `;
 
-// DBに保存されている技術を全件取得
-gql`
-  query GetAllTechArea {
-    getAllTechArea {
-      id
-      name
-      techTrees {
-        id
-        name
-        techArea_id
-        techBranches {
-          id
-          name
-          techTree_id
-          techLeafs {
-            id
-            name
-            techBranch_id
-          }
-        }
-      }
-    }
-  }
-`;
-
 // 特定のユーザーが保持している技術を全件取得
 gql`
   query GetUserLeafsById($userId: String!, $areaId: String!) {
@@ -96,21 +71,30 @@ gql`
       node {
         id
         myForest {
-          areaId
-          treeId
+          id
           treeName
           achievementRate
           branches {
+            id
             name
             leafs {
+              id
               name
-              techBranch_id
-              techTree_id
               isStatus
             }
           }
         }
       }
+    }
+  }
+`;
+
+// 技術ツリーのステータスを変更
+gql`
+  mutation ChangeLeafStatus($techLeafInfo: UserTechLeafUpdateInput!) {
+    changeLeafStatus(techLeafInfo: $techLeafInfo) {
+      status
+      msg
     }
   }
 `;

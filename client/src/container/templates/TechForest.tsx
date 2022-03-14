@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useGetAllTechAreaQuery } from "../../types/generated/graphql";
+import { useChangeLeafStatusMutation } from "../../types/generated/graphql";
 import { useGetUserLeafsByIdQuery } from "../../types/generated/graphql";
+import { GetUserLeafsByIdDocument } from "../../types/generated/graphql";
 import {
   Box,
   Button,
@@ -19,34 +20,51 @@ import {
 import { Progress } from "@chakra-ui/react";
 
 export const TechForest = () => {
-  // const { data, loading, error } = useGetAllTechAreaQuery();
+  // treeId
+  const [treeId, setTreeId] = useState("");
+  // branchId
+  const [branchId, setBranchId] = useState("");
+  // leafId
+  const [leafId, setLeafId] = useState("");
+  // 習得状況のステータス
+  const [isStatus, setIsStatus] = useState(false);
+  // 進捗率
+  const [achievementRate, setAchivementRate] = useState(10);
   const { data, loading, error } = useGetUserLeafsByIdQuery({
     variables: {
-      userId: "622db6cb03794ad6e8ea6950",
+      userId: "622db6cb03794ad6e8ea6950", // 狗巻棘のID
       areaId: "6219afb4d55e2e236b9062b8",
     },
   });
+  const [changeLeafStatusMutation] = useChangeLeafStatusMutation({
+    variables: {
+      techLeafInfo: {
+        userLeafsId: "622db6cb03794ad6e8ea695b", // 狗巻棘のuserLeafsId
+        treeId: treeId,
+        branchId: branchId,
+        leafId: leafId,
+        achievementRate: achievementRate,
+        currentStatus: isStatus,
+      },
+    },
+    refetchQueries: [GetUserLeafsByIdDocument],
+  });
 
-  console.log(data?.getUserLeafsById.node.myForest);
+  const cheakedLeaf = async (
+    treeId: string,
+    branchId: string,
+    leafId: string,
+    isStatus: boolean,
+  ) => {
+    setTreeId(treeId);
+    setBranchId(branchId);
+    setLeafId(leafId);
+    setIsStatus(isStatus);
+    const response = await changeLeafStatusMutation();
+    const result = await changeLeafStatusMutation();
+  };
 
-  const [numberOfArea, setNumberOfData] = useState(0);
-  // 習得した技術を入れる配列
-  const [leafData, setLeafData] = useState([""]);
-  // 進捗率
-  const [achievementRate, setAchivementRate] = useState(0);
-  //
-  const cheakedLeaf = (techLeaf: string) => {
-    leafData?.push(techLeaf);
-    console.log(leafData);
-  };
-  // エリアの切り替え
-  const changeArea = (index: number) => {
-    setNumberOfData(index);
-    console.log(index);
-  };
-  // const techAreaData = data?.getAllTechArea;
   const techTreeData = data?.getUserLeafsById.node.myForest;
-  console.log(techTreeData);
 
   return (
     <div>
@@ -138,8 +156,29 @@ export const TechForest = () => {
                                                   colorScheme="blue"
                                                   onChange={() =>
                                                     cheakedLeaf(
-                                                      techLeafData.name,
+                                                      techTreeData.id,
+                                                      data?.getUserLeafsById
+                                                        .node.myForest[
+                                                        indexOfTreeData
+                                                      ].branches[
+                                                        indexOfBranchData
+                                                      ].id,
+                                                      data?.getUserLeafsById
+                                                        .node.myForest[
+                                                        indexOfTreeData
+                                                      ].branches[
+                                                        indexOfBranchData
+                                                      ].leafs[index].id,
+                                                      data?.getUserLeafsById
+                                                        .node.myForest[
+                                                        indexOfTreeData
+                                                      ].branches[
+                                                        indexOfBranchData
+                                                      ].leafs[index].isStatus,
                                                     )
+                                                  }
+                                                  isChecked={
+                                                    techLeafData.isStatus
                                                   }
                                                 />
                                               </HStack>
