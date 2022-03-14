@@ -1,13 +1,29 @@
 # ユーザー習得技術情報
 type UserLeafs {
   id: ID!
-  techLeafs: [leafInfo!]!
+  myForest: [treeInfo!]!
   userId: ID!
 }
-type leafInfo {
-  techTreeId: ID!
+type treeInfo {
+  id: ID!
+  treeId: ID!
+  areaId: ID!
+  treeName: String!
   achievementRate: Int!
-  techLeafIds: [ID!]!
+  branches: [branchInfo!]!
+}
+type branchInfo {
+  id: ID!
+  name: String!
+  leafs: [leafInfo!]!
+}
+# isStatusが!あるとエラー起こる
+type leafInfo {
+  id: String!
+  name: String!
+  techBranch_id: String!
+  techTree_id: String!
+  isStatus: Boolean
 }
 
 ################
@@ -15,10 +31,12 @@ type leafInfo {
 
 # TechLeaf情報
 input UserTechLeafUpdateInput {
-  techTreeId: ID!
+  userLeafsId: ID!
+  treeId: ID!
+  branchId: ID!
+  leafId: ID!
   achievementRate: Int!
-  techLeafIds: [String]!
-  userId: ID!
+  currentStatus: Boolean!
 }
 
 ################################
@@ -27,6 +45,6 @@ input UserTechLeafUpdateInput {
 # ユーザーの習得技術情報
 type ResponseUserTechLeaf {
   status: String!
-  node: UserLeafs
-  msg: String
+  node: UserLeafs!
+  msg: String!
 }

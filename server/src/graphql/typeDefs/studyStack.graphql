@@ -1,5 +1,5 @@
 type StudyStack {
-  id: ID
+  id: ID!
   content: String!
   timeStack: Int!
   createdAt: String!
@@ -30,11 +30,11 @@ input StudyStackUpdateInput {
 
 type ResponseStudyStackArr {
   status: String!
-  node: [StudyStack]
-  msg: String
+  node: [StudyStack!]!
+  msg: String!
 }
 
 type ResponseStudyStack {
   status: String!
-  node: StudyStack
+  node: StudyStack!
 }

@@ -11,6 +11,10 @@ type Query {
   """
   getUserById(_id: String!): ResponseUser!
   """
+  エリアidに紐づく技術情報を取得.
+  """
+  getUserLeafsById(userId: String!, areaId: String!): ResponseUserTechLeaf!
+  """
   ユーザーのTodo一覧情報を取得.
   """
   getAllTodoByUser(userId: String!): ResponseTodoArr!
@@ -87,7 +91,9 @@ type Mutation {
   """
   ユーザー習得技術を更新.
   """
-  updateUserTechLeafs(techLeaf: UserTechLeafUpdateInput!): ResponseUserTechLeaf!
+  changeLeafStatus(
+    techLeafInfo: UserTechLeafUpdateInput!
+  ): ResponseUserTechLeaf!
   """
   ユーザーの持つUrlを作成.
   """
@@ -146,7 +152,11 @@ type Mutation {
   """
   スプレッドシートのスキル要約を更新.
   """
-  updateSpeadTechInfo(userId: String!): Res!
+  updateSpreadTechInfo(userId: String!): Res!
+  """
+  スプレッドシートの開発経験を更新.
+  """
+  updateSpreadProject(userId: String!, projectIndex: Int!): Res!
 
   """
   基本情報を更新.
@@ -164,14 +174,6 @@ type Mutation {
   開発経験情報を更新.
   """
   updateSpecProject(specProject: SpecProjectUpdateInput!): ResponseSpecProject!
-  """
-  開発経験情報を追加.
-  """
-  addSpecProject(specProject: SpecProjectAddInput!): ResponseSpecProject!
-  """
-  開発経験情報を削除.
-  """
-  removeSpecProject(specProjectId: String!): Res!
 
   """
   ポートフォリオを作成.

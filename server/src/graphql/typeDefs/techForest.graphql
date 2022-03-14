@@ -48,17 +48,17 @@ input TechAreaCreateInput {
 
 type CreatedTechLeaf {
   status: String!
-  node: TechLeaf
+  node: TechLeaf!
 }
 type CreatedTechBranch {
   status: String!
-  node: TechBranch
+  node: TechBranch!
 }
 type CreatedTechTree {
   status: String!
-  node: TechTree
+  node: TechTree!
 }
 type CreatedTechArea {
   status: String!
-  node: TechArea
+  node: TechArea!
 }

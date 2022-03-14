@@ -86,6 +86,8 @@ export const useUserInfo = (
       await updateUserInfo({
         variables: {
           user: {
+            password: "",
+            email: "",
             userId: "621b4b55e9204efe7d8f594a",
             name: data.name,
             jobType: data.jobType,

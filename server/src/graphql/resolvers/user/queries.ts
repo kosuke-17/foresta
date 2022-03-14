@@ -20,6 +20,10 @@ const userQueries = {
   getUserById: async (_: any, { _id }: IdType) => {
     try {
       const result = await Users.findById({ _id });
+      if (result === null) {
+        return error("該当のユーザーが見つかりません。");
+      }
+
       return success(result, "取得に成功しました。");
     } catch {
       return error("取得に失敗しました。");

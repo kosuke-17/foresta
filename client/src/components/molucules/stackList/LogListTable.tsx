@@ -16,13 +16,13 @@ type Props = {
 };
 
 /**
- * 記録情報テーブルモーダル
+ * 記録情報テーブル
  */
 export const LogListTable: FC<Props> = memo((props) => {
   const { data } = props;
 
   return (
-    <Table variant="simple" colorScheme="green">
+    <Table size="md" variant="simple" colorScheme="green">
       <TableCaption>更新情報</TableCaption>
       <Thead>
         <Tr>
@@ -35,7 +35,7 @@ export const LogListTable: FC<Props> = memo((props) => {
       </Thead>
       <Tbody>
         {data &&
-          data.getAllStudyStack.map((stackList) => (
+          data.getAllStudyStack.node.map((stackList) => (
             <Tr key={stackList.id}>
               <Td>{stackList.createdAt}</Td>
               <Td>{stackList.skillTagId}</Td>

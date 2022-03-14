@@ -5,6 +5,9 @@ import {
   SpecTechInfoSheet,
   SpecUserInfoSheet,
   TechTree,
+  SpecProjectSheet,
+  TechLeaf,
+  TechBranch,
 } from "../../../models";
 import { error, success } from "../responseStatus";
 import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
@@ -44,14 +47,30 @@ const userMutations = {
       // ユーザー技術情報オブジェクトを生成
       if (result !== null) {
         const techTrees = await TechTree.find({});
-        const techLeafInfo = { techLeafs: new Array(), userId: createUser._id };
-        for (const tech of techTrees) {
+        const techLeafs = await TechLeaf.find({});
+        const techLeafInfo = { myForest: new Array(), userId: createUser._id };
+        for (const tree of techTrees) {
+          let techBranches = await TechBranch.find({ techTree_id: tree._id });
+          // ブランチオブジェクトにリーフを格納し、代入
+          let branch_leaf = new Array();
+          for (let i = 0; i < techBranches.length; i++) {
+            branch_leaf = techLeafs.filter(
+              (leaf) => techBranches[i]._id == leaf.techBranch_id
+            );
+            const newBranch = new Object({
+              name: techBranches[i].name,
+              leafs: branch_leaf,
+            });
+            techBranches[i] = newBranch;
+          }
           const userTechInfo = new Object({
-            techTreeId: tech._id,
+            treeId: tree._id,
+            areaId: tree.techArea_id,
+            treeName: tree.name,
             achievementRate: 0,
-            techLeafIds: [],
+            branches: techBranches,
           });
-          techLeafInfo.techLeafs.push(userTechInfo);
+          techLeafInfo.myForest.push(userTechInfo);
         }
         const createdTechLeafs = new UserLeafs({ ...techLeafInfo });
 
@@ -86,6 +105,27 @@ const userMutations = {
           devRoles: [],
           specSheetId: createdSpecSheet._id,
         });
+
+        // ユーザーの開発経験(3つ)のオブジェクト作成・保存
+        for (let i = 0; i < 3; i++) {
+          const createdSpecProjectSheet = new SpecProjectSheet({
+            name: "",
+            startedAt: "",
+            finishedAt: "",
+            roleSharing: "",
+            memberCount: 0,
+            content: "",
+            operationEnvs: [],
+            languages: [],
+            frameworks: [],
+            libraries: [],
+            otherTools: [],
+            devRoles: [],
+            specSheetId: createdSpecSheet._id,
+          });
+          await createdSpecProjectSheet.save();
+        }
+
         // ユーザーの技術オブジェクトを保存
         await createdTechLeafs.save();
         // スペックシート関連のオブジェクト保存

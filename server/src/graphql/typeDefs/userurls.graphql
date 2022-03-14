@@ -33,6 +33,6 @@ input UserUrlsRemoveInput {
 # 追加したユーザーURL
 type ResponseUserUrls {
   status: String!
-  node: UserUrls
-  msg: String
+  node: UserUrls!
+  msg: String!
 }

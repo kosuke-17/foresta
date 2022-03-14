@@ -3,12 +3,14 @@ import mongoose from "mongoose";
 /**
  *  ユーザースキーマ.
  *  @remarks
+ * getUserでエラーが出るため、_idはコメントアウトした
  *  - ユーザー名 : string
  *  - 職業タイプ : string
  *  - スプレッドシートURL : string
  *  - GithubURL : string
  */
 const UserSchema = new mongoose.Schema({
+  // _id: { type: String, required: true },
   name: { type: String, required: true },
   jobType: { type: String, required: true },
   email: { type: String, required: true },
@@ -65,11 +67,25 @@ const UseTodoSchema = new mongoose.Schema({
  *    - ユーザーID : string
  */
 const UserLeafsSchema = new mongoose.Schema({
-  techLeafs: [
+  myForest: [
     {
-      techTreeId: { type: String, required: true },
+      treeId: { type: String, required: true },
+      areaId: { type: String, required: true },
+      treeName: { type: String, required: true },
       achievementRate: { type: Number, required: true },
-      techLeafIds: { type: [String], required: true },
+      branches: [
+        {
+          name: { type: String },
+          leafs: [
+            {
+              name: { type: String },
+              techBranch_id: { type: String },
+              techTree_id: { type: String },
+              isStatus: { type: Boolean },
+            },
+          ],
+        },
+      ],
     },
   ],
   userId: { type: String, required: true },

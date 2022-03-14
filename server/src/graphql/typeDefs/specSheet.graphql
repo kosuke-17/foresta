@@ -39,6 +39,7 @@ type SpecTechInfoSheet {
 
 # スペックシートプロジェクト
 type SpecProjectSheet {
+  id: String!
   name: String!
   startedAt: String!
   finishedAt: String!
@@ -60,6 +61,7 @@ type Portfolio {
   description: String!
   img: String!
   portfolioURL: String!
+  skills: [String!]!
   userId: ID!
   specSheetId: ID!
 }
@@ -121,27 +123,28 @@ input SpecProjectUpdateInput {
   specSheetId: ID!
 }
 # 開発経験追加
-input SpecProjectAddInput {
-  name: String!
-  startedAt: String!
-  finishedAt: String!
-  roleSharing: String!
-  memberCount: Int!
-  content: String!
-  operationEnvs: [String!]!
-  languages: [String!]!
-  frameworks: [String!]!
-  libraries: [String!]!
-  otherTools: [String!]!
-  devRoles: [String!]!
-  specSheetId: ID!
-}
+# input SpecProjectAddInput {
+#   name: String!
+#   startedAt: String!
+#   finishedAt: String!
+#   roleSharing: String!
+#   memberCount: Int!
+#   content: String!
+#   operationEnvs: [String!]!
+#   languages: [String!]!
+#   frameworks: [String!]!
+#   libraries: [String!]!
+#   otherTools: [String!]!
+#   devRoles: [String!]!
+#   specSheetId: ID!
+# }
 # ポートフォリオ作成情報
 input PortfolioCreateInput {
   title: String!
   description: String!
   img: String
   portfolioURL: String
+  skills: [String]!
   userId: ID!
   specSheetId: ID!
 }
@@ -152,6 +155,7 @@ input PortfolioUpdateInput {
   description: String!
   img: String
   portfolioURL: String
+  skills: [String]!
 }
 
 ################
@@ -159,28 +163,28 @@ input PortfolioUpdateInput {
 
 type ResponseSpecSheet {
   status: String!
-  node: SpecSheet
+  node: SpecSheet!
   msg: String
 }
 type ResponseSpecUserInfo {
   status: String!
-  node: SpecUserInfoSheet
+  node: SpecUserInfoSheet!
   msg: String
 }
 type ResponseSpecTechInfo {
   status: String!
-  node: SpecTechInfoSheet
+  node: SpecTechInfoSheet!
   msg: String
 }
 type ResponseSpecProject {
   status: String!
-  node: SpecProjectSheet
+  node: SpecProjectSheet!
   msg: String
 }
 
 type ResponsePortfolio {
   status: String!
-  node: Portfolio
+  node: Portfolio!
   msg: String
 }
 

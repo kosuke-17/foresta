@@ -9,12 +9,10 @@ import {
   PortfolioIdType,
   PortfolioType,
   SpecProjectType,
-  SpecSheetIdType,
   SpecSheetType,
   SpecTechInfoType,
   SpecUserInfoType,
   PortfolioUpdateType,
-  SpecProjectAddType,
 } from "../../../types";
 import { error, success } from "../responseStatus";
 
@@ -230,60 +228,60 @@ const specSheetMutations = {
    * @param specProject - 追加プロジェクト情報
    * @returns 追加したプロジェクト情報
    */
-  addSpecProject: async (_: any, { specProject }: SpecProjectAddType) => {
-    const {
-      name,
-      startedAt,
-      finishedAt,
-      roleSharing,
-      memberCount,
-      content,
-      operationEnvs,
-      languages,
-      frameworks,
-      libraries,
-      otherTools,
-      devRoles,
-      specSheetId,
-    } = specProject;
+  // addSpecProject: async (_: any, { specProject }: SpecProjectAddType) => {
+  //   const {
+  //     name,
+  //     startedAt,
+  //     finishedAt,
+  //     roleSharing,
+  //     memberCount,
+  //     content,
+  //     operationEnvs,
+  //     languages,
+  //     frameworks,
+  //     libraries,
+  //     otherTools,
+  //     devRoles,
+  //     specSheetId,
+  //   } = specProject;
 
-    const createProject = new SpecProjectSheet({
-      name,
-      startedAt,
-      finishedAt,
-      roleSharing,
-      memberCount,
-      content,
-      operationEnvs: [...operationEnvs],
-      languages: [...languages],
-      frameworks: [...frameworks],
-      libraries: [...libraries],
-      otherTools: [...otherTools],
-      devRoles: [...devRoles],
-      specSheetId,
-    });
+  //   const createProject = new SpecProjectSheet({
+  //     name,
+  //     startedAt,
+  //     finishedAt,
+  //     roleSharing,
+  //     memberCount,
+  //     content,
+  //     operationEnvs: [...operationEnvs],
+  //     languages: [...languages],
+  //     frameworks: [...frameworks],
+  //     libraries: [...libraries],
+  //     otherTools: [...otherTools],
+  //     devRoles: [...devRoles],
+  //     specSheetId,
+  //   });
 
-    try {
-      const result = await createProject.save();
-      return success(result, "追加に成功しました。");
-    } catch {
-      return error("追加に失敗しました。");
-    }
-  },
+  //   try {
+  //     const result = await createProject.save();
+  //     return success(result, "追加に成功しました。");
+  //   } catch {
+  //     return error("追加に失敗しました。");
+  //   }
+  // },
   /**
    * 開発経験の削除.
    *
    * @param specProjectId - 開発経験ID
    * @returns 削除処理ステータス
    */
-  removeSpecProject: async (_: any, { specProjectId }: SpecSheetIdType) => {
-    try {
-      await SpecProjectSheet.findByIdAndRemove({ _id: specProjectId });
-      return success("", "削除に成功しました。");
-    } catch {
-      return error("削除に失敗しました。");
-    }
-  },
+  // removeSpecProject: async (_: any, { specProjectId }: SpecSheetIdType) => {
+  //   try {
+  //     await SpecProjectSheet.findByIdAndRemove({ _id: specProjectId });
+  //     return success("", "削除に成功しました。");
+  //   } catch {
+  //     return error("削除に失敗しました。");
+  //   }
+  // },
   /**
    * ポートフォリオの作成.
    *
@@ -291,13 +289,21 @@ const specSheetMutations = {
    * @returns 作成したポートフォリオ情報
    */
   createPortfolio: async (_: any, { portfolio }: PortfolioType) => {
-    const { title, description, img, portfolioURL, userId, specSheetId } =
-      portfolio;
+    const {
+      title,
+      description,
+      img,
+      portfolioURL,
+      skills,
+      userId,
+      specSheetId,
+    } = portfolio;
     const newPortfolio = new Portfolio({
       title,
       description,
       img,
       portfolioURL,
+      skills,
       userId,
       specSheetId,
     });
@@ -315,11 +321,12 @@ const specSheetMutations = {
    * @returns 編集したポートフォリオ情報
    */
   updatePortfolio: async (_: any, { portfolio }: PortfolioUpdateType) => {
-    const { portfolioId, title, description, img, portfolioURL } = portfolio;
+    const { portfolioId, title, description, img, skills, portfolioURL } =
+      portfolio;
     try {
       const result = await Portfolio.findByIdAndUpdate(
         { _id: portfolioId },
-        { $set: { title, description, img, portfolioURL } },
+        { $set: { title, description, img, skills, portfolioURL } },
         { new: true }
       );
       return success(result, "更新に成功しました。");

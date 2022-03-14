@@ -24,26 +24,24 @@ export const TodoWithCheck: FC<Props> = memo((props) => {
   };
 
   return (
-    <>
-      <Flex
-        align="center"
-        justify="space-between"
-        _hover={{ backgroundColor: "#f5f5f5", cursor: "pointer" }}
-        onClick={(e) => onOpenTodoDetail(e)}
-      >
-        <Flex align="center" overflow="hidden" white-space="nowrap">
-          <Checkbox
-            isChecked={isStatus}
-            colorScheme="teal"
-            size="lg"
-            onChange={() => alert("toggle")}
-            padding="5px"
-          />
-          <_Title>{title}</_Title>
-        </Flex>
-        <_Date>{getformattedTodoDate(startedAt, finishedAt)}</_Date>
+    <Flex
+      align="center"
+      justify="space-between"
+      _hover={{ backgroundColor: "#f5f5f5", cursor: "pointer" }}
+      onClick={(e) => onOpenTodoDetail(e)}
+    >
+      <Flex align="center" overflow="hidden" white-space="nowrap">
+        <Checkbox
+          isChecked={isStatus}
+          colorScheme="teal"
+          size="lg"
+          onChange={() => alert("toggle")}
+          padding="5px"
+        />
+        <_Title>{title}</_Title>
       </Flex>
-    </>
+      <_Date>{getformattedTodoDate(startedAt, finishedAt)}</_Date>
+    </Flex>
   );
 });
 

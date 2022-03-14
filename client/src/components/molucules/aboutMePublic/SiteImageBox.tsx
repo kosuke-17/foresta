@@ -3,7 +3,7 @@ import { Box, Flex } from "@chakra-ui/react";
 
 import { SiteDetail } from "./SiteDetail";
 import { ModalSet } from "../../molucules/ModalSet";
-import { SiteImage } from "../../atoms/AboutMePublic/SiteImage";
+import { SiteImage } from "../../atoms/aboutMePublic/SiteImage";
 import { useModal } from "../../../hooks/useModal";
 import { Portfolio } from "../../../types/generated/graphql";
 

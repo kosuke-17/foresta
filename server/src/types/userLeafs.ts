@@ -1,8 +1,10 @@
-export type TechLeafUpdateType = {
-  techLeaf: {
-    techTreeId: string;
+export type ChangeLeafInfoType = {
+  techLeafInfo: {
+    userLeafsId: string;
+    treeId: string;
+    branchId: string;
+    leafId: string;
     achievementRate: number;
-    techLeafIds: string;
-    userId: string;
+    currentStatus: boolean;
   };
 };

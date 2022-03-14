@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { memo } from "react";
 
-
 import { useStackList } from "../../../hooks/study/useStackList";
 import { LogListTable } from "../../molucules/stackList/LogListTable";
 import { StudyListTable } from "../../molucules/stackList/StudyListTable";
@@ -22,13 +21,8 @@ const tabNames = ["学習リスト", "更新情報"] as const;
  * @returns 学習リストと更新情報
  */
 export const StackList = memo(() => {
-
   //カスタムフックから学習リストデータ取得
-  const { error, loading, data, stackSumList} = useStackList();
-
-  if (error) {
-    return <p>Error!</p>;
-  }
+  const { error, loading, data, stackSumList } = useStackList();
 
   return (
     <div>
@@ -38,7 +32,10 @@ export const StackList = memo(() => {
           isLazy
           variant="soft-rounded"
           colorScheme="green"
-          width="container.xl"
+          width="full"
+          backgroundColor="gray.100"
+          margin="20px"
+          padding="20px"
         >
           <TabList>
             {tabNames.map((tab, index) => (
@@ -47,6 +44,7 @@ export const StackList = memo(() => {
                 _focus={{ boxShadow: "none" }}
                 _selected={{ color: "white", bg: "green.300" }}
                 _hover={{ bg: "gray.300" }}
+                backgroundColor="white"
               >
                 {tab}
               </Tab>
@@ -54,8 +52,17 @@ export const StackList = memo(() => {
           </TabList>
           {loading ? (
             <p>Loading...</p>
-          ) : data?.getAllStudyStack.length ? (
-            <TabPanels overflow="auto" height="250px">
+          ) : error ? (
+            <p>Error...</p>
+          ) : data?.getAllStudyStack.node.length ? (
+            <TabPanels
+              overflowY="auto"
+              overflowX="visible"
+              white-space="nowrap"
+              height="300px"
+              backgroundColor="white"
+              margin="30px"
+            >
               <TabPanel>
                 <StudyListTable data={data} stackSumList={stackSumList} />
               </TabPanel>

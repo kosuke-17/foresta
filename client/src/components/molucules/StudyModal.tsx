@@ -1,28 +1,23 @@
 import {
   Button,
-  Input,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Textarea,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
-import { ChangeEvent, FC, memo, useState } from "react";
-import { useCookies } from "react-cookie";
-import {
-  GetAllStudyStackDocument,
-  useAddStudyStackMutation,
-  useUpdateStudyStackMutation,
-  useRemoveStudyStackMutation,
-} from "../../types/generated/graphql";
-import { AddStackButton } from "../atoms/study/AddStackBotton";
-import { RemoveStackButton } from "../atoms/study/RemoveStackBotton";
-import { UpdateStackButton } from "../atoms/study/updateStackBotton";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { FC, memo } from "react";
+import { useForm } from "react-hook-form";
+import { useGetStudyStackByIdQuery } from "../../types/generated/graphql";
+import { StackButton } from "../atoms/study/StackBotton";
+import { useAddStack } from "../../hooks/study/useAddStack";
+import { useRemoveStack } from "../../hooks/study/useRemoveStack";
+import { useUpdateStack } from "../../hooks/study/useUpdateStack";
+import { StudyModalInput } from "./stackList/StudyModalInput";
 
 type Props = {
   title: string;
@@ -30,209 +25,118 @@ type Props = {
   stackId: string;
 };
 
+type AddStack = {
+  createdAt: string;
+  skillTagId: string;
+  timeStack: number;
+  content: string;
+};
+
+//バリデーションチェック
+const schema = yup.object().shape({
+  createdAt: yup.string().required("学習日時を入力してください"),
+  skillTagId: yup.string().required("学習技術を入力してください"),
+  timeStack: yup
+    .number()
+    .min(0, "0以上の値を入力してください")
+    .integer("整数で入力してください")
+    .typeError("学習時間を入力してください"),
+  content: yup.string().required("メモを入力してください"),
+});
+
+/**
+ * モーダルコンポーネント
+ */
 export const StudyModal: FC<Props> = memo((props) => {
   //モーダルの開閉
   const { isOpen, onOpen, onClose } = useDisclosure();
   //propsでもらうもの
   const { title, buttonTitle, stackId } = props;
-  //トーストアラート
-  const toast = useToast();
-  //クッキー情報取得
-  const [cookies] = useCookies();
-
-  //記録日
-  const [createdAt, setCreatedAt] = useState<string>("");
-  const onChangeCreatedAt = (e: ChangeEvent<HTMLInputElement>) =>
-    setCreatedAt(e.target.value);
-  //学習技術
-  const [skillTagId, setSkillTagId] = useState<string>("");
-  const onChangeSkillTagId = (e: ChangeEvent<HTMLInputElement>) =>
-    setSkillTagId(e.target.value);
-  //学習時間
-  const [timeStack, setTimeStack] = useState<number>(0);
-  const onChangeTimeStack = (e: ChangeEvent<HTMLInputElement>) =>
-    setTimeStack(Number(e.target.value));
-  //メモ
-  const [content, setContent] = useState<string>("");
-  const onChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) =>
-    setContent(e.target.value);
-
-  //記録追加メソッド（リフェッチ機能）
-  const [addStudyStack] = useAddStudyStackMutation({
-    variables: {
-      stack: {
-        createdAt,
-        skillTagId,
-        timeStack,
-        content,
-        //一旦指定のユーザー
-        userId: cookies.ForestaID,
-      },
-    },
-    refetchQueries: [GetAllStudyStackDocument], //データを表示するクエリーのDocument
+  //学習記録を１件取得クエリー（本当はdaleyを使いたい）
+  const { loading, data, error } = useGetStudyStackByIdQuery({
+    variables: { studyStackId: stackId },
+    // fetchPolicy: "cache-and-network",
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+  } = useForm<AddStack>({
+    resolver: yupResolver(schema),
   });
 
-  //記録追加
-  const addStack = async () => {
-    const addStackData = await addStudyStack();
-    if (addStackData.data?.addStudyStack.status === "success") {
-      toast({ title: "学習を記録しました", status: "success" });
-      onClose();
-    } else if (addStackData.data?.addStudyStack.status === "error") {
-      toast({ title: "記録に失敗しました", status: "error" });
-      onClose();
+  //記録追加フックス呼ぶ
+  const { addStack } = useAddStack(onClose, reset);
+
+  //記録を削除するフックス呼ぶ
+  const { removeStack } = useRemoveStack(onClose, stackId);
+
+  //記録を編集するフックスを呼ぶ
+  const { updateStack } = useUpdateStack(onClose, stackId);
+
+  //モーダルを開いた時のメソッド
+  const openMethod = () => {
+    //編集ボタンをクリックしたときには初期値をセットする
+    if (data) {
+      setValue("createdAt", data?.getStudyStackById.node.createdAt as string);
+      setValue("skillTagId", data?.getStudyStackById.node.skillTagId as string);
+      setValue("timeStack", data?.getStudyStackById.node.timeStack as number);
+      setValue("content", data?.getStudyStackById.node.content as string);
+    }
+    onOpen();
+    if (loading || error) {
+      onOpen();
     }
   };
 
-  //記録削除メソッド
-  const [removeStudyStack] = useRemoveStudyStackMutation({
-    variables: {
-      //一旦指定の記録ID
-      studyStackId: stackId,
-    },
-    refetchQueries: [GetAllStudyStackDocument],
-  });
-
-  //記録削除
-  const removeStack = async () => {
-    const removeStackData = await removeStudyStack();
-    if (removeStackData.data?.removeStudyStack.status === "success") {
-      toast({ title: "学習を削除しました", status: "success" });
-      onClose();
-    } else if (removeStackData.data?.removeStudyStack.status === "error") {
-      toast({ title: "削除に失敗しました", status: "error" });
-      onClose();
-    }
-  };
-
-  //記録編集メソッド
-  const [updateMutation] = useUpdateStudyStackMutation({
-    variables: {
-      stack: {
-        createdAt,
-        skillTagId,
-        timeStack,
-        content,
-        //一旦指定の記録ID
-        studyStackId: stackId,
-      },
-    },
-    refetchQueries: [GetAllStudyStackDocument],
-  });
-
-  //記録編集
-  const updateStack = async () => {
-    const updateStackData = await updateMutation();
-    if (updateStackData.data?.updateStudyStack.status === "success") {
-      toast({ title: "学習記録を編集しました", status: "success" });
-      onClose();
-    } else if (updateStackData.data?.updateStudyStack.status === "error") {
-      toast({ title: "編集に失敗しました", status: "error" });
-      onClose();
-    }
+  //モーダルを閉じた時のメソッド
+  const closeMethod = () => {
+    onClose();
+    reset();
   };
 
   return (
     <>
-      <Button onClick={onOpen} _focus={{ boxShadow: "none" }}>
+      <Button onClick={openMethod} _focus={{ boxShadow: "none" }}>
         {buttonTitle}
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size="xl"
+        blockScrollOnMount={false}
+        closeOnOverlayClick={false}
+        isCentered
+      >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent backgroundColor="green.100">
           <ModalHeader>{title}</ModalHeader>
-          <ModalCloseButton />
           {title === "記録削除" && (
             <ModalBody>この記事を削除しますか</ModalBody>
           )}
-          {title === "記録追加" && (
-            <ModalBody>
-              日付:
-              <Input
-                variant="outline"
-                placeholder="日付"
-                type="date"
-                value={createdAt}
-                onChange={(e) => onChangeCreatedAt(e)}
-                // {...register("createdAtStart")}
-              />
-              技術:
-              <Input
-                variant="outline"
-                placeholder="技術"
-                type="text"
-                value={skillTagId}
-                onChange={(e) => onChangeSkillTagId(e)}
-                // {...register("skillTagId")}
-              />
-              時間:
-              <Input
-                variant="outline"
-                placeholder="時間"
-                type="number"
-                value={timeStack}
-                onChange={(e) => onChangeTimeStack(e)}
-                // {...register("timeStack")}
-              />
-              メモ:
-              <Textarea
-                placeholder="メモ"
-                value={content}
-                onChange={(e) => onChangeContent(e)}
-                // {...register("content")}
-              />
-            </ModalBody>
-          )}
-          {title === "記録編集" && (
-            <ModalBody>
-              日付:
-              <Input
-                variant="outline"
-                placeholder="日付"
-                type="date"
-                value={createdAt}
-                onChange={(e) => onChangeCreatedAt(e)}
-                // {...register("createdAtStart")}
-              />
-              技術:
-              <Input
-                variant="outline"
-                placeholder="技術"
-                type="text"
-                value={skillTagId}
-                onChange={(e) => onChangeSkillTagId(e)}
-                // {...register("skillTagId")}
-              />
-              時間:
-              <Input
-                variant="outline"
-                placeholder="時間"
-                type="number"
-                value={timeStack}
-                onChange={(e) => onChangeTimeStack(e)}
-                // {...register("timeStack")}
-              />
-              メモ:
-              <Textarea
-                placeholder="メモ"
-                value={content}
-                onChange={(e) => onChangeContent(e)}
-                // {...register("content")}
-              />
-            </ModalBody>
-          )}
-
+          <StudyModalInput register={register} errors={errors} />
           <ModalFooter>
-            {title === "記録追加" && <AddStackButton addStack={addStack} />}
+            {title === "記録追加" && (
+              <StackButton onClick={handleSubmit(addStack)} title="追加する" />
+            )}
             {title === "記録編集" && (
-              <UpdateStackButton updateStack={updateStack} />
+              <StackButton
+                onClick={handleSubmit(updateStack)}
+                title="編集する"
+              />
             )}
             {title === "記録削除" && (
-              <RemoveStackButton removeStack={removeStack} />
+              <StackButton onClick={removeStack} title="削除する" />
             )}
-
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+            <Button
+              colorScheme="gray"
+              mx={3}
+              _focus={{ boxShadow: "none" }}
+              onClick={closeMethod}
+            >
               キャンセル
             </Button>
           </ModalFooter>

@@ -25,13 +25,13 @@ input UserCreateInput {
   githubURL: String!
 }
 input UserUpdateInput {
-  userId: String
-  name: String
-  jobType: String
+  userId: String!
+  name: String!
+  jobType: String!
   email: String
   password: String
   spreadSheetID: String!
-  githubURL: String
+  githubURL: String!
 }
 
 # ログインユーザー情報
@@ -45,6 +45,6 @@ input UserLoginInput {
 # ユーザー情報
 type ResponseUser {
   status: String!
-  node: User
-  msg: String
+  node: User!
+  msg: String!
 }
