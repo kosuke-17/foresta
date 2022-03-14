@@ -97,7 +97,7 @@ export const MenuBar: FC = memo(() => {
               onOpen(e);
             }}
           >
-            スペックシートスキル要約
+            スペックシート基本情報
           </MenuItem>
 
           {/* スペックシートスキル要約 */}
@@ -127,7 +127,7 @@ export const MenuBar: FC = memo(() => {
               onOpen(e);
             }}
           >
-            開発経験
+            スペックシート開発経験
           </MenuItem>
         </MenuList>
       </Menu>
