@@ -5,6 +5,7 @@ type UserLeafs {
   userId: ID!
 }
 type treeInfo {
+  id: ID!
   treeId: ID!
   areaId: ID!
   treeName: String!
@@ -12,6 +13,7 @@ type treeInfo {
   branches: [branchInfo!]!
 }
 type branchInfo {
+  id: ID!
   name: String!
   leafs: [leafInfo!]!
 }
