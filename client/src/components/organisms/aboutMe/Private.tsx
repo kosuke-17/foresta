@@ -7,7 +7,7 @@ import { UserInfoTable } from "../../molucules/aboutMePrivate/UserInfoTable";
 import { SkillTable } from "../../molucules/aboutMePrivate/SkillTable";
 import { OtherData } from "../../molucules/aboutMePrivate/OtherData";
 import { Project } from "../../molucules/aboutMePrivate/Project";
-import { TextBox } from "../../molucules/aboutMePrivate/TextBox";
+import { SpecPr } from "../../molucules/aboutMePrivate/SpecPr";
 
 /**
  * AboutMeプライベート(スペックシート)ゾーン.
@@ -24,7 +24,7 @@ export const Private: FC = memo(() => {
   const propsDataArray = [
     { title: "基本情報", content: <UserInfoTable />, size: "lg" },
     { title: "スキル要約", content: <SkillTable />, size: "lg" },
-    { title: "自己PR・前職経験", content: <TextBox />, size: "lg" },
+    { title: "自己PR・前職経験", content: <SpecPr />, size: "lg" },
     { title: "その他", content: <OtherData />, size: "lg" },
   ];
 
