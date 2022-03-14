@@ -6,7 +6,7 @@ import { SiteDetail } from "./SiteDetail";
 import { ModalSet } from "../../molucules/ModalSet";
 import { SiteImage } from "../../atoms/aboutMePublic/SiteImage";
 import { useModal } from "../../../hooks/useModal";
-import { useGetPortfolioByIdQuery } from "../../../types/generated/graphql";
+import { useGetUserPortfolioByIdQuery } from "../../../types/generated/graphql";
 import { PortfolioType } from "../../../types/types";
 import { XCircleFillIcon } from "@primer/octicons-react";
 
@@ -16,7 +16,7 @@ import { XCircleFillIcon } from "@primer/octicons-react";
 export const SiteImageBox: FC = memo(() => {
   //cookieからID取得
   const [cookies] = useCookies();
-  const { data, loading, error } = useGetPortfolioByIdQuery({
+  const { data, loading, error } = useGetUserPortfolioByIdQuery({
     variables: {
       id: cookies.ForestaID,
     },

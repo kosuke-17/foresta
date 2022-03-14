@@ -18,7 +18,7 @@ gql`
 
 //ユーザ情報:制作物取得.
 gql`
-  query GetPortfolioById($id: String!) {
+  query GetUserPortfolioById($id: String!) {
     portfolios: getUserById(_id: $id) {
       status
       msg
@@ -29,6 +29,7 @@ gql`
           description
           img
           portfolioURL
+          skills
           specSheetId
         }
       }

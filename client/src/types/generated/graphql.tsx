@@ -837,11 +837,11 @@ export type GetUserByIdQuery = {
   };
 };
 
-export type GetPortfolioByIdQueryVariables = Exact<{
+export type GetUserPortfolioByIdQueryVariables = Exact<{
   id: Scalars["String"];
 }>;
 
-export type GetPortfolioByIdQuery = {
+export type GetUserPortfolioByIdQuery = {
   __typename?: "Query";
   portfolios: {
     __typename?: "ResponseUser";
@@ -856,6 +856,7 @@ export type GetPortfolioByIdQuery = {
         description: string;
         img: string;
         portfolioURL: string;
+        skills: Array<string>;
         specSheetId: string;
       } | null>;
     };
@@ -1243,8 +1244,8 @@ export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserByIdQuery,
   GetUserByIdQueryVariables
 >;
-export const GetPortfolioByIdDocument = gql`
-  query GetPortfolioById($id: String!) {
+export const GetUserPortfolioByIdDocument = gql`
+  query GetUserPortfolioById($id: String!) {
     portfolios: getUserById(_id: $id) {
       status
       msg
@@ -1255,6 +1256,7 @@ export const GetPortfolioByIdDocument = gql`
           description
           img
           portfolioURL
+          skills
           specSheetId
         }
       }
@@ -1263,54 +1265,54 @@ export const GetPortfolioByIdDocument = gql`
 `;
 
 /**
- * __useGetPortfolioByIdQuery__
+ * __useGetUserPortfolioByIdQuery__
  *
- * To run a query within a React component, call `useGetPortfolioByIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPortfolioByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUserPortfolioByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserPortfolioByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetPortfolioByIdQuery({
+ * const { data, loading, error } = useGetUserPortfolioByIdQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetPortfolioByIdQuery(
+export function useGetUserPortfolioByIdQuery(
   baseOptions: Apollo.QueryHookOptions<
-    GetPortfolioByIdQuery,
-    GetPortfolioByIdQueryVariables
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetPortfolioByIdQuery, GetPortfolioByIdQueryVariables>(
-    GetPortfolioByIdDocument,
-    options,
-  );
+  return Apollo.useQuery<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >(GetUserPortfolioByIdDocument, options);
 }
-export function useGetPortfolioByIdLazyQuery(
+export function useGetUserPortfolioByIdLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetPortfolioByIdQuery,
-    GetPortfolioByIdQueryVariables
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
-    GetPortfolioByIdQuery,
-    GetPortfolioByIdQueryVariables
-  >(GetPortfolioByIdDocument, options);
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >(GetUserPortfolioByIdDocument, options);
 }
-export type GetPortfolioByIdQueryHookResult = ReturnType<
-  typeof useGetPortfolioByIdQuery
+export type GetUserPortfolioByIdQueryHookResult = ReturnType<
+  typeof useGetUserPortfolioByIdQuery
 >;
-export type GetPortfolioByIdLazyQueryHookResult = ReturnType<
-  typeof useGetPortfolioByIdLazyQuery
+export type GetUserPortfolioByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserPortfolioByIdLazyQuery
 >;
-export type GetPortfolioByIdQueryResult = Apollo.QueryResult<
-  GetPortfolioByIdQuery,
-  GetPortfolioByIdQueryVariables
+export type GetUserPortfolioByIdQueryResult = Apollo.QueryResult<
+  GetUserPortfolioByIdQuery,
+  GetUserPortfolioByIdQueryVariables
 >;
 export const GetUrlByIdDocument = gql`
   query GetUrlById($id: String!) {

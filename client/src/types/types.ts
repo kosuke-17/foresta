@@ -21,7 +21,13 @@ export type UserType = Pick<
 //制作物
 export type PortfolioType = Pick<
   Portfolio,
-  "id" | "title" | "description" | "img" | "portfolioURL" | "specSheetId"
+  | "id"
+  | "title"
+  | "description"
+  | "img"
+  | "portfolioURL"
+  | "specSheetId"
+  | "skills"
 >;
 
 //ユーザ情報編集
