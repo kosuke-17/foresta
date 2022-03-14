@@ -1,13 +1,14 @@
-import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useGetUserByIdQuery } from "../../types/generated/graphql";
+import { useCookies } from "react-cookie";
 
 import {
   GetUserByIdDocument,
   useUpdateUserMutation,
 } from "../../types/generated/graphql";
-import { userInfoEditType, UserType } from "../../types/types";
 
 /**
  * バリデーションチェック.
@@ -39,36 +40,32 @@ const schema = yup.object().shape({
  * @params userData - 初期表示用データ
  */
 export const useUserInfo = (
-  userData: UserType,
+  // userData: UserType,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
+  //cookieからID取得
+  const [cookies] = useCookies();
+  const { data: userData } = useGetUserByIdQuery({
+    variables: {
+      id: cookies.ForestaID,
+    },
+  });
+  const user = userData?.user.node;
+
   // バリデーション機能を呼び出し
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    //初期値はログインしている人のデータを入れる
-    defaultValues: {
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
-    },
   });
-
-  /**
-   * デフォルト値読み込み直し用.
-   */
-  useEffect(() => {
-    reset({
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
-    });
-  }, [reset, userData?.githubURL, userData?.jobType, userData?.name]);
+  //初期値はログインしている人のデータを入れる
+  setValue("name", user?.name);
+  setValue("jobType", user?.jobType);
+  setValue("githubURL", user?.githubURL);
 
   /**
    * キャンセルボタンを押した時に呼ばれる.
@@ -91,16 +88,16 @@ export const useUserInfo = (
    * @param data - 入力したデータ
    */
   const onSubmit = useCallback(
-    async (data: userInfoEditType) => {
+    async (data: any) => {
       try {
         await updateUserInfo({
           variables: {
             user: {
-              userId: userData.id, //受け取ったデータそのまま
+              userId: cookies.ForestaID, //受け取ったデータそのまま
               name: data.name,
               jobType: data.jobType,
               githubURL: data.githubURL,
-              spreadSheetID: userData.spreadSheetID, //受け取ったデータそのまま
+              spreadSheetID: user?.spreadSheetID || "", //受け取ったデータそのまま
             },
           },
         });
@@ -109,7 +106,7 @@ export const useUserInfo = (
         console.log(error);
       }
     },
-    [cancel, updateUserInfo, userData],
+    [cancel, cookies.ForestaID, updateUserInfo, user?.spreadSheetID],
   );
 
   return {
@@ -119,7 +116,6 @@ export const useUserInfo = (
     register,
     errors,
     onSubmit,
-    userData,
     GetUserByIdDocument,
     updateUserInfo,
   };
