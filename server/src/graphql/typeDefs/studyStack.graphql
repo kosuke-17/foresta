@@ -2,7 +2,7 @@ type StudyStack {
   id: ID!
   content: String!
   timeStack: Int!
-  createdAt: String!
+  createdAt: Date!
   skillTagId: ID!
   userId: ID!
 }
@@ -13,7 +13,7 @@ type StudyStack {
 input StudyStackAddInput {
   content: String!
   timeStack: Int!
-  createdAt: String!
+  createdAt: Date!
   skillTagId: ID!
   userId: ID!
 }
@@ -21,7 +21,7 @@ input StudyStackUpdateInput {
   studyStackId: ID!
   content: String!
   timeStack: Int!
-  createdAt: String!
+  createdAt: Date!
   skillTagId: ID!
 }
 
