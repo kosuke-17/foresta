@@ -1,15 +1,32 @@
-import { Todo } from "./generated/graphql";
+import { Todo, Portfolio, User } from "./generated/graphql";
 
 // 一覧用のTodoの型
-export type TodoData =
-  Pick<
-    Todo,
-    "id" | "title" | "startedAt" | "finishedAt" | "isStatus"
-  >;
+export type TodoData = Pick<
+  Todo,
+  "id" | "title" | "startedAt" | "finishedAt" | "isStatus"
+>;
 
 // Todo詳細用の型(descriptionあり)
-export type TodoDetail =
-  Pick<
-    Todo,
-    "id" | "title" | "description" | "startedAt" | "finishedAt" | "isStatus"
-  >;
+export type TodoDetail = Pick<
+  Todo,
+  "id" | "title" | "description" | "startedAt" | "finishedAt" | "isStatus"
+>;
+
+//ユーザ型
+export type UserType = Pick<
+  User,
+  "id" | "name" | "jobType" | "githubURL" | "spreadSheetID"
+>;
+
+//制作物
+export type PortfolioType = Pick<
+  Portfolio,
+  "id" | "title" | "description" | "img" | "portfolioURL" | "specSheetId"
+>;
+
+//ユーザ情報編集
+export type userInfoEditType = {
+  name: string;
+  jobType: string;
+  githubURL: string;
+};
