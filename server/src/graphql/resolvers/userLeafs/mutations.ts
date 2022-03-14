@@ -41,6 +41,7 @@ const userLeafsMutations = {
             { "branchInfo._id": { $eq: branchId } },
             { "leafInfo._id": { $eq: leafId } },
           ],
+          new: true,
         }
       );
       return success(result, "更新に成功しました。");

@@ -22,7 +22,7 @@ export const LogListTable: FC<Props> = memo((props) => {
   const { data } = props;
 
   return (
-    <Table variant="simple" colorScheme="green">
+    <Table size="md" variant="simple" colorScheme="green">
       <TableCaption>更新情報</TableCaption>
       <Thead>
         <Tr>
