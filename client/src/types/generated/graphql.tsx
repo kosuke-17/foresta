@@ -1004,6 +1004,32 @@ export type GetSheetProjectByUserIdQuery = {
   };
 };
 
+export type GetPrAndSheetByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetPrAndSheetByUserIdQuery = {
+  __typename?: "Query";
+  pr: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: { __typename?: "SpecSheet"; id: string; selfIntro: string };
+  };
+  other: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      id: string;
+      studyOnOwnTime: string;
+      certification: string;
+      prevJobs: Array<{ __typename?: "prevJobsContent"; content: string }>;
+    };
+  };
+};
+
 export type UpdateUserMutationVariables = Exact<{
   user: UserUpdateInput;
 }>;
@@ -1727,6 +1753,81 @@ export type GetSheetProjectByUserIdLazyQueryHookResult = ReturnType<
 export type GetSheetProjectByUserIdQueryResult = Apollo.QueryResult<
   GetSheetProjectByUserIdQuery,
   GetSheetProjectByUserIdQueryVariables
+>;
+export const GetPrAndSheetByUserIdDocument = gql`
+  query GetPrAndSheetByUserId($userId: String!) {
+    pr: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        selfIntro
+      }
+    }
+    other: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        studyOnOwnTime
+        certification
+        prevJobs {
+          content
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetPrAndSheetByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetPrAndSheetByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPrAndSheetByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPrAndSheetByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetPrAndSheetByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >(GetPrAndSheetByUserIdDocument, options);
+}
+export function useGetPrAndSheetByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >(GetPrAndSheetByUserIdDocument, options);
+}
+export type GetPrAndSheetByUserIdQueryHookResult = ReturnType<
+  typeof useGetPrAndSheetByUserIdQuery
+>;
+export type GetPrAndSheetByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetPrAndSheetByUserIdLazyQuery
+>;
+export type GetPrAndSheetByUserIdQueryResult = Apollo.QueryResult<
+  GetPrAndSheetByUserIdQuery,
+  GetPrAndSheetByUserIdQueryVariables
 >;
 export const UpdateUserDocument = gql`
   mutation UpdateUser($user: UserUpdateInput!) {

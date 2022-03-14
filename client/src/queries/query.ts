@@ -159,6 +159,32 @@ gql`
   }
 `;
 
+//ユーザ情報:自己PR取得+スペックシートその他情報同時取得.
+gql`
+  query GetPrAndSheetByUserId($userId: String!) {
+    pr: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        selfIntro
+      }
+    }
+    other: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        studyOnOwnTime
+        certification
+        prevJobs {
+          content
+        }
+      }
+    }
+  }
+`;
+
 //ユーザ情報(public基本情報)編集
 gql`
   mutation UpdateUser($user: UserUpdateInput!) {
