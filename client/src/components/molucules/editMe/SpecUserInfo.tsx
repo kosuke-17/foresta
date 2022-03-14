@@ -1,10 +1,11 @@
 import { memo, FC, Dispatch, SetStateAction } from "react";
 import { useCookies } from "react-cookie";
-import { Button } from "@chakra-ui/react";
+import { Button, Spinner, Flex } from "@chakra-ui/react";
 
 import { SelectInput } from "../../atoms/editMe/SelectInput";
 import { TextInput } from "../../atoms/editMe/TextInput";
 import { useSpecUserInfo } from "../../../hooks/editMe/useSpecUserInfo";
+import { useGetSheetByUserIdQuery } from "../../../types/generated/graphql";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
@@ -18,6 +19,26 @@ type Props = {
 export const SpecUserInfo: FC<Props> = memo(({ setMenuItem, onClose }) => {
   //cookieからID取得
   const [cookies] = useCookies();
+
+  const { data, loading, error } = useGetSheetByUserIdQuery({
+    variables: {
+      userId: cookies.ForestaID,
+    },
+  });
+  console.dir(JSON.stringify(data?.user.node));
+
+  //読み込み中時の表示
+  if (loading) {
+    return (
+      <Flex justifyContent="center">
+        <Spinner color="green.400" />
+      </Flex>
+    );
+  }
+  //エラー時の表示
+  if (error) {
+    return <Flex justifyContent="center">Error</Flex>;
+  }
   return (
     <>
       <Button type="button" onClick={onClose} _focus={{ boxShadow: "none" }}>
