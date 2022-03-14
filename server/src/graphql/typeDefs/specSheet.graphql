@@ -61,6 +61,7 @@ type Portfolio {
   description: String!
   img: String!
   portfolioURL: String!
+  skills: [String!]!
   userId: ID!
   specSheetId: ID!
 }
@@ -143,6 +144,7 @@ input PortfolioCreateInput {
   description: String!
   img: String
   portfolioURL: String
+  skills: [String]!
   userId: ID!
   specSheetId: ID!
 }
@@ -153,6 +155,7 @@ input PortfolioUpdateInput {
   description: String!
   img: String
   portfolioURL: String
+  skills: [String]!
 }
 
 ################
@@ -160,28 +163,28 @@ input PortfolioUpdateInput {
 
 type ResponseSpecSheet {
   status: String!
-  node: SpecSheet
+  node: SpecSheet!
   msg: String
 }
 type ResponseSpecUserInfo {
   status: String!
-  node: SpecUserInfoSheet
+  node: SpecUserInfoSheet!
   msg: String
 }
 type ResponseSpecTechInfo {
   status: String!
-  node: SpecTechInfoSheet
+  node: SpecTechInfoSheet!
   msg: String
 }
 type ResponseSpecProject {
   status: String!
-  node: SpecProjectSheet
+  node: SpecProjectSheet!
   msg: String
 }
 
 type ResponsePortfolio {
   status: String!
-  node: Portfolio
+  node: Portfolio!
   msg: String
 }
 

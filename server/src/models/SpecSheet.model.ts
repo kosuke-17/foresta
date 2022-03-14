@@ -56,6 +56,7 @@ const PortfolioSchema = new mongoose.Schema({
   img: { type: String },
   portfolioURL: { type: String },
   userId: { type: String, required: true },
+  skills: { type: [String] },
   specSheetId: { type: String, required: true },
 });
 

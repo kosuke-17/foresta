@@ -28,8 +28,8 @@ input UserUpdateInput {
   userId: String!
   name: String!
   jobType: String!
-  email: String!
-  password: String!
+  email: String
+  password: String
   spreadSheetID: String!
   githubURL: String!
 }

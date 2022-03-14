@@ -32,4 +32,5 @@ export {
   UrlDataCreateType,
   UrlDataAddType,
   UrlDataRemoveType,
+  UrlType,
 } from "./userUrl";
