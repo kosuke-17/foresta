@@ -796,7 +796,7 @@ export type BranchInfo = {
 export type LeafInfo = {
   __typename?: "leafInfo";
   id: Scalars["String"];
-  isStatus?: Maybe<Scalars["Boolean"]>;
+  isStatus: Scalars["Boolean"];
   name: Scalars["String"];
   techBranch_id: Scalars["String"];
   techTree_id: Scalars["String"];
