@@ -117,7 +117,13 @@ export const StudyModal: FC<Props> = memo((props) => {
           {title === "記録削除" && (
             <ModalBody>この記事を削除しますか</ModalBody>
           )}
-          <StudyModalInput register={register} errors={errors} />
+          {title === "記録追加" && (
+            <StudyModalInput register={register} errors={errors} />
+          )}
+          {title === "記録編集" && (
+            <StudyModalInput register={register} errors={errors} />
+          )}
+
           <ModalFooter>
             {title === "記録追加" && (
               <StackButton onClick={handleSubmit(addStack)} title="追加する" />
