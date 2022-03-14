@@ -10,6 +10,7 @@ import {
 import { FC, memo } from "react";
 import { GetAllStudyStackQuery } from "../../../types/generated/graphql";
 import { StackList } from "../../../hooks/study/useStackList";
+import styled from "styled-components";
 
 type Props = {
   data: GetAllStudyStackQuery | undefined; //データベースから取得した記録データ
@@ -22,7 +23,7 @@ type Props = {
 export const StudyListTable: FC<Props> = memo((props) => {
   const { stackSumList } = props;
   return (
-    <Table variant="simple" colorScheme="green">
+    <Table size="md" variant="simple" colorScheme="green">
       <TableCaption>学習の記録</TableCaption>
       <Thead>
         <Tr>
@@ -41,10 +42,17 @@ export const StudyListTable: FC<Props> = memo((props) => {
               <Td>{stackList.timeStack}</Td>
               <Td>{stackList.createdAtStart}</Td>
               <Td>{stackList.createdAtLast}</Td>
-              <Td>{stackList.content}</Td>
+              <Td>
+                <_Content>{stackList.content}</_Content>
+              </Td>
             </Tr>
           ))}
       </Tbody>
     </Table>
   );
 });
+
+const _Content = styled.span`
+  overflowx: hidden;
+  white-space: nowrap;
+`;

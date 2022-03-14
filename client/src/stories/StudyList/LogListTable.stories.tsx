@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
-import { LogListTable } from "../components/molucules/stackList/LogListTable";
+import { LogListTable } from "../../components/molucules/stackList/LogListTable";
 
 export default {
   component: LogListTable,
