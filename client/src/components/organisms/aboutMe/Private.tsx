@@ -1,4 +1,4 @@
-import { memo, FC, useState } from "react";
+import { memo, FC } from "react";
 import { Box } from "@chakra-ui/react";
 import styled from "styled-components";
 
@@ -7,24 +7,17 @@ import { UserInfoTable } from "../../molucules/aboutMePrivate/UserInfoTable";
 import { SkillTable } from "../../molucules/aboutMePrivate/SkillTable";
 import { OtherData } from "../../molucules/aboutMePrivate/OtherData";
 import { Project } from "../../molucules/aboutMePrivate/Project";
-import { TextBox } from "../../molucules/aboutMePrivate/TextBox";
+import { SpecPr } from "../../molucules/aboutMePrivate/SpecPr";
 
 /**
  * AboutMeプライベート(スペックシート)ゾーン.
  */
 export const Private: FC = memo(() => {
-  //多分本番はタイトルだけじゃなくてプロジェクトデータを回す
-  const [projects] = useState<Array<string>>([
-    "プロジェクト1",
-    "プロジェクト2",
-    "プロジェクト3",
-  ]);
-
   //アコーディオンに渡すデータ
   const propsDataArray = [
     { title: "基本情報", content: <UserInfoTable />, size: "lg" },
     { title: "スキル要約", content: <SkillTable />, size: "lg" },
-    { title: "自己PR・前職経験", content: <TextBox />, size: "lg" },
+    { title: "自己PR・前職経験", content: <SpecPr />, size: "lg" },
     { title: "その他", content: <OtherData />, size: "lg" },
   ];
 
@@ -38,11 +31,7 @@ export const Private: FC = memo(() => {
         ))}
 
         <_Title>開発経験</_Title>
-        {projects.map((title) => (
-          <div key={title}>
-            <AccordionContent title={title} content={<Project />} size="sm" />
-          </div>
-        ))}
+        <Project />
       </Box>
     </>
   );
