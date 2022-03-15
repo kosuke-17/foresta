@@ -7,6 +7,7 @@ export type TechLeafType = {
 export type TechBranchType = {
   techBranch: {
     name: string;
+    color: string;
     techTree_id: string;
   };
 };
