@@ -160,6 +160,7 @@ gql`
       node {
         id
         title
+        description
         startedAt
         finishedAt
         isStatus
@@ -179,6 +180,24 @@ gql`
         startedAt
         finishedAt
         isStatus
+      }
+    }
+  }
+`;
+
+// Todoを更新する
+gql`
+  mutation updateTodo($todo: TodoUpdateInput!) {
+    updateTodo(todo: $todo) {
+      status
+      node {
+        id
+        title
+        description
+        startedAt
+        finishedAt
+        isStatus
+        userId
       }
     }
   }
