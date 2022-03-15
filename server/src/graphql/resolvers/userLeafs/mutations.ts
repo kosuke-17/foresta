@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { UserLeafs } from "../../../models";
 import { ChangeLeafInfoType } from "../../../types";
 import { calcUserLeafsRate } from "../../../utli/calcLeafRate";
@@ -18,8 +19,14 @@ const userLeafsMutations = {
   changeLeafStatus: async (_: any, { techLeafInfo }: ChangeLeafInfoType) => {
     const { userLeafsId, treeId, branchId, leafId, currentStatus } =
       techLeafInfo;
-    const achievementRate = calcUserLeafsRate("ユーザーIDが入る");
     const changedStatus = !currentStatus;
+
+    const achievementRate = await calcUserLeafsRate(
+      userLeafsId,
+      treeId,
+      changedStatus
+    );
+
     try {
       const result = await UserLeafs.findOneAndUpdate(
         { _id: userLeafsId },
