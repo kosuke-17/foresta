@@ -1,32 +1,67 @@
 import { memo, FC } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Spinner } from "@chakra-ui/react";
 import styled from "styled-components";
-import { Url } from "../../../types/generated/graphql";
 
-type Props = {
-  urlData: Array<Url>; //URL情報
-};
+import { useCookies } from "react-cookie";
+import { useGetUrlByIdQuery, Url } from "../../../types/generated/graphql";
+import { XCircleFillIcon } from "@primer/octicons-react";
 
 /**
  * URL一覧画面.
  */
-export const UrlList: FC<Props> = memo(({ urlData }) => {
+export const UrlList: FC = memo(() => {
+  //cookieからID取得
+  const [cookies] = useCookies();
+  /**
+   * URLリストの取得.
+   */
+  const { data, loading, error } = useGetUrlByIdQuery({
+    variables: {
+      id: cookies.ForestaID,
+    },
+  });
+  const urlData = data?.urls.node.userUrls.user_urls as Array<Url>;
+
+  //読み込み中時の表示
+  if (loading) {
+    return (
+      <Flex justifyContent="center">
+        <Spinner color="green.400" />
+      </Flex>
+    );
+  }
+  // //エラー時の表示
+  if (
+    error?.graphQLErrors[0].message ===
+    "Cannot return null for non-nullable field User.userUrls."
+  ) {
+    return (
+      <Flex justifyContent="center">
+        <XCircleFillIcon size={24} />
+        URLの登録がありません
+      </Flex>
+    );
+  }
+  //エラー時の表示
+  if (error) {
+    return <Flex justifyContent="center">Error</Flex>;
+  }
+
   return (
     <>
       <_Title>■その他URL</_Title>
 
-      {urlData.map((urlItem, i) => (
-        <div key={i}>
-          <Flex mt={5}>
-            <_UrlTitle>『{urlItem.urlName}』</_UrlTitle>
-            <_UrlContent>
+      {urlData &&
+        urlData.map((urlItem) => (
+          <div key={urlItem.urlName}>
+            <Flex mt={5}>
+              『{urlItem.urlName}』
               <a href={urlItem.url} target="blank">
                 {urlItem.url}
               </a>
-            </_UrlContent>
-          </Flex>
-        </div>
-      ))}
+            </Flex>
+          </div>
+        ))}
     </>
   );
 });
@@ -35,14 +70,4 @@ export const UrlList: FC<Props> = memo(({ urlData }) => {
 const _Title = styled.div`
   font-weight: bold;
   font-size: 30px;
-`;
-
-//URLタイトル
-const _UrlTitle = styled.div`
-  margin: auto 10px 0 20px;
-`;
-
-//URL本体
-const _UrlContent = styled.div`
-  width: 1000px;
 `;

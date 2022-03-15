@@ -1,43 +1,64 @@
-import { memo, FC, useState } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { memo, FC, useState, MouseEvent } from "react";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
+import { useCookies } from "react-cookie";
 
 import { SiteDetail } from "./SiteDetail";
 import { ModalSet } from "../../molucules/ModalSet";
 import { SiteImage } from "../../atoms/aboutMePublic/SiteImage";
 import { useModal } from "../../../hooks/useModal";
-import { Portfolio } from "../../../types/generated/graphql";
-
-// 自動生成したPortfolioの型から使用したいプロパティ名だけを指定
-type Props = {
-  siteData?: Array<
-    Pick<Portfolio, "title" | "description" | "img" | "portfolioURL">
-  >;
-};
+import { useGetUserPortfolioByIdQuery } from "../../../types/generated/graphql";
+import { PortfolioType } from "../../../types/types";
+import { XCircleFillIcon } from "@primer/octicons-react";
 
 /**
  * 制作物一覧画面.
  */
-export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
+export const SiteImageBox: FC = memo(() => {
+  //cookieからID取得
+  const [cookies] = useCookies();
+  const { data, loading, error } = useGetUserPortfolioByIdQuery({
+    variables: {
+      id: cookies.ForestaID,
+    },
+  });
+  const portfolioData = data?.portfolios.node.portfolio as Array<PortfolioType>;
+
   //モーダル使用のhooks
   const modalStore = useModal();
   const { onOpen, isOpen, onClose } = modalStore;
-  const [siteItem, setSiteItem] =
-    useState<
-      Pick<Portfolio, "title" | "description" | "img" | "portfolioURL">
-    >();
+  const [portfolioItem, setPortfolioItem] = useState<PortfolioType>();
 
   /**
    *モーダルを開く.
    * @param e 親への伝搬を防ぐため渡す
-   * @param siteItem - 制作物データ
+   * @param item - 制作物データ
    */
-  const openModal = (
-    e: any,
-    siteItem: Pick<Portfolio, "title" | "description" | "img" | "portfolioURL">,
-  ) => {
-    setSiteItem(siteItem);
+  const openModal = (e: MouseEvent, item: PortfolioType) => {
+    setPortfolioItem(item);
     onOpen(e);
   };
+
+  //読み込み中時の表示
+  if (loading) {
+    return (
+      <Flex justifyContent="center">
+        <Spinner color="green.400" />
+      </Flex>
+    );
+  }
+  //エラー時の表示
+  if (error) {
+    return <Flex justifyContent="center">Error</Flex>;
+  }
+  //制作物の登録が0の時の表示
+  if (portfolioData?.length === 0) {
+    return (
+      <Flex justifyContent="center">
+        <XCircleFillIcon size={24} />
+        制作物の登録がありません
+      </Flex>
+    );
+  }
 
   return (
     <>
@@ -58,24 +79,21 @@ export const SiteImageBox: FC<Props> = memo(({ siteData }) => {
         <ModalSet
           isOpen={isOpen}
           onClose={onClose}
-          modalTitle={siteItem?.title}
-          contents={<SiteDetail siteItem={siteItem} />}
+          modalTitle={portfolioItem?.title}
+          contents={<SiteDetail siteItem={portfolioItem} />}
           closeBtnName="とじる"
         />
         <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
-          {siteData &&
-            siteData.map((siteItem, i) => (
-              <div key={i}>
+          {portfolioData &&
+            portfolioData.map((item) => (
+              <div key={item.id}>
                 <Flex
                   direction="column"
                   cursor="pointer"
                   outline="none"
-                  onClick={(e) => openModal(e, siteItem)}
+                  onClick={(e) => openModal(e, item)}
                 >
-                  <SiteImage
-                    siteName={siteItem.title}
-                    imageUrl={siteItem.img}
-                  />
+                  <SiteImage siteName={item.title} imageUrl={item.img} />
                 </Flex>
               </div>
             ))}

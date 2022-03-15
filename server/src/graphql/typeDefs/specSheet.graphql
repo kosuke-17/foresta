@@ -41,8 +41,8 @@ type SpecTechInfoSheet {
 type SpecProjectSheet {
   id: String!
   name: String!
-  startedAt: String!
-  finishedAt: String!
+  startedAt: Date!
+  finishedAt: Date!
   roleSharing: String!
   memberCount: Int!
   content: String!
@@ -109,8 +109,8 @@ input SpecTechInfoUpdateInput {
 input SpecProjectUpdateInput {
   specProjectId: ID!
   name: String!
-  startedAt: String!
-  finishedAt: String!
+  startedAt: Date!
+  finishedAt: Date!
   roleSharing: String!
   memberCount: Int!
   content: String!
