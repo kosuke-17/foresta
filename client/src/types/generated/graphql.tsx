@@ -639,6 +639,7 @@ export type TechAreaCreateInput = {
 
 export type TechBranch = {
   __typename?: "TechBranch";
+  color: Scalars["String"];
   id: Scalars["ID"];
   name: Scalars["String"];
   techLeafs: Array<TechLeaf>;
@@ -646,6 +647,7 @@ export type TechBranch = {
 };
 
 export type TechBranchCreateInput = {
+  color: Scalars["String"];
   name: Scalars["String"];
   techTree_id: Scalars["ID"];
 };
@@ -688,7 +690,7 @@ export type Todo = {
 
 export type TodoAddInput = {
   description: Scalars["String"];
-  finishedAt: Scalars["Date"];
+  finishedAt?: InputMaybe<Scalars["Date"]>;
   isStatus: Scalars["Boolean"];
   startedAt: Scalars["Date"];
   title: Scalars["String"];
@@ -697,7 +699,7 @@ export type TodoAddInput = {
 
 export type TodoUpdateInput = {
   description: Scalars["String"];
-  finishedAt: Scalars["Date"];
+  finishedAt?: InputMaybe<Scalars["Date"]>;
   isStatus: Scalars["Boolean"];
   startedAt: Scalars["Date"];
   title: Scalars["String"];
@@ -766,6 +768,7 @@ export type UserUpdateInput = {
 
 export type UserUrls = {
   __typename?: "UserUrls";
+  id: Scalars["ID"];
   userId: Scalars["ID"];
   user_urls: Array<Url>;
 };
