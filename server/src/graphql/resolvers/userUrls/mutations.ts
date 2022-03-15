@@ -1,39 +1,8 @@
 import { UserUrls } from "../../../models";
-import {
-  UrlDataAddType,
-  UrlDataCreateType,
-  UrlDataRemoveType,
-} from "../../../types";
+import { UrlDataAddType, UrlDataRemoveType } from "../../../types";
 import { error, success } from "../responseStatus";
 
 const userUrlsMutations = {
-  /**
-   * ユーザーのurl情報を作成.
-   *
-   * @param urlData - url情報
-   * @returns success : successステータス,作成したURL情報
-   * @returns error : errorステータス
-   */
-  createUserUrls: async (_: any, { urlData }: UrlDataCreateType) => {
-    const { urlName, url, userId } = urlData;
-
-    try {
-      const createUserUrls = new UserUrls({
-        user_urls: [
-          {
-            urlName: urlName,
-            url: url,
-          },
-        ],
-        userId: userId,
-      });
-
-      const result = await createUserUrls.save();
-      return success(result, "作成に成功しました。");
-    } catch {
-      return error("作成に失敗しました。");
-    }
-  },
   /**
    * ユーザーのurl情報を追加.
    *
