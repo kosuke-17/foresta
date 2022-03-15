@@ -44,7 +44,7 @@ export const TechForest = () => {
   });
   // 技術ツリーデータ(技術エリアデータの状態と一致しているものを絞り込み)
   const treeData = data?.getUserLeafsById.node.myForest.filter(
-    (element) => element.areaId == areaId,
+    (element: any) => element.areaId == areaId,
   );
   // 技術ツリーIdの状態管理
   const [treeId, setTreeId] = useState("");
