@@ -9,13 +9,13 @@ type TechBranch {
   id: ID!
   name: String!
   techTree_id: ID!
-  color: String!
   techLeafs: [TechLeaf!]!
 }
 # id,name,techArea_idは子リゾルバのtechBranchesに渡る
 type TechTree {
   id: ID!
   name: String!
+  color: String!
   techArea_id: ID!
   techBranches: [TechBranch!]!
 }
@@ -35,11 +35,11 @@ input TechLeafCreateInput {
 }
 input TechBranchCreateInput {
   name: String!
-  color: String!
   techTree_id: ID!
 }
 input TechTreeCreateInput {
   name: String!
+  color: String!
   techArea_id: ID!
 }
 input TechAreaCreateInput {

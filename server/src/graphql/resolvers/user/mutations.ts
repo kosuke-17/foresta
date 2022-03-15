@@ -69,6 +69,7 @@ const userMutations = {
             areaId: tree.techArea_id,
             treeName: tree.name,
             achievementRate: 0,
+            color: tree.color,
             branches: techBranches,
           });
           techLeafInfo.myForest.push(userTechInfo);
