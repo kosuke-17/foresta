@@ -275,17 +275,27 @@ export const LOGIN_QUERY = gql`
   }
 `;
 
+// 技術エリアを全件取得
+gql`
+  query GetAllTechArea {
+    getAllTechArea {
+      id
+      name
+    }
+  }
+`;
+
 // 特定のユーザーが保持している技術を全件取得
 gql`
-  query GetUserLeafsById($userId: String!, $areaId: String!) {
-    getUserLeafsById(userId: $userId, areaId: $areaId) {
+  query GetUserLeafsById($userId: String!) {
+    getUserLeafsById(userId: $userId) {
       status
       node {
         id
         myForest {
           id
+          areaId
           treeName
-          achievementRate
           branches {
             id
             name
