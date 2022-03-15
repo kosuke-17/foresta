@@ -1,5 +1,5 @@
 import "chart.js/auto";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { Box, Button, Flex } from "@chakra-ui/react";
 //pluginを使うため
@@ -88,8 +88,17 @@ export const StackTime = memo(() => {
 
   const chartDatas = { datasets };
 
+  const [isDay, setIsDay] = useState(true);
+
+  const monthBtn = () => {
+    setIsDay(false);
+  };
+  const dayBtn = () => {
+    setIsDay(true);
+  };
+
   //型をつけないとoptionを追加できない
-  const options: ChartOptions<any> = {
+  const dayOptions: ChartOptions<any> = {
     //アスペクト比
     // maintainAspectRatio: false,
     scales: {
@@ -103,10 +112,36 @@ export const StackTime = memo(() => {
           },
         },
 
-        // ticks: {
-        //   min: "2021-10-07 09:00:28",
-        //   max: "2021-11-07 01:00:28",
-        // },
+        ticks: {
+          min: "2022-03-07",
+          max: "2022-03-16",
+          maxTicksLimit: 6,
+        },
+      },
+
+      yAxes: {
+        stacked: true,
+      },
+    },
+  };
+  const monthOptions: ChartOptions<any> = {
+    //アスペクト比
+    // maintainAspectRatio: false,
+    scales: {
+      xAxes: {
+        stacked: true,
+        type: "time",
+        time: {
+          unit: "month",
+          displayFormats: {
+            quarter: "MMM YYYY",
+          },
+        },
+
+        ticks: {
+          min: "2021-10-07 09:00:28",
+          max: "2021-11-07 01:00:28",
+        },
       },
 
       yAxes: {
@@ -117,12 +152,27 @@ export const StackTime = memo(() => {
 
   return (
     <div>
-      <h1>Chartjs練習</h1>
-      <Button>月別</Button>
-      <Button>日別</Button>
+      <Box>
+        <Button onClick={monthBtn}>月別</Button>
+        <Button onClick={dayBtn}>日別</Button>
+      </Box>
       <Flex>
         <Box>
-          <Bar data={chartDatas} options={options} height={400} width={500} />
+          {isDay ? (
+            <Bar
+              data={chartDatas}
+              options={dayOptions}
+              height={400}
+              width={500}
+            />
+          ) : (
+            <Bar
+              data={chartDatas}
+              options={monthOptions}
+              height={400}
+              width={500}
+            />
+          )}
         </Box>
         <canvas></canvas>
       </Flex>
