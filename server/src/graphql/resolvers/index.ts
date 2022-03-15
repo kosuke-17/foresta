@@ -1,3 +1,4 @@
+import { dateScalar } from "../ scalar/dateScalar";
 import {
   Portfolio,
   SpecProjectSheet,
@@ -18,8 +19,8 @@ import { userMutations, userQueries } from "./user";
 import { userLeafsMutations, userLeafsQueries } from "./userLeafs";
 import { userTodosMutations, userTodosQueries } from "./userTodos.ts";
 import { userUrlsMutations } from "./userUrls";
-
 const resolvers = {
+  Date: dateScalar,
   Query: {
     ...userQueries,
     ...userTodosQueries,

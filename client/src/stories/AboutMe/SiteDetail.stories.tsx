@@ -8,10 +8,13 @@ export default {
 export const Default: ComponentStoryObj<typeof SiteDetail> = {
   args: {
     siteItem: {
+      id: "Default",
       title: "Default",
       description: "Default",
       img: "Default.jpg",
       portfolioURL: "Default",
+      specSheetId: "Default",
+      skills: ["Default1", "Default2", "Default3"],
     },
   },
   storyName: "デフォルト",

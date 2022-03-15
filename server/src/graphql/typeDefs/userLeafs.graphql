@@ -9,7 +9,6 @@ type treeInfo {
   treeId: ID!
   areaId: ID!
   treeName: String!
-  achievementRate: Int!
   branches: [branchInfo!]!
 }
 type branchInfo {
@@ -23,7 +22,7 @@ type leafInfo {
   name: String!
   techBranch_id: String!
   techTree_id: String!
-  isStatus: Boolean
+  isStatus: Boolean!
 }
 
 ################
@@ -35,7 +34,6 @@ input UserTechLeafUpdateInput {
   treeId: ID!
   branchId: ID!
   leafId: ID!
-  achievementRate: Int!
   currentStatus: Boolean!
 }
 

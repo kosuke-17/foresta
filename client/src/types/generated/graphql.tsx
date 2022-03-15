@@ -19,6 +19,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** Date custom scalar type */
+  Date: any;
 };
 
 export type CreatedTechArea = {
@@ -262,6 +264,7 @@ export type Portfolio = {
   id: Scalars["ID"];
   img: Scalars["String"];
   portfolioURL: Scalars["String"];
+  skills: Array<Scalars["String"]>;
   specSheetId: Scalars["ID"];
   title: Scalars["String"];
   userId: Scalars["ID"];
@@ -271,6 +274,7 @@ export type PortfolioCreateInput = {
   description: Scalars["String"];
   img?: InputMaybe<Scalars["String"]>;
   portfolioURL?: InputMaybe<Scalars["String"]>;
+  skills: Array<InputMaybe<Scalars["String"]>>;
   specSheetId: Scalars["ID"];
   title: Scalars["String"];
   userId: Scalars["ID"];
@@ -281,6 +285,7 @@ export type PortfolioUpdateInput = {
   img?: InputMaybe<Scalars["String"]>;
   portfolioId: Scalars["ID"];
   portfolioURL?: InputMaybe<Scalars["String"]>;
+  skills: Array<InputMaybe<Scalars["String"]>>;
   title: Scalars["String"];
 };
 
@@ -322,6 +327,7 @@ export type Query = {
   getTodoById: ResponseTodo;
   /** ユーザーidに紐づくユーザー情報を取得. */
   getUserById: ResponseUser;
+  /** エリアidに紐づく技術情報を取得. */
   getUserLeafsById: ResponseUserTechLeaf;
 };
 
@@ -392,6 +398,7 @@ export type QueryGetUserByIdArgs = {
 
 /** データを取得する */
 export type QueryGetUserLeafsByIdArgs = {
+  areaId: Scalars["String"];
   userId: Scalars["String"];
 };
 
@@ -404,35 +411,35 @@ export type Res = {
 export type ResponsePortfolio = {
   __typename?: "ResponsePortfolio";
   msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<Portfolio>;
+  node: Portfolio;
   status: Scalars["String"];
 };
 
 export type ResponseSpecProject = {
   __typename?: "ResponseSpecProject";
   msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<SpecProjectSheet>;
+  node: SpecProjectSheet;
   status: Scalars["String"];
 };
 
 export type ResponseSpecSheet = {
   __typename?: "ResponseSpecSheet";
   msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<SpecSheet>;
+  node: SpecSheet;
   status: Scalars["String"];
 };
 
 export type ResponseSpecTechInfo = {
   __typename?: "ResponseSpecTechInfo";
   msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<SpecTechInfoSheet>;
+  node: SpecTechInfoSheet;
   status: Scalars["String"];
 };
 
 export type ResponseSpecUserInfo = {
   __typename?: "ResponseSpecUserInfo";
   msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<SpecUserInfoSheet>;
+  node: SpecUserInfoSheet;
   status: Scalars["String"];
 };
 
@@ -495,7 +502,7 @@ export type SpecProjectSheet = {
   __typename?: "SpecProjectSheet";
   content: Scalars["String"];
   devRoles: Array<Scalars["String"]>;
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   frameworks: Array<Scalars["String"]>;
   id: Scalars["String"];
   languages: Array<Scalars["String"]>;
@@ -506,13 +513,13 @@ export type SpecProjectSheet = {
   otherTools: Array<Scalars["String"]>;
   roleSharing: Scalars["String"];
   specSheetId: Scalars["ID"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
 };
 
 export type SpecProjectUpdateInput = {
   content: Scalars["String"];
   devRoles: Array<Scalars["String"]>;
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   frameworks: Array<Scalars["String"]>;
   languages: Array<Scalars["String"]>;
   libraries: Array<Scalars["String"]>;
@@ -523,7 +530,7 @@ export type SpecProjectUpdateInput = {
   roleSharing: Scalars["String"];
   specProjectId: Scalars["ID"];
   specSheetId: Scalars["ID"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
 };
 
 export type SpecSheet = {
@@ -596,7 +603,7 @@ export type SpecUserInfoUpdateInput = {
 export type StudyStack = {
   __typename?: "StudyStack";
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   id: Scalars["ID"];
   skillTagId: Scalars["ID"];
   timeStack: Scalars["Int"];
@@ -605,7 +612,7 @@ export type StudyStack = {
 
 export type StudyStackAddInput = {
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   skillTagId: Scalars["ID"];
   timeStack: Scalars["Int"];
   userId: Scalars["ID"];
@@ -613,7 +620,7 @@ export type StudyStackAddInput = {
 
 export type StudyStackUpdateInput = {
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   skillTagId: Scalars["ID"];
   studyStackId: Scalars["ID"];
   timeStack: Scalars["Int"];
@@ -671,28 +678,28 @@ export type TechTreeCreateInput = {
 export type Todo = {
   __typename?: "Todo";
   description?: Maybe<Scalars["String"]>;
-  finishedAt?: Maybe<Scalars["String"]>;
+  finishedAt?: Maybe<Scalars["Date"]>;
   id: Scalars["ID"];
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   userId: Scalars["ID"];
 };
 
 export type TodoAddInput = {
   description: Scalars["String"];
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   userId: Scalars["ID"];
 };
 
 export type TodoUpdateInput = {
   description: Scalars["String"];
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   todoId: Scalars["ID"];
   userId: Scalars["ID"];
@@ -730,7 +737,7 @@ export type UserCreateInput = {
 export type UserLeafs = {
   __typename?: "UserLeafs";
   id: Scalars["ID"];
-  myTech: Array<TreeInfo>;
+  myForest: Array<TreeInfo>;
   userId: Scalars["ID"];
 };
 
@@ -740,7 +747,7 @@ export type UserLoginInput = {
 };
 
 export type UserTechLeafUpdateInput = {
-  achievementRate: Scalars["Int"];
+  branchId: Scalars["ID"];
   currentStatus: Scalars["Boolean"];
   leafId: Scalars["ID"];
   treeId: Scalars["ID"];
@@ -748,11 +755,11 @@ export type UserTechLeafUpdateInput = {
 };
 
 export type UserUpdateInput = {
-  email: Scalars["String"];
+  email?: InputMaybe<Scalars["String"]>;
   githubURL: Scalars["String"];
   jobType: Scalars["String"];
   name: Scalars["String"];
-  password: Scalars["String"];
+  password?: InputMaybe<Scalars["String"]>;
   spreadSheetID: Scalars["String"];
   userId: Scalars["String"];
 };
@@ -780,8 +787,16 @@ export type UserUrlsRemoveInput = {
   userUrlsId: Scalars["ID"];
 };
 
+export type BranchInfo = {
+  __typename?: "branchInfo";
+  id: Scalars["ID"];
+  leafs: Array<LeafInfo>;
+  name: Scalars["String"];
+};
+
 export type LeafInfo = {
   __typename?: "leafInfo";
+  id: Scalars["String"];
   isStatus: Scalars["Boolean"];
   name: Scalars["String"];
   techBranch_id: Scalars["String"];
@@ -795,8 +810,9 @@ export type PrevJobsContent = {
 
 export type TreeInfo = {
   __typename?: "treeInfo";
-  achievementRate: Scalars["Int"];
-  leafs: Array<LeafInfo>;
+  areaId: Scalars["ID"];
+  branches: Array<BranchInfo>;
+  id: Scalars["ID"];
   treeId: Scalars["ID"];
   treeName: Scalars["String"];
 };
@@ -809,23 +825,221 @@ export type GetUserByIdQuery = {
   __typename?: "Query";
   user: {
     __typename?: "ResponseUser";
+    status: string;
+    msg: string;
     node: {
       __typename?: "User";
       name: string;
       jobType: string;
       spreadSheetID: string;
       githubURL: string;
+    };
+  };
+};
+
+export type GetUserPortfolioByIdQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type GetUserPortfolioByIdQuery = {
+  __typename?: "Query";
+  portfolios: {
+    __typename?: "ResponseUser";
+    status: string;
+    msg: string;
+    node: {
+      __typename?: "User";
       portfolio: Array<{
         __typename?: "Portfolio";
+        id: string;
         title: string;
         description: string;
         img: string;
         portfolioURL: string;
+        skills: Array<string>;
+        specSheetId: string;
       } | null>;
+    };
+  };
+};
+
+export type GetUrlByIdQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type GetUrlByIdQuery = {
+  __typename?: "Query";
+  urls: {
+    __typename?: "ResponseUser";
+    status: string;
+    msg: string;
+    node: {
+      __typename?: "User";
       userUrls: {
         __typename?: "UserUrls";
         user_urls: Array<{ __typename?: "URL"; urlName: string; url: string }>;
       };
+    };
+  };
+};
+
+export type GetSheetByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetSheetByUserIdQuery = {
+  __typename?: "Query";
+  user: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      userInfo: {
+        __typename?: "SpecUserInfoSheet";
+        stuffID: string;
+        age: number;
+        gender: string;
+        nearestStation: string;
+        startWorkDate: string;
+        seExpAmount: number;
+        pgExpAmount: number;
+        itExpAmount: number;
+        specSheetId: string;
+      };
+    };
+  };
+};
+
+export type GetSheetPrByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetSheetPrByUserIdQuery = {
+  __typename?: "Query";
+  pr: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: { __typename?: "SpecSheet"; id: string; selfIntro: string };
+  };
+};
+
+export type GetSheetSkillByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetSheetSkillByUserIdQuery = {
+  __typename?: "Query";
+  skills: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      techInfo: {
+        __typename?: "SpecTechInfoSheet";
+        operationEnvs: Array<string>;
+        languages: Array<string>;
+        frameworks: Array<string>;
+        libraries: Array<string>;
+        otherTools: Array<string>;
+        devRoles: Array<string>;
+        specSheetId: string;
+      };
+    };
+  };
+};
+
+export type GetSheetOtherByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetSheetOtherByUserIdQuery = {
+  __typename?: "Query";
+  other: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      id: string;
+      studyOnOwnTime: string;
+      certification: string;
+      prevJobs: Array<{ __typename?: "prevJobsContent"; content: string }>;
+    };
+  };
+};
+
+export type GetSheetProjectByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetSheetProjectByUserIdQuery = {
+  __typename?: "Query";
+  projects: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      project: Array<{
+        __typename?: "SpecProjectSheet";
+        id: string;
+        name: string;
+        startedAt: any;
+        finishedAt: any;
+        roleSharing: string;
+        memberCount: number;
+        content: string;
+        operationEnvs: Array<string>;
+        languages: Array<string>;
+        frameworks: Array<string>;
+        libraries: Array<string>;
+        otherTools: Array<string>;
+        devRoles: Array<string>;
+        specSheetId: string;
+      }>;
+    };
+  };
+};
+
+export type GetSpreadSheetIdQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type GetSpreadSheetIdQuery = {
+  __typename?: "Query";
+  getUserById: {
+    __typename?: "ResponseUser";
+    status: string;
+    msg: string;
+    node: { __typename?: "User"; spreadSheetID: string };
+  };
+};
+
+export type GetPrAndSheetByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetPrAndSheetByUserIdQuery = {
+  __typename?: "Query";
+  pr: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: { __typename?: "SpecSheet"; id: string; selfIntro: string };
+  };
+  other: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      id: string;
+      studyOnOwnTime: string;
+      certification: string;
+      prevJobs: Array<{ __typename?: "prevJobsContent"; content: string }>;
     };
   };
 };
@@ -837,6 +1051,56 @@ export type UpdateUserMutationVariables = Exact<{
 export type UpdateUserMutation = {
   __typename?: "Mutation";
   updateUser: { __typename?: "ResponseUser"; status: string; msg: string };
+};
+
+export type CreatePortfolioMutationVariables = Exact<{
+  portfolio: PortfolioCreateInput;
+}>;
+
+export type CreatePortfolioMutation = {
+  __typename?: "Mutation";
+  createPortfolio: {
+    __typename?: "ResponsePortfolio";
+    status: string;
+    msg?: string | null;
+  };
+};
+
+export type UpdatePortfolioMutationVariables = Exact<{
+  portfolio: PortfolioUpdateInput;
+}>;
+
+export type UpdatePortfolioMutation = {
+  __typename?: "Mutation";
+  updatePortfolio: {
+    __typename?: "ResponsePortfolio";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "Portfolio";
+      id: string;
+      title: string;
+      description: string;
+      img: string;
+      portfolioURL: string;
+      skills: Array<string>;
+      userId: string;
+      specSheetId: string;
+    };
+  };
+};
+
+export type RemovePortfolioMutationVariables = Exact<{
+  portfolioId: Scalars["String"];
+}>;
+
+export type RemovePortfolioMutation = {
+  __typename?: "Mutation";
+  removePortfolio: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
 };
 
 export type UserLoginMutationVariables = Exact<{
@@ -889,7 +1153,7 @@ export type GetAllStudyStackQuery = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     }>;
@@ -910,7 +1174,7 @@ export type GetStudyStackByIdQuery = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -931,7 +1195,7 @@ export type AddStudyStackMutation = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -952,7 +1216,7 @@ export type UpdateStudyStackMutation = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -980,8 +1244,8 @@ export type GetAllTodoByUserQuery = {
       __typename?: "Todo";
       id: string;
       title: string;
-      startedAt: string;
-      finishedAt?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
       isStatus: boolean;
     }>;
   };
@@ -1000,8 +1264,8 @@ export type GetTodoByIdQuery = {
       id: string;
       title: string;
       description?: string | null;
-      startedAt: string;
-      finishedAt?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
       isStatus: boolean;
     };
   };
@@ -1010,23 +1274,13 @@ export type GetTodoByIdQuery = {
 export const GetUserByIdDocument = gql`
   query GetUserById($id: String!) {
     user: getUserById(_id: $id) {
+      status
+      msg
       node {
         name
         jobType
         spreadSheetID
         githubURL
-        portfolio {
-          title
-          description
-          img
-          portfolioURL
-        }
-        userUrls {
-          user_urls {
-            urlName
-            url
-          }
-        }
       }
     }
   }
@@ -1080,6 +1334,627 @@ export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserByIdQuery,
   GetUserByIdQueryVariables
 >;
+export const GetUserPortfolioByIdDocument = gql`
+  query GetUserPortfolioById($id: String!) {
+    portfolios: getUserById(_id: $id) {
+      status
+      msg
+      node {
+        portfolio {
+          id
+          title
+          description
+          img
+          portfolioURL
+          skills
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUserPortfolioByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserPortfolioByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserPortfolioByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserPortfolioByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserPortfolioByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >(GetUserPortfolioByIdDocument, options);
+}
+export function useGetUserPortfolioByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >(GetUserPortfolioByIdDocument, options);
+}
+export type GetUserPortfolioByIdQueryHookResult = ReturnType<
+  typeof useGetUserPortfolioByIdQuery
+>;
+export type GetUserPortfolioByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserPortfolioByIdLazyQuery
+>;
+export type GetUserPortfolioByIdQueryResult = Apollo.QueryResult<
+  GetUserPortfolioByIdQuery,
+  GetUserPortfolioByIdQueryVariables
+>;
+export const GetUrlByIdDocument = gql`
+  query GetUrlById($id: String!) {
+    urls: getUserById(_id: $id) {
+      status
+      msg
+      node {
+        userUrls {
+          user_urls {
+            urlName
+            url
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUrlByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUrlByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUrlByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUrlByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUrlByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUrlByIdQuery,
+    GetUrlByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUrlByIdQuery, GetUrlByIdQueryVariables>(
+    GetUrlByIdDocument,
+    options,
+  );
+}
+export function useGetUrlByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUrlByIdQuery,
+    GetUrlByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetUrlByIdQuery, GetUrlByIdQueryVariables>(
+    GetUrlByIdDocument,
+    options,
+  );
+}
+export type GetUrlByIdQueryHookResult = ReturnType<typeof useGetUrlByIdQuery>;
+export type GetUrlByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUrlByIdLazyQuery
+>;
+export type GetUrlByIdQueryResult = Apollo.QueryResult<
+  GetUrlByIdQuery,
+  GetUrlByIdQueryVariables
+>;
+export const GetSheetByUserIdDocument = gql`
+  query GetSheetByUserId($userId: String!) {
+    user: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        userInfo {
+          stuffID
+          age
+          gender
+          nearestStation
+          startWorkDate
+          seExpAmount
+          pgExpAmount
+          itExpAmount
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSheetByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetSheetByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSheetByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSheetByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSheetByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSheetByUserIdQuery,
+    GetSheetByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetSheetByUserIdQuery, GetSheetByUserIdQueryVariables>(
+    GetSheetByUserIdDocument,
+    options,
+  );
+}
+export function useGetSheetByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSheetByUserIdQuery,
+    GetSheetByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSheetByUserIdQuery,
+    GetSheetByUserIdQueryVariables
+  >(GetSheetByUserIdDocument, options);
+}
+export type GetSheetByUserIdQueryHookResult = ReturnType<
+  typeof useGetSheetByUserIdQuery
+>;
+export type GetSheetByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetSheetByUserIdLazyQuery
+>;
+export type GetSheetByUserIdQueryResult = Apollo.QueryResult<
+  GetSheetByUserIdQuery,
+  GetSheetByUserIdQueryVariables
+>;
+export const GetSheetPrByUserIdDocument = gql`
+  query GetSheetPrByUserId($userId: String!) {
+    pr: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        selfIntro
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSheetPrByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetSheetPrByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSheetPrByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSheetPrByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSheetPrByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSheetPrByUserIdQuery,
+    GetSheetPrByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetSheetPrByUserIdQuery,
+    GetSheetPrByUserIdQueryVariables
+  >(GetSheetPrByUserIdDocument, options);
+}
+export function useGetSheetPrByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSheetPrByUserIdQuery,
+    GetSheetPrByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSheetPrByUserIdQuery,
+    GetSheetPrByUserIdQueryVariables
+  >(GetSheetPrByUserIdDocument, options);
+}
+export type GetSheetPrByUserIdQueryHookResult = ReturnType<
+  typeof useGetSheetPrByUserIdQuery
+>;
+export type GetSheetPrByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetSheetPrByUserIdLazyQuery
+>;
+export type GetSheetPrByUserIdQueryResult = Apollo.QueryResult<
+  GetSheetPrByUserIdQuery,
+  GetSheetPrByUserIdQueryVariables
+>;
+export const GetSheetSkillByUserIdDocument = gql`
+  query GetSheetSkillByUserId($userId: String!) {
+    skills: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        techInfo {
+          operationEnvs
+          languages
+          frameworks
+          libraries
+          otherTools
+          devRoles
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSheetSkillByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetSheetSkillByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSheetSkillByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSheetSkillByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSheetSkillByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSheetSkillByUserIdQuery,
+    GetSheetSkillByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetSheetSkillByUserIdQuery,
+    GetSheetSkillByUserIdQueryVariables
+  >(GetSheetSkillByUserIdDocument, options);
+}
+export function useGetSheetSkillByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSheetSkillByUserIdQuery,
+    GetSheetSkillByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSheetSkillByUserIdQuery,
+    GetSheetSkillByUserIdQueryVariables
+  >(GetSheetSkillByUserIdDocument, options);
+}
+export type GetSheetSkillByUserIdQueryHookResult = ReturnType<
+  typeof useGetSheetSkillByUserIdQuery
+>;
+export type GetSheetSkillByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetSheetSkillByUserIdLazyQuery
+>;
+export type GetSheetSkillByUserIdQueryResult = Apollo.QueryResult<
+  GetSheetSkillByUserIdQuery,
+  GetSheetSkillByUserIdQueryVariables
+>;
+export const GetSheetOtherByUserIdDocument = gql`
+  query GetSheetOtherByUserId($userId: String!) {
+    other: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        studyOnOwnTime
+        certification
+        prevJobs {
+          content
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSheetOtherByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetSheetOtherByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSheetOtherByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSheetOtherByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSheetOtherByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSheetOtherByUserIdQuery,
+    GetSheetOtherByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetSheetOtherByUserIdQuery,
+    GetSheetOtherByUserIdQueryVariables
+  >(GetSheetOtherByUserIdDocument, options);
+}
+export function useGetSheetOtherByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSheetOtherByUserIdQuery,
+    GetSheetOtherByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSheetOtherByUserIdQuery,
+    GetSheetOtherByUserIdQueryVariables
+  >(GetSheetOtherByUserIdDocument, options);
+}
+export type GetSheetOtherByUserIdQueryHookResult = ReturnType<
+  typeof useGetSheetOtherByUserIdQuery
+>;
+export type GetSheetOtherByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetSheetOtherByUserIdLazyQuery
+>;
+export type GetSheetOtherByUserIdQueryResult = Apollo.QueryResult<
+  GetSheetOtherByUserIdQuery,
+  GetSheetOtherByUserIdQueryVariables
+>;
+export const GetSheetProjectByUserIdDocument = gql`
+  query GetSheetProjectByUserId($userId: String!) {
+    projects: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        project {
+          id
+          name
+          startedAt
+          finishedAt
+          roleSharing
+          memberCount
+          content
+          operationEnvs
+          languages
+          frameworks
+          libraries
+          otherTools
+          devRoles
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSheetProjectByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetSheetProjectByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSheetProjectByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSheetProjectByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSheetProjectByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSheetProjectByUserIdQuery,
+    GetSheetProjectByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetSheetProjectByUserIdQuery,
+    GetSheetProjectByUserIdQueryVariables
+  >(GetSheetProjectByUserIdDocument, options);
+}
+export function useGetSheetProjectByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSheetProjectByUserIdQuery,
+    GetSheetProjectByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSheetProjectByUserIdQuery,
+    GetSheetProjectByUserIdQueryVariables
+  >(GetSheetProjectByUserIdDocument, options);
+}
+export type GetSheetProjectByUserIdQueryHookResult = ReturnType<
+  typeof useGetSheetProjectByUserIdQuery
+>;
+export type GetSheetProjectByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetSheetProjectByUserIdLazyQuery
+>;
+export type GetSheetProjectByUserIdQueryResult = Apollo.QueryResult<
+  GetSheetProjectByUserIdQuery,
+  GetSheetProjectByUserIdQueryVariables
+>;
+export const GetSpreadSheetIdDocument = gql`
+  query GetSpreadSheetID($id: String!) {
+    getUserById(_id: $id) {
+      status
+      msg
+      node {
+        spreadSheetID
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSpreadSheetIdQuery__
+ *
+ * To run a query within a React component, call `useGetSpreadSheetIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSpreadSheetIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSpreadSheetIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetSpreadSheetIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSpreadSheetIdQuery,
+    GetSpreadSheetIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetSpreadSheetIdQuery, GetSpreadSheetIdQueryVariables>(
+    GetSpreadSheetIdDocument,
+    options,
+  );
+}
+export function useGetSpreadSheetIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSpreadSheetIdQuery,
+    GetSpreadSheetIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSpreadSheetIdQuery,
+    GetSpreadSheetIdQueryVariables
+  >(GetSpreadSheetIdDocument, options);
+}
+export type GetSpreadSheetIdQueryHookResult = ReturnType<
+  typeof useGetSpreadSheetIdQuery
+>;
+export type GetSpreadSheetIdLazyQueryHookResult = ReturnType<
+  typeof useGetSpreadSheetIdLazyQuery
+>;
+export type GetSpreadSheetIdQueryResult = Apollo.QueryResult<
+  GetSpreadSheetIdQuery,
+  GetSpreadSheetIdQueryVariables
+>;
+export const GetPrAndSheetByUserIdDocument = gql`
+  query GetPrAndSheetByUserId($userId: String!) {
+    pr: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        selfIntro
+      }
+    }
+    other: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        studyOnOwnTime
+        certification
+        prevJobs {
+          content
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetPrAndSheetByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetPrAndSheetByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPrAndSheetByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPrAndSheetByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetPrAndSheetByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >(GetPrAndSheetByUserIdDocument, options);
+}
+export function useGetPrAndSheetByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >(GetPrAndSheetByUserIdDocument, options);
+}
+export type GetPrAndSheetByUserIdQueryHookResult = ReturnType<
+  typeof useGetPrAndSheetByUserIdQuery
+>;
+export type GetPrAndSheetByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetPrAndSheetByUserIdLazyQuery
+>;
+export type GetPrAndSheetByUserIdQueryResult = Apollo.QueryResult<
+  GetPrAndSheetByUserIdQuery,
+  GetPrAndSheetByUserIdQueryVariables
+>;
 export const UpdateUserDocument = gql`
   mutation UpdateUser($user: UserUpdateInput!) {
     updateUser(user: $user) {
@@ -1130,6 +2005,169 @@ export type UpdateUserMutationResult =
 export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
   UpdateUserMutation,
   UpdateUserMutationVariables
+>;
+export const CreatePortfolioDocument = gql`
+  mutation CreatePortfolio($portfolio: PortfolioCreateInput!) {
+    createPortfolio(portfolio: $portfolio) {
+      status
+      msg
+    }
+  }
+`;
+export type CreatePortfolioMutationFn = Apollo.MutationFunction<
+  CreatePortfolioMutation,
+  CreatePortfolioMutationVariables
+>;
+
+/**
+ * __useCreatePortfolioMutation__
+ *
+ * To run a mutation, you first call `useCreatePortfolioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePortfolioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPortfolioMutation, { data, loading, error }] = useCreatePortfolioMutation({
+ *   variables: {
+ *      portfolio: // value for 'portfolio'
+ *   },
+ * });
+ */
+export function useCreatePortfolioMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreatePortfolioMutation,
+    CreatePortfolioMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreatePortfolioMutation,
+    CreatePortfolioMutationVariables
+  >(CreatePortfolioDocument, options);
+}
+export type CreatePortfolioMutationHookResult = ReturnType<
+  typeof useCreatePortfolioMutation
+>;
+export type CreatePortfolioMutationResult =
+  Apollo.MutationResult<CreatePortfolioMutation>;
+export type CreatePortfolioMutationOptions = Apollo.BaseMutationOptions<
+  CreatePortfolioMutation,
+  CreatePortfolioMutationVariables
+>;
+export const UpdatePortfolioDocument = gql`
+  mutation UpdatePortfolio($portfolio: PortfolioUpdateInput!) {
+    updatePortfolio(portfolio: $portfolio) {
+      status
+      msg
+      node {
+        id
+        title
+        description
+        img
+        portfolioURL
+        skills
+        userId
+        specSheetId
+      }
+    }
+  }
+`;
+export type UpdatePortfolioMutationFn = Apollo.MutationFunction<
+  UpdatePortfolioMutation,
+  UpdatePortfolioMutationVariables
+>;
+
+/**
+ * __useUpdatePortfolioMutation__
+ *
+ * To run a mutation, you first call `useUpdatePortfolioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePortfolioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePortfolioMutation, { data, loading, error }] = useUpdatePortfolioMutation({
+ *   variables: {
+ *      portfolio: // value for 'portfolio'
+ *   },
+ * });
+ */
+export function useUpdatePortfolioMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdatePortfolioMutation,
+    UpdatePortfolioMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdatePortfolioMutation,
+    UpdatePortfolioMutationVariables
+  >(UpdatePortfolioDocument, options);
+}
+export type UpdatePortfolioMutationHookResult = ReturnType<
+  typeof useUpdatePortfolioMutation
+>;
+export type UpdatePortfolioMutationResult =
+  Apollo.MutationResult<UpdatePortfolioMutation>;
+export type UpdatePortfolioMutationOptions = Apollo.BaseMutationOptions<
+  UpdatePortfolioMutation,
+  UpdatePortfolioMutationVariables
+>;
+export const RemovePortfolioDocument = gql`
+  mutation RemovePortfolio($portfolioId: String!) {
+    removePortfolio(portfolioId: $portfolioId) {
+      status
+      msg
+    }
+  }
+`;
+export type RemovePortfolioMutationFn = Apollo.MutationFunction<
+  RemovePortfolioMutation,
+  RemovePortfolioMutationVariables
+>;
+
+/**
+ * __useRemovePortfolioMutation__
+ *
+ * To run a mutation, you first call `useRemovePortfolioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemovePortfolioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removePortfolioMutation, { data, loading, error }] = useRemovePortfolioMutation({
+ *   variables: {
+ *      portfolioId: // value for 'portfolioId'
+ *   },
+ * });
+ */
+export function useRemovePortfolioMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemovePortfolioMutation,
+    RemovePortfolioMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    RemovePortfolioMutation,
+    RemovePortfolioMutationVariables
+  >(RemovePortfolioDocument, options);
+}
+export type RemovePortfolioMutationHookResult = ReturnType<
+  typeof useRemovePortfolioMutation
+>;
+export type RemovePortfolioMutationResult =
+  Apollo.MutationResult<RemovePortfolioMutation>;
+export type RemovePortfolioMutationOptions = Apollo.BaseMutationOptions<
+  RemovePortfolioMutation,
+  RemovePortfolioMutationVariables
 >;
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {

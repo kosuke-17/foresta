@@ -4,7 +4,6 @@ export type ChangeLeafInfoType = {
     treeId: string;
     branchId: string;
     leafId: string;
-    achievementRate: number;
     currentStatus: boolean;
   };
 };

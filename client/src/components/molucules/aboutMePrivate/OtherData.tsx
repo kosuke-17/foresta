@@ -1,51 +1,62 @@
 import { memo, FC } from "react";
 import styled from "styled-components";
-import { UnorderedList, ListItem } from "@chakra-ui/react";
+import { Spinner, Flex } from "@chakra-ui/react";
+import { useCookies } from "react-cookie";
+import { returnCodeToBr } from "../../../utils/methods";
 
-import { TitleAndContent } from "../../atoms/aboutMePrivate/TitleAndContent";
-
+import { useGetSheetOtherByUserIdQuery } from "../../../types/generated/graphql";
 
 /**
  * その他のデータ.
  * @remarks - 業務外、資格、前職について
  */
 export const OtherData: FC = memo(() => {
-  //業務外テストデータ
-  const outsideOfWorkData = [
-    {
-      name: "本を読んでいる",
-      content: "ほげほげほげほげほげほげほげほげほげほげほげほげほげほげ",
-    },
-    {
-      name: "毎日10分の学習",
-      content: "ほげほげほげほげほげほげほげほげほげほげほげほげほげほげ",
-    },
-  ];
+  //cookieからID取得
+  const [cookies] = useCookies();
 
-  //前職テストデータ
-  const formerJob = {
-    name: "業務名",
-    content: "ほげほげほげほげほげほげほげほげほげほげほげほげほげほげ",
-  };
+  /**
+   * スペックシートユーザ自己PR取得.
+   */
+  const { data, loading, error } = useGetSheetOtherByUserIdQuery({
+    variables: {
+      userId: cookies.ForestaID,
+    },
+  });
+
+  //業務外
+  const studyOnOwnTime = data?.other.node.studyOnOwnTime;
+  //資格
+  const certification = data?.other.node.certification;
+  //前職経験
+  const prevJobs = data?.other.node.prevJobs;
+
+  //読み込み中時の表示
+  if (loading) {
+    return (
+      <Flex justifyContent="center">
+        <Spinner color="green.400" />
+      </Flex>
+    );
+  }
+  //エラー時の表示
+  if (error) {
+    return <Flex justifyContent="center">Error</Flex>;
+  }
 
   return (
     <>
       <_Title>業務外に取り組んでいること</_Title>
-      {outsideOfWorkData.map((item) => (
-        <div key={item.name}>
-          <TitleAndContent title={item.name} content={item.content} />
-        </div>
-      ))}
+      {studyOnOwnTime}
 
       <_Title>資格</_Title>
-      <UnorderedList listStyleType="none" ml={5}>
-        <ListItem>ITパスポート(00年0月)</ListItem>
-        <ListItem>基本情報技術者試験(00年0月)</ListItem>
-        <ListItem>色彩検定1級(00年0月)</ListItem>
-      </UnorderedList>
+      {certification}
+
       <div>
         <_Title>前職</_Title>
-        <TitleAndContent title={formerJob.name} content={formerJob.content} />
+        {prevJobs &&
+          prevJobs?.map((job) => (
+            <_Job key={job.content}>{returnCodeToBr(job.content)}</_Job>
+          ))}
       </div>
     </>
   );
@@ -56,4 +67,9 @@ const _Title = styled.div`
   font-weight: bold;
   font-size: 30px;
   margin: 40px 0px 10px 0px;
+`;
+
+const _Job = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
