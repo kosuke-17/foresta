@@ -21,7 +21,7 @@ export const MenuBar: FC = memo(() => {
       <ModalSet
         isOpen={isOpen}
         onClose={onClose}
-        modalTitle={menuItem}
+        modalTitle={`${menuItem}を更新`}
         closeBtn={false}
         contents={
           <EditMe
