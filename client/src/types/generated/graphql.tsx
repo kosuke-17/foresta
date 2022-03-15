@@ -19,6 +19,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** Date custom scalar type */
+  Date: any;
 };
 
 export type CreatedTechArea = {
@@ -500,7 +502,7 @@ export type SpecProjectSheet = {
   __typename?: "SpecProjectSheet";
   content: Scalars["String"];
   devRoles: Array<Scalars["String"]>;
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   frameworks: Array<Scalars["String"]>;
   id: Scalars["String"];
   languages: Array<Scalars["String"]>;
@@ -511,13 +513,13 @@ export type SpecProjectSheet = {
   otherTools: Array<Scalars["String"]>;
   roleSharing: Scalars["String"];
   specSheetId: Scalars["ID"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
 };
 
 export type SpecProjectUpdateInput = {
   content: Scalars["String"];
   devRoles: Array<Scalars["String"]>;
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   frameworks: Array<Scalars["String"]>;
   languages: Array<Scalars["String"]>;
   libraries: Array<Scalars["String"]>;
@@ -528,7 +530,7 @@ export type SpecProjectUpdateInput = {
   roleSharing: Scalars["String"];
   specProjectId: Scalars["ID"];
   specSheetId: Scalars["ID"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
 };
 
 export type SpecSheet = {
@@ -601,7 +603,7 @@ export type SpecUserInfoUpdateInput = {
 export type StudyStack = {
   __typename?: "StudyStack";
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   id: Scalars["ID"];
   skillTagId: Scalars["ID"];
   timeStack: Scalars["Int"];
@@ -610,7 +612,7 @@ export type StudyStack = {
 
 export type StudyStackAddInput = {
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   skillTagId: Scalars["ID"];
   timeStack: Scalars["Int"];
   userId: Scalars["ID"];
@@ -618,7 +620,7 @@ export type StudyStackAddInput = {
 
 export type StudyStackUpdateInput = {
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   skillTagId: Scalars["ID"];
   studyStackId: Scalars["ID"];
   timeStack: Scalars["Int"];
@@ -676,28 +678,28 @@ export type TechTreeCreateInput = {
 export type Todo = {
   __typename?: "Todo";
   description?: Maybe<Scalars["String"]>;
-  finishedAt?: Maybe<Scalars["String"]>;
+  finishedAt?: Maybe<Scalars["Date"]>;
   id: Scalars["ID"];
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   userId: Scalars["ID"];
 };
 
 export type TodoAddInput = {
   description: Scalars["String"];
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   userId: Scalars["ID"];
 };
 
 export type TodoUpdateInput = {
   description: Scalars["String"];
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   todoId: Scalars["ID"];
   userId: Scalars["ID"];
@@ -745,7 +747,6 @@ export type UserLoginInput = {
 };
 
 export type UserTechLeafUpdateInput = {
-  achievementRate: Scalars["Int"];
   branchId: Scalars["ID"];
   currentStatus: Scalars["Boolean"];
   leafId: Scalars["ID"];
@@ -809,7 +810,6 @@ export type PrevJobsContent = {
 
 export type TreeInfo = {
   __typename?: "treeInfo";
-  achievementRate: Scalars["Int"];
   areaId: Scalars["ID"];
   branches: Array<BranchInfo>;
   id: Scalars["ID"];
@@ -987,8 +987,8 @@ export type GetSheetProjectByUserIdQuery = {
         __typename?: "SpecProjectSheet";
         id: string;
         name: string;
-        startedAt: string;
-        finishedAt: string;
+        startedAt: any;
+        finishedAt: any;
         roleSharing: string;
         memberCount: number;
         content: string;
@@ -1001,6 +1001,20 @@ export type GetSheetProjectByUserIdQuery = {
         specSheetId: string;
       }>;
     };
+  };
+};
+
+export type GetSpreadSheetIdQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type GetSpreadSheetIdQuery = {
+  __typename?: "Query";
+  getUserById: {
+    __typename?: "ResponseUser";
+    status: string;
+    msg: string;
+    node: { __typename?: "User"; spreadSheetID: string };
   };
 };
 
@@ -1037,6 +1051,56 @@ export type UpdateUserMutationVariables = Exact<{
 export type UpdateUserMutation = {
   __typename?: "Mutation";
   updateUser: { __typename?: "ResponseUser"; status: string; msg: string };
+};
+
+export type CreatePortfolioMutationVariables = Exact<{
+  portfolio: PortfolioCreateInput;
+}>;
+
+export type CreatePortfolioMutation = {
+  __typename?: "Mutation";
+  createPortfolio: {
+    __typename?: "ResponsePortfolio";
+    status: string;
+    msg?: string | null;
+  };
+};
+
+export type UpdatePortfolioMutationVariables = Exact<{
+  portfolio: PortfolioUpdateInput;
+}>;
+
+export type UpdatePortfolioMutation = {
+  __typename?: "Mutation";
+  updatePortfolio: {
+    __typename?: "ResponsePortfolio";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "Portfolio";
+      id: string;
+      title: string;
+      description: string;
+      img: string;
+      portfolioURL: string;
+      skills: Array<string>;
+      userId: string;
+      specSheetId: string;
+    };
+  };
+};
+
+export type RemovePortfolioMutationVariables = Exact<{
+  portfolioId: Scalars["String"];
+}>;
+
+export type RemovePortfolioMutation = {
+  __typename?: "Mutation";
+  removePortfolio: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
 };
 
 export type UserLoginMutationVariables = Exact<{
@@ -1089,7 +1153,7 @@ export type GetAllStudyStackQuery = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     }>;
@@ -1110,7 +1174,7 @@ export type GetStudyStackByIdQuery = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -1131,7 +1195,7 @@ export type AddStudyStackMutation = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -1152,7 +1216,7 @@ export type UpdateStudyStackMutation = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -1180,8 +1244,8 @@ export type GetAllTodoByUserQuery = {
       __typename?: "Todo";
       id: string;
       title: string;
-      startedAt: string;
-      finishedAt?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
       isStatus: boolean;
     }>;
   };
@@ -1200,8 +1264,8 @@ export type GetTodoByIdQuery = {
       id: string;
       title: string;
       description?: string | null;
-      startedAt: string;
-      finishedAt?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
       isStatus: boolean;
     };
   };
@@ -1754,6 +1818,68 @@ export type GetSheetProjectByUserIdQueryResult = Apollo.QueryResult<
   GetSheetProjectByUserIdQuery,
   GetSheetProjectByUserIdQueryVariables
 >;
+export const GetSpreadSheetIdDocument = gql`
+  query GetSpreadSheetID($id: String!) {
+    getUserById(_id: $id) {
+      status
+      msg
+      node {
+        spreadSheetID
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSpreadSheetIdQuery__
+ *
+ * To run a query within a React component, call `useGetSpreadSheetIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSpreadSheetIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSpreadSheetIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetSpreadSheetIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSpreadSheetIdQuery,
+    GetSpreadSheetIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetSpreadSheetIdQuery, GetSpreadSheetIdQueryVariables>(
+    GetSpreadSheetIdDocument,
+    options,
+  );
+}
+export function useGetSpreadSheetIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSpreadSheetIdQuery,
+    GetSpreadSheetIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSpreadSheetIdQuery,
+    GetSpreadSheetIdQueryVariables
+  >(GetSpreadSheetIdDocument, options);
+}
+export type GetSpreadSheetIdQueryHookResult = ReturnType<
+  typeof useGetSpreadSheetIdQuery
+>;
+export type GetSpreadSheetIdLazyQueryHookResult = ReturnType<
+  typeof useGetSpreadSheetIdLazyQuery
+>;
+export type GetSpreadSheetIdQueryResult = Apollo.QueryResult<
+  GetSpreadSheetIdQuery,
+  GetSpreadSheetIdQueryVariables
+>;
 export const GetPrAndSheetByUserIdDocument = gql`
   query GetPrAndSheetByUserId($userId: String!) {
     pr: getSheetByUserId(userId: $userId) {
@@ -1879,6 +2005,169 @@ export type UpdateUserMutationResult =
 export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
   UpdateUserMutation,
   UpdateUserMutationVariables
+>;
+export const CreatePortfolioDocument = gql`
+  mutation CreatePortfolio($portfolio: PortfolioCreateInput!) {
+    createPortfolio(portfolio: $portfolio) {
+      status
+      msg
+    }
+  }
+`;
+export type CreatePortfolioMutationFn = Apollo.MutationFunction<
+  CreatePortfolioMutation,
+  CreatePortfolioMutationVariables
+>;
+
+/**
+ * __useCreatePortfolioMutation__
+ *
+ * To run a mutation, you first call `useCreatePortfolioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePortfolioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPortfolioMutation, { data, loading, error }] = useCreatePortfolioMutation({
+ *   variables: {
+ *      portfolio: // value for 'portfolio'
+ *   },
+ * });
+ */
+export function useCreatePortfolioMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreatePortfolioMutation,
+    CreatePortfolioMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreatePortfolioMutation,
+    CreatePortfolioMutationVariables
+  >(CreatePortfolioDocument, options);
+}
+export type CreatePortfolioMutationHookResult = ReturnType<
+  typeof useCreatePortfolioMutation
+>;
+export type CreatePortfolioMutationResult =
+  Apollo.MutationResult<CreatePortfolioMutation>;
+export type CreatePortfolioMutationOptions = Apollo.BaseMutationOptions<
+  CreatePortfolioMutation,
+  CreatePortfolioMutationVariables
+>;
+export const UpdatePortfolioDocument = gql`
+  mutation UpdatePortfolio($portfolio: PortfolioUpdateInput!) {
+    updatePortfolio(portfolio: $portfolio) {
+      status
+      msg
+      node {
+        id
+        title
+        description
+        img
+        portfolioURL
+        skills
+        userId
+        specSheetId
+      }
+    }
+  }
+`;
+export type UpdatePortfolioMutationFn = Apollo.MutationFunction<
+  UpdatePortfolioMutation,
+  UpdatePortfolioMutationVariables
+>;
+
+/**
+ * __useUpdatePortfolioMutation__
+ *
+ * To run a mutation, you first call `useUpdatePortfolioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePortfolioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePortfolioMutation, { data, loading, error }] = useUpdatePortfolioMutation({
+ *   variables: {
+ *      portfolio: // value for 'portfolio'
+ *   },
+ * });
+ */
+export function useUpdatePortfolioMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdatePortfolioMutation,
+    UpdatePortfolioMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdatePortfolioMutation,
+    UpdatePortfolioMutationVariables
+  >(UpdatePortfolioDocument, options);
+}
+export type UpdatePortfolioMutationHookResult = ReturnType<
+  typeof useUpdatePortfolioMutation
+>;
+export type UpdatePortfolioMutationResult =
+  Apollo.MutationResult<UpdatePortfolioMutation>;
+export type UpdatePortfolioMutationOptions = Apollo.BaseMutationOptions<
+  UpdatePortfolioMutation,
+  UpdatePortfolioMutationVariables
+>;
+export const RemovePortfolioDocument = gql`
+  mutation RemovePortfolio($portfolioId: String!) {
+    removePortfolio(portfolioId: $portfolioId) {
+      status
+      msg
+    }
+  }
+`;
+export type RemovePortfolioMutationFn = Apollo.MutationFunction<
+  RemovePortfolioMutation,
+  RemovePortfolioMutationVariables
+>;
+
+/**
+ * __useRemovePortfolioMutation__
+ *
+ * To run a mutation, you first call `useRemovePortfolioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemovePortfolioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removePortfolioMutation, { data, loading, error }] = useRemovePortfolioMutation({
+ *   variables: {
+ *      portfolioId: // value for 'portfolioId'
+ *   },
+ * });
+ */
+export function useRemovePortfolioMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemovePortfolioMutation,
+    RemovePortfolioMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    RemovePortfolioMutation,
+    RemovePortfolioMutationVariables
+  >(RemovePortfolioDocument, options);
+}
+export type RemovePortfolioMutationHookResult = ReturnType<
+  typeof useRemovePortfolioMutation
+>;
+export type RemovePortfolioMutationResult =
+  Apollo.MutationResult<RemovePortfolioMutation>;
+export type RemovePortfolioMutationOptions = Apollo.BaseMutationOptions<
+  RemovePortfolioMutation,
+  RemovePortfolioMutationVariables
 >;
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
