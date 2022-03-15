@@ -159,6 +159,19 @@ gql`
   }
 `;
 
+//ユーザ情報:スペックシートIDのみ取得.
+gql`
+  query GetSpreadSheetID($id: String!) {
+    getUserById(_id: $id) {
+      status
+      msg
+      node {
+        spreadSheetID
+      }
+    }
+  }
+`;
+
 //ユーザ情報:自己PR取得+スペックシートその他情報同時取得.
 gql`
   query GetPrAndSheetByUserId($userId: String!) {
@@ -189,6 +202,46 @@ gql`
 gql`
   mutation UpdateUser($user: UserUpdateInput!) {
     updateUser(user: $user) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:制作物新規追加
+gql`
+  mutation CreatePortfolio($portfolio: PortfolioCreateInput!) {
+    createPortfolio(portfolio: $portfolio) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:制作物編集
+gql`
+  mutation UpdatePortfolio($portfolio: PortfolioUpdateInput!) {
+    updatePortfolio(portfolio: $portfolio) {
+      status
+      msg
+      node {
+        id
+        title
+        description
+        img
+        portfolioURL
+        skills
+        userId
+        specSheetId
+      }
+    }
+  }
+`;
+
+//ユーザ情報:制作物削除
+gql`
+  mutation RemovePortfolio($portfolioId: String!) {
+    removePortfolio(portfolioId: $portfolioId) {
       status
       msg
     }

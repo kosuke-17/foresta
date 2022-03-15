@@ -2,12 +2,12 @@ import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useCookies } from "react-cookie";
 
 import {
   GetUserPortfolioByIdDocument,
-  Portfolio,
-  useRemovePortfolioMutation,
-  useUpdatePortfolioMutation,
+  useCreatePortfolioMutation,
+  useGetSpreadSheetIdQuery,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
 
@@ -23,6 +23,8 @@ const schema = yup.object().shape({
   img: yup.string(),
   //URL
   portfolioURL: yup.string(),
+  //specSheetId
+  specSheetId: yup.string(),
 });
 
 /**
@@ -34,33 +36,38 @@ const schema = yup.object().shape({
  * - onSubmit:更新ボタンを押した時のメソッド
  * @params userData - 初期表示用データ
  */
-export const useUserPortfolio = (
-  portfolioData: Portfolio,
+export const useNewPortfolio = (
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
+  //cookieからID取得
+  const [cookies] = useCookies();
+
+  const { data } = useGetSpreadSheetIdQuery({
+    variables: {
+      id: cookies.ForestaID,
+    },
+  });
+
+  const specSheetId = data?.getUserById.node.spreadSheetID;
+
   // バリデーション機能を呼び出し
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: {
-      title: portfolioData.title,
-      description: portfolioData.description,
-      img: portfolioData.img,
-      portfolioURL: portfolioData.portfolioURL,
-    },
   });
+
+  setValue("specSheetId", specSheetId);
 
   //トーストの使用
   const toast = useToast();
 
   //使用技術の配列
-  const [hookSkillArray, setHookSkillArray] = useState<Array<string>>([
-    ...portfolioData.skills,
-  ]);
+  const [hookSkillArray, setHookSkillArray] = useState<Array<string>>([]);
 
   /**
    * 技術の追加.
@@ -86,9 +93,9 @@ export const useUserPortfolio = (
   }, [onClose, setMenuItem]);
 
   /**
-   * 制作物情報更新.（リフェッチ機能）
+   * 制作物情報新規追加.（リフェッチ機能）
    */
-  const [updatePortfolio] = useUpdatePortfolioMutation({
+  const [updatePortfolio] = useCreatePortfolioMutation({
     refetchQueries: [GetUserPortfolioByIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
@@ -103,17 +110,18 @@ export const useUserPortfolio = (
         await updatePortfolio({
           variables: {
             portfolio: {
-              portfolioId: portfolioData.id,
               title: data.title,
               description: data.description,
               img: data.img,
               portfolioURL: data.portfolioURL,
               skills: hookSkillArray,
+              userId: cookies.ForestaID,
+              specSheetId: data.specSheetId,
             },
           },
         });
         toast({
-          title: "変更しました",
+          title: "追加しました",
           status: "success",
           isClosable: true,
         });
@@ -122,35 +130,8 @@ export const useUserPortfolio = (
         console.log(error);
       }
     },
-    [cancel, hookSkillArray, portfolioData.id, toast, updatePortfolio],
+    [cancel, cookies.ForestaID, hookSkillArray, toast, updatePortfolio],
   );
-
-  /**
-   * 制作物情報更新(削除用).（リフェッチ機能）
-   */
-  const [deletePortfolio] = useRemovePortfolioMutation({
-    refetchQueries: [GetUserPortfolioByIdDocument], //データを表示するクエリーのDocument
-    awaitRefetchQueries: true,
-  });
-
-  /**
-   * 削除ボタンを押した際に呼ばれる.
-   */
-  const onDelete = useCallback(async () => {
-    try {
-      await deletePortfolio({
-        variables: { portfolioId: portfolioData.id },
-      });
-      toast({
-        title: "削除しました",
-        status: "success",
-        isClosable: true,
-      });
-      cancel();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [cancel, deletePortfolio, portfolioData.id, toast]);
 
   return {
     handleSubmit,
@@ -161,6 +142,5 @@ export const useUserPortfolio = (
     hookSkillArray,
     setHookSkillArray,
     addSkill,
-    onDelete,
   };
 };

@@ -23,6 +23,7 @@ const TechLeafSchema = new mongoose.Schema({
  */
 const TechBranchSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  color: { type: String, required: true },
   techTree_id: { type: String, required: true },
 });
 

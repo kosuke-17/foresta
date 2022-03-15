@@ -37,10 +37,11 @@ const techForestMutations = {
    * @returns error : errorステータス
    */
   createTechBranch: async (_: any, { techBranch }: TechBranchType) => {
-    const { name } = techBranch;
+    const { name, color, techTree_id } = techBranch;
 
     try {
-      const createTechBranch = new TechBranch({ name });
+      const createTechBranch = new TechBranch({ name, color, techTree_id });
+
       const result = await createTechBranch.save();
       return success(result, "追加に成功しました。");
     } catch {

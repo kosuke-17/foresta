@@ -17,7 +17,7 @@ input TodoAddInput {
   title: String!
   description: String!
   startedAt: Date!
-  finishedAt: Date!
+  finishedAt: Date
   isStatus: Boolean!
   userId: ID!
 }
@@ -26,7 +26,7 @@ input TodoUpdateInput {
   title: String!
   description: String!
   startedAt: Date!
-  finishedAt: Date!
+  finishedAt: Date
   isStatus: Boolean!
   userId: ID!
 }

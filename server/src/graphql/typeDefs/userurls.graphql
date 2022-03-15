@@ -1,8 +1,10 @@
 type URL {
+  id: ID!
   urlName: String!
   url: String!
 }
 type UserUrls {
+  id: ID!
   user_urls: [URL!]!
   userId: ID!
 }
