@@ -2,7 +2,7 @@ import { FC, memo } from "react";
 import { Button, Container } from "@chakra-ui/react";
 
 import { TodoList } from "./TodoList";
-import { TodoDetail } from "./TodoDetail";
+import { TodoModal } from "./TodoModal";
 import { Calendar } from "../../molucules/todos/Calendar";
 import { useGetAllTodoByUserQuery } from "../../../types/generated/graphql";
 import { useTodoModal } from "../../../hooks/study/useTodoModal";
@@ -45,7 +45,7 @@ export const TodosArea: FC = memo(() => {
       />
 
       {/* Todo詳細 */}
-      <TodoDetail isOpen={isOpen} onClose={onClose} />
+      <TodoModal isOpen={isOpen} onClose={onClose} />
     </Container>
   );
 });
