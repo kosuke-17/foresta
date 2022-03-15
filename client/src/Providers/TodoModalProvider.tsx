@@ -6,7 +6,7 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { TodoData } from "../types/types";
+import { TodoData, TodoModalModeType } from "../types/types";
 
 type Props = {
   children: ReactNode;
@@ -14,8 +14,8 @@ type Props = {
 
 // contextのタイプ定義
 type ContextType = {
-  modalMode: "read" | "edit" | "add" | "delete";
-  setModalMode: Dispatch<SetStateAction<"read" | "edit" | "add" | "delete">>;
+  modalMode: TodoModalModeType;
+  setModalMode: Dispatch<SetStateAction<TodoModalModeType>>;
   todo: TodoData;
   setTodo: Dispatch<SetStateAction<TodoData>>;
 };
@@ -30,9 +30,7 @@ export const TodoModalProvider: FC<Props> = (props) => {
   const { children } = props;
 
   // モーダルのモード (read, edit, add, delete)
-  const [modalMode, setModalMode] = useState<
-    "read" | "edit" | "add" | "delete"
-  >("read");
+  const [modalMode, setModalMode] = useState<TodoModalModeType>("read");
   // モーダルに表示する対象のTodo
   const [todo, setTodo] = useState<TodoData>({} as TodoData);
 

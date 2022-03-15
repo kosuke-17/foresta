@@ -29,7 +29,7 @@ export const useTodoModal = () => {
    */
   const openAddModal = () => {
     // モーダルのモードを追加モードに設定
-    setModalMode("add");
+    setModalMode("create");
     // Todoは空のオブジェクトを設定
     setTodo({} as TodoData);
     onOpen();

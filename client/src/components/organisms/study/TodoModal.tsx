@@ -34,7 +34,7 @@ export const TodoModal: FC<Props> = memo((props) => {
         <ModalOverlay />
         <ModalContent bg="green.50">
           {/* 編集モードもしくは追加モード */}
-          {(modalMode === "edit" || modalMode === "add") && (
+          {(modalMode === "update" || modalMode === "create") && (
             <TodoDetailEdit todo={todo} setModalMode={setModalMode} />
           )}
           {/* 閲覧モード */}
@@ -54,7 +54,7 @@ export const TodoModal: FC<Props> = memo((props) => {
                       削除
                     </>
                   }
-                  func1={() => setModalMode("edit")}
+                  func1={() => setModalMode("update")}
                   func2={() => alert("削除")}
                 />
               </ModalHeader>

@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import styled from "styled-components";
 
-import type { TodoData } from "../../../types/types";
+import type { TodoData, TodoModalModeType } from "../../../types/types";
 import { DateRangePicker } from "../../atoms/study/DateRangePicker";
 import { useEditTodo } from "../../../hooks/study/useEditTodo";
 import { TodoHeaderButtons } from "../../molucules/todos/TodoHeaderButtons";
@@ -18,7 +18,7 @@ import { TodoModalContext } from "../../../Providers/TodoModalProvider";
 
 type Props = {
   todo: TodoData;
-  setModalMode: Dispatch<SetStateAction<"read" | "edit" | "add" | "delete">>;
+  setModalMode: Dispatch<SetStateAction<TodoModalModeType>>;
 };
 
 /**
@@ -47,7 +47,7 @@ export const TodoDetailEdit: FC<Props> = memo((props) => {
   return (
     <>
       <ModalHeader>
-        {modalMode === "edit" && (
+        {modalMode === "update" && (
           <TodoHeaderButtons
             label1={"更新"}
             label2={"キャンセル"}
@@ -55,7 +55,7 @@ export const TodoDetailEdit: FC<Props> = memo((props) => {
             func2={cancelEdit}
           />
         )}
-        {modalMode === "add" && (
+        {modalMode === "create" && (
           <TodoHeaderButtons
             label1={"作成"}
             label2={"キャンセル"}

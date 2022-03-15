@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 // import { useCookies } from 'react-cookie';
 import { getFormattedDate } from "../../utils/methods";
 import { useUpdateTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
-import { TodoData } from "../../types/types";
+import { TodoData, TodoModalModeType } from "../../types/types";
 
 //バリデーションチェック
 const schema = yup.object().shape({
@@ -23,7 +23,7 @@ type Data = {
   description: string;
 }
 
-export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateAction<"read" | "edit" | "add" | "delete">>) => {
+export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateAction<TodoModalModeType>>) => {
   //cookie情報取得
   // const [cookies] = useCookies();
 
