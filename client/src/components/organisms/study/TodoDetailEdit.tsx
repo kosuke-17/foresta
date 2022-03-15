@@ -1,83 +1,98 @@
-import { FC, memo, useCallback, useState } from "react";
+import { Dispatch, FC, memo, SetStateAction, useContext } from "react";
 import {
-  ModalBody,
-  Heading,
   Flex,
   Box,
   Input,
   Textarea,
   Checkbox,
+  ModalHeader,
+  ModalBody,
 } from "@chakra-ui/react";
 import styled from "styled-components";
 
-import { getformattedTodoDate } from "../../../utils/methods";
-import type { TodoDetail } from "../../../types/types";
+import type { TodoData } from "../../../types/types";
+import { DateRangePicker } from "../../atoms/study/DateRangePicker";
+import { useEditTodo } from "../../../hooks/study/useEditTodo";
+import { TodoHeaderButtons } from "../../molucules/todos/TodoHeaderButtons";
+import { TodoModalContext } from "../../../Providers/TodoModalProvider";
 
 type Props = {
-  todo: TodoDetail;
+  todo: TodoData;
+  setModalMode: Dispatch<SetStateAction<"read" | "edit" | "add" | "delete">>;
 };
 
 /**
  * Todoの詳細を編集するコンポーネント.
  */
 export const TodoDetailEdit: FC<Props> = memo((props) => {
-  const { todo } = props;
+  const { todo, setModalMode } = props;
+  const { modalMode } = useContext(TodoModalContext);
 
-  // Todoのタイトル
-  const [title, setTitle] = useState(todo.title);
+  const {
+    register,
+    handleSubmit,
+    onUpdateTodo,
+    errors,
+    watch,
+    startedAt,
+    setStartedAt,
+    finishedAt,
+    setFinishedAt,
+  } = useEditTodo(todo, setModalMode);
 
-  // Todoのメモ
-  const [description, setDescription] = useState(todo.description || " ");
-
-  // Todoのステータス
-  const [isStatus, setIsStatus] = useState(todo.isStatus);
-
-  /**
-   * タイトルを入力したときのハンドラ.
-   */
-  const inputTitle = useCallback((e) => {
-    setTitle(e.target.value);
-  }, []);
-
-  /**
-   * メモを入力したときのハンドラ.
-   */
-  const inputDescription = useCallback((e) => {
-    setDescription(e.target.value);
-  }, []);
-
-  /**
-   * ステータスのチェックを切り替えたときのハンドラ.
-   */
-  const onToggleStatus = useCallback(() => {
-    setIsStatus((isStatus: boolean) => !isStatus);
-  }, []);
+  const cancelEdit = () => {
+    setModalMode("read");
+  };
 
   return (
     <>
-      {todo && (
+      <ModalHeader>
+        {modalMode === "edit" && (
+          <TodoHeaderButtons
+            label1={"更新"}
+            label2={"キャンセル"}
+            func1={handleSubmit(onUpdateTodo)}
+            func2={cancelEdit}
+          />
+        )}
+        {modalMode === "add" && (
+          <TodoHeaderButtons
+            label1={"作成"}
+            label2={"キャンセル"}
+            func1={handleSubmit(onUpdateTodo)}
+            func2={cancelEdit}
+          />
+        )}
+      </ModalHeader>
+
+      <ModalBody padding="0 4rem">
         <>
-          <Heading as="h2" size="lg" mb={5}>
+          <_Label>Todoタイトル: </_Label>
+          <div>
             <Input
-              value={title}
-              onChange={inputTitle}
               focusBorderColor="green.200"
               bg="white"
+              {...register("title")}
             />
-          </Heading>
-          <div>
-            <_Label>日付: </_Label>
-
-            {getformattedTodoDate(todo.startedAt, todo.finishedAt)}
+            <Box textColor="red" fontSize="xs">
+              {errors.title?.message}
+            </Box>
           </div>
+          <Flex alignItems="center" gap={2} mt={2}>
+            <_Label>日付: </_Label>
+            <DateRangePicker
+              startedAt={startedAt}
+              setStartedAt={setStartedAt}
+              finishedAt={finishedAt}
+              setFinishedAt={setFinishedAt}
+            />
+          </Flex>
+
           <Flex alignItems="center">
-            <div>
-              <_Label>ステータス: </_Label>
-              {isStatus ? "完了" : "未完了"}
-            </div>
+            <_Label>ステータス: </_Label>
+            {watch("isStatus") ? "完了" : "未完了"}
             <Checkbox
-              isChecked={isStatus}
-              onChange={onToggleStatus}
+              {...register("isStatus")}
               size="lg"
               colorScheme="teal"
               bg="white"
@@ -87,21 +102,20 @@ export const TodoDetailEdit: FC<Props> = memo((props) => {
 
           <Box mt={5}>
             <_Label>メモ</_Label>
-
             <Textarea
-              value={description}
-              onChange={inputDescription}
+              {...register("description")}
               mb={5}
               bg="white"
               focusBorderColor="green.200"
             />
           </Box>
         </>
-      )}
+      </ModalBody>
     </>
   );
 });
 
 const _Label = styled.span`
   font-weight: bold;
+  white-space: nowrap;
 `;
