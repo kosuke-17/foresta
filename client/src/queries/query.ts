@@ -4,22 +4,181 @@ import { gql } from "@apollo/client";
 gql`
   query GetUserById($id: String!) {
     user: getUserById(_id: $id) {
+      status
+      msg
       node {
         name
         jobType
         spreadSheetID
         githubURL
+      }
+    }
+  }
+`;
+
+//ユーザ情報:制作物取得.
+gql`
+  query GetUserPortfolioById($id: String!) {
+    portfolios: getUserById(_id: $id) {
+      status
+      msg
+      node {
         portfolio {
+          id
           title
           description
           img
           portfolioURL
+          skills
+          specSheetId
         }
+      }
+    }
+  }
+`;
+
+//ユーザ情報:URL取得.
+gql`
+  query GetUrlById($id: String!) {
+    urls: getUserById(_id: $id) {
+      status
+      msg
+      node {
         userUrls {
           user_urls {
             urlName
             url
           }
+        }
+      }
+    }
+  }
+`;
+
+//ユーザ情報:スペックシート基本情報取得
+gql`
+  query GetSheetByUserId($userId: String!) {
+    user: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        userInfo {
+          stuffID
+          age
+          gender
+          nearestStation
+          startWorkDate
+          seExpAmount
+          pgExpAmount
+          itExpAmount
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+//ユーザ情報:スペックシート自己PR取得
+gql`
+  query GetSheetPrByUserId($userId: String!) {
+    pr: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        selfIntro
+      }
+    }
+  }
+`;
+
+//ユーザ情報:スペックシートスキル要約取得
+gql`
+  query GetSheetSkillByUserId($userId: String!) {
+    skills: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        techInfo {
+          operationEnvs
+          languages
+          frameworks
+          libraries
+          otherTools
+          devRoles
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+//ユーザ情報:スペックシートその他の情報取得
+gql`
+  query GetSheetOtherByUserId($userId: String!) {
+    other: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        studyOnOwnTime
+        certification
+        prevJobs {
+          content
+        }
+      }
+    }
+  }
+`;
+
+//ユーザ情報:スペックシート開発経験取得
+gql`
+  query GetSheetProjectByUserId($userId: String!) {
+    projects: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        project {
+          id
+          name
+          startedAt
+          finishedAt
+          roleSharing
+          memberCount
+          content
+          operationEnvs
+          languages
+          frameworks
+          libraries
+          otherTools
+          devRoles
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+//ユーザ情報:自己PR取得+スペックシートその他情報同時取得.
+gql`
+  query GetPrAndSheetByUserId($userId: String!) {
+    pr: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        selfIntro
+      }
+    }
+    other: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        studyOnOwnTime
+        certification
+        prevJobs {
+          content
         }
       }
     }

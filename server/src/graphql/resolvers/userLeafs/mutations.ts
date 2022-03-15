@@ -1,5 +1,6 @@
 import { UserLeafs } from "../../../models";
 import { ChangeLeafInfoType } from "../../../types";
+import { calcUserLeafsRate } from "../../../utli/calcLeafRate";
 import { error, success } from "../responseStatus";
 /**
  * ## 習得技術の変更処理
@@ -15,15 +16,9 @@ const userLeafsMutations = {
    * @returns error : errorステータス
    */
   changeLeafStatus: async (_: any, { techLeafInfo }: ChangeLeafInfoType) => {
-    const {
-      userLeafsId,
-      treeId,
-      branchId,
-      achievementRate,
-      leafId,
-      currentStatus,
-    } = techLeafInfo;
-
+    const { userLeafsId, treeId, branchId, leafId, currentStatus } =
+      techLeafInfo;
+    const achievementRate = calcUserLeafsRate("ユーザーIDが入る");
     const changedStatus = !currentStatus;
     try {
       const result = await UserLeafs.findOneAndUpdate(

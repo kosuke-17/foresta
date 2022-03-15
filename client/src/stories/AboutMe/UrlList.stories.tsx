@@ -6,13 +6,5 @@ export default {
 } as ComponentMeta<typeof UrlList>;
 
 export const Default: ComponentStoryObj<typeof UrlList> = {
-  args: {
-    urlData: [
-      {
-        url: "Default",
-        urlName: "Default",
-      },
-    ],
-  },
   storyName: "デフォルト",
 };
