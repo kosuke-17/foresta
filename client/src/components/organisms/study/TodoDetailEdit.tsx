@@ -19,19 +19,21 @@ import { TodoModalContext } from "../../../Providers/TodoModalProvider";
 type Props = {
   todo: TodoData;
   setModalMode: Dispatch<SetStateAction<TodoModalModeType>>;
+  onClose: () => void;
 };
 
 /**
  * Todoの詳細を編集するコンポーネント.
  */
 export const TodoDetailEdit: FC<Props> = memo((props) => {
-  const { todo, setModalMode } = props;
+  const { todo, setModalMode, onClose } = props;
   const { modalMode } = useContext(TodoModalContext);
 
   const {
     register,
     handleSubmit,
     onUpdateTodo,
+    onCreateTodo,
     errors,
     watch,
     startedAt,
@@ -39,10 +41,6 @@ export const TodoDetailEdit: FC<Props> = memo((props) => {
     finishedAt,
     setFinishedAt,
   } = useEditTodo(todo, setModalMode);
-
-  const cancelEdit = () => {
-    setModalMode("read");
-  };
 
   return (
     <>
@@ -52,15 +50,15 @@ export const TodoDetailEdit: FC<Props> = memo((props) => {
             label1={"更新"}
             label2={"キャンセル"}
             func1={handleSubmit(onUpdateTodo)}
-            func2={cancelEdit}
+            func2={() => setModalMode("read")}
           />
         )}
         {modalMode === "create" && (
           <TodoHeaderButtons
             label1={"作成"}
             label2={"キャンセル"}
-            func1={handleSubmit(onUpdateTodo)}
-            func2={cancelEdit}
+            func1={handleSubmit(onCreateTodo)}
+            func2={onClose}
           />
         )}
       </ModalHeader>

@@ -3,8 +3,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 // import { useCookies } from 'react-cookie';
-import { getFormattedDate } from "../../utils/methods";
-import { useUpdateTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
+
+import { useUpdateTodoMutation, useAddTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
 import { TodoData, TodoModalModeType } from "../../types/types";
 
 //バリデーションチェック
@@ -23,14 +23,26 @@ type Data = {
   description: string;
 }
 
+/**
+ * Todoを更新・作成するためのHook.
+ * @param todo Todoデータ
+ * @param setModalMode Todoモーダルのモードの更新関数
+ */
 export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateAction<TodoModalModeType>>) => {
   //cookie情報取得
   // const [cookies] = useCookies();
 
+  //Todoデータを更新するためのmutation
   const [updateTodo] = useUpdateTodoMutation({
     refetchQueries: [GetAllTodoByUserDocument],
   });
 
+  // Todoを新規追加するためのmutation
+  const [addTodo] = useAddTodoMutation({
+    refetchQueries: [GetAllTodoByUserDocument],
+  });
+
+  // react-hoook-formのuseFormを使用
   const {
     register,
     handleSubmit,
@@ -54,25 +66,58 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
     todo.finishedAt ? new Date(todo.finishedAt) : null,
   );
 
+  /**
+   * Todoを新規作成する.
+   */
+  const onCreateTodo = async (data: Data) => {
+
+    const newData = {
+      title: data.title,
+      description: data.description,
+      startedAt,
+      finishedAt: finishedAt || null,
+      isStatus: data.isStatus,
+      userId: "621f1cba386085f036353ecd",
+      // userId: cookies.ForestaID,
+    };
+    try {
+      const addTodoData = await addTodo({
+        variables: {
+          todo: newData,
+        }
+      });
+      console.log(addTodoData);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+    
+  };
+
+  /**
+   * Todoを更新する.
+   */
   const onUpdateTodo = async (data: Data) => {
     console.log(startedAt, finishedAt);
     const newData = {
       todoId: todo.id,
       title: data.title,
       description: data.description,
-      startedAt: getFormattedDate(startedAt),
-      finishedAt: finishedAt ? getFormattedDate(finishedAt) : "",
+      startedAt,
+      finishedAt: finishedAt || null,
       isStatus: data.isStatus,
       userId: "621f1cba386085f036353ecd",
       // userId: cookies.ForestaID,
     };
 
-    const upDateTodoDate = await updateTodo({
+
+    const upDateTodoData = await updateTodo({
       variables: {
         todo: newData,
       }
     });
-    console.log(upDateTodoDate);
+    console.log(upDateTodoData);
     setModalMode("read");
   };
 
@@ -80,6 +125,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
     register,
     handleSubmit,
     onUpdateTodo,
+    onCreateTodo,
     errors,
     reset,
     watch,

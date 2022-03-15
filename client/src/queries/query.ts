@@ -361,3 +361,20 @@ gql`
     }
   }
 `;
+
+// Todoを追加する
+gql`
+  mutation AddTodo($todo: TodoAddInput!) {
+    addTodo(todo: $todo) {
+      status
+      node {
+        id
+        title
+        description
+        startedAt
+        finishedAt
+        isStatus
+      }
+    }
+  }
+`;
