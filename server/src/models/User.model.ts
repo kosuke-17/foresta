@@ -50,7 +50,7 @@ const UserUrlsSchema = new mongoose.Schema({
  */
 const UseTodoSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String },
   startedAt: { type: String, required: true },
   finishedAt: { type: String, required: true },
   isStatus: { type: Boolean, required: true },

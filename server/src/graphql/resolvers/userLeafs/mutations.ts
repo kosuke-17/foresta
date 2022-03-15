@@ -18,8 +18,15 @@ const userLeafsMutations = {
   changeLeafStatus: async (_: any, { techLeafInfo }: ChangeLeafInfoType) => {
     const { userLeafsId, treeId, branchId, leafId, currentStatus } =
       techLeafInfo;
-    const achievementRate = calcUserLeafsRate("ユーザーIDが入る");
     const changedStatus = !currentStatus;
+
+    // 習得率の計算を行い値を受け取る
+    const achievementRate = await calcUserLeafsRate(
+      userLeafsId,
+      treeId,
+      changedStatus
+    );
+
     try {
       const result = await UserLeafs.findOneAndUpdate(
         { _id: userLeafsId },

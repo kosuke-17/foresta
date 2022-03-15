@@ -5,19 +5,13 @@ type URL {
 }
 type UserUrls {
   id: ID!
-  user_urls: [URL!]!
+  user_urls: [URL]!
   userId: ID!
 }
 
 ################
 #リクエストボディ
 
-# ユーザーに紐づくurlを作成する
-input UserUrlsCreateInput {
-  userId: ID!
-  urlName: String!
-  url: String!
-}
 # ユーザーに紐づくurlを追加する
 input UserUrlsAddInput {
   urlId: ID!
