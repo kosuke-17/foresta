@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { UserLeafs } from "../../../models";
 import { ChangeLeafInfoType } from "../../../types";
 import { calcUserLeafsRate } from "../../../utli/calcLeafRate";
@@ -21,6 +20,7 @@ const userLeafsMutations = {
       techLeafInfo;
     const changedStatus = !currentStatus;
 
+    // 習得率の計算を行い値を受け取る
     const achievementRate = await calcUserLeafsRate(
       userLeafsId,
       treeId,
