@@ -14,7 +14,7 @@ type Query {
   """
   エリアidに紐づく技術情報を取得.
   """
-  getUserLeafsById(userId: String!, areaId: String!): ResponseUserTechLeaf!
+  getUserLeafsById(userId: String!): ResponseUserTechLeaf!
   """
   ユーザーのTodo一覧情報を取得.
   """
