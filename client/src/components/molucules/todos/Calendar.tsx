@@ -1,4 +1,4 @@
-import { Dispatch, FC, memo, SetStateAction, useState, useEffect } from "react";
+import { FC, memo, useState, useEffect } from "react";
 import FullCalendar, {
   addDays,
   EventClickArg,
@@ -15,8 +15,7 @@ import { isNonNullTodoData } from "../../organisms/study/TodoList";
 type Props = {
   todos: Array<TodoData | null>;
   error: ApolloError | undefined;
-  onOpen: (e: any) => void;
-  setTodoId: Dispatch<SetStateAction<string>>;
+  openReadModal: (todo: TodoData) => void;
 };
 
 /**
@@ -25,7 +24,7 @@ type Props = {
  * @param todos Todoの配列
  */
 export const Calendar: FC<Props> = memo((props) => {
-  const { todos, error, onOpen, setTodoId } = props;
+  const { todos, error, openReadModal } = props;
 
   // カレンダーに渡すデータ
   const [events, setEvents] = useState([] as EventInput);
@@ -37,9 +36,16 @@ export const Calendar: FC<Props> = memo((props) => {
    * @param info イベントが持っている情報
    */
   const onEventClick = (info: EventClickArg) => {
-    setTodoId(info.event.id);
-    onOpen(info.jsEvent); // info.jsEventでクリックしたイベントのDOMを取得できる
-    console.log(info);
+    const todo = {
+      id: info.event.id,
+      title: info.event.title,
+      description: info.event.extendedProps.description,
+      startedAt: info.event.extendedProps.startedAt,
+      finishedAt: info.event.extendedProps.finishedAt,
+      isStatus: info.event.extendedProps.isStatus,
+    };
+
+    openReadModal(todo);
   };
 
   /**
@@ -48,13 +54,11 @@ export const Calendar: FC<Props> = memo((props) => {
   useEffect(() => {
     // todosの中身がnullかどうかで型ガード
     if (!isNonNullTodoData(todos)) {
-      console.log(todos);
       return;
     }
     const events = todos.map((todo) => {
       return {
-        id: todo.id,
-        title: todo.title,
+        ...todo,
         start: todo.startedAt,
         end: todo.finishedAt ? addDays(new Date(todo.finishedAt), 1) : null,
         allDay: true,
