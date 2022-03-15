@@ -73,6 +73,7 @@ const UserLeafsSchema = new mongoose.Schema({
       areaId: { type: String, required: true },
       treeName: { type: String, required: true },
       achievementRate: { type: Number, required: true },
+      color: { type: String, required: true },
       branches: [
         {
           name: { type: String },

@@ -9,6 +9,8 @@ type treeInfo {
   treeId: ID!
   areaId: ID!
   treeName: String!
+  achievementRate: Int!
+  color: String!
   branches: [branchInfo!]!
 }
 type branchInfo {
