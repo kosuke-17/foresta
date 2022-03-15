@@ -19,6 +19,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** Date custom scalar type */
+  Date: any;
 };
 
 export type CreatedTechArea = {
@@ -500,7 +502,7 @@ export type SpecProjectSheet = {
   __typename?: "SpecProjectSheet";
   content: Scalars["String"];
   devRoles: Array<Scalars["String"]>;
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   frameworks: Array<Scalars["String"]>;
   id: Scalars["String"];
   languages: Array<Scalars["String"]>;
@@ -511,13 +513,13 @@ export type SpecProjectSheet = {
   otherTools: Array<Scalars["String"]>;
   roleSharing: Scalars["String"];
   specSheetId: Scalars["ID"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
 };
 
 export type SpecProjectUpdateInput = {
   content: Scalars["String"];
   devRoles: Array<Scalars["String"]>;
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   frameworks: Array<Scalars["String"]>;
   languages: Array<Scalars["String"]>;
   libraries: Array<Scalars["String"]>;
@@ -528,7 +530,7 @@ export type SpecProjectUpdateInput = {
   roleSharing: Scalars["String"];
   specProjectId: Scalars["ID"];
   specSheetId: Scalars["ID"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
 };
 
 export type SpecSheet = {
@@ -601,7 +603,7 @@ export type SpecUserInfoUpdateInput = {
 export type StudyStack = {
   __typename?: "StudyStack";
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   id: Scalars["ID"];
   skillTagId: Scalars["ID"];
   timeStack: Scalars["Int"];
@@ -610,7 +612,7 @@ export type StudyStack = {
 
 export type StudyStackAddInput = {
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   skillTagId: Scalars["ID"];
   timeStack: Scalars["Int"];
   userId: Scalars["ID"];
@@ -618,7 +620,7 @@ export type StudyStackAddInput = {
 
 export type StudyStackUpdateInput = {
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   skillTagId: Scalars["ID"];
   studyStackId: Scalars["ID"];
   timeStack: Scalars["Int"];
@@ -676,28 +678,28 @@ export type TechTreeCreateInput = {
 export type Todo = {
   __typename?: "Todo";
   description?: Maybe<Scalars["String"]>;
-  finishedAt?: Maybe<Scalars["String"]>;
+  finishedAt?: Maybe<Scalars["Date"]>;
   id: Scalars["ID"];
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   userId: Scalars["ID"];
 };
 
 export type TodoAddInput = {
   description: Scalars["String"];
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   userId: Scalars["ID"];
 };
 
 export type TodoUpdateInput = {
   description: Scalars["String"];
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   todoId: Scalars["ID"];
   userId: Scalars["ID"];
@@ -745,7 +747,6 @@ export type UserLoginInput = {
 };
 
 export type UserTechLeafUpdateInput = {
-  achievementRate: Scalars["Int"];
   branchId: Scalars["ID"];
   currentStatus: Scalars["Boolean"];
   leafId: Scalars["ID"];
@@ -809,7 +810,6 @@ export type PrevJobsContent = {
 
 export type TreeInfo = {
   __typename?: "treeInfo";
-  achievementRate: Scalars["Int"];
   areaId: Scalars["ID"];
   branches: Array<BranchInfo>;
   id: Scalars["ID"];
@@ -987,8 +987,8 @@ export type GetSheetProjectByUserIdQuery = {
         __typename?: "SpecProjectSheet";
         id: string;
         name: string;
-        startedAt: string;
-        finishedAt: string;
+        startedAt: any;
+        finishedAt: any;
         roleSharing: string;
         memberCount: number;
         content: string;
@@ -1089,7 +1089,7 @@ export type GetAllStudyStackQuery = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     }>;
@@ -1110,7 +1110,7 @@ export type GetStudyStackByIdQuery = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -1131,7 +1131,7 @@ export type AddStudyStackMutation = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -1152,7 +1152,7 @@ export type UpdateStudyStackMutation = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -1180,8 +1180,9 @@ export type GetAllTodoByUserQuery = {
       __typename?: "Todo";
       id: string;
       title: string;
-      startedAt: string;
-      finishedAt?: string | null;
+      description?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
       isStatus: boolean;
     }>;
   };
@@ -1200,9 +1201,31 @@ export type GetTodoByIdQuery = {
       id: string;
       title: string;
       description?: string | null;
-      startedAt: string;
-      finishedAt?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
       isStatus: boolean;
+    };
+  };
+};
+
+export type UpdateTodoMutationVariables = Exact<{
+  todo: TodoUpdateInput;
+}>;
+
+export type UpdateTodoMutation = {
+  __typename?: "Mutation";
+  updateTodo: {
+    __typename?: "ResponseTodo";
+    status: string;
+    node: {
+      __typename?: "Todo";
+      id: string;
+      title: string;
+      description?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
+      isStatus: boolean;
+      userId: string;
     };
   };
 };
@@ -2301,6 +2324,7 @@ export const GetAllTodoByUserDocument = gql`
       node {
         id
         title
+        description
         startedAt
         finishedAt
         isStatus
@@ -2421,4 +2445,63 @@ export type GetTodoByIdLazyQueryHookResult = ReturnType<
 export type GetTodoByIdQueryResult = Apollo.QueryResult<
   GetTodoByIdQuery,
   GetTodoByIdQueryVariables
+>;
+export const UpdateTodoDocument = gql`
+  mutation updateTodo($todo: TodoUpdateInput!) {
+    updateTodo(todo: $todo) {
+      status
+      node {
+        id
+        title
+        description
+        startedAt
+        finishedAt
+        isStatus
+        userId
+      }
+    }
+  }
+`;
+export type UpdateTodoMutationFn = Apollo.MutationFunction<
+  UpdateTodoMutation,
+  UpdateTodoMutationVariables
+>;
+
+/**
+ * __useUpdateTodoMutation__
+ *
+ * To run a mutation, you first call `useUpdateTodoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTodoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTodoMutation, { data, loading, error }] = useUpdateTodoMutation({
+ *   variables: {
+ *      todo: // value for 'todo'
+ *   },
+ * });
+ */
+export function useUpdateTodoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateTodoMutation,
+    UpdateTodoMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateTodoMutation, UpdateTodoMutationVariables>(
+    UpdateTodoDocument,
+    options,
+  );
+}
+export type UpdateTodoMutationHookResult = ReturnType<
+  typeof useUpdateTodoMutation
+>;
+export type UpdateTodoMutationResult =
+  Apollo.MutationResult<UpdateTodoMutation>;
+export type UpdateTodoMutationOptions = Apollo.BaseMutationOptions<
+  UpdateTodoMutation,
+  UpdateTodoMutationVariables
 >;
