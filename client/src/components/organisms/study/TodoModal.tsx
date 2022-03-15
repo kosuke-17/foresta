@@ -1,9 +1,11 @@
 import { FC, memo, useContext } from "react";
 import {
+  Flex,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
+  CloseButton,
   ModalBody,
   Heading,
   Box,
@@ -14,6 +16,7 @@ import { getformattedTodoDate, returnCodeToBr } from "../../../utils/methods";
 import { TodoDetailEdit } from "./TodoDetailEdit";
 import { TodoModalContext } from "../../../Providers/TodoModalProvider";
 import { TodoHeaderButtons } from "../../molucules/todos/TodoHeaderButtons";
+import { DeleteConfirm } from "../../molucules/todos/DeleteConfirm";
 
 type Props = {
   isOpen: boolean;
@@ -35,28 +38,35 @@ export const TodoModal: FC<Props> = memo((props) => {
         <ModalContent bg="green.50">
           {/* 編集モードもしくは追加モード */}
           {(modalMode === "update" || modalMode === "create") && (
-            <TodoDetailEdit todo={todo} setModalMode={setModalMode} />
+            <TodoDetailEdit
+              todo={todo}
+              setModalMode={setModalMode}
+              onClose={onClose}
+            />
           )}
           {/* 閲覧モード */}
           {modalMode === "read" && (
             <>
               <ModalHeader>
-                <TodoHeaderButtons
-                  label1={
-                    <>
-                      <EditIcon />
-                      <span>編集</span>
-                    </>
-                  }
-                  label2={
-                    <>
-                      <DeleteIcon />
-                      削除
-                    </>
-                  }
-                  func1={() => setModalMode("update")}
-                  func2={() => alert("削除")}
-                />
+                <Flex justify="space-between">
+                  <CloseButton onClick={onClose} />
+                  <TodoHeaderButtons
+                    label1={
+                      <>
+                        <EditIcon />
+                        <span>編集</span>
+                      </>
+                    }
+                    label2={
+                      <>
+                        <DeleteIcon />
+                        削除
+                      </>
+                    }
+                    func1={() => setModalMode("update")}
+                    func2={() => setModalMode("delete")}
+                  />
+                </Flex>
               </ModalHeader>
 
               <ModalBody padding="0 4rem">
@@ -88,7 +98,7 @@ export const TodoModal: FC<Props> = memo((props) => {
           )}
 
           {/* 削除モード */}
-          {modalMode === "delete" && <>削除モード</>}
+          {modalMode === "delete" && <DeleteConfirm onClose={onClose}/>}
         </ModalContent>
       </Modal>
     </>

@@ -378,3 +378,12 @@ gql`
     }
   }
 `;
+
+// Todoを削除する
+gql`
+  mutation RemoveTodo($todoId: String!) {
+    removeTodo(todoId: $todoId) {
+      status
+    }
+  }
+`;
