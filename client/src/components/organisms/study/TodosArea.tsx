@@ -29,7 +29,7 @@ export const TodosArea: FC = memo(() => {
   return (
     <Container maxW="5xl">
       {/* Todoリストエリア */}
-      <Button onClick={openAddModal}>Todo追加</Button>
+      <Button onClick={() => openAddModal()}>Todo追加</Button>
       <TodoList
         todos={todos || []} // todosがなければ空配列を渡す
         loading={loading}
@@ -42,6 +42,7 @@ export const TodosArea: FC = memo(() => {
         todos={todos || []} // todosがなければ空配列を渡す
         error={error}
         openReadModal={openReadModal}
+        openAddModal={openAddModal}
       />
 
       {/* Todo詳細 */}

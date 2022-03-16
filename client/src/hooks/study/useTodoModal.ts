@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { TodoModalContext } from "../../Providers/TodoModalProvider";
 import { TodoData } from "../../types/types";
+import { isSameDay } from "date-fns";
 
 /**
  * Todoのモーダルを操作するためのhook.
@@ -27,11 +28,21 @@ export const useTodoModal = () => {
   /**
    * Todo追加用のモーダルを開く.
    */
-  const openAddModal = () => {
+  const openAddModal = (startedAt?: Date, finishedAt?: Date) => {
     // モーダルのモードを追加モードに設定
     setModalMode("create");
-    // Todoは空のオブジェクトを設定
-    setTodo({} as TodoData);
+    if (startedAt && finishedAt) {
+      // カレンダーの日付変更がトリガーとなった時
+      setTodo({
+        startedAt,
+        finishedAt: isSameDay(startedAt, finishedAt) ? null : finishedAt // 単一日の場合終了日をnullに
+      } as TodoData);
+    } else {
+      // Todo追加ボタンがトリガーとなった時
+      // Todoは空のオブジェクトを設定
+      setTodo({} as TodoData);
+    }
+
     onOpen();
   };
 
