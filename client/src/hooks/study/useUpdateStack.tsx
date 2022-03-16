@@ -6,8 +6,6 @@ import {
 } from "../../types/generated/graphql";
 import { AddStack } from "../../types/types";
 
-
-
 /**
  * 学習記録を編集するフックス
  * @param onClose
@@ -40,10 +38,18 @@ export const useUpdateStack = (onClose: () => void, stackId: string) => {
         },
       });
       if (updateStackData.data?.updateStudyStack.status === "success") {
-        toast({ title: "学習記録を編集しました", status: "success" });
+        toast({
+          title: "学習記録を編集しました",
+          status: "success",
+          position: "bottom-left",
+        });
         onClose();
       } else if (updateStackData.data?.updateStudyStack.status === "error") {
-        toast({ title: "編集に失敗しました", status: "error" });
+        toast({
+          title: "編集に失敗しました",
+          status: "error",
+          position: "bottom-left",
+        });
         onClose();
       }
     },

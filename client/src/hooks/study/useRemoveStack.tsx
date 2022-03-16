@@ -30,10 +30,10 @@ export const useRemoveStack = (onClose: () => void, stackId: string) => {
       },
     });
     if (removeStackData.data?.removeStudyStack.status === "success") {
-      toast({ title: "学習を削除しました", status: "success" });
+      toast({ title: "学習を削除しました", status: "success",position: "bottom-left",});
       onClose();
     } else if (removeStackData.data?.removeStudyStack.status === "error") {
-      toast({ title: "削除に失敗しました", status: "error" });
+      toast({ title: "削除に失敗しました", status: "error" ,position: "bottom-left",});
       onClose();
     }
   }, [onClose, removeStudyStack, stackId, toast]);
