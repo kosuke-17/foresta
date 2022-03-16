@@ -415,6 +415,19 @@ gql`
   }
 `;
 
+// Todoのステータスを変更する
+gql`
+  mutation ChangeTodoStatus($todoId: String!) {
+    changeTodoStatus(todoId: $todoId) {
+      status
+      node {
+        isStatus
+        title
+      }
+    }
+  }
+`;
+
 // Todoを追加する
 gql`
   mutation AddTodo($todo: TodoAddInput!) {
