@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { FC, memo } from "react";
 import {
+  Flex,
   Tabs,
   TabList,
   TabPanels,
@@ -10,7 +11,9 @@ import {
   Heading,
   List,
   ListItem,
+  IconButton,
 } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import type { ApolloError } from "@apollo/client";
 import { isWithinInterval, isToday, isBefore, addDays } from "date-fns";
 
@@ -22,6 +25,7 @@ type Props = {
   loading: boolean;
   error: ApolloError | undefined;
   openReadModal: (todo: TodoData) => void;
+  openAddModal: (startedAt?: Date, finishedAt?: Date) => void;
 };
 
 // タブのタイプ
@@ -44,7 +48,7 @@ export const isNonNullTodoData = (
  * Todoリストを表示するコンポーネント.
  */
 export const TodoList: FC<Props> = memo((props) => {
-  const { todos, loading, error, openReadModal } = props;
+  const { todos, loading, error, openReadModal, openAddModal } = props;
 
   /**
    * Todoをタブのタイプに応じてフィルタリングする.
@@ -108,9 +112,18 @@ export const TodoList: FC<Props> = memo((props) => {
 
   return (
     <>
-      <Heading as="h2" size="lg">
-        Todoリスト
-      </Heading>
+      <Flex align="center" gap={1} mb={1}>
+        <Heading as="h2" size="lg">
+          Todoリスト
+        </Heading>
+        <IconButton
+          size="sm"
+          aria-label="Add Todo"
+          colorScheme="teal"
+          icon={<AddIcon />}
+          onClick={() => openAddModal()}
+        />
+      </Flex>
       <Box bg="#f5f5f5" padding="5px 24px 10px 24px">
         <Tabs variant="soft-rounded" isLazy>
           <TabList>

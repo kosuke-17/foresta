@@ -1,5 +1,5 @@
 import { FC, memo } from "react";
-import { Button, Container } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 
 import { TodoList } from "./TodoList";
 import { TodoModal } from "./TodoModal";
@@ -29,12 +29,12 @@ export const TodosArea: FC = memo(() => {
   return (
     <Container maxW="5xl">
       {/* Todoリストエリア */}
-      <Button onClick={() => openAddModal()}>Todo追加</Button>
       <TodoList
         todos={todos || []} // todosがなければ空配列を渡す
         loading={loading}
         error={error}
         openReadModal={openReadModal}
+        openAddModal={openAddModal}
       />
 
       {/* カレンダーエリア */}
