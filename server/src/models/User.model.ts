@@ -50,7 +50,7 @@ const UserUrlsSchema = new mongoose.Schema({
  */
 const UseTodoSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String },
   startedAt: { type: String, required: true },
   finishedAt: { type: String, required: true },
   isStatus: { type: Boolean, required: true },
@@ -69,10 +69,11 @@ const UseTodoSchema = new mongoose.Schema({
 const UserLeafsSchema = new mongoose.Schema({
   myForest: [
     {
-      treeId: { type: String, required: true },
+      treeId: { type: mongoose.Types.ObjectId, required: true },
       areaId: { type: String, required: true },
       treeName: { type: String, required: true },
       achievementRate: { type: Number, required: true },
+      color: { type: String, required: true },
       branches: [
         {
           name: { type: String },

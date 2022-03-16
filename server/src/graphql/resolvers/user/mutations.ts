@@ -8,6 +8,7 @@ import {
   SpecProjectSheet,
   TechLeaf,
   TechBranch,
+  UserUrls,
 } from "../../../models";
 import { error, success } from "../responseStatus";
 import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
@@ -68,6 +69,7 @@ const userMutations = {
             areaId: tree.techArea_id,
             treeName: tree.name,
             achievementRate: 0,
+            color: tree.color,
             branches: techBranches,
           });
           techLeafInfo.myForest.push(userTechInfo);
@@ -106,6 +108,12 @@ const userMutations = {
           specSheetId: createdSpecSheet._id,
         });
 
+        // ユーザーの持つURLオブジェクトを作成
+        const createUserUrls = new UserUrls({
+          user_urls: [],
+          userId: createUser._id,
+        });
+
         // ユーザーの開発経験(3つ)のオブジェクト作成・保存
         for (let i = 0; i < 3; i++) {
           const createdSpecProjectSheet = new SpecProjectSheet({
@@ -128,6 +136,8 @@ const userMutations = {
 
         // ユーザーの技術オブジェクトを保存
         await createdTechLeafs.save();
+        // ユーザーのURLオブジェクトを保存
+        await createUserUrls.save();
         // スペックシート関連のオブジェクト保存
         await createdSpecSheet.save();
         await createdSpecUserInfoSheet.save();

@@ -5,27 +5,29 @@ import {
   SetStateAction,
   useState,
   useCallback,
-  useEffect,
 } from "react";
 import { Button, Spinner, Flex, Input } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
+import styled from "styled-components";
 
-import { SelectInput } from "../../atoms/editMe/SelectInput";
 import { TextInput } from "../../atoms/editMe/TextInput";
+import { TableFlexItem } from "../../atoms/TableFlexItem";
+import { EditPortfolio } from "./EditPortfolio";
 import { useNewPortfolio } from "../../../hooks/editMe/useNewPortfolio";
-import { EditPortfolio } from "../../atoms/editMe/EditPortfolio";
-
 import {
   Portfolio,
   useGetUserPortfolioByIdQuery,
 } from "../../../types/generated/graphql";
-import styled from "styled-components";
-import { TableFlexItem } from "../../atoms/TableFlexItem";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
   onClose: () => void; //モーダルを閉じるメソッド
 };
+
+//やること:
+//CSS
+//バリデーション
+//asを処理
 
 /**
  * 制作物編集画面.
@@ -35,15 +37,19 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
   //cookieからID取得
   const [cookies] = useCookies();
 
+  /**
+   * 制作物情報デフォルト値取得.
+   */
   const { data, loading, error } = useGetUserPortfolioByIdQuery({
     variables: {
-      // id: "622db6cb03794ad6e8ea6950", //toge
       id: cookies.ForestaID,
     },
   });
   const portfolioData = data?.portfolios.node.portfolio as Array<Portfolio>;
 
+  //編集モード
   const [editMode, setEditMode] = useState("");
+  //どの制作物を編集中か判断用
   const [itemName, setItemName] = useState("");
 
   //public部分基本情報編集hooksを使用
