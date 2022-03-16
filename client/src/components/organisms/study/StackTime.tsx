@@ -1,7 +1,6 @@
 import "chart.js/auto";
 import { memo, useState } from "react";
-import { Bar } from "react-chartjs-2";
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, Stack } from "@chakra-ui/react";
 //pluginを使うため
 import "chartjs-plugin-datalabels";
 //optionを追加するため
@@ -9,8 +8,12 @@ import { ChartOptions } from "chart.js";
 //日付を使うため
 import "chartjs-adapter-date-fns";
 import { useStackList } from "../../../hooks/study/useStackList";
+import { subDays, subMonths } from "date-fns";
+import { DayStackTimeFig } from "../../molucules/stackList/DayStackTimeFig";
+import { MonthStackTimeFig } from "../../molucules/stackList/MonthStackTimeFig";
 
 export const StackTime = memo(() => {
+  //学習リストのデータを取得
   const { data } = useStackList();
 
   //色サンプル（背景）
@@ -52,7 +55,9 @@ export const StackTime = memo(() => {
     "rgba(127, 255, 255, 1)",
   ];
 
+  //データ変換用
   const firstDatasets = [];
+  //グラフ用
   const datasets = [];
 
   if (data) {
@@ -61,7 +66,13 @@ export const StackTime = memo(() => {
     for (const stackData of stackDatas) {
       firstDatasets.push({
         label: stackData.skillTagId,
-        data: [{ x: stackData.createdAt, y: stackData.timeStack }],
+        data: [
+          {
+            // x: format(new Date(stackData.createdAt), "yyyy-MM-dd"),
+            x: new Date(stackData.createdAt).getTime(),
+            y: stackData.timeStack,
+          },
+        ],
       });
     }
     //グラフ用に変換したデータを同じ技術内容ごとに振り分けて技術内容ごとに色分けする
@@ -75,6 +86,7 @@ export const StackTime = memo(() => {
             }
           }
         }
+        //それぞれのデータをグラフ用datasetsにpushする
         datasets.push({
           label: firstDatasets[i].label,
           data: firstDatasets[i].data,
@@ -85,42 +97,67 @@ export const StackTime = memo(() => {
       }
     }
   }
-
+  //グラフ表示用
   const chartDatas = { datasets };
 
+  //月ごとか日毎か
   const [isDay, setIsDay] = useState(true);
-
+  //月ごと表示ボタン
   const monthBtn = () => {
     setIsDay(false);
   };
+  //日毎表示ボタン
   const dayBtn = () => {
     setIsDay(true);
   };
 
-  //型をつけないとoptionを追加できない
+  //日付用グラフの変化させる日にち
+  const [dateValueDay, setDateValueDay] = useState(0);
+  //月用グラフの変化させる月
+  const [dateValueMonth, setDateValueMonth] = useState(0);
+  //過去の記録を見るメソッド
+  const subDateBtn = () => {
+    if (isDay) {
+      setDateValueDay(dateValueDay + 7);
+    } else {
+      setDateValueMonth(dateValueMonth + 1);
+    }
+  };
+  //未来の記録を見るメソッド
+  const addDateBtn = () => {
+    if (isDay) {
+      setDateValueDay(dateValueDay - 7);
+    } else {
+      setDateValueMonth(dateValueMonth - 1);
+    }
+  };
+
+  //グラフのオプションを指定
   const dayOptions: ChartOptions<any> = {
-    //アスペクト比
-    // maintainAspectRatio: false,
     scales: {
       xAxes: {
         stacked: true,
+        min: subDays(new Date(), 7 + dateValueDay).getTime(),
+        max: subDays(new Date(), dateValueDay).getTime(),
+        title: {
+          display: true,
+          text: "学習日時",
+        },
         type: "time",
         time: {
-          unit: "day",
-          displayFormats: {
-            quarter: "MMM YYYY",
-          },
+          unit: "day", //日付ごと表示
         },
-
         ticks: {
-          min: "2022-03-07",
-          max: "2022-03-16",
-          maxTicksLimit: 6,
+          align: "start",
         },
       },
 
       yAxes: {
         stacked: true,
+        title: {
+          display: true,
+          text: "学習時間（分）",
+        },
       },
     },
   };
@@ -130,20 +167,13 @@ export const StackTime = memo(() => {
     scales: {
       xAxes: {
         stacked: true,
+        min: subMonths(new Date(), 3 + dateValueMonth).getTime(),
+        max: subMonths(new Date(), dateValueMonth).getTime(),
         type: "time",
         time: {
-          unit: "month",
-          displayFormats: {
-            quarter: "MMM YYYY",
-          },
-        },
-
-        ticks: {
-          min: "2021-10-07 09:00:28",
-          max: "2021-11-07 01:00:28",
+          unit: "month", //月ごと表示
         },
       },
-
       yAxes: {
         stacked: true,
       },
@@ -151,31 +181,41 @@ export const StackTime = memo(() => {
   };
 
   return (
-    <div>
-      <Box>
-        <Button onClick={monthBtn}>月別</Button>
-        <Button onClick={dayBtn}>日別</Button>
+    <>
+      <Box width={600}>
+        <Stack>
+          <Flex>
+            <Button colorScheme="green" onClick={monthBtn}>
+              月別
+            </Button>
+            <Button colorScheme="green" onClick={dayBtn}>
+              日別
+            </Button>
+          </Flex>
+
+          <Flex>
+            <Box>
+              {isDay ? (
+                <DayStackTimeFig
+                  subDateBtn={subDateBtn}
+                  dateValueDay={dateValueDay}
+                  addDateBtn={addDateBtn}
+                  chartDatas={chartDatas}
+                  dayOptions={dayOptions}
+                />
+              ) : (
+                <MonthStackTimeFig
+                  subDateBtn={subDateBtn}
+                  dateValueMonth={dateValueMonth}
+                  addDateBtn={addDateBtn}
+                  chartDatas={chartDatas}
+                  monthOptions={monthOptions}
+                />
+              )}
+            </Box>
+          </Flex>
+        </Stack>
       </Box>
-      <Flex>
-        <Box>
-          {isDay ? (
-            <Bar
-              data={chartDatas}
-              options={dayOptions}
-              height={400}
-              width={500}
-            />
-          ) : (
-            <Bar
-              data={chartDatas}
-              options={monthOptions}
-              height={400}
-              width={500}
-            />
-          )}
-        </Box>
-        <canvas></canvas>
-      </Flex>
-    </div>
+    </>
   );
 });
