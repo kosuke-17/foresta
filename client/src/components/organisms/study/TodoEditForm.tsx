@@ -25,7 +25,7 @@ type Props = {
 /**
  * Todoの詳細を編集するコンポーネント.
  */
-export const TodoDetailEdit: FC<Props> = memo((props) => {
+export const TodoEditForm: FC<Props> = memo((props) => {
   const { todo, setModalMode, onClose } = props;
   const { modalMode } = useContext(TodoModalContext);
 
@@ -40,7 +40,7 @@ export const TodoDetailEdit: FC<Props> = memo((props) => {
     setStartedAt,
     finishedAt,
     setFinishedAt,
-  } = useEditTodo(todo, setModalMode);
+  } = useEditTodo(todo, setModalMode, onClose);
 
   return (
     <>
@@ -105,6 +105,7 @@ export const TodoDetailEdit: FC<Props> = memo((props) => {
               mb={5}
               bg="white"
               focusBorderColor="green.200"
+              rows={10}
             />
           </Box>
         </>

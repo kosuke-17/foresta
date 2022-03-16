@@ -12,8 +12,9 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import styled from "styled-components";
+
 import { getformattedTodoDate, returnCodeToBr } from "../../../utils/methods";
-import { TodoDetailEdit } from "./TodoDetailEdit";
+import { TodoEditForm } from "./TodoEditForm";
 import { TodoModalContext } from "../../../Providers/TodoModalProvider";
 import { TodoHeaderButtons } from "../../molucules/todos/TodoHeaderButtons";
 import { DeleteConfirm } from "../../molucules/todos/DeleteConfirm";
@@ -38,7 +39,7 @@ export const TodoModal: FC<Props> = memo((props) => {
         <ModalContent bg="green.50">
           {/* 編集モードもしくは追加モード */}
           {(modalMode === "update" || modalMode === "create") && (
-            <TodoDetailEdit
+            <TodoEditForm
               todo={todo}
               setModalMode={setModalMode}
               onClose={onClose}
