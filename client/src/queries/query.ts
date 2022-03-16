@@ -410,6 +410,7 @@ gql`
       node {
         id
         title
+        description
         startedAt
         finishedAt
         isStatus
@@ -430,6 +431,63 @@ gql`
         finishedAt
         isStatus
       }
+    }
+  }
+`;
+
+// Todoを更新する
+gql`
+  mutation updateTodo($todo: TodoUpdateInput!) {
+    updateTodo(todo: $todo) {
+      status
+      node {
+        id
+        title
+        description
+        startedAt
+        finishedAt
+        isStatus
+        userId
+      }
+    }
+  }
+`;
+
+// Todoのステータスを変更する
+gql`
+  mutation ChangeTodoStatus($todoId: String!) {
+    changeTodoStatus(todoId: $todoId) {
+      status
+      node {
+        isStatus
+        title
+      }
+    }
+  }
+`;
+
+// Todoを追加する
+gql`
+  mutation AddTodo($todo: TodoAddInput!) {
+    addTodo(todo: $todo) {
+      status
+      node {
+        id
+        title
+        description
+        startedAt
+        finishedAt
+        isStatus
+      }
+    }
+  }
+`;
+
+// Todoを削除する
+gql`
+  mutation RemoveTodo($todoId: String!) {
+    removeTodo(todoId: $todoId) {
+      status
     }
   }
 `;

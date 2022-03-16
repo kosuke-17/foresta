@@ -51,8 +51,7 @@ export const Default: ComponentStoryObj<typeof TodoList> = {
     ],
     loading: false,
     error: undefined,
-    onOpen: action("onOpen"),
-    setTodoId: action("setTodoId"),
+    openReadModal: action("openReadModal"),
   },
   storyName: "デフォルト",
 };
