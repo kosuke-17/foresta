@@ -54,6 +54,7 @@ export type Mutation = {
   addStudyStack: ResponseStudyStack;
   /** Todoを追加. */
   addTodo: ResponseTodo;
+  /** ユーザーの持つUrlを追加. */
   addUserUrls: ResponseUserUrls;
   /** ユーザー習得技術を更新. */
   changeLeafStatus: ResponseUserTechLeaf;
@@ -68,14 +69,13 @@ export type Mutation = {
   createTechTree: CreatedTechTree;
   /** ユーザーを追加. */
   createUser: ResponseUser;
-  /** ユーザーの持つUrlを作成. */
-  createUserUrls: ResponseUserUrls;
   /** ポートフォリオを削除. */
   removePortfolio: Res;
   /** ユーザーの学習記録を削除. */
   removeStudyStack: ResponseStudyStack;
   /** Todoを削除. */
   removeTodo: ResponseTodo;
+  /** ユーザーの持つUrlを削除. */
   removeUserUrls: ResponseUserUrls;
   /** ポートフォリオを更新. */
   updatePortfolio: ResponsePortfolio;
@@ -160,11 +160,6 @@ export type MutationCreateTechTreeArgs = {
 /** データを変更する */
 export type MutationCreateUserArgs = {
   user: UserCreateInput;
-};
-
-/** データを変更する */
-export type MutationCreateUserUrlsArgs = {
-  urlData: UserUrlsCreateInput;
 };
 
 /** データを変更する */
@@ -398,7 +393,6 @@ export type QueryGetUserByIdArgs = {
 
 /** データを取得する */
 export type QueryGetUserLeafsByIdArgs = {
-  areaId: Scalars["String"];
   userId: Scalars["String"];
 };
 
@@ -664,6 +658,7 @@ export type TechLeafCreateInput = {
 
 export type TechTree = {
   __typename?: "TechTree";
+  color: Scalars["String"];
   id: Scalars["ID"];
   name: Scalars["String"];
   techArea_id: Scalars["ID"];
@@ -671,6 +666,7 @@ export type TechTree = {
 };
 
 export type TechTreeCreateInput = {
+  color: Scalars["String"];
   name: Scalars["String"];
   techArea_id: Scalars["ID"];
 };
@@ -687,8 +683,8 @@ export type Todo = {
 };
 
 export type TodoAddInput = {
-  description: Scalars["String"];
-  finishedAt: Scalars["Date"];
+  description?: InputMaybe<Scalars["String"]>;
+  finishedAt?: InputMaybe<Scalars["Date"]>;
   isStatus: Scalars["Boolean"];
   startedAt: Scalars["Date"];
   title: Scalars["String"];
@@ -696,8 +692,8 @@ export type TodoAddInput = {
 };
 
 export type TodoUpdateInput = {
-  description: Scalars["String"];
-  finishedAt: Scalars["Date"];
+  description?: InputMaybe<Scalars["String"]>;
+  finishedAt?: InputMaybe<Scalars["Date"]>;
   isStatus: Scalars["Boolean"];
   startedAt: Scalars["Date"];
   title: Scalars["String"];
@@ -707,6 +703,7 @@ export type TodoUpdateInput = {
 
 export type Url = {
   __typename?: "URL";
+  id: Scalars["ID"];
   url: Scalars["String"];
   urlName: Scalars["String"];
 };
@@ -766,20 +763,15 @@ export type UserUpdateInput = {
 
 export type UserUrls = {
   __typename?: "UserUrls";
+  id: Scalars["ID"];
   userId: Scalars["ID"];
-  user_urls: Array<Url>;
+  user_urls: Array<Maybe<Url>>;
 };
 
 export type UserUrlsAddInput = {
   url: Scalars["String"];
   urlId: Scalars["ID"];
   urlName: Scalars["String"];
-};
-
-export type UserUrlsCreateInput = {
-  url: Scalars["String"];
-  urlName: Scalars["String"];
-  userId: Scalars["ID"];
 };
 
 export type UserUrlsRemoveInput = {
@@ -810,8 +802,10 @@ export type PrevJobsContent = {
 
 export type TreeInfo = {
   __typename?: "treeInfo";
+  achievementRate: Scalars["Int"];
   areaId: Scalars["ID"];
   branches: Array<BranchInfo>;
+  color: Scalars["String"];
   id: Scalars["ID"];
   treeId: Scalars["ID"];
   treeName: Scalars["String"];
@@ -877,7 +871,11 @@ export type GetUrlByIdQuery = {
       __typename?: "User";
       userUrls: {
         __typename?: "UserUrls";
-        user_urls: Array<{ __typename?: "URL"; urlName: string; url: string }>;
+        user_urls: Array<{
+          __typename?: "URL";
+          urlName: string;
+          url: string;
+        } | null>;
       };
     };
   };
@@ -1101,6 +1099,44 @@ export type RemovePortfolioMutation = {
     status?: string | null;
     msg?: string | null;
   };
+};
+
+export type UpdateSpecProjectMutationVariables = Exact<{
+  specProject: SpecProjectUpdateInput;
+}>;
+
+export type UpdateSpecProjectMutation = {
+  __typename?: "Mutation";
+  updateSpecProject: {
+    __typename?: "ResponseSpecProject";
+    status: string;
+    msg?: string | null;
+  };
+};
+
+export type UpdateSpecTechInfoMutationVariables = Exact<{
+  specTechInfo: SpecTechInfoUpdateInput;
+}>;
+
+export type UpdateSpecTechInfoMutation = {
+  __typename?: "Mutation";
+  updateSpecTechInfo: {
+    __typename?: "ResponseSpecTechInfo";
+    status: string;
+    msg?: string | null;
+  };
+};
+
+export type GetAllSkillQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllSkillQuery = {
+  __typename?: "Query";
+  skills: Array<{
+    __typename?: "Skill";
+    id: string;
+    name: string;
+    data: Array<string>;
+  }>;
 };
 
 export type UserLoginMutationVariables = Exact<{
@@ -2168,6 +2204,165 @@ export type RemovePortfolioMutationResult =
 export type RemovePortfolioMutationOptions = Apollo.BaseMutationOptions<
   RemovePortfolioMutation,
   RemovePortfolioMutationVariables
+>;
+export const UpdateSpecProjectDocument = gql`
+  mutation UpdateSpecProject($specProject: SpecProjectUpdateInput!) {
+    updateSpecProject(specProject: $specProject) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpecProjectMutationFn = Apollo.MutationFunction<
+  UpdateSpecProjectMutation,
+  UpdateSpecProjectMutationVariables
+>;
+
+/**
+ * __useUpdateSpecProjectMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpecProjectMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpecProjectMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpecProjectMutation, { data, loading, error }] = useUpdateSpecProjectMutation({
+ *   variables: {
+ *      specProject: // value for 'specProject'
+ *   },
+ * });
+ */
+export function useUpdateSpecProjectMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpecProjectMutation,
+    UpdateSpecProjectMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpecProjectMutation,
+    UpdateSpecProjectMutationVariables
+  >(UpdateSpecProjectDocument, options);
+}
+export type UpdateSpecProjectMutationHookResult = ReturnType<
+  typeof useUpdateSpecProjectMutation
+>;
+export type UpdateSpecProjectMutationResult =
+  Apollo.MutationResult<UpdateSpecProjectMutation>;
+export type UpdateSpecProjectMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpecProjectMutation,
+  UpdateSpecProjectMutationVariables
+>;
+export const UpdateSpecTechInfoDocument = gql`
+  mutation UpdateSpecTechInfo($specTechInfo: SpecTechInfoUpdateInput!) {
+    updateSpecTechInfo(specTechInfo: $specTechInfo) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpecTechInfoMutationFn = Apollo.MutationFunction<
+  UpdateSpecTechInfoMutation,
+  UpdateSpecTechInfoMutationVariables
+>;
+
+/**
+ * __useUpdateSpecTechInfoMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpecTechInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpecTechInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpecTechInfoMutation, { data, loading, error }] = useUpdateSpecTechInfoMutation({
+ *   variables: {
+ *      specTechInfo: // value for 'specTechInfo'
+ *   },
+ * });
+ */
+export function useUpdateSpecTechInfoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpecTechInfoMutation,
+    UpdateSpecTechInfoMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpecTechInfoMutation,
+    UpdateSpecTechInfoMutationVariables
+  >(UpdateSpecTechInfoDocument, options);
+}
+export type UpdateSpecTechInfoMutationHookResult = ReturnType<
+  typeof useUpdateSpecTechInfoMutation
+>;
+export type UpdateSpecTechInfoMutationResult =
+  Apollo.MutationResult<UpdateSpecTechInfoMutation>;
+export type UpdateSpecTechInfoMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpecTechInfoMutation,
+  UpdateSpecTechInfoMutationVariables
+>;
+export const GetAllSkillDocument = gql`
+  query GetAllSkill {
+    skills: getAllSkill {
+      id
+      name
+      data
+    }
+  }
+`;
+
+/**
+ * __useGetAllSkillQuery__
+ *
+ * To run a query within a React component, call `useGetAllSkillQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllSkillQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllSkillQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllSkillQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllSkillQuery,
+    GetAllSkillQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAllSkillQuery, GetAllSkillQueryVariables>(
+    GetAllSkillDocument,
+    options,
+  );
+}
+export function useGetAllSkillLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllSkillQuery,
+    GetAllSkillQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAllSkillQuery, GetAllSkillQueryVariables>(
+    GetAllSkillDocument,
+    options,
+  );
+}
+export type GetAllSkillQueryHookResult = ReturnType<typeof useGetAllSkillQuery>;
+export type GetAllSkillLazyQueryHookResult = ReturnType<
+  typeof useGetAllSkillLazyQuery
+>;
+export type GetAllSkillQueryResult = Apollo.QueryResult<
+  GetAllSkillQuery,
+  GetAllSkillQueryVariables
 >;
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {

@@ -248,15 +248,36 @@ gql`
   }
 `;
 
-//言語情報取得
-// gql`
-//   query GetLanguages {
-//     getLanguages(name: "languages") {
-//       name
-//       data
-//     }
-//   }
-// `;
+//ユーザ情報:スペックシート開発経験更新
+gql`
+  mutation UpdateSpecProject($specProject: SpecProjectUpdateInput!) {
+    updateSpecProject(specProject: $specProject) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スペックシートスキル要約更新
+gql`
+  mutation UpdateSpecTechInfo($specTechInfo: SpecTechInfoUpdateInput!) {
+    updateSpecTechInfo(specTechInfo: $specTechInfo) {
+      status
+      msg
+    }
+  }
+`;
+
+//セレクトボックス用
+gql`
+  query GetAllSkill {
+    skills: getAllSkill {
+      id
+      name
+      data
+    }
+  }
+`;
 
 // ログイン処理
 export const LOGIN_QUERY = gql`
