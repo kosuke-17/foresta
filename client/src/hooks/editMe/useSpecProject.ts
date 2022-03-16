@@ -1,35 +1,65 @@
-/**
- * 一旦コピペしただけ(未完成)
- */
-import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useCookies } from "react-cookie";
 import * as yup from "yup";
 
 import {
+  GetSheetProjectByUserIdDocument,
   GetUserByIdDocument,
-  useUpdateUserMutation,
+  SpecProjectSheet,
+  useGetSpreadSheetIdQuery,
+  useUpdateSpecProjectMutation,
 } from "../../types/generated/graphql";
-import { userInfoEditType, UserType } from "../../types/types";
+import { useToast } from "@chakra-ui/react";
 
 /**
  * バリデーションチェック.
  */
 const schema = yup.object().shape({
-  //氏名のバリデーション
+  //プロジェクト名
   name: yup
     .string()
     .trim()
-    .required("氏名を入力してください")
-    .max(15, "氏名は15文字以内で入力してください"),
-  //職種のバリデーション
-  jobType: yup.string().required("職種を入力して下さい"),
-  //Githubアカウントのバリデーション
-  githubURL: yup
+    .required("プロジェクト名を入力してください")
+    .typeError("プロジェクト名を入力してください")
+    .max(50, "アカウント名は50文字以内で入力してください"),
+  //プロジェクト開始日
+  startedAt: yup.date().typeError("プロジェクト開始日を入力してください"),
+  //プロジェクト終了日
+  finishedAt: yup.date().typeError("プロジェクト終了日を入力してください"),
+  //担当役割
+  roleSharing: yup
     .string()
     .trim()
-    .required("GitHubアカウント名を入力して下さい")
-    .max(39, "39文字以内で入力して下さい"),
+    .required("担当役割を入力してください")
+    .typeError("担当役割を入力してください")
+    .max(50, "担当役割名は50文字以内で入力してください"),
+  //メンバー人数
+  memberCount: yup
+    .number()
+    .required("メンバー人数を入力してください")
+    .typeError("メンバー人数を入力してください")
+    .max(10, "メンバー人数は10文字以内で入力してください"),
+  //詳細
+  content: yup
+    .string()
+    .trim()
+    .required("詳細を入力してください")
+    .typeError("詳細を入力してください")
+    .max(150, "詳細は150文字以内で入力してください"),
+  //担当工程
+  devRoles: yup.array().nullable(),
+  //OS
+  operationEnvs: yup.array().nullable(),
+  //言語
+  languages: yup.array().nullable(),
+  //フレームワーク
+  frameworks: yup.array().nullable(),
+  //ライブラリ
+  libraries: yup.array().nullable(),
+  //その他ツール
+  otherTools: yup.array().nullable(),
 });
 
 /**
@@ -42,36 +72,50 @@ const schema = yup.object().shape({
  * @params userData - 初期表示用データ
  */
 export const useSpecProject = (
-  userData: UserType,
+  projectData: SpecProjectSheet,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
+  //cookieからID取得
+  const [cookies] = useCookies();
+
+  /**
+   * スプレッドシートIDだけ取得.
+   * @remarks 受け取ったスプレッドシートIDがnullの場合があるため
+   */
+  const { data } = useGetSpreadSheetIdQuery({
+    variables: {
+      id: cookies.ForestaID,
+    },
+  });
+  //スプレッドシートID
+  const spId = data?.getUserById.node.spreadSheetID as string;
+
   // バリデーション機能を呼び出し
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    //初期値はログインしている人のデータを入れる
     defaultValues: {
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
+      name: projectData.name,
+      startedAt: projectData.startedAt,
+      finishedAt: projectData.finishedAt,
+      roleSharing: projectData.roleSharing,
+      memberCount: projectData.memberCount,
+      content: projectData.content,
+      devRoles: String(projectData.devRoles),
+      operationEnvs: String(projectData.operationEnvs),
+      languages: String(projectData.languages),
+      frameworks: String(projectData.frameworks),
+      libraries: String(projectData.libraries),
+      otherTools: String(projectData.otherTools),
     },
   });
 
-  /**
-   * デフォルト値読み込み直し用.
-   */
-  useEffect(() => {
-    reset({
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
-    });
-  }, [reset, userData?.githubURL, userData?.jobType, userData?.name]);
+  //トーストの使用
+  const toast = useToast();
 
   /**
    * キャンセルボタンを押した時に呼ばれる.
@@ -82,10 +126,10 @@ export const useSpecProject = (
   }, [onClose, setMenuItem]);
 
   /**
-   * ユーザ情報更新.（リフェッチ機能）
+   * スペックシート開発経験更新.（リフェッチ機能）
    */
-  const [updateUserInfo] = useUpdateUserMutation({
-    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
+  const [updateUserInfo] = useUpdateSpecProjectMutation({
+    refetchQueries: [GetSheetProjectByUserIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -94,35 +138,57 @@ export const useSpecProject = (
    * @param data - 入力したデータ
    */
   const onSubmit = useCallback(
-    async (data: userInfoEditType) => {
-      try {
-        await updateUserInfo({
-          variables: {
-            user: {
-              userId: userData.id, //受け取ったデータそのまま
-              name: data.name,
-              jobType: data.jobType,
-              githubURL: data.githubURL,
-              spreadSheetID: userData.spreadSheetID, //受け取ったデータそのまま
-            },
-          },
-        });
-        cancel();
-      } catch (error) {
-        console.log(error);
-      }
+    async (data: any) => {
+      //nullだった場合、[]に置き換える
+      const os = data.operationEnvs != null ? data.operationEnvs : [];
+      const lang = data.languages != null ? data.languages : [];
+      const frame = data.frameworks != null ? data.frameworks : [];
+      const lib = data.libraries != null ? data.libraries : [];
+      const other = data.otherTools != null ? data.otherTools : [];
+      const dev = data.devRoles != null ? data.devRoles : [];
+
+      //送るデータ
+      const specProject = {
+        specProjectId: projectData.id, //開発経験ID
+        name: data.name, //プロジェクト名
+        startedAt: String(data.startedAt), //開始日
+        finishedAt: String(data.finishedAt), //終了日
+        roleSharing: data.roleSharing, //担当役割(PGとか)
+        memberCount: data.memberCount, //メンバー人数
+        content: data.content, //詳細
+        operationEnvs: os, //OS
+        languages: lang, //言語
+        frameworks: frame, //フレームワーク
+        libraries: lib, //ライブラリ
+        otherTools: other, //その他ツール
+        devRoles: dev, //担当工程
+        specSheetId: spId, //スプレッドシートID
+      };
+      console.dir(JSON.stringify(specProject));
+      // try {
+      //   await updateUserInfo({
+      //     variables: { specProject },
+      //   });
+      //   cancel();
+      //   toast({
+      //     title: "更新しました",
+      //     status: "success",
+      //     isClosable: true,
+      //   });
+      // } catch (error) {
+      //   console.log(error);
+      // }
     },
-    [cancel, updateUserInfo, userData],
+    [projectData.id, spId],
   );
 
   return {
-    useUpdateUserMutation,
+    useUpdateSpecProjectMutation,
     handleSubmit,
     cancel,
     register,
     errors,
     onSubmit,
-    userData,
     GetUserByIdDocument,
     updateUserInfo,
   };
