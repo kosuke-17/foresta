@@ -1,35 +1,23 @@
-/**
- * 一旦コピペしただけ(未完成)
- */
-import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import {
-  GetUserByIdDocument,
+  GetUrlByIdDocument,
+  useAddUserUrlsMutation,
+  useRemoveUserUrlsMutation,
   useUpdateUserMutation,
 } from "../../types/generated/graphql";
-import { userInfoEditType, UserType } from "../../types/types";
+import { useToast } from "@chakra-ui/react";
 
 /**
  * バリデーションチェック.
  */
 const schema = yup.object().shape({
-  //氏名のバリデーション
-  name: yup
-    .string()
-    .trim()
-    .required("氏名を入力してください")
-    .max(15, "氏名は15文字以内で入力してください"),
-  //職種のバリデーション
-  jobType: yup.string().required("職種を入力して下さい"),
-  //Githubアカウントのバリデーション
-  githubURL: yup
-    .string()
-    .trim()
-    .required("GitHubアカウント名を入力して下さい")
-    .max(39, "39文字以内で入力して下さい"),
+  urlName: yup.string(),
+  url: yup.string(),
+  urlTableId: yup.string(),
 });
 
 /**
@@ -42,7 +30,7 @@ const schema = yup.object().shape({
  * @params userData - 初期表示用データ
  */
 export const useUserUrls = (
-  userData: UserType,
+  urlTableId: string,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
@@ -50,28 +38,16 @@ export const useUserUrls = (
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    //初期値はログインしている人のデータを入れる
-    defaultValues: {
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
-    },
   });
 
-  /**
-   * デフォルト値読み込み直し用.
-   */
-  useEffect(() => {
-    reset({
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
-    });
-  }, [reset, userData?.githubURL, userData?.jobType, userData?.name]);
+  setValue("urlTableId", urlTableId);
+
+  //トーストの使用
+  const toast = useToast();
 
   /**
    * キャンセルボタンを押した時に呼ばれる.
@@ -82,10 +58,10 @@ export const useUserUrls = (
   }, [onClose, setMenuItem]);
 
   /**
-   * ユーザ情報更新.（リフェッチ機能）
+   * URL追加.（リフェッチ機能）
    */
-  const [updateUserInfo] = useUpdateUserMutation({
-    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
+  const [updatePortfolio] = useAddUserUrlsMutation({
+    refetchQueries: [GetUrlByIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -94,25 +70,64 @@ export const useUserUrls = (
    * @param data - 入力したデータ
    */
   const onSubmit = useCallback(
-    async (data: userInfoEditType) => {
+    async (data: any) => {
       try {
-        await updateUserInfo({
+        await updatePortfolio({
           variables: {
-            user: {
-              userId: userData.id, //受け取ったデータそのまま
-              name: data.name,
-              jobType: data.jobType,
-              githubURL: data.githubURL,
-              spreadSheetID: userData.spreadSheetID, //受け取ったデータそのまま
+            urlData: {
+              urlName: data.urlName,
+              url: data.url,
+              urlId: urlTableId,
             },
           },
+        });
+
+        toast({
+          title: "追加しました",
+          status: "success",
+          isClosable: true,
         });
         cancel();
       } catch (error) {
         console.log(error);
       }
     },
-    [cancel, updateUserInfo, userData],
+    [cancel, toast, updatePortfolio, urlTableId],
+  );
+
+  /**
+   * URL削除用.（リフェッチ機能）
+   */
+  const [deleteUrl] = useRemoveUserUrlsMutation({
+    refetchQueries: [GetUrlByIdDocument], //データを表示するクエリーのDocument
+    awaitRefetchQueries: true,
+  });
+
+  /**
+   * 削除ボタンを押した際に呼ばれる.
+   */
+  const onDelete = useCallback(
+    async (urlId: string) => {
+      try {
+        await deleteUrl({
+          variables: {
+            urlData: {
+              urlId: urlId,
+              userUrlsId: urlTableId,
+            },
+          },
+        });
+        toast({
+          title: "削除しました",
+          status: "success",
+          isClosable: true,
+        });
+        cancel();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [cancel, deleteUrl, toast, urlTableId],
   );
 
   return {
@@ -121,9 +136,9 @@ export const useUserUrls = (
     cancel,
     register,
     errors,
+    GetUrlByIdDocument,
+    deleteUrl,
+    onDelete,
     onSubmit,
-    userData,
-    GetUserByIdDocument,
-    updateUserInfo,
   };
 };
