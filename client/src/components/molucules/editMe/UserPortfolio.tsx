@@ -46,7 +46,7 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
   const [editMode, setEditMode] = useState("");
   const [itemName, setItemName] = useState("");
 
-  //public部分基本情報編集hooksを使用
+  //hooksを使用
   const {
     handleSubmit,
     register,
