@@ -18,6 +18,7 @@ import { useAddStack } from "../../hooks/study/useAddStack";
 import { useRemoveStack } from "../../hooks/study/useRemoveStack";
 import { useUpdateStack } from "../../hooks/study/useUpdateStack";
 import { StudyModalInput } from "./stackList/StudyModalInput";
+import { format } from "date-fns";
 
 type Props = {
   title: string;
@@ -80,7 +81,10 @@ export const StudyModal: FC<Props> = memo((props) => {
   const openMethod = () => {
     //編集ボタンをクリックしたときには初期値をセットする
     if (data) {
-      setValue("createdAt", data?.getStudyStackById.node.createdAt as string);
+      setValue(
+        "createdAt",
+        format(new Date(data?.getStudyStackById.node.createdAt), "yyyy-MM-dd"),
+      );
       setValue("skillTagId", data?.getStudyStackById.node.skillTagId as string);
       setValue("timeStack", data?.getStudyStackById.node.timeStack as number);
       setValue("content", data?.getStudyStackById.node.content as string);
