@@ -10,7 +10,7 @@ import {
 import { FC, memo } from "react";
 import { GetAllStudyStackQuery } from "../../../types/generated/graphql";
 import { getFormattedStackDate } from "../../../utils/methods";
-import { StudyModal } from "../StudyModal";
+import { StudyModal } from "./StudyModal";
 
 type Props = {
   data: GetAllStudyStackQuery | undefined; //データベースから取得した記録データ
