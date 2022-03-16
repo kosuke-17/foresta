@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { getformattedTodoDate } from "../../../utils/methods";
 
 import type { TodoData } from "../../../types/types";
+import { useChangeTodoStatus } from "../../../hooks/study/useChangeTodoStatus";
 
 // 自動生成したTodoの型から使用したいプロパティ名だけを指定
 type Props = {
@@ -16,6 +17,8 @@ type Props = {
  */
 export const TodoWithCheck: FC<Props> = memo((props) => {
   const { todo, openReadModal } = props;
+  // Todoのステータスを変更する関数をhooksから取得
+  const { onChangeTodoStatus } = useChangeTodoStatus(todo.id);
 
   return (
     <Flex
@@ -25,13 +28,15 @@ export const TodoWithCheck: FC<Props> = memo((props) => {
       onClick={() => openReadModal(todo)}
     >
       <Flex align="center" overflow="hidden" white-space="nowrap">
-        <Checkbox
-          isChecked={todo.isStatus}
-          colorScheme="teal"
-          size="lg"
-          onChange={() => alert("toggle")}
-          padding="5px"
-        />
+        {/* ここでonClickで呼び出さないとe.stopPropagation();がうまくいかなかった */}
+        <div onClick={(e) => onChangeTodoStatus(e)}>
+          <Checkbox
+            isChecked={todo.isStatus}
+            colorScheme="teal"
+            size="lg"
+            padding="5px"
+          />
+        </div>
         <_Title>{todo.title}</_Title>
       </Flex>
       <_Date>{getformattedTodoDate(todo.startedAt, todo.finishedAt)}</_Date>
