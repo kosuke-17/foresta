@@ -26,31 +26,35 @@ export const useUpdateStack = (onClose: () => void, stackId: string) => {
    */
   const updateStack = useCallback(
     async (data: AddStack) => {
-      const updateStackData = await updateMutation({
-        variables: {
-          stack: {
-            createdAt: data.createdAt,
-            skillTagId: data.skillTagId,
-            timeStack: data.timeStack,
-            content: data.content,
-            studyStackId: stackId,
+      try {
+        const updateStackData = await updateMutation({
+          variables: {
+            stack: {
+              createdAt: data.createdAt,
+              skillTagId: data.skillTagId,
+              timeStack: data.timeStack,
+              content: data.content,
+              studyStackId: stackId,
+            },
           },
-        },
-      });
-      if (updateStackData.data?.updateStudyStack.status === "success") {
-        toast({
-          title: "学習記録を編集しました",
-          status: "success",
-          position: "bottom-left",
         });
-        onClose();
-      } else if (updateStackData.data?.updateStudyStack.status === "error") {
-        toast({
-          title: "編集に失敗しました",
-          status: "error",
-          position: "bottom-left",
-        });
-        onClose();
+        if (updateStackData.data?.updateStudyStack.status === "success") {
+          toast({
+            title: "学習記録を編集しました",
+            status: "success",
+            position: "bottom-left",
+          });
+          onClose();
+        } else if (updateStackData.data?.updateStudyStack.status === "error") {
+          toast({
+            title: "編集に失敗しました",
+            status: "error",
+            position: "bottom-left",
+          });
+          onClose();
+        }
+      } catch (error) {
+        alert(error);
       }
     },
     [onClose, stackId, toast, updateMutation],
