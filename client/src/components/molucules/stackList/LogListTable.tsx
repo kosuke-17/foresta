@@ -12,6 +12,7 @@ import { GetAllStudyStackQuery } from "../../../types/generated/graphql";
 import { getFormattedStackDate } from "../../../utils/methods";
 import { StudyModal } from "./StudyModal";
 
+
 type Props = {
   data: GetAllStudyStackQuery | undefined; //データベースから取得した記録データ
 };

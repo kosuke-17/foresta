@@ -13,6 +13,7 @@ import { LogListTable } from "../../molucules/stackList/LogListTable";
 import { StudyListTable } from "../../molucules/stackList/StudyListTable";
 import { StudyModal } from "../../molucules/stackList/StudyModal";
 
+
 //タブ名
 const tabNames = ["学習リスト", "更新情報"] as const;
 
