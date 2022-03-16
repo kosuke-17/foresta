@@ -48,8 +48,7 @@ export const Default: ComponentStoryObj<typeof Calendar> = {
         isStatus: true,
       },
     ],
-    onOpen: action("onOpen"),
-    setTodoId: action("setTodoId"),
+    openReadModal: action("openReadModal"),
   },
   storyName: "デフォルト",
 };
