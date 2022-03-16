@@ -1,35 +1,60 @@
-/**
- * 一旦コピペしただけ(未完成)
- */
-import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useCookies } from "react-cookie";
 import * as yup from "yup";
 
 import {
+  GetSheetByUserIdDocument,
   GetUserByIdDocument,
-  useUpdateUserMutation,
+  useGetSheetByUserIdQuery,
+  useUpdateSpecProjectMutation,
+  useUpdateSpecTechInfoMutation,
 } from "../../types/generated/graphql";
-import { userInfoEditType, UserType } from "../../types/types";
+import { useToast } from "@chakra-ui/react";
 
 /**
  * バリデーションチェック.
  */
 const schema = yup.object().shape({
-  //氏名のバリデーション
-  name: yup
+  //
+  stuffID: yup
     .string()
     .trim()
-    .required("氏名を入力してください")
-    .max(15, "氏名は15文字以内で入力してください"),
-  //職種のバリデーション
-  jobType: yup.string().required("職種を入力して下さい"),
-  //Githubアカウントのバリデーション
-  githubURL: yup
+    .required("スタッフIDを入力してください")
+    .typeError("スタッフIDを入力してください")
+    .max(5, "スタッフIDは5文字以内で入力してください"),
+  age: yup
     .string()
     .trim()
-    .required("GitHubアカウント名を入力して下さい")
-    .max(39, "39文字以内で入力して下さい"),
+    .required("年齢を入力して下さい")
+    .typeError("年齢を入力して下さい")
+    .max(3, "年齢は3文字以内で入力して下さい"),
+  gender: yup.string(),
+  nearestStation: yup
+    .string()
+    .trim()
+    .required("最寄駅を入力して下さい")
+    .typeError("最寄駅を入力して下さい")
+    .max(50, "最寄駅は50文字以内で入力して下さい"),
+  nearestLine: yup
+    .string()
+    .trim()
+    .required("最寄路線を入力して下さい")
+    .typeError("最寄路線を入力して下さい")
+    .max(50, "最寄路線は50文字以内で入力して下さい"),
+  startWorkDate: yup
+    .string()
+    .trim()
+    .required("稼働開始日を入力して下さい")
+    .typeError("稼働開始日を入力して下さい")
+    .max(50, "稼働開始日は50文字以内で入力して下さい"),
+  seExpAmountYear: yup.number(),
+  seExpAmountMonth: yup.number(),
+  pgExpAmountYear: yup.number(),
+  pgExpAmountMonth: yup.number(),
+  itExpAmountYear: yup.number(),
+  itExpAmountMonth: yup.number(),
 });
 
 /**
@@ -42,36 +67,94 @@ const schema = yup.object().shape({
  * @params userData - 初期表示用データ
  */
 export const useSpecUserInfo = (
-  userData: UserType,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
+  //cookieからID取得
+  const [cookies] = useCookies();
+
+  /**
+   * スペックシート基本情報取得.
+   */
+  const { data } = useGetSheetByUserIdQuery({
+    variables: {
+      userId: cookies.ForestaID,
+    },
+  });
+
+  const [stationData, setStdata] = useState(["", ""]);
+  if (data?.user.node.userInfo.nearestStation) {
+    const array = data?.user.node.userInfo.nearestStation.split("(");
+    setStdata([...array]);
+  }
+
+  const station = stationData?.[0];
+  const line = String(stationData?.[1]).replace(")", "");
+
+  const [seHis, setSeHis] = useState(0);
+  const [pgHis, setPgHis] = useState(0);
+  const [itHis, setItHis] = useState(0);
+
+  if (data?.user.node.userInfo.seExpAmount) {
+    setSeHis(Number(data?.user.node.userInfo.seExpAmount));
+  }
+
+  if (data?.user.node.userInfo.seExpAmount) {
+    setPgHis(Number(data?.user.node.userInfo.pgExpAmount));
+  }
+
+  if (data?.user.node.userInfo.seExpAmount) {
+    setItHis(Number(data?.user.node.userInfo.itExpAmount));
+  }
+
+  const seYear = Math.floor(Number(seHis) / 12);
+  const seMonth = Number(seHis) % 12;
+
+  const pgYear = Math.floor(Number(pgHis) / 12);
+  const pgMonth = Number(pgHis) % 12;
+
+  const itYear = Math.floor(Number(itHis) / 12);
+  const itMonth = Number(itHis) % 12;
+
   // バリデーション機能を呼び出し
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    //初期値はログインしている人のデータを入れる
     defaultValues: {
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
+      stuffID: data?.user.node.userInfo.stuffID,
+      age: data?.user.node.userInfo.age,
+      gender: String(data?.user.node.userInfo.gender),
+      nearestStation: station,
+      nearestLine: line,
+      startWorkDate: data?.user.node.userInfo.startWorkDate,
+      seExpAmountYear: seYear,
+      seExpAmountMonth: seMonth,
+      pgExpAmountYear: pgYear,
+      pgExpAmountMonth: pgMonth,
+      itExpAmountYear: itYear,
+      itExpAmountMonth: itMonth,
     },
   });
 
-  /**
-   * デフォルト値読み込み直し用.
-   */
-  useEffect(() => {
-    reset({
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
-    });
-  }, [reset, userData?.githubURL, userData?.jobType, userData?.name]);
+  // setValue("stuffID", data?.user.node.userInfo.stuffID);
+  // setValue("age", data?.user.node.userInfo.age);
+  // setValue("gender", data?.user.node.userInfo.gender);
+  // setValue("nearestStation", station);
+  // setValue("nearestLine", line);
+  // setValue("startWorkDate", data?.user.node.userInfo.startWorkDate);
+  // setValue("seExpAmountYear", seYear);
+  // setValue("seExpAmountMonth", seMonth);
+  // setValue("pgExpAmountYear", pgYear);
+  // setValue("pgExpAmountMonth", pgMonth);
+  // setValue("itExpAmountYear", itYear);
+  // setValue("itExpAmountMonth", itMonth);
+
+  //トーストの使用
+  const toast = useToast();
 
   /**
    * キャンセルボタンを押した時に呼ばれる.
@@ -82,10 +165,10 @@ export const useSpecUserInfo = (
   }, [onClose, setMenuItem]);
 
   /**
-   * ユーザ情報更新.（リフェッチ機能）
+   * スペックシート基本情報更新.（リフェッチ機能）
    */
-  const [updateUserInfo] = useUpdateUserMutation({
-    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
+  const [updateSpecInfo] = useUpdateSpecTechInfoMutation({
+    refetchQueries: [GetSheetByUserIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -93,37 +176,48 @@ export const useSpecUserInfo = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = useCallback(
-    async (data: userInfoEditType) => {
-      try {
-        await updateUserInfo({
-          variables: {
-            user: {
-              userId: userData.id, //受け取ったデータそのまま
-              name: data.name,
-              jobType: data.jobType,
-              githubURL: data.githubURL,
-              spreadSheetID: userData.spreadSheetID, //受け取ったデータそのまま
-            },
-          },
-        });
-        cancel();
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [cancel, updateUserInfo, userData],
-  );
+  const onSubmit = useCallback(async (data: any) => {
+    const neareData = `${data.nearestStation}(${data.nearestLine})`;
+    const se = data.seExpAmountYear * 12 + data.seExpAmountMonth;
+    const pg = data.pgExpAmountYear * 12 + data.pgExpAmountMonth;
+    const it = data.itExpAmountYear * 12 + data.itExpAmountMonth;
+
+    const specUserInfo = {
+      specUserInfoId: "",
+      stuffID: data.stuffID,
+      age: data.age,
+      gender: data.gender,
+      nearestStation: neareData,
+      startWorkDate: data.startWorkDate,
+      seExpAmount: se,
+      pgExpAmount: pg,
+      itExpAmount: it,
+    };
+
+    console.dir(JSON.stringify(specUserInfo));
+    // try {
+    //   await updateSpecInfo({
+    //     variables: { specTechInfo },
+    //   });
+    //   cancel();
+    //   toast({
+    //     title: "更新しました",
+    //     status: "success",
+    //     isClosable: true,
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  }, []);
 
   return {
-    useUpdateUserMutation,
+    useUpdateSpecProjectMutation,
     handleSubmit,
     cancel,
     register,
     errors,
     onSubmit,
-    userData,
     GetUserByIdDocument,
-    updateUserInfo,
+    updateSpecInfo,
   };
 };
