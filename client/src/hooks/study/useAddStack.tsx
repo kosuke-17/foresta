@@ -6,13 +6,9 @@ import {
   useAddStudyStackMutation,
   GetAllStudyStackDocument,
 } from "../../types/generated/graphql";
+import { AddStack } from "../../types/types";
 
-type AddStack = {
-  createdAt: string;
-  skillTagId: string;
-  timeStack: number;
-  content: string;
-};
+
 
 /**
  * 学習記録を追加するフックス.

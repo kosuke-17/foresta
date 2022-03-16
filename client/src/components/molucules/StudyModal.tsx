@@ -18,19 +18,13 @@ import { useAddStack } from "../../hooks/study/useAddStack";
 import { useRemoveStack } from "../../hooks/study/useRemoveStack";
 import { useUpdateStack } from "../../hooks/study/useUpdateStack";
 import { StudyModalInput } from "./stackList/StudyModalInput";
+import { AddStack } from "../../types/types";
 import { format } from "date-fns";
 
 type Props = {
   title: string;
   buttonTitle: string;
   stackId: string;
-};
-
-type AddStack = {
-  createdAt: string;
-  skillTagId: string;
-  timeStack: number;
-  content: string;
 };
 
 //バリデーションチェック
