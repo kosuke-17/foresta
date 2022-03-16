@@ -1,5 +1,5 @@
 import { memo, FC, SetStateAction, Dispatch } from "react";
-import { SpecProject } from "../../molucules/editMe/SpecProject";
+import { SpecProject } from "../../molucules/editMe/specProject/SpecProject";
 import { SpecSheet } from "../../molucules/editMe/SpecSheet";
 import { SpecTechInfo } from "../../molucules/editMe/SpecTechInfo";
 import { SpecUserInfo } from "../../molucules/editMe/SpecUserInfo";
