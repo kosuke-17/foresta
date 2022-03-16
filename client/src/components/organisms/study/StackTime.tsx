@@ -169,6 +169,10 @@ export const StackTime = memo(() => {
         stacked: true,
         min: subMonths(new Date(), 3 + dateValueMonth).getTime(),
         max: subMonths(new Date(), dateValueMonth).getTime(),
+        title: {
+          display: true,
+          text: "学習日時",
+        },
         type: "time",
         time: {
           unit: "month", //月ごと表示
@@ -176,6 +180,10 @@ export const StackTime = memo(() => {
       },
       yAxes: {
         stacked: true,
+        title: {
+          display: true,
+          text: "学習時間（分）",
+        },
       },
     },
   };
