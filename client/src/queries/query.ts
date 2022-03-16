@@ -248,6 +248,44 @@ gql`
   }
 `;
 
+//ユーザ情報:URL編集用取得
+gql`
+  query GetUserUrlById($id: String!) {
+    urls: getUserById(_id: $id) {
+      node {
+        userUrls {
+          user_urls {
+            urlName
+            url
+            id
+          }
+          id
+        }
+      }
+    }
+  }
+`;
+
+//ユーザ情報:URL追加
+gql`
+  mutation AddUserUrls($urlData: UserUrlsAddInput!) {
+    addUserUrls(urlData: $urlData) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:URL削除
+gql`
+  mutation RemoveUserUrls($urlData: UserUrlsRemoveInput!) {
+    removeUserUrls(urlData: $urlData) {
+      status
+      msg
+    }
+  }
+`;
+
 //言語情報取得
 // gql`
 //   query GetLanguages {

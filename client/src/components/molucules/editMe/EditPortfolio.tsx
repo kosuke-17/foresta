@@ -7,17 +7,18 @@ import {
   useCallback,
 } from "react";
 import { Button, Input } from "@chakra-ui/react";
-import { Portfolio } from "../../../types/generated/graphql";
-import { TextInput } from "./TextInput";
-import { useUserPortfolio } from "../../../hooks/editMe/useUserPortfolio";
 import styled from "styled-components";
-import { TableFlexItem } from "../TableFlexItem";
+
+import { TextInput } from "../../atoms/editMe/TextInput";
+import { TableFlexItem } from "../../atoms/TableFlexItem";
+import { Portfolio } from "../../../types/generated/graphql";
+import { useUserPortfolio } from "../../../hooks/editMe/useUserPortfolio";
 
 type Props = {
   portfolioData: Portfolio;
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
   setEditMode: Dispatch<SetStateAction<string>>; //モードセット用
-  editMode: string;
+  editMode: string; //編集モード
   onClose: () => void; //モーダルを閉じるメソッド
 };
 

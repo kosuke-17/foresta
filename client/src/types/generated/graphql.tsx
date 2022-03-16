@@ -1101,6 +1101,52 @@ export type RemovePortfolioMutation = {
   };
 };
 
+export type GetUserUrlByIdQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type GetUserUrlByIdQuery = {
+  __typename?: "Query";
+  urls: {
+    __typename?: "ResponseUser";
+    node: {
+      __typename?: "User";
+      userUrls: {
+        __typename?: "UserUrls";
+        id: string;
+        user_urls: Array<{
+          __typename?: "URL";
+          urlName: string;
+          url: string;
+          id: string;
+        } | null>;
+      };
+    };
+  };
+};
+
+export type AddUserUrlsMutationVariables = Exact<{
+  urlData: UserUrlsAddInput;
+}>;
+
+export type AddUserUrlsMutation = {
+  __typename?: "Mutation";
+  addUserUrls: { __typename?: "ResponseUserUrls"; status: string; msg: string };
+};
+
+export type RemoveUserUrlsMutationVariables = Exact<{
+  urlData: UserUrlsRemoveInput;
+}>;
+
+export type RemoveUserUrlsMutation = {
+  __typename?: "Mutation";
+  removeUserUrls: {
+    __typename?: "ResponseUserUrls";
+    status: string;
+    msg: string;
+  };
+};
+
 export type UserLoginMutationVariables = Exact<{
   user: UserLoginInput;
 }>;
@@ -2232,6 +2278,175 @@ export type RemovePortfolioMutationResult =
 export type RemovePortfolioMutationOptions = Apollo.BaseMutationOptions<
   RemovePortfolioMutation,
   RemovePortfolioMutationVariables
+>;
+export const GetUserUrlByIdDocument = gql`
+  query GetUserUrlById($id: String!) {
+    urls: getUserById(_id: $id) {
+      node {
+        userUrls {
+          user_urls {
+            urlName
+            url
+            id
+          }
+          id
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUserUrlByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserUrlByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserUrlByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserUrlByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserUrlByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserUrlByIdQuery,
+    GetUserUrlByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUserUrlByIdQuery, GetUserUrlByIdQueryVariables>(
+    GetUserUrlByIdDocument,
+    options,
+  );
+}
+export function useGetUserUrlByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserUrlByIdQuery,
+    GetUserUrlByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetUserUrlByIdQuery, GetUserUrlByIdQueryVariables>(
+    GetUserUrlByIdDocument,
+    options,
+  );
+}
+export type GetUserUrlByIdQueryHookResult = ReturnType<
+  typeof useGetUserUrlByIdQuery
+>;
+export type GetUserUrlByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserUrlByIdLazyQuery
+>;
+export type GetUserUrlByIdQueryResult = Apollo.QueryResult<
+  GetUserUrlByIdQuery,
+  GetUserUrlByIdQueryVariables
+>;
+export const AddUserUrlsDocument = gql`
+  mutation AddUserUrls($urlData: UserUrlsAddInput!) {
+    addUserUrls(urlData: $urlData) {
+      status
+      msg
+    }
+  }
+`;
+export type AddUserUrlsMutationFn = Apollo.MutationFunction<
+  AddUserUrlsMutation,
+  AddUserUrlsMutationVariables
+>;
+
+/**
+ * __useAddUserUrlsMutation__
+ *
+ * To run a mutation, you first call `useAddUserUrlsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddUserUrlsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addUserUrlsMutation, { data, loading, error }] = useAddUserUrlsMutation({
+ *   variables: {
+ *      urlData: // value for 'urlData'
+ *   },
+ * });
+ */
+export function useAddUserUrlsMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddUserUrlsMutation,
+    AddUserUrlsMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddUserUrlsMutation, AddUserUrlsMutationVariables>(
+    AddUserUrlsDocument,
+    options,
+  );
+}
+export type AddUserUrlsMutationHookResult = ReturnType<
+  typeof useAddUserUrlsMutation
+>;
+export type AddUserUrlsMutationResult =
+  Apollo.MutationResult<AddUserUrlsMutation>;
+export type AddUserUrlsMutationOptions = Apollo.BaseMutationOptions<
+  AddUserUrlsMutation,
+  AddUserUrlsMutationVariables
+>;
+export const RemoveUserUrlsDocument = gql`
+  mutation RemoveUserUrls($urlData: UserUrlsRemoveInput!) {
+    removeUserUrls(urlData: $urlData) {
+      status
+      msg
+    }
+  }
+`;
+export type RemoveUserUrlsMutationFn = Apollo.MutationFunction<
+  RemoveUserUrlsMutation,
+  RemoveUserUrlsMutationVariables
+>;
+
+/**
+ * __useRemoveUserUrlsMutation__
+ *
+ * To run a mutation, you first call `useRemoveUserUrlsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveUserUrlsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeUserUrlsMutation, { data, loading, error }] = useRemoveUserUrlsMutation({
+ *   variables: {
+ *      urlData: // value for 'urlData'
+ *   },
+ * });
+ */
+export function useRemoveUserUrlsMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemoveUserUrlsMutation,
+    RemoveUserUrlsMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    RemoveUserUrlsMutation,
+    RemoveUserUrlsMutationVariables
+  >(RemoveUserUrlsDocument, options);
+}
+export type RemoveUserUrlsMutationHookResult = ReturnType<
+  typeof useRemoveUserUrlsMutation
+>;
+export type RemoveUserUrlsMutationResult =
+  Apollo.MutationResult<RemoveUserUrlsMutation>;
+export type RemoveUserUrlsMutationOptions = Apollo.BaseMutationOptions<
+  RemoveUserUrlsMutation,
+  RemoveUserUrlsMutationVariables
 >;
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
