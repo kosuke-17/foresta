@@ -1158,14 +1158,12 @@ export type UserLoginMutation = {
   userLogin: {
     __typename?: "ResponseUser";
     status: string;
+    msg: string;
     node: {
       __typename?: "User";
       id: string;
       name: string;
-      jobType: string;
-      email: string;
-      password: string;
-      githubURL: string;
+      userLeafs: { __typename?: "UserLeafs"; id: string };
     };
   };
 };
@@ -2512,13 +2510,13 @@ export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
       status
+      msg
       node {
         id
         name
-        jobType
-        email
-        password
-        githubURL
+        userLeafs {
+          id
+        }
       }
     }
   }
