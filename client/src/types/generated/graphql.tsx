@@ -552,6 +552,7 @@ export type SpecTechInfoSheet = {
   __typename?: "SpecTechInfoSheet";
   devRoles: Array<Scalars["String"]>;
   frameworks: Array<Scalars["String"]>;
+  id: Scalars["ID"];
   languages: Array<Scalars["String"]>;
   libraries: Array<Scalars["String"]>;
   operationEnvs: Array<Scalars["String"]>;
@@ -573,6 +574,7 @@ export type SpecUserInfoSheet = {
   __typename?: "SpecUserInfoSheet";
   age: Scalars["Int"];
   gender: Scalars["String"];
+  id: Scalars["ID"];
   itExpAmount: Scalars["Int"];
   nearestStation: Scalars["String"];
   pgExpAmount: Scalars["Int"];
