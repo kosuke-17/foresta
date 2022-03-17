@@ -9,10 +9,10 @@ import {
 import { Button, Input } from "@chakra-ui/react";
 import styled from "styled-components";
 
-import { TextInput } from "../../atoms/editMe/TextInput";
-import { TableFlexItem } from "../../atoms/TableFlexItem";
-import { Portfolio } from "../../../types/generated/graphql";
-import { useUserPortfolio } from "../../../hooks/editMe/useUserPortfolio";
+import { TextInput } from "../../../atoms/editMe/TextInput";
+import { TableFlexItem } from "../../../atoms/TableFlexItem";
+import { Portfolio } from "../../../../types/generated/graphql";
+import { useUserPortfolio } from "../../../../hooks/editMe/useUserPortfolio";
 
 type Props = {
   portfolioData: Portfolio;

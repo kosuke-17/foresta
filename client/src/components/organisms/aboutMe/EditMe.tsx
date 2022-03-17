@@ -4,7 +4,7 @@ import { SpecSheet } from "../../molucules/editMe/SpecSheet";
 import { SpecTechInfo } from "../../molucules/editMe/SpecTechInfo";
 import { SpecUserInfo } from "../../molucules/editMe/SpecUserInfo";
 import { UserInfo } from "../../molucules/editMe/UserInfo";
-import { UserPortfolio } from "../../molucules/editMe/UserPortfolio";
+import { UserPortfolio } from "../../molucules/editMe/userPortfolio/UserPortfolio";
 import { UserUrls } from "../../molucules/editMe/UserUrls";
 
 type Props = {
