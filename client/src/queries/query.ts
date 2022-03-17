@@ -172,6 +172,21 @@ gql`
   }
 `;
 
+//ユーザ情報:開発経験名前のみ取得.
+gql`
+  query GetPjNameByUserId($userId: String!) {
+    pj: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        project {
+          name
+        }
+      }
+    }
+  }
+`;
+
 //ユーザ情報:自己PR取得+スペックシートその他情報同時取得.
 gql`
   query GetPrAndSheetByUserId($userId: String!) {
@@ -321,6 +336,90 @@ gql`
 gql`
   mutation RemoveUserUrls($urlData: UserUrlsRemoveInput!) {
     removeUserUrls(urlData: $urlData) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スプレッドシートに全情報出力
+gql`
+  mutation UpdateSpreadSheet($userId: String!) {
+    updateSpreadUserInfo(userId: $userId) {
+      status
+      msg
+    }
+    updateSpeadSelfPR(userId: $userId) {
+      status
+      msg
+    }
+    updateSpreadPortfolioUrl(userId: $userId) {
+      status
+      msg
+    }
+    updateSpreadTechInfo(userId: $userId) {
+      status
+      msg
+    }
+    pj1: updateSpreadProject(userId: $userId, projectIndex: 0) {
+      status
+      msg
+    }
+    pj2: updateSpreadProject(userId: $userId, projectIndex: 1) {
+      status
+      msg
+    }
+    pj3: updateSpreadProject(userId: $userId, projectIndex: 2) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スプレッドシートに基本情報書き出し
+gql`
+  mutation UpdateSpreadUserInfo($userId: String!) {
+    updateSpreadUserInfo(userId: $userId) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スプレッドシートに自己PR書き出し
+gql`
+  mutation UpdateSpeadSelfPR($userId: String!) {
+    updateSpeadSelfPR(userId: $userId) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スプレッドシートにURL書き出し
+gql`
+  mutation UpdateSpreadPortfolioUrl($userId: String!) {
+    updateSpreadPortfolioUrl(userId: $userId) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スプレッドシートにスキル要約書き出し
+gql`
+  mutation UpdateSpreadTechInfo($userId: String!) {
+    updateSpreadTechInfo(userId: $userId) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スプレッドシートに開発経験書き出し
+gql`
+  mutation UpdateSpreadProject($userId: String!, $projectIndex: Int!) {
+    updateSpreadProject(userId: $userId, projectIndex: $projectIndex) {
       status
       msg
     }
