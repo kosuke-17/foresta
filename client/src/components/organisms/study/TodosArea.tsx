@@ -45,7 +45,7 @@ export const TodosArea: FC = memo(() => {
         openAddModal={openAddModal}
       />
 
-      {/* Todo詳細 */}
+      {/* Todoモーダル */}
       <TodoModal isOpen={isOpen} onClose={onClose} />
     </Container>
   );

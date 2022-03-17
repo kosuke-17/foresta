@@ -1,5 +1,5 @@
-import { Button, Flex } from "@chakra-ui/react";
 import { FC, ReactNode } from "react";
+import { Button, Flex } from "@chakra-ui/react";
 
 type Props = {
   label1: string | ReactNode;
@@ -19,17 +19,15 @@ export const TodoHeaderButtons: FC<Props> = (props) => {
   const { label1, label2, func1, func2 } = props;
 
   return (
-    <>
-      <Flex justify="end">
-        <Flex gap={1}>
-          <Button colorScheme="green" size="sm" onClick={func1}>
-            {label1}
-          </Button>
-          <Button colorScheme="green" size="sm" onClick={func2}>
-            {label2}
-          </Button>
-        </Flex>
+    <Flex justify="end">
+      <Flex gap={1}>
+        <Button colorScheme="green" size="sm" onClick={func1}>
+          {label1}
+        </Button>
+        <Button colorScheme="green" size="sm" onClick={func2}>
+          {label2}
+        </Button>
       </Flex>
-    </>
+    </Flex>
   );
 };
