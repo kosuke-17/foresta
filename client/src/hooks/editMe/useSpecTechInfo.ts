@@ -17,6 +17,8 @@ import { useToast } from "@chakra-ui/react";
  * バリデーションチェック.
  */
 const schema = yup.object().shape({
+  //ID
+  id: yup.string(),
   //担当工程
   devRoles: yup.array().nullable(),
   //OS
@@ -51,7 +53,7 @@ export const useSpecTechInfo = (
    * スキル要約取得.
    */
 
-  const { data } = useGetSheetSkillByUserIdQuery({
+  const { data: skillData } = useGetSheetSkillByUserIdQuery({
     variables: {
       userId: cookies.ForestaID,
     },
@@ -64,17 +66,26 @@ export const useSpecTechInfo = (
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    // defaultValues: {
+    //   id: skillData?.skills.node.techInfo.id,
+    //   devRoles: String(skillData?.skills.node.techInfo.devRoles),
+    //   operationEnvs: skillData?.skills.node.techInfo.operationEnvs,
+    //   languages: skillData?.skills.node.techInfo.languages,
+    //   frameworks: skillData?.skills.node.techInfo.frameworks,
+    //   libraries: skillData?.skills.node.techInfo.libraries,
+    //   otherTools: skillData?.skills.node.techInfo.otherTools,
+    //   specSheetId: skillData?.skills.node.techInfo.specSheetId,
+    // },
   });
 
-  console.dir(JSON.stringify(data?.skills.node));
-
-  setValue("devRoles", data?.skills.node.techInfo.devRoles);
-  setValue("operationEnvs", data?.skills.node.techInfo.operationEnvs);
-  setValue("languages", data?.skills.node.techInfo.languages);
-  setValue("frameworks", data?.skills.node.techInfo.frameworks);
-  setValue("libraries", data?.skills.node.techInfo.libraries);
-  setValue("otherTools", data?.skills.node.techInfo.otherTools);
-  setValue("specSheetId", data?.skills.node.techInfo.specSheetId);
+  setValue("id", skillData?.skills.node.techInfo.id);
+  setValue("devRoles", skillData?.skills.node.techInfo.devRoles);
+  setValue("operationEnvs", skillData?.skills.node.techInfo.operationEnvs);
+  setValue("languages", skillData?.skills.node.techInfo.languages);
+  setValue("frameworks", skillData?.skills.node.techInfo.frameworks);
+  setValue("libraries", skillData?.skills.node.techInfo.libraries);
+  setValue("otherTools", skillData?.skills.node.techInfo.otherTools);
+  setValue("specSheetId", skillData?.skills.node.techInfo.specSheetId);
 
   //トーストの使用
   const toast = useToast();
@@ -99,41 +110,49 @@ export const useSpecTechInfo = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = useCallback(async (data: any) => {
-    //nullだった場合、[]に置き換える
-    const os = data.operationEnvs != null ? data.operationEnvs : [];
-    const lang = data.languages != null ? data.languages : [];
-    const frame = data.frameworks != null ? data.frameworks : [];
-    const lib = data.libraries != null ? data.libraries : [];
-    const other = data.otherTools != null ? data.otherTools : [];
-    const rol = data.devRoles != null ? data.devRoles : [];
+  const onSubmit = useCallback(
+    async (data: any) => {
+      //nullだった場合、[]に置き換える
+      const os = data.operationEnvs != null ? data.operationEnvs : [];
+      const lang = data.languages != null ? data.languages : [];
+      const frame = data.frameworks != null ? data.frameworks : [];
+      const lib = data.libraries != null ? data.libraries : [];
+      const other = data.otherTools != null ? data.otherTools : [];
+      const rol = data.devRoles != null ? data.devRoles : [];
 
-    //送るデータ
-    const specTechInfo = {
-      specTechInfoId: "",
-      operationEnvs: os,
-      languages: lang,
-      frameworks: frame,
-      libraries: lib,
-      otherTools: other,
-      devRoles: rol,
-    };
+      //送るデータ
+      const specTechInfo = {
+        specTechInfoId: data.id,
+        operationEnvs: os,
+        languages: lang,
+        frameworks: frame,
+        libraries: lib,
+        otherTools: other,
+        devRoles: rol,
+      };
 
-    console.dir(JSON.stringify(specTechInfo));
-    // try {
-    //   await updateSpecSkill({
-    //     variables: { specTechInfo },
-    //   });
-    //   cancel();
-    //   toast({
-    //     title: "更新しました",
-    //     status: "success",
-    //     isClosable: true,
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  }, []);
+      try {
+        await updateSpecSkill({
+          variables: { specTechInfo },
+        });
+        cancel();
+        toast({
+          title: "更新しました",
+          position: "bottom-left",
+          status: "success",
+          isClosable: true,
+        });
+      } catch (error) {
+        toast({
+          title: "失敗しました",
+          position: "bottom-left",
+          status: "error",
+          isClosable: true,
+        });
+      }
+    },
+    [cancel, toast, updateSpecSkill],
+  );
 
   return {
     useUpdateSpecProjectMutation,
