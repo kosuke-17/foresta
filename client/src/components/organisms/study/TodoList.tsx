@@ -78,7 +78,8 @@ export const TodoList: FC<Props> = memo((props) => {
               return (
                 <TabPanel key={index}>
                   {loading ? (
-                    <Stack>
+                    <Stack spacing={3}>
+                      <Skeleton height="20px" />
                       <Skeleton height="20px" />
                       <Skeleton height="20px" />
                       <Skeleton height="20px" />
