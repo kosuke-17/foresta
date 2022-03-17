@@ -20,6 +20,7 @@ import {
   useGetSheetProjectByUserIdQuery,
 } from "../../../types/generated/graphql";
 import { AccordionContent } from "../AccordionContent";
+import { format } from "date-fns";
 
 /**
  * 開発経験.
@@ -74,9 +75,10 @@ export const Project: FC = memo(() => {
                       <Tr>
                         <Td>期間</Td>
                         <Td>
-                          {/* {new Date(project?.startedAt)} */}
-                          {/* {project?.finishedAt} */}
-                          ヵ月
+                          <Flex gap={3}>
+                            {format(new Date(project?.startedAt), "yyyy-M-d")}~
+                            {format(new Date(project?.finishedAt), "yyyy-M-d")}
+                          </Flex>
                         </Td>
                       </Tr>
                       <Tr>

@@ -10,6 +10,7 @@ import {
   useUpdateSpecProjectMutation,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
+import { format } from "date-fns";
 
 /**
  * バリデーションチェック.
@@ -23,9 +24,9 @@ const schema = yup.object().shape({
     .typeError("プロジェクト名を入力してください")
     .max(50, "アカウント名は50文字以内で入力してください"),
   //プロジェクト開始日
-  startedAt: yup.date().typeError("プロジェクト開始日を入力してください"),
+  startedAt: yup.string().typeError("プロジェクト開始日を入力してください"),
   //プロジェクト終了日
-  finishedAt: yup.date().typeError("プロジェクト終了日を入力してください"),
+  finishedAt: yup.string().typeError("プロジェクト終了日を入力してください"),
   //担当役割
   roleSharing: yup
     .string()
@@ -78,23 +79,40 @@ export const useSpecProject = (
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: {
-      name: projectData.name,
-      startedAt: projectData.startedAt,
-      finishedAt: projectData.finishedAt,
-      roleSharing: projectData.roleSharing,
-      memberCount: projectData.memberCount,
-      content: projectData.content,
-      devRoles: String(projectData.devRoles),
-      operationEnvs: String(projectData.operationEnvs),
-      languages: String(projectData.languages),
-      frameworks: String(projectData.frameworks),
-      libraries: String(projectData.libraries),
-      otherTools: String(projectData.otherTools),
-    },
+    // defaultValues: {
+    //   name: projectData.name,
+    //   startedAt: projectData.startedAt,
+    //   finishedAt: projectData.finishedAt,
+    //   roleSharing: projectData.roleSharing,
+    //   memberCount: projectData.memberCount,
+    //   content: projectData.content,
+    //   devRoles: String(projectData.devRoles),
+    //   operationEnvs: String(projectData.operationEnvs),
+    //   languages: String(projectData.languages),
+    //   frameworks: String(projectData.frameworks),
+    //   libraries: String(projectData.libraries),
+    //   otherTools: String(projectData.otherTools),
+    // },
   });
+
+  setValue("name", projectData.name);
+  setValue("startedAt", format(new Date(projectData.startedAt), "yyyy-MM-dd"));
+  setValue(
+    "finishedAt",
+    format(new Date(projectData.finishedAt), "yyyy-MM-dd"),
+  );
+  setValue("roleSharing", projectData.roleSharing);
+  setValue("memberCount", projectData.memberCount);
+  setValue("content", projectData.content);
+  setValue("devRoles", projectData.devRoles);
+  setValue("operationEnvs", projectData.operationEnvs);
+  setValue("languages", projectData.languages);
+  setValue("frameworks", projectData.frameworks);
+  setValue("libraries", projectData.libraries);
+  setValue("otherTools", projectData.otherTools);
 
   //トーストの使用
   const toast = useToast();
@@ -154,11 +172,17 @@ export const useSpecProject = (
         cancel();
         toast({
           title: "更新しました",
+          position: "bottom-left",
           status: "success",
           isClosable: true,
         });
       } catch (error) {
-        console.log(error);
+        toast({
+          title: "失敗しました",
+          position: "bottom-left",
+          status: "error",
+          isClosable: true,
+        });
       }
     },
     [cancel, projectData.id, projectData.specSheetId, toast, updatePj],
