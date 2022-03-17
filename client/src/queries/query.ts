@@ -198,6 +198,16 @@ gql`
   }
 `;
 
+// スペックシートその他情報更新
+gql`
+  mutation UpdateSpecSheet($specSheet: SpecSheetUpdateInput!) {
+    updateSpecSheet(specSheet: $specSheet) {
+      status
+      msg
+    }
+  }
+`;
+
 //ユーザ情報(public基本情報)編集
 gql`
   mutation UpdateUser($user: UserUpdateInput!) {
