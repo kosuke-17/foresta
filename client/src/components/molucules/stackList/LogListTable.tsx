@@ -9,7 +9,9 @@ import {
 } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { GetAllStudyStackQuery } from "../../../types/generated/graphql";
-import { StudyModal } from "../StudyModal";
+import { getFormattedStackDate } from "../../../utils/methods";
+import { StudyModal } from "./StudyModal";
+
 
 type Props = {
   data: GetAllStudyStackQuery | undefined; //データベースから取得した記録データ
@@ -37,7 +39,7 @@ export const LogListTable: FC<Props> = memo((props) => {
         {data &&
           data.getAllStudyStack.node.map((stackList) => (
             <Tr key={stackList.id}>
-              <Td>{stackList.createdAt}</Td>
+              <Td>{getFormattedStackDate(new Date(stackList.createdAt))}</Td>
               <Td>{stackList.skillTagId}</Td>
               <Td>{stackList.timeStack}分</Td>
               <Td>
