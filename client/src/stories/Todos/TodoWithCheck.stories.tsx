@@ -11,39 +11,42 @@ export default {
 
 export const CompletedTodo: ComponentStoryObj<typeof TodoWithCheck> = {
   args: {
-    id: "TodoId",
-    title: "Todoタイトル",
-    startedAt: "2022-03-10",
-    finishedAt: null,
-    isStatus: true,
-    onOpen: action("onOpen"),
-    setTodoId: action("setTodoId"),
+    todo: {
+      id: "TodoId",
+      title: "Todoタイトル",
+      startedAt: "2022-03-10",
+      finishedAt: null,
+      isStatus: true,
+    },
+    openReadModal: action("openReadModal"),
   },
   storyName: "完了済みタスク",
 };
 
 export const NoCompletedTodo: ComponentStoryObj<typeof TodoWithCheck> = {
   args: {
-    id: "TodoId",
-    title: "Todoタイトル",
-    startedAt: "2022-03-10",
-    finishedAt: null,
-    isStatus: false,
-    onOpen: action("onOpen"),
-    setTodoId: action("setTodoId"),
+    todo: {
+      id: "TodoId",
+      title: "Todoタイトル",
+      startedAt: "2022-03-10",
+      finishedAt: null,
+      isStatus: false,
+    },
+    openReadModal: action("openReadModal"),
   },
   storyName: "未完了タスク",
 };
 
 export const MultipleDaysTodo: ComponentStoryObj<typeof TodoWithCheck> = {
   args: {
-    id: "TodoId",
-    title: "Todoタイトル(複数日)",
-    startedAt: "2022-03-10",
-    finishedAt: "2022-03-15",
-    isStatus: true,
-    onOpen: action("onOpen"),
-    setTodoId: action("setTodoId"),
+    todo: {
+      id: "TodoId",
+      title: "Todoタイトル",
+      startedAt: "2022-03-10",
+      finishedAt: "2022-03-15",
+      isStatus: true,
+    },
+    openReadModal: action("openReadModal"),
   },
   storyName: "複数日のタスク",
 };

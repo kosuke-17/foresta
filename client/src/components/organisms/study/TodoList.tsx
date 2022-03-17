@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
-import { FC, memo, Dispatch, SetStateAction } from "react";
+import { FC, memo } from "react";
 import {
+  Flex,
   Tabs,
   TabList,
   TabPanels,
@@ -10,7 +11,9 @@ import {
   Heading,
   List,
   ListItem,
+  IconButton,
 } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import type { ApolloError } from "@apollo/client";
 import { isWithinInterval, isToday, isBefore, addDays } from "date-fns";
 
@@ -21,8 +24,8 @@ type Props = {
   todos: Array<TodoData | null>;
   loading: boolean;
   error: ApolloError | undefined;
-  onOpen: (e: any) => void;
-  setTodoId: Dispatch<SetStateAction<string>>;
+  openReadModal: (todo: TodoData) => void;
+  openAddModal: (startedAt?: Date, finishedAt?: Date) => void;
 };
 
 // タブのタイプ
@@ -45,7 +48,7 @@ export const isNonNullTodoData = (
  * Todoリストを表示するコンポーネント.
  */
 export const TodoList: FC<Props> = memo((props) => {
-  const { todos, loading, error, onOpen, setTodoId } = props;
+  const { todos, loading, error, openReadModal, openAddModal } = props;
 
   /**
    * Todoをタブのタイプに応じてフィルタリングする.
@@ -57,7 +60,6 @@ export const TodoList: FC<Props> = memo((props) => {
 
     // todosの中身がnullかどうかで型ガード
     if (!isNonNullTodoData(todos)) {
-      console.log(todos);
       return [];
     }
 
@@ -99,7 +101,6 @@ export const TodoList: FC<Props> = memo((props) => {
           if (todo?.finishedAt) {
             // 複数日間のタスク
             const endDate = new Date(todo?.finishedAt);
-            console.log(startDate, endDate, today);
             return isBefore(addDays(endDate, 1), today);
           }
           return isBefore(addDays(startDate, 1), today);
@@ -111,9 +112,18 @@ export const TodoList: FC<Props> = memo((props) => {
 
   return (
     <>
-      <Heading as="h2" size="lg">
-        Todoリスト
-      </Heading>
+      <Flex align="center" gap={1} mb={1}>
+        <Heading as="h2" size="lg">
+          Todoリスト
+        </Heading>
+        <IconButton
+          size="sm"
+          aria-label="Add Todo"
+          colorScheme="teal"
+          icon={<AddIcon />}
+          onClick={() => openAddModal()}
+        />
+      </Flex>
       <Box bg="#f5f5f5" padding="5px 24px 10px 24px">
         <Tabs variant="soft-rounded" isLazy>
           <TabList>
@@ -146,9 +156,8 @@ export const TodoList: FC<Props> = memo((props) => {
                       {getFilteredTodos(tab).map((todo) => (
                         <ListItem key={todo.id}>
                           <TodoWithCheck
-                            {...todo}
-                            onOpen={onOpen}
-                            setTodoId={setTodoId}
+                            todo={todo}
+                            openReadModal={openReadModal}
                           />
                         </ListItem>
                       ))}
