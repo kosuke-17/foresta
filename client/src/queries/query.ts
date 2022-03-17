@@ -195,6 +195,16 @@ gql`
   }
 `;
 
+// スペックシート更新
+gql`
+  mutation UpdateSpecSheet($specSheet: SpecSheetUpdateInput!) {
+    updateSpecSheet(specSheet: $specSheet) {
+      status
+      msg
+    }
+  }
+`;
+
 //言語情報取得
 // gql`
 //   query GetLanguages {
