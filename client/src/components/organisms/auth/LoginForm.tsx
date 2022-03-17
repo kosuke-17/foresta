@@ -1,19 +1,11 @@
 import { FC, memo, useState, ChangeEvent } from "react";
-import { useCookies } from "react-cookie";
+import { useLogin } from "../../../hooks/auth/useLogin";
 import { EmailInput } from "../../atoms/auth/EmailInput";
 import { PasswordInput } from "../../atoms/auth/PasswordInput";
 import { LoginButton } from "../../atoms/auth/LoginButton";
-import { useMutation } from "@apollo/client";
-import { LOGIN_QUERY } from "../../../queries/query";
 import { Center, Box, SimpleGrid } from "@chakra-ui/react";
-import { useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 
 const LoginForm: FC = memo(() => {
-  const toast = useToast();
-  const navigate = useNavigate();
-  // クッキー
-  const [, setCookie] = useCookies();
   // メールアドレス
   const [mailAddress, setMailAddress] = useState<string>("");
   // テキストボックス入力時に入力内容をStateに設定
@@ -24,38 +16,8 @@ const LoginForm: FC = memo(() => {
   // テキストボックス入力時に入力内容をStateに設定
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
-
-  const [mutateFunction] = useMutation(LOGIN_QUERY, {
-    variables: {
-      user: {
-        email: mailAddress,
-        password: password,
-      },
-    },
-  });
-
-  // ログイン処理
-  const doLogin = async () => {
-    const loginData = await mutateFunction();
-    // ログインが成功した場合はCookieにForestaIDを保存
-    if (loginData.data.userLogin.status == "success") {
-      setCookie("ForestaID", loginData.data.userLogin.node.id);
-      toast({
-        title: "ログインに成功しました",
-        position: "top-right",
-        status: "success",
-        isClosable: true,
-      });
-    } else if (loginData.data.userLogin.status == "error") {
-      toast({
-        title: "ログインに失敗しました",
-        position: "top-right",
-        status: "error",
-        isClosable: true,
-      });
-    }
-    navigate("/");
-  };
+  // ログインフックス呼ぶ
+  const { doLogin } = useLogin(mailAddress, password);
 
   return (
     <div>
