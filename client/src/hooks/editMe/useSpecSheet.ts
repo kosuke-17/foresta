@@ -102,13 +102,18 @@ export const useSpecSheet = (
         jobs.push(item.content);
       });
 
+      //空白の入力欄は削除
+      const formatJobs = jobs.filter((x) => {
+        return !(x === null || x === undefined || x === "");
+      });
+
       try {
         await updateSpecSheet({
           variables: {
             specSheet: {
               specSheetId: specSheetData?.other.node.id as string,
               certification: data.certification,
-              prevJobs: jobs,
+              prevJobs: formatJobs,
               selfIntro: data.selfIntro,
               studyOnOwnTime: data.studyOnOwnTime,
             },
