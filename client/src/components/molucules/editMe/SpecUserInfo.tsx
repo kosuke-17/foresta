@@ -1,5 +1,5 @@
 import { memo, FC, Dispatch, SetStateAction } from "react";
-import { Button, Flex, Radio, RadioGroup } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import styled from "styled-components";
 
 import { TextInput } from "../../atoms/editMe/TextInput";
@@ -28,7 +28,7 @@ export const SpecUserInfo: FC<Props> = memo(({ setMenuItem, onClose }) => {
         <TextInput
           registers={register("stuffID")}
           errorMessage={errors.stuffID?.message}
-          label="スタッフID"
+          label="スタッフID(FR-XXX-XXXXの形式)"
           placeholder="スタッフID"
         />
       </_TextItem>
@@ -47,16 +47,17 @@ export const SpecUserInfo: FC<Props> = memo(({ setMenuItem, onClose }) => {
           <_LabelItem>性別</_LabelItem>
           <_ErrorMessage>{errors.gender?.message}</_ErrorMessage>
         </Flex>
-        <RadioGroup>
-          <Flex textAlign="left" ml={3} gap={5}>
-            <Radio {...register("gender")} value="男">
-              男
-            </Radio>
-            <Radio {...register("gender")} value="女">
-              女
-            </Radio>
+
+        <Flex textAlign="left" ml={3} gap={5}>
+          <Flex alignItems="center" gap={1}>
+            <input type="radio" {...register("gender")} value="男" id="男" />
+            <label htmlFor="男">男</label>
           </Flex>
-        </RadioGroup>
+          <Flex alignItems="center" gap={1}>
+            <input type="radio" {...register("gender")} value="女" id="女" />
+            <label htmlFor="女">女</label>
+          </Flex>
+        </Flex>
       </_TextItem>
 
       {/* 最寄駅*/}
