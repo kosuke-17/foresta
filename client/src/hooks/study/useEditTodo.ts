@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/react";
-// import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 import { useUpdateTodoMutation, useAddTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
 import type { TodoData, TodoModalModeType } from "../../types/types";
@@ -32,8 +32,8 @@ type Data = {
  * @param setModalMode Todoモーダルのモードの更新関数
  */
 export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateAction<TodoModalModeType>>, onClose: () => void) => {
-  //cookie情報取得
-  // const [cookies] = useCookies();
+  // cookie情報取得
+  const [cookies] = useCookies();
   //トーストアラート
   const toast = useToast();
 
@@ -83,8 +83,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
       startedAt,
       finishedAt: finishedAt || "",
       isStatus: data.isStatus,
-      userId: "621f1cba386085f036353ecd",
-      // userId: cookies.ForestaID,
+      userId: cookies.ForestaID,
     };
     try {
       const addTodoData = await addTodo({
@@ -120,7 +119,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         });
       }
     }
-  }, [addTodo, finishedAt, onClose, startedAt, toast]);
+  }, [addTodo, finishedAt, onClose, startedAt, toast, cookies]);
 
   /**
    * Todoを更新する.
@@ -134,8 +133,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
       startedAt,
       finishedAt: finishedAt || "",
       isStatus: data.isStatus,
-      userId: "621f1cba386085f036353ecd",
-      // userId: cookies.ForestaID,
+      userId: cookies.ForestaID,
     };
 
     try {
@@ -183,7 +181,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         });
       }
     }
-  }, [finishedAt, setModalMode, setTodo, startedAt, toast, todo, updateTodo]);
+  }, [finishedAt, setModalMode, setTodo, startedAt, toast, todo, updateTodo, cookies]);
 
   return {
     register,

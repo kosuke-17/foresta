@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { addDays, DateSelectArg, EventClickArg, EventDropArg } from "@fullcalendar/react";
 import { useToast } from "@chakra-ui/react";
+import { useCookies } from "react-cookie";
 
 import { useUpdateTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
 import type { TodoData } from "../../types/types";
@@ -9,6 +10,8 @@ import type { TodoData } from "../../types/types";
  * カレンダーを操作するためのhooks.
  */
 export const useHandleCalendar = (openReadModal: (todo: TodoData) => void, openAddModal: (startedAt?: Date, finishedAt?: Date) => void) => {
+  // cookie情報取得
+  const [cookies] = useCookies();
   const toast = useToast();
 
   const [updateTodo] = useUpdateTodoMutation({
@@ -60,7 +63,7 @@ export const useHandleCalendar = (openReadModal: (todo: TodoData) => void, openA
       startedAt: info.event.start, // 移動先の開始日
       finishedAt, // 移動先の終了日
       isStatus: info.event.extendedProps.isStatus,
-      userId: "621f1cba386085f036353ecd",
+      userId: cookies.ForestaID,
     };
     try {
       const updateTodoData = await updateTodo({
@@ -95,7 +98,7 @@ export const useHandleCalendar = (openReadModal: (todo: TodoData) => void, openA
         });
       }
     }
-  }, [toast, updateTodo]);
+  }, [toast, updateTodo, cookies]);
 
   return { onEventClick, onDateSelect, onEventDrop };
 };
