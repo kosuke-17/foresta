@@ -1333,6 +1333,64 @@ export type UserLoginMutation = {
   };
 };
 
+export type GetAllTechAreaQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllTechAreaQuery = {
+  __typename?: "Query";
+  getAllTechArea: Array<{ __typename?: "TechArea"; id: string; name: string }>;
+};
+
+export type GetUserLeafsByIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetUserLeafsByIdQuery = {
+  __typename?: "Query";
+  getUserLeafsById: {
+    __typename?: "ResponseUserTechLeaf";
+    status: string;
+    node: {
+      __typename?: "UserLeafs";
+      id: string;
+      myForest: Array<{
+        __typename?: "treeInfo";
+        id: string;
+        treeId: string;
+        areaId: string;
+        treeName: string;
+        achievementRate: number;
+        color: string;
+        branches: Array<{
+          __typename?: "branchInfo";
+          id: string;
+          name: string;
+          leafs: Array<{
+            __typename?: "leafInfo";
+            id: string;
+            name: string;
+            techBranch_id: string;
+            techTree_id: string;
+            isStatus: boolean;
+          }>;
+        }>;
+      }>;
+    };
+  };
+};
+
+export type ChangeLeafStatusMutationVariables = Exact<{
+  techLeafInfo: UserTechLeafUpdateInput;
+}>;
+
+export type ChangeLeafStatusMutation = {
+  __typename?: "Mutation";
+  changeLeafStatus: {
+    __typename?: "ResponseUserTechLeaf";
+    status: string;
+    msg: string;
+  };
+};
+
 export type GetAllUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllUserQuery = {
@@ -3275,6 +3333,195 @@ export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
 export type UserLoginMutationOptions = Apollo.BaseMutationOptions<
   UserLoginMutation,
   UserLoginMutationVariables
+>;
+export const GetAllTechAreaDocument = gql`
+  query GetAllTechArea {
+    getAllTechArea {
+      id
+      name
+    }
+  }
+`;
+
+/**
+ * __useGetAllTechAreaQuery__
+ *
+ * To run a query within a React component, call `useGetAllTechAreaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllTechAreaQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllTechAreaQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllTechAreaQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllTechAreaQuery,
+    GetAllTechAreaQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAllTechAreaQuery, GetAllTechAreaQueryVariables>(
+    GetAllTechAreaDocument,
+    options,
+  );
+}
+export function useGetAllTechAreaLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllTechAreaQuery,
+    GetAllTechAreaQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAllTechAreaQuery, GetAllTechAreaQueryVariables>(
+    GetAllTechAreaDocument,
+    options,
+  );
+}
+export type GetAllTechAreaQueryHookResult = ReturnType<
+  typeof useGetAllTechAreaQuery
+>;
+export type GetAllTechAreaLazyQueryHookResult = ReturnType<
+  typeof useGetAllTechAreaLazyQuery
+>;
+export type GetAllTechAreaQueryResult = Apollo.QueryResult<
+  GetAllTechAreaQuery,
+  GetAllTechAreaQueryVariables
+>;
+export const GetUserLeafsByIdDocument = gql`
+  query GetUserLeafsById($userId: String!) {
+    getUserLeafsById(userId: $userId) {
+      status
+      node {
+        id
+        myForest {
+          id
+          treeId
+          areaId
+          treeName
+          achievementRate
+          color
+          branches {
+            id
+            name
+            leafs {
+              id
+              name
+              techBranch_id
+              techTree_id
+              isStatus
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUserLeafsByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserLeafsByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserLeafsByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserLeafsByIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetUserLeafsByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserLeafsByIdQuery,
+    GetUserLeafsByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUserLeafsByIdQuery, GetUserLeafsByIdQueryVariables>(
+    GetUserLeafsByIdDocument,
+    options,
+  );
+}
+export function useGetUserLeafsByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserLeafsByIdQuery,
+    GetUserLeafsByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetUserLeafsByIdQuery,
+    GetUserLeafsByIdQueryVariables
+  >(GetUserLeafsByIdDocument, options);
+}
+export type GetUserLeafsByIdQueryHookResult = ReturnType<
+  typeof useGetUserLeafsByIdQuery
+>;
+export type GetUserLeafsByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserLeafsByIdLazyQuery
+>;
+export type GetUserLeafsByIdQueryResult = Apollo.QueryResult<
+  GetUserLeafsByIdQuery,
+  GetUserLeafsByIdQueryVariables
+>;
+export const ChangeLeafStatusDocument = gql`
+  mutation ChangeLeafStatus($techLeafInfo: UserTechLeafUpdateInput!) {
+    changeLeafStatus(techLeafInfo: $techLeafInfo) {
+      status
+      msg
+    }
+  }
+`;
+export type ChangeLeafStatusMutationFn = Apollo.MutationFunction<
+  ChangeLeafStatusMutation,
+  ChangeLeafStatusMutationVariables
+>;
+
+/**
+ * __useChangeLeafStatusMutation__
+ *
+ * To run a mutation, you first call `useChangeLeafStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeLeafStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeLeafStatusMutation, { data, loading, error }] = useChangeLeafStatusMutation({
+ *   variables: {
+ *      techLeafInfo: // value for 'techLeafInfo'
+ *   },
+ * });
+ */
+export function useChangeLeafStatusMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ChangeLeafStatusMutation,
+    ChangeLeafStatusMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ChangeLeafStatusMutation,
+    ChangeLeafStatusMutationVariables
+  >(ChangeLeafStatusDocument, options);
+}
+export type ChangeLeafStatusMutationHookResult = ReturnType<
+  typeof useChangeLeafStatusMutation
+>;
+export type ChangeLeafStatusMutationResult =
+  Apollo.MutationResult<ChangeLeafStatusMutation>;
+export type ChangeLeafStatusMutationOptions = Apollo.BaseMutationOptions<
+  ChangeLeafStatusMutation,
+  ChangeLeafStatusMutationVariables
 >;
 export const GetAllUserDocument = gql`
   query GetAllUser {
