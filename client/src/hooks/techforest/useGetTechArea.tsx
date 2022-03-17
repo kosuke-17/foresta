@@ -12,6 +12,5 @@ export const useGetTechArea = () => {
   const dataOfTechArea = data;
   const loadingOfTechArea = loading;
   const errorOfTechArea = error;
-
   return { errorOfTechArea, loadingOfTechArea, dataOfTechArea };
 };
