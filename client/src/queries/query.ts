@@ -297,17 +297,17 @@ gql`
 // `;
 
 // ログイン処理
-export const LOGIN_QUERY = gql`
+gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
       status
+      msg
       node {
         id
         name
-        jobType
-        email
-        password
-        githubURL
+        userLeafs {
+          id
+        }
       }
     }
   }
