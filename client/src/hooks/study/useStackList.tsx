@@ -7,8 +7,8 @@ export type StackList = {
   timeStack: number; //学習時間（累計）
   skillTagId: string; //学習技術
   content: string; //メモ
-  createdAtStart: string; //学習記録開始日
-  createdAtLast: string; //最終学習記録日
+  createdAtStart: Date; //学習記録開始日
+  createdAtLast: Date; //最終学習記録日
 };
 
 /**
@@ -32,8 +32,8 @@ export const useStackList = () => {
   //学習リストの詳細内容一つ一つを格納する新しい配列を作成
   const timeStackDatas = new Array<number>(); //学習時間
   const skillTagIdtackDatas = new Array<string>(); //学習技術
-  const createdAtStartDatas = new Array<string>(); //記録開始日
-  const createdAtLastDatas = new Array<string>(); //最終記録日
+  const createdAtStartDatas = new Array<Date>(); //記録開始日
+  const createdAtLastDatas = new Array<Date>(); //最終記録日
   const contentDatas = new Array<string>(); //メモ内容
   const idDatas = new Array<string | null | undefined>(); //記録id
   //上記の記録データを格納する配列

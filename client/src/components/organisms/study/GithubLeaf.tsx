@@ -36,6 +36,7 @@ export const GithubLeaf = () => {
       query: gql`
         {
           user(login: "hiroki-yama-1118") {
+            login
             contributionsCollection {
               contributionCalendar {
                 totalContributions

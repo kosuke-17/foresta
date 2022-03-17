@@ -1,8 +1,9 @@
+import { FC, memo } from "react";
 import { useGetAllUserQuery } from "../../types/generated/graphql";
 import { SimpleGrid, Box, Center, Input } from "@chakra-ui/react";
 import { EngineerComp } from "../../components/organisms/engineers/EngineerComp";
 
-export const EngineerList = () => {
+export const EngineerList: FC = memo(() => {
   const { data } = useGetAllUserQuery();
   const engineerData = data?.getAllUser;
   return (
@@ -28,4 +29,4 @@ export const EngineerList = () => {
       </SimpleGrid>
     </div>
   );
-};
+});

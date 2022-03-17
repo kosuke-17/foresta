@@ -6,13 +6,7 @@ import {
   useAddStudyStackMutation,
   GetAllStudyStackDocument,
 } from "../../types/generated/graphql";
-
-type AddStack = {
-  createdAt: string;
-  skillTagId: string;
-  timeStack: number;
-  content: string;
-};
+import { AddStack } from "../../types/types";
 
 /**
  * 学習記録を追加するフックス.
@@ -39,25 +33,37 @@ export const useAddStack = (
    */
   const addStack = useCallback(
     async (data: AddStack) => {
-      const addStackData = await addStudyStack({
-        variables: {
-          stack: {
-            createdAt: data.createdAt,
-            skillTagId: data.skillTagId,
-            timeStack: data.timeStack,
-            content: data.content,
-            userId: cookies.ForestaID,
+      try {
+        const addStackData = await addStudyStack({
+          variables: {
+            stack: {
+              createdAt: data.createdAt,
+              skillTagId: data.skillTagId,
+              timeStack: data.timeStack,
+              content: data.content,
+              userId: cookies.ForestaID,
+            },
           },
-        },
-      });
-      if (addStackData.data?.addStudyStack.status === "success") {
-        toast({ title: "学習を記録しました", status: "success" });
-        onClose();
-        reset();
-      } else if (addStackData.data?.addStudyStack.status === "error") {
-        toast({ title: "記録に失敗しました", status: "error" });
-        onClose();
-        reset();
+        });
+        if (addStackData.data?.addStudyStack.status === "success") {
+          toast({
+            title: "学習を記録しました",
+            status: "success",
+            position: "bottom-left",
+          });
+          onClose();
+          reset();
+        } else if (addStackData.data?.addStudyStack.status === "error") {
+          toast({
+            title: "記録に失敗しました",
+            status: "error",
+            position: "bottom-left",
+          });
+          onClose();
+          reset();
+        }
+      } catch (error) {
+        alert(error);
       }
     },
     [addStudyStack, cookies.ForestaID, onClose, reset, toast],
