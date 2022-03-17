@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useToast } from "@chakra-ui/react";
 import { useRemoveTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
 
@@ -16,7 +17,7 @@ export const useDeleteTodo = (todoId: string, onClose: () => void) => {
   /**
    * Todoを削除する.
    */
-  const onDeleteTodo = async () => {
+  const onDeleteTodo = useCallback(async () => {
     try {
       const res = await removeTodo({
         variables: {
@@ -50,7 +51,7 @@ export const useDeleteTodo = (todoId: string, onClose: () => void) => {
         });
       }
     }
-  };
+  }, [onClose, removeTodo, todoId, toast]);
 
   return { onDeleteTodo };
 };

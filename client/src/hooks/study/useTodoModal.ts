@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { useDisclosure } from "@chakra-ui/react";
-import { TodoModalContext } from "../../Providers/TodoModalProvider";
-import { TodoData } from "../../types/types";
 import { isSameDay } from "date-fns";
+
+import type { TodoData } from "../../types/types";
+import { TodoModalContext } from "../../Providers/TodoModalProvider";
 
 /**
  * Todoのモーダルを操作するためのhook.
@@ -19,16 +20,16 @@ export const useTodoModal = () => {
    * Todo詳細表示のモーダルを開く.
    * @param todo モーダルに表示するTodo
    */
-  const openReadModal = (todo: TodoData) => {
+  const openReadModal = useCallback((todo: TodoData) => {
     setModalMode("read");
     setTodo(todo);
     onOpen();
-  };
+  }, [onOpen, setModalMode, setTodo]);
 
   /**
    * Todo追加用のモーダルを開く.
    */
-  const openAddModal = (startedAt?: Date, finishedAt?: Date) => {
+  const openAddModal = useCallback((startedAt?: Date, finishedAt?: Date) => {
     // モーダルのモードを追加モードに設定
     setModalMode("create");
     if (startedAt && finishedAt) {
@@ -44,7 +45,7 @@ export const useTodoModal = () => {
     }
 
     onOpen();
-  };
+  }, [onOpen, setModalMode, setTodo]);
 
   return { isOpen, onOpen, onClose, openReadModal, openAddModal };
 };

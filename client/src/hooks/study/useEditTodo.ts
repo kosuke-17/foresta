@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useContext, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -6,7 +6,7 @@ import { useToast } from "@chakra-ui/react";
 // import { useCookies } from 'react-cookie';
 
 import { useUpdateTodoMutation, useAddTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
-import { TodoData, TodoModalModeType } from "../../types/types";
+import type { TodoData, TodoModalModeType } from "../../types/types";
 import { TodoModalContext } from "../../Providers/TodoModalProvider";
 
 //バリデーションチェック
@@ -76,7 +76,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
    * Todoを新規作成する.
    * @param data フォームのデータ
    */
-  const onCreateTodo = async (data: Data) => {
+  const onCreateTodo = useCallback(async (data: Data) => {
     const newData = {
       title: data.title,
       description: data.description,
@@ -120,13 +120,13 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         });
       }
     }
-  };
+  }, [addTodo, finishedAt, onClose, startedAt, toast]);
 
   /**
    * Todoを更新する.
    * @param data フォームのデータ
    */
-  const onUpdateTodo = async (data: Data) => {
+  const onUpdateTodo = useCallback(async (data: Data) => {
     const newData = {
       todoId: todo.id,
       title: data.title,
@@ -183,8 +183,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         });
       }
     }
-
-  };
+  }, [finishedAt, setModalMode, setTodo, startedAt, toast, todo, updateTodo]);
 
   return {
     register,
