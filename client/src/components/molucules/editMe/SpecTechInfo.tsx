@@ -1,14 +1,8 @@
 import { memo, FC, Dispatch, SetStateAction } from "react";
-import { useCookies } from "react-cookie";
 import { Button, Spinner, Flex } from "@chakra-ui/react";
 
-import { SelectInput } from "../../atoms/editMe/SelectInput";
-import { TextInput } from "../../atoms/editMe/TextInput";
 import { useSpecTechInfo } from "../../../hooks/editMe/useSpecTechInfo";
-import {
-  useGetAllSkillQuery,
-  useGetSheetSkillByUserIdQuery,
-} from "../../../types/generated/graphql";
+import { useGetAllSkillQuery } from "../../../types/generated/graphql";
 import styled from "styled-components";
 import { CheckInput } from "../../atoms/editMe/CheckInput";
 
