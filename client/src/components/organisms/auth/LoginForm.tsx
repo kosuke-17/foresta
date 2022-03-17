@@ -7,14 +7,9 @@ import { useUserLoginMutation } from "../../../types/generated/graphql";
 import { Center, Box, SimpleGrid } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../../../hooks/auth/useLogin";
 
 const LoginForm: FC = memo(() => {
-  // ログイン通知用のトースト
-  const toast = useToast();
-  // 画面遷移用のnavigate
-  const navigate = useNavigate();
-  // クッキー
-  const [, setCookie] = useCookies();
   // メールアドレス
   const [mailAddress, setMailAddress] = useState<string>("");
   // テキストボックス入力時に入力内容をStateに設定
@@ -25,41 +20,8 @@ const LoginForm: FC = memo(() => {
   // テキストボックス入力時に入力内容をStateに設定
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
-
-  const [userLoginMutation] = useUserLoginMutation({
-    variables: {
-      user: {
-        email: mailAddress,
-        password: password,
-      },
-    },
-  });
-
-  // ログイン処理
-  const doLogin = async () => {
-    try {
-      const response = await userLoginMutation();
-      console.log(response);
-      // ログインが成功した場合はCookieにForestaIDを保存
-      if (response.data?.userLogin.status == "success") {
-        setCookie("ForestaID", response.data.userLogin.node.id);
-        toast({
-          title: "ログインに成功しました",
-          position: "bottom-left",
-          status: "success",
-          isClosable: true,
-        });
-        navigate("/");
-      }
-    } catch {
-      toast({
-        title: "このユーザーは存在しません",
-        position: "bottom-left",
-        status: "error",
-        isClosable: true,
-      });
-    }
-  };
+  // ログインフックス呼ぶ
+  const { doLogin } = useLogin(mailAddress, password);
 
   return (
     <div>
