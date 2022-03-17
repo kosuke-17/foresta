@@ -12,6 +12,8 @@ import {
   List,
   ListItem,
   IconButton,
+  Skeleton,
+  Stack,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import type { ApolloError } from "@apollo/client";
@@ -148,7 +150,12 @@ export const TodoList: FC<Props> = memo((props) => {
               return (
                 <TabPanel key={index}>
                   {loading ? (
-                    <>Loading...</>
+                    <Stack>
+                      <Skeleton height="20px" />
+                      <Skeleton height="20px" />
+                      <Skeleton height="20px" />
+                      <Skeleton height="20px" />
+                    </Stack>
                   ) : error ? (
                     <>エラーが発生しました</>
                   ) : getFilteredTodos(tab).length > 0 ? (
