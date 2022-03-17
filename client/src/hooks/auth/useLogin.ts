@@ -16,7 +16,7 @@ export const useLogin = (mailAddress: string, password: string) => {
   const navigate = useNavigate();
   // クッキー
   const [, setCookie] = useCookies();
-
+  // ログインするMutaion
   const [userLoginMutation] = useUserLoginMutation({
     variables: {
       user: {
@@ -25,7 +25,6 @@ export const useLogin = (mailAddress: string, password: string) => {
       },
     },
   });
-
   // ログイン処理
   const doLogin = async () => {
     try {
