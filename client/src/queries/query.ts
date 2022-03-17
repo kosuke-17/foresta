@@ -294,14 +294,19 @@ gql`
         id
         myForest {
           id
+          treeId
           areaId
           treeName
+          achievementRate
+          color
           branches {
             id
             name
             leafs {
               id
               name
+              techBranch_id
+              techTree_id
               isStatus
             }
           }
