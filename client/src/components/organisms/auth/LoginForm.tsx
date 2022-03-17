@@ -3,14 +3,15 @@ import { useCookies } from "react-cookie";
 import { EmailInput } from "../../atoms/auth/EmailInput";
 import { PasswordInput } from "../../atoms/auth/PasswordInput";
 import { LoginButton } from "../../atoms/auth/LoginButton";
-import { useMutation } from "@apollo/client";
-import { LOGIN_QUERY } from "../../../queries/query";
+import { useUserLoginMutation } from "../../../types/generated/graphql";
 import { Center, Box, SimpleGrid } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm: FC = memo(() => {
+  // ログイン通知用のトースト
   const toast = useToast();
+  // 画面遷移用のnavigate
   const navigate = useNavigate();
   // クッキー
   const [, setCookie] = useCookies();
@@ -25,7 +26,7 @@ const LoginForm: FC = memo(() => {
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
 
-  const [mutateFunction] = useMutation(LOGIN_QUERY, {
+  const [userLoginMutation] = useUserLoginMutation({
     variables: {
       user: {
         email: mailAddress,
@@ -36,25 +37,28 @@ const LoginForm: FC = memo(() => {
 
   // ログイン処理
   const doLogin = async () => {
-    const loginData = await mutateFunction();
-    // ログインが成功した場合はCookieにForestaIDを保存
-    if (loginData.data.userLogin.status == "success") {
-      setCookie("ForestaID", loginData.data.userLogin.node.id);
+    try {
+      const response = await userLoginMutation();
+      console.log(response);
+      // ログインが成功した場合はCookieにForestaIDを保存
+      if (response.data?.userLogin.status == "success") {
+        setCookie("ForestaID", response.data.userLogin.node.id);
+        toast({
+          title: "ログインに成功しました",
+          position: "bottom-left",
+          status: "success",
+          isClosable: true,
+        });
+        navigate("/");
+      }
+    } catch {
       toast({
-        title: "ログインに成功しました",
-        position: "top-right",
-        status: "success",
-        isClosable: true,
-      });
-    } else if (loginData.data.userLogin.status == "error") {
-      toast({
-        title: "ログインに失敗しました",
-        position: "top-right",
+        title: "このユーザーは存在しません",
+        position: "bottom-left",
         status: "error",
         isClosable: true,
       });
     }
-    navigate("/");
   };
 
   return (
