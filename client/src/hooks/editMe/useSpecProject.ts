@@ -1,14 +1,12 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCookies } from "react-cookie";
 import * as yup from "yup";
 
 import {
   GetSheetProjectByUserIdDocument,
   GetUserByIdDocument,
   SpecProjectSheet,
-  useGetSpreadSheetIdQuery,
   useUpdateSpecProjectMutation,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
@@ -39,12 +37,10 @@ const schema = yup.object().shape({
   memberCount: yup
     .number()
     .required("メンバー人数を入力してください")
-    .typeError("メンバー人数を入力してください")
-    .max(10, "メンバー人数は10文字以内で入力してください"),
+    .typeError("メンバー人数を入力してください"),
   //詳細
   content: yup
     .string()
-    .trim()
     .required("詳細を入力してください")
     .typeError("詳細を入力してください")
     .max(150, "詳細は150文字以内で入力してください"),
@@ -73,24 +69,10 @@ const schema = yup.object().shape({
  */
 export const useSpecProject = (
   projectData: SpecProjectSheet,
+  setIndexNum: Dispatch<SetStateAction<number>>,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
-  //cookieからID取得
-  const [cookies] = useCookies();
-
-  /**
-   * スプレッドシートIDだけ取得.
-   * @remarks 受け取ったスプレッドシートIDがnullの場合があるため
-   */
-  const { data } = useGetSpreadSheetIdQuery({
-    variables: {
-      id: cookies.ForestaID,
-    },
-  });
-  //スプレッドシートID
-  const spId = data?.getUserById.node.spreadSheetID as string;
-
   // バリデーション機能を呼び出し
   const {
     register,
@@ -123,7 +105,8 @@ export const useSpecProject = (
   const cancel = useCallback(() => {
     onClose();
     setMenuItem("");
-  }, [onClose, setMenuItem]);
+    setIndexNum(-1);
+  }, [onClose, setIndexNum, setMenuItem]);
 
   /**
    * スペックシート開発経験更新.（リフェッチ機能）
@@ -151,8 +134,8 @@ export const useSpecProject = (
       const specProject = {
         specProjectId: projectData.id, //開発経験ID
         name: data.name, //プロジェクト名
-        startedAt: String(data.startedAt), //開始日
-        finishedAt: String(data.finishedAt), //終了日
+        startedAt: data.startedAt, //開始日
+        finishedAt: data.finishedAt, //終了日
         roleSharing: data.roleSharing, //担当役割(PGとか)
         memberCount: data.memberCount, //メンバー人数
         content: data.content, //詳細
@@ -162,24 +145,24 @@ export const useSpecProject = (
         libraries: lib, //ライブラリ
         otherTools: other, //その他ツール
         devRoles: dev, //担当工程
-        specSheetId: spId, //スプレッドシートID
+        specSheetId: projectData.specSheetId, //スプレッドシートID
       };
       console.dir(JSON.stringify(specProject));
-      // try {
-      //   await updateUserInfo({
-      //     variables: { specProject },
-      //   });
-      //   cancel();
-      //   toast({
-      //     title: "更新しました",
-      //     status: "success",
-      //     isClosable: true,
-      //   });
-      // } catch (error) {
-      //   console.log(error);
-      // }
+      try {
+        await updateUserInfo({
+          variables: { specProject },
+        });
+        cancel();
+        toast({
+          title: "更新しました",
+          status: "success",
+          isClosable: true,
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
-    [projectData.id, spId],
+    [cancel, projectData.id, projectData.specSheetId, toast, updateUserInfo],
   );
 
   return {

@@ -10,6 +10,7 @@ import {
   useGetSheetByUserIdQuery,
   useUpdateSpecProjectMutation,
   useUpdateSpecTechInfoMutation,
+  useUpdateSpecUserInfoMutation,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
 
@@ -25,11 +26,9 @@ const schema = yup.object().shape({
     .typeError("スタッフIDを入力してください")
     .max(5, "スタッフIDは5文字以内で入力してください"),
   age: yup
-    .string()
-    .trim()
+    .number()
     .required("年齢を入力して下さい")
-    .typeError("年齢を入力して下さい")
-    .max(3, "年齢は3文字以内で入力して下さい"),
+    .typeError("年齢を入力して下さい"),
   gender: yup.string(),
   nearestStation: yup
     .string()
@@ -167,7 +166,7 @@ export const useSpecUserInfo = (
   /**
    * スペックシート基本情報更新.（リフェッチ機能）
    */
-  const [updateSpecInfo] = useUpdateSpecTechInfoMutation({
+  const [updateSpecInfo] = useUpdateSpecUserInfoMutation({
     refetchQueries: [GetSheetByUserIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
@@ -176,39 +175,41 @@ export const useSpecUserInfo = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = useCallback(async (data: any) => {
-    const neareData = `${data.nearestStation}(${data.nearestLine})`;
-    const se = data.seExpAmountYear * 12 + data.seExpAmountMonth;
-    const pg = data.pgExpAmountYear * 12 + data.pgExpAmountMonth;
-    const it = data.itExpAmountYear * 12 + data.itExpAmountMonth;
+  const onSubmit = useCallback(
+    async (data: any) => {
+      const neareData = `${data.nearestStation}(${data.nearestLine})`;
+      const se = data.seExpAmountYear * 12 + data.seExpAmountMonth;
+      const pg = data.pgExpAmountYear * 12 + data.pgExpAmountMonth;
+      const it = data.itExpAmountYear * 12 + data.itExpAmountMonth;
 
-    const specUserInfo = {
-      specUserInfoId: "",
-      stuffID: data.stuffID,
-      age: data.age,
-      gender: data.gender,
-      nearestStation: neareData,
-      startWorkDate: data.startWorkDate,
-      seExpAmount: se,
-      pgExpAmount: pg,
-      itExpAmount: it,
-    };
-
-    console.dir(JSON.stringify(specUserInfo));
-    // try {
-    //   await updateSpecInfo({
-    //     variables: { specTechInfo },
-    //   });
-    //   cancel();
-    //   toast({
-    //     title: "更新しました",
-    //     status: "success",
-    //     isClosable: true,
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  }, []);
+      try {
+        await updateSpecInfo({
+          variables: {
+            specUserInfo: {
+              specUserInfoId: "",
+              stuffID: data.stuffID,
+              age: data.age,
+              gender: data.geder,
+              nearestStation: String(neareData),
+              startWorkDate: data.startWorkDate,
+              seExpAmount: Number(se),
+              pgExpAmount: Number(pg),
+              itExpAmount: Number(it),
+            },
+          },
+        });
+        cancel();
+        toast({
+          title: "更新しました",
+          status: "success",
+          isClosable: true,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [cancel, toast, updateSpecInfo],
+  );
 
   return {
     useUpdateSpecProjectMutation,
