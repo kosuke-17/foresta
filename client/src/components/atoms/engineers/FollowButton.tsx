@@ -1,6 +1,6 @@
-import React, { FC, useState } from "react";
+import { FC, memo, useState } from "react";
 import { Button } from "@chakra-ui/react";
-export const FollowButton: FC = () => {
+export const FollowButton: FC = memo(() => {
   const [status, setStatus] = useState(true);
   const change = () => {
     setStatus(!status);
@@ -31,4 +31,4 @@ export const FollowButton: FC = () => {
       )}
     </div>
   );
-};
+});
