@@ -63,6 +63,7 @@ gql`
       msg
       node {
         userInfo {
+          id
           stuffID
           age
           gender
@@ -100,6 +101,7 @@ gql`
       msg
       node {
         techInfo {
+          id
           operationEnvs
           languages
           frameworks

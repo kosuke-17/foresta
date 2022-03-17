@@ -552,6 +552,7 @@ export type SpecTechInfoSheet = {
   __typename?: "SpecTechInfoSheet";
   devRoles: Array<Scalars["String"]>;
   frameworks: Array<Scalars["String"]>;
+  id: Scalars["ID"];
   languages: Array<Scalars["String"]>;
   libraries: Array<Scalars["String"]>;
   operationEnvs: Array<Scalars["String"]>;
@@ -573,6 +574,7 @@ export type SpecUserInfoSheet = {
   __typename?: "SpecUserInfoSheet";
   age: Scalars["Int"];
   gender: Scalars["String"];
+  id: Scalars["ID"];
   itExpAmount: Scalars["Int"];
   nearestStation: Scalars["String"];
   pgExpAmount: Scalars["Int"];
@@ -895,6 +897,7 @@ export type GetSheetByUserIdQuery = {
       __typename?: "SpecSheet";
       userInfo: {
         __typename?: "SpecUserInfoSheet";
+        id: string;
         stuffID: string;
         age: number;
         gender: string;
@@ -937,6 +940,7 @@ export type GetSheetSkillByUserIdQuery = {
       __typename?: "SpecSheet";
       techInfo: {
         __typename?: "SpecTechInfoSheet";
+        id: string;
         operationEnvs: Array<string>;
         languages: Array<string>;
         frameworks: Array<string>;
@@ -1321,14 +1325,12 @@ export type UserLoginMutation = {
   userLogin: {
     __typename?: "ResponseUser";
     status: string;
+    msg: string;
     node: {
       __typename?: "User";
       id: string;
       name: string;
-      jobType: string;
-      email: string;
-      password: string;
-      githubURL: string;
+      userLeafs: { __typename?: "UserLeafs"; id: string };
     };
   };
 };
@@ -1809,6 +1811,7 @@ export const GetSheetByUserIdDocument = gql`
       msg
       node {
         userInfo {
+          id
           stuffID
           age
           gender
@@ -1944,6 +1947,7 @@ export const GetSheetSkillByUserIdDocument = gql`
       msg
       node {
         techInfo {
+          id
           operationEnvs
           languages
           frameworks
@@ -3281,13 +3285,13 @@ export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
       status
+      msg
       node {
         id
         name
-        jobType
-        email
-        password
-        githubURL
+        userLeafs {
+          id
+        }
       }
     }
   }
