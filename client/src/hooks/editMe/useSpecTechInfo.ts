@@ -48,8 +48,7 @@ export const useSpecTechInfo = (
   const [cookies] = useCookies();
 
   /**
-   * スプレッドシートIDだけ取得.
-   * @remarks 受け取ったスプレッドシートIDがnullの場合があるため
+   * スキル要約取得.
    */
 
   const { data } = useGetSheetSkillByUserIdQuery({
@@ -66,6 +65,8 @@ export const useSpecTechInfo = (
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  console.dir(JSON.stringify(data?.skills.node));
 
   setValue("devRoles", data?.skills.node.techInfo.devRoles);
   setValue("operationEnvs", data?.skills.node.techInfo.operationEnvs);
