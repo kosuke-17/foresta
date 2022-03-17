@@ -184,7 +184,7 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
           </_TextItem>
 
           <_TextItem>
-            使用技術
+            <_LabelItem>使用技術</_LabelItem>
             <Flex>
               <Input type="text" value={skill} onChange={handleChange} />
               <Button
@@ -244,4 +244,9 @@ const _ListTitle = styled.div`
 const _List = styled.div`
   margin-top: 5px;
   margin-bottom: 10px;
+`;
+
+const _LabelItem = styled.div`
+  text-align: left;
+  font-weight: bold;
 `;
