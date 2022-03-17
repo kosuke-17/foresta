@@ -68,16 +68,30 @@ export const useHandleCalendar = (openReadModal: (todo: TodoData) => void, openA
         }
       });
       if (updateTodoData.data?.updateTodo.status === "success") {
-        toast({ title: "Todoの日付を更新しました", status: "success" });
-
+        toast({
+          title: "Todoの日付を更新しました",
+          status: "success",
+          position: "bottom-left",
+          isClosable: true
+        });
 
       } else if (updateTodoData.data?.updateTodo.status === "error") {
-        toast({ title: "Todoの日付の更新に失敗しました", status: "error" });
+        toast({
+          title: "Todoの日付の更新に失敗しました",
+          status: "error",
+          position: "bottom-left",
+          isClosable: true
+        });
       }
 
     } catch (error) {
       if (error instanceof Error) { // errorがunknown型で返ってくるので型ガード
-        toast({ title: "Todoの日付の更新に失敗しました", status: "error" });
+        toast({
+          title: "Todoの日付の更新に失敗しました",
+          status: "error",
+          position: "bottom-left",
+          isClosable: true
+        });
       }
     }
   };

@@ -93,16 +93,31 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         }
       });
       if (addTodoData.data?.addTodo.status === "success") {
-        toast({ title: "Todoを追加しました", status: "success" });
+        toast({
+          title: "Todoを追加しました",
+          status: "success",
+          position: "bottom-left",
+          isClosable: true
+        });
         onClose();
 
       } else if (addTodoData.data?.addTodo.status === "error") {
-        toast({ title: "Todoの追加に失敗しました", status: "error" });
+        toast({
+          title: "Todoの追加に失敗しました",
+          status: "error",
+          position: "bottom-left",
+          isClosable: true
+        });
       }
 
     } catch (error) {
       if (error instanceof Error) { // errorがunknown型で返ってくるので型ガード
-        toast({ title: "Todoの追加に失敗しました", status: "error" });
+        toast({
+          title: "Todoの追加に失敗しました",
+          status: "error",
+          position: "bottom-left",
+          isClosable: true
+        });
       }
     }
   };
@@ -130,8 +145,13 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         }
       });
       if (updateTodoData.data?.updateTodo.status === "success") {
-        toast({ title: "Todoを更新しました", status: "success" });
-    
+        toast({
+          title: "Todoを更新しました",
+          status: "success",
+          position: "bottom-left",
+          isClosable: true
+        });
+
         // 表示させるTodoを手動で更新
         setTodo({
           ...todo,
@@ -145,12 +165,22 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         setModalMode("read");
 
       } else if (updateTodoData.data?.updateTodo.status === "error") {
-        toast({ title: "Todoの更新に失敗しました", status: "error" });
+        toast({
+          title: "Todoの更新に失敗しました",
+          status: "error",
+          position: "bottom-left",
+          isClosable: true
+        });
       }
 
     } catch (error) {
       if (error instanceof Error) { // errorがunknown型で返ってくるので型ガード
-        toast({ title: "Todoの更新に失敗しました", status: "error" });
+        toast({
+          title: "Todoの更新に失敗しました",
+          status: "error",
+          position: "bottom-left",
+          isClosable: true
+        });
       }
     }
 
