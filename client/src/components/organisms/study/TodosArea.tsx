@@ -15,7 +15,6 @@ export const TodosArea: FC = memo(() => {
   //cookie情報取得
   const [cookies] = useCookies();
   const userId = cookies.ForestaID;
-  console.log(userId);
 
   // Todoのモーダルを使用するためのhookを使用する
   const { isOpen, onClose, openReadModal, openAddModal } = useTodoModal();

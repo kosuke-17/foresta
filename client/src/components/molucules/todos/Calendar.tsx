@@ -6,7 +6,7 @@ import { Box } from "@chakra-ui/react";
 import type { ApolloError } from "@apollo/client";
 
 import type { TodoData } from "../../../types/types";
-import { isNonNullTodoData } from "../../organisms/study/TodoList";
+import { isNonNullTodoData } from "../../../hooks/study/useTodoList";
 import { useHandleCalendar } from "../../../hooks/study/useHandleCalendar";
 
 type Props = {
@@ -62,7 +62,7 @@ export const Calendar: FC<Props> = memo((props) => {
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        eventColor="#48BB78"
+        eventColor="#319896"
         businessHours={true} // 休日に色をつけるかどうか
         contentHeight="auto" // カレンダーの高さ
         dayMaxEvents={3} // 1日に表示できるイベント数
