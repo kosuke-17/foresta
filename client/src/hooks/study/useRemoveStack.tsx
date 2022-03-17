@@ -24,17 +24,29 @@ export const useRemoveStack = (onClose: () => void, stackId: string) => {
    * 学習を削除するメソッド
    */
   const removeStack = useCallback(async () => {
-    const removeStackData = await removeStudyStack({
-      variables: {
-        studyStackId: stackId,
-      },
-    });
-    if (removeStackData.data?.removeStudyStack.status === "success") {
-      toast({ title: "学習を削除しました", status: "success" });
-      onClose();
-    } else if (removeStackData.data?.removeStudyStack.status === "error") {
-      toast({ title: "削除に失敗しました", status: "error" });
-      onClose();
+    try {
+      const removeStackData = await removeStudyStack({
+        variables: {
+          studyStackId: stackId,
+        },
+      });
+      if (removeStackData.data?.removeStudyStack.status === "success") {
+        toast({
+          title: "学習を削除しました",
+          status: "success",
+          position: "bottom-left",
+        });
+        onClose();
+      } else if (removeStackData.data?.removeStudyStack.status === "error") {
+        toast({
+          title: "削除に失敗しました",
+          status: "error",
+          position: "bottom-left",
+        });
+        onClose();
+      }
+    } catch (error) {
+      alert(error);
     }
   }, [onClose, removeStudyStack, stackId, toast]);
 
