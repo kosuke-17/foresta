@@ -1,21 +1,9 @@
 import { memo, FC, Dispatch, SetStateAction } from "react";
-import { useCookies } from "react-cookie";
-import {
-  Button,
-  Spinner,
-  Flex,
-  Box,
-  Input,
-  Radio,
-  RadioGroup,
-  Stack,
-} from "@chakra-ui/react";
+import { Button, Flex, Radio, RadioGroup } from "@chakra-ui/react";
+import styled from "styled-components";
 
-import { SelectInput } from "../../atoms/editMe/SelectInput";
 import { TextInput } from "../../atoms/editMe/TextInput";
 import { useSpecUserInfo } from "../../../hooks/editMe/useSpecUserInfo";
-import { useGetSheetByUserIdQuery } from "../../../types/generated/graphql";
-import styled from "styled-components";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
