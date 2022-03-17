@@ -10,10 +10,10 @@ import {
 } from "@chakra-ui/react";
 import styled from "styled-components";
 
-import type { TodoData, TodoModalModeType } from "../../../types/types";
 import { DateRangePicker } from "../../atoms/study/DateRangePicker";
-import { useEditTodo } from "../../../hooks/study/useEditTodo";
 import { TodoHeaderButtons } from "../../molucules/todos/TodoHeaderButtons";
+import type { TodoData, TodoModalModeType } from "../../../types/types";
+import { useEditTodo } from "../../../hooks/study/useEditTodo";
 import { TodoModalContext } from "../../../Providers/TodoModalProvider";
 
 type Props = {
@@ -76,7 +76,7 @@ export const TodoEditForm: FC<Props> = memo((props) => {
               {errors.title?.message}
             </Box>
           </div>
-          <Flex alignItems="center" gap={2} mt={2}>
+          <Flex alignItems="center" mt={2}>
             <_Label>日付: </_Label>
             <DateRangePicker
               startedAt={startedAt}
@@ -86,7 +86,7 @@ export const TodoEditForm: FC<Props> = memo((props) => {
             />
           </Flex>
 
-          <Flex alignItems="center">
+          <Flex alignItems="center" >
             <_Label>ステータス: </_Label>
             {watch("isStatus") ? "完了" : "未完了"}
             <Checkbox
@@ -117,4 +117,5 @@ export const TodoEditForm: FC<Props> = memo((props) => {
 const _Label = styled.span`
   font-weight: bold;
   white-space: nowrap;
+  margin-right: 4px;
 `;

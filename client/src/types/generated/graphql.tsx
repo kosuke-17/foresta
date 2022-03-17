@@ -552,6 +552,7 @@ export type SpecTechInfoSheet = {
   __typename?: "SpecTechInfoSheet";
   devRoles: Array<Scalars["String"]>;
   frameworks: Array<Scalars["String"]>;
+  id: Scalars["ID"];
   languages: Array<Scalars["String"]>;
   libraries: Array<Scalars["String"]>;
   operationEnvs: Array<Scalars["String"]>;
@@ -573,6 +574,7 @@ export type SpecUserInfoSheet = {
   __typename?: "SpecUserInfoSheet";
   age: Scalars["Int"];
   gender: Scalars["String"];
+  id: Scalars["ID"];
   itExpAmount: Scalars["Int"];
   nearestStation: Scalars["String"];
   pgExpAmount: Scalars["Int"];
@@ -1156,14 +1158,12 @@ export type UserLoginMutation = {
   userLogin: {
     __typename?: "ResponseUser";
     status: string;
+    msg: string;
     node: {
       __typename?: "User";
       id: string;
       name: string;
-      jobType: string;
-      email: string;
-      password: string;
-      githubURL: string;
+      userLeafs: { __typename?: "UserLeafs"; id: string };
     };
   };
 };
@@ -2510,13 +2510,13 @@ export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
       status
+      msg
       node {
         id
         name
-        jobType
-        email
-        password
-        githubURL
+        userLeafs {
+          id
+        }
       }
     }
   }

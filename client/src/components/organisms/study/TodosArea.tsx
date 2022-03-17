@@ -1,5 +1,6 @@
 import { FC, memo } from "react";
 import { Container } from "@chakra-ui/react";
+import { useCookies } from "react-cookie";
 
 import { TodoList } from "./TodoList";
 import { TodoModal } from "./TodoModal";
@@ -11,7 +12,9 @@ import { useTodoModal } from "../../../hooks/study/useTodoModal";
  * Todoを表示するエリアのコンポーネント.
  */
 export const TodosArea: FC = memo(() => {
-  const userId = "621f1cba386085f036353ecd";
+  //cookie情報取得
+  const [cookies] = useCookies();
+  const userId = cookies.ForestaID;
 
   // Todoのモーダルを使用するためのhookを使用する
   const { isOpen, onClose, openReadModal, openAddModal } = useTodoModal();
@@ -45,7 +48,7 @@ export const TodosArea: FC = memo(() => {
         openAddModal={openAddModal}
       />
 
-      {/* Todo詳細 */}
+      {/* Todoモーダル */}
       <TodoModal isOpen={isOpen} onClose={onClose} />
     </Container>
   );
