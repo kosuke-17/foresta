@@ -1,16 +1,14 @@
-import { Todo, Portfolio, User } from "./generated/graphql";
+import { Todo, Portfolio, User, StudyStack } from "./generated/graphql";
 
-// 一覧用のTodoの型
-export type TodoData = Pick<
-  Todo,
-  "id" | "title" | "startedAt" | "finishedAt" | "isStatus"
->;
+// Todoの型
+export type TodoData =
+  Pick<
+    Todo,
+    "id" | "title" | "description" | "startedAt" | "finishedAt" | "isStatus"
+  >;
 
-// Todo詳細用の型(descriptionあり)
-export type TodoDetail = Pick<
-  Todo,
-  "id" | "title" | "description" | "startedAt" | "finishedAt" | "isStatus"
->;
+// Todoモーダルのモードの型
+export type TodoModalModeType = "read" | "update" | "create" | "delete";
 
 //ユーザ型
 export type UserType = Pick<
@@ -36,3 +34,9 @@ export type userInfoEditType = {
   jobType: string;
   githubURL: string;
 };
+
+//学習リストの型
+export type AddStack = Pick<
+  StudyStack,
+  "createdAt" | "skillTagId" | "timeStack" | "content"
+>;
