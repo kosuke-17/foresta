@@ -1101,6 +1101,19 @@ export type RemovePortfolioMutation = {
   };
 };
 
+export type UpdateSpecUserInfoMutationVariables = Exact<{
+  specUserInfo: SpecUserInfoUpdateInput;
+}>;
+
+export type UpdateSpecUserInfoMutation = {
+  __typename?: "Mutation";
+  updateSpecUserInfo: {
+    __typename?: "ResponseSpecUserInfo";
+    status: string;
+    msg?: string | null;
+  };
+};
+
 export type UpdateSpecProjectMutationVariables = Exact<{
   specProject: SpecProjectUpdateInput;
 }>;
@@ -2316,6 +2329,57 @@ export type RemovePortfolioMutationResult =
 export type RemovePortfolioMutationOptions = Apollo.BaseMutationOptions<
   RemovePortfolioMutation,
   RemovePortfolioMutationVariables
+>;
+export const UpdateSpecUserInfoDocument = gql`
+  mutation UpdateSpecUserInfo($specUserInfo: SpecUserInfoUpdateInput!) {
+    updateSpecUserInfo(specUserInfo: $specUserInfo) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpecUserInfoMutationFn = Apollo.MutationFunction<
+  UpdateSpecUserInfoMutation,
+  UpdateSpecUserInfoMutationVariables
+>;
+
+/**
+ * __useUpdateSpecUserInfoMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpecUserInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpecUserInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpecUserInfoMutation, { data, loading, error }] = useUpdateSpecUserInfoMutation({
+ *   variables: {
+ *      specUserInfo: // value for 'specUserInfo'
+ *   },
+ * });
+ */
+export function useUpdateSpecUserInfoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpecUserInfoMutation,
+    UpdateSpecUserInfoMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpecUserInfoMutation,
+    UpdateSpecUserInfoMutationVariables
+  >(UpdateSpecUserInfoDocument, options);
+}
+export type UpdateSpecUserInfoMutationHookResult = ReturnType<
+  typeof useUpdateSpecUserInfoMutation
+>;
+export type UpdateSpecUserInfoMutationResult =
+  Apollo.MutationResult<UpdateSpecUserInfoMutation>;
+export type UpdateSpecUserInfoMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpecUserInfoMutation,
+  UpdateSpecUserInfoMutationVariables
 >;
 export const UpdateSpecProjectDocument = gql`
   mutation UpdateSpecProject($specProject: SpecProjectUpdateInput!) {

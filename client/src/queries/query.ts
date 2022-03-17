@@ -248,6 +248,16 @@ gql`
   }
 `;
 
+//ユーザ情報:スペックシート基本情報更新
+gql`
+  mutation UpdateSpecUserInfo($specUserInfo: SpecUserInfoUpdateInput!) {
+    updateSpecUserInfo(specUserInfo: $specUserInfo) {
+      status
+      msg
+    }
+  }
+`;
+
 //ユーザ情報:スペックシート開発経験更新
 gql`
   mutation UpdateSpecProject($specProject: SpecProjectUpdateInput!) {
