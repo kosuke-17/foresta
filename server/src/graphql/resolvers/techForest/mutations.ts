@@ -37,10 +37,11 @@ const techForestMutations = {
    * @returns error : errorステータス
    */
   createTechBranch: async (_: any, { techBranch }: TechBranchType) => {
-    const { name } = techBranch;
+    const { name, techTree_id } = techBranch;
 
     try {
-      const createTechBranch = new TechBranch({ name });
+      const createTechBranch = new TechBranch({ name, techTree_id });
+
       const result = await createTechBranch.save();
       return success(result, "追加に成功しました。");
     } catch {
@@ -55,10 +56,10 @@ const techForestMutations = {
    * @returns error : errorステータス
    */
   createTechTree: async (_: any, { techTree }: TechTreeType) => {
-    const { name } = techTree;
+    const { name, color, techArea_id } = techTree;
 
     try {
-      const createTechTree = new TechTree({ name });
+      const createTechTree = new TechTree({ name, color, techArea_id });
       const result = await createTechTree.save();
       return success(result, "作成に成功しました。");
     } catch {

@@ -1,35 +1,28 @@
-/**
- * 一旦コピペしただけ(未完成)
- */
-import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import {
-  GetUserByIdDocument,
-  useUpdateUserMutation,
+  GetUserPortfolioByIdDocument,
+  Portfolio,
+  useRemovePortfolioMutation,
+  useUpdatePortfolioMutation,
 } from "../../types/generated/graphql";
-import { userInfoEditType, UserType } from "../../types/types";
+import { useToast } from "@chakra-ui/react";
 
 /**
  * バリデーションチェック.
  */
 const schema = yup.object().shape({
-  //氏名のバリデーション
-  name: yup
-    .string()
-    .trim()
-    .required("氏名を入力してください")
-    .max(15, "氏名は15文字以内で入力してください"),
-  //職種のバリデーション
-  jobType: yup.string().required("職種を入力して下さい"),
-  //Githubアカウントのバリデーション
-  githubURL: yup
-    .string()
-    .trim()
-    .required("GitHubアカウント名を入力して下さい")
-    .max(39, "39文字以内で入力して下さい"),
+  //プロジェクト名
+  title: yup.string(),
+  //詳細
+  description: yup.string(),
+  //画像URL
+  img: yup.string(),
+  //URL
+  portfolioURL: yup.string(),
 });
 
 /**
@@ -42,7 +35,7 @@ const schema = yup.object().shape({
  * @params userData - 初期表示用データ
  */
 export const useUserPortfolio = (
-  userData: UserType,
+  portfolioData: Portfolio,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
@@ -50,28 +43,39 @@ export const useUserPortfolio = (
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    //初期値はログインしている人のデータを入れる
     defaultValues: {
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
+      title: portfolioData.title,
+      description: portfolioData.description,
+      img: portfolioData.img,
+      portfolioURL: portfolioData.portfolioURL,
     },
   });
 
+  //トーストの使用
+  const toast = useToast();
+
+  //使用技術の配列
+  const [hookSkillArray, setHookSkillArray] = useState<Array<string>>([
+    ...portfolioData.skills,
+  ]);
+
   /**
-   * デフォルト値読み込み直し用.
+   * 技術の追加.
    */
-  useEffect(() => {
-    reset({
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
-    });
-  }, [reset, userData?.githubURL, userData?.jobType, userData?.name]);
+  const addSkill = useCallback(
+    (skill: string) => {
+      if (skill === "") {
+        return;
+      }
+      const array = hookSkillArray;
+      array.push(skill);
+      setHookSkillArray([...array]);
+    },
+    [hookSkillArray, setHookSkillArray],
+  );
 
   /**
    * キャンセルボタンを押した時に呼ばれる.
@@ -82,10 +86,10 @@ export const useUserPortfolio = (
   }, [onClose, setMenuItem]);
 
   /**
-   * ユーザ情報更新.（リフェッチ機能）
+   * 制作物情報更新.（リフェッチ機能）
    */
-  const [updateUserInfo] = useUpdateUserMutation({
-    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
+  const [updatePortfolio] = useUpdatePortfolioMutation({
+    refetchQueries: [GetUserPortfolioByIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -94,36 +98,69 @@ export const useUserPortfolio = (
    * @param data - 入力したデータ
    */
   const onSubmit = useCallback(
-    async (data: userInfoEditType) => {
+    async (data: any) => {
       try {
-        await updateUserInfo({
+        await updatePortfolio({
           variables: {
-            user: {
-              userId: userData.id, //受け取ったデータそのまま
-              name: data.name,
-              jobType: data.jobType,
-              githubURL: data.githubURL,
-              spreadSheetID: userData.spreadSheetID, //受け取ったデータそのまま
+            portfolio: {
+              portfolioId: portfolioData.id,
+              title: data.title,
+              description: data.description,
+              img: data.img,
+              portfolioURL: data.portfolioURL,
+              skills: hookSkillArray,
             },
           },
+        });
+        toast({
+          title: "変更しました",
+          status: "success",
+          isClosable: true,
         });
         cancel();
       } catch (error) {
         console.log(error);
       }
     },
-    [cancel, updateUserInfo, userData],
+    [cancel, hookSkillArray, portfolioData.id, toast, updatePortfolio],
   );
 
+  /**
+   * 制作物情報更新(削除用).（リフェッチ機能）
+   */
+  const [deletePortfolio] = useRemovePortfolioMutation({
+    refetchQueries: [GetUserPortfolioByIdDocument], //データを表示するクエリーのDocument
+    awaitRefetchQueries: true,
+  });
+
+  /**
+   * 削除ボタンを押した際に呼ばれる.
+   */
+  const onDelete = useCallback(async () => {
+    try {
+      await deletePortfolio({
+        variables: { portfolioId: portfolioData.id },
+      });
+      toast({
+        title: "削除しました",
+        status: "success",
+        isClosable: true,
+      });
+      cancel();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [cancel, deletePortfolio, portfolioData.id, toast]);
+
   return {
-    useUpdateUserMutation,
     handleSubmit,
     cancel,
     register,
     errors,
     onSubmit,
-    userData,
-    GetUserByIdDocument,
-    updateUserInfo,
+    hookSkillArray,
+    setHookSkillArray,
+    addSkill,
+    onDelete,
   };
 };

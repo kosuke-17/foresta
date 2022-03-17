@@ -159,6 +159,19 @@ gql`
   }
 `;
 
+//ユーザ情報:スペックシートIDのみ取得.
+gql`
+  query GetSpreadSheetID($id: String!) {
+    getUserById(_id: $id) {
+      status
+      msg
+      node {
+        spreadSheetID
+      }
+    }
+  }
+`;
+
 //ユーザ情報:自己PR取得+スペックシートその他情報同時取得.
 gql`
   query GetPrAndSheetByUserId($userId: String!) {
@@ -195,10 +208,78 @@ gql`
   }
 `;
 
-// スペックシート更新
+//ユーザ情報:制作物新規追加
 gql`
-  mutation UpdateSpecSheet($specSheet: SpecSheetUpdateInput!) {
-    updateSpecSheet(specSheet: $specSheet) {
+  mutation CreatePortfolio($portfolio: PortfolioCreateInput!) {
+    createPortfolio(portfolio: $portfolio) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:制作物編集
+gql`
+  mutation UpdatePortfolio($portfolio: PortfolioUpdateInput!) {
+    updatePortfolio(portfolio: $portfolio) {
+      status
+      msg
+      node {
+        id
+        title
+        description
+        img
+        portfolioURL
+        skills
+        userId
+        specSheetId
+      }
+    }
+  }
+`;
+
+//ユーザ情報:制作物削除
+gql`
+  mutation RemovePortfolio($portfolioId: String!) {
+    removePortfolio(portfolioId: $portfolioId) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:URL編集用取得
+gql`
+  query GetUserUrlById($id: String!) {
+    urls: getUserById(_id: $id) {
+      node {
+        userUrls {
+          user_urls {
+            urlName
+            url
+            id
+          }
+          id
+        }
+      }
+    }
+  }
+`;
+
+//ユーザ情報:URL追加
+gql`
+  mutation AddUserUrls($urlData: UserUrlsAddInput!) {
+    addUserUrls(urlData: $urlData) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:URL削除
+gql`
+  mutation RemoveUserUrls($urlData: UserUrlsRemoveInput!) {
+    removeUserUrls(urlData: $urlData) {
       status
       msg
     }
@@ -228,6 +309,57 @@ export const LOGIN_QUERY = gql`
         password
         githubURL
       }
+    }
+  }
+`;
+
+// 技術エリアを全件取得
+gql`
+  query GetAllTechArea {
+    getAllTechArea {
+      id
+      name
+    }
+  }
+`;
+
+// 特定のユーザーが保持している技術を全件取得
+gql`
+  query GetUserLeafsById($userId: String!) {
+    getUserLeafsById(userId: $userId) {
+      status
+      node {
+        id
+        myForest {
+          id
+          treeId
+          areaId
+          treeName
+          achievementRate
+          color
+          branches {
+            id
+            name
+            leafs {
+              id
+              name
+              techBranch_id
+              techTree_id
+              isStatus
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+// 技術ツリーのステータスを変更
+gql`
+  mutation ChangeLeafStatus($techLeafInfo: UserTechLeafUpdateInput!) {
+    changeLeafStatus(techLeafInfo: $techLeafInfo) {
+      status
+      msg
     }
   }
 `;
@@ -329,6 +461,7 @@ gql`
       node {
         id
         title
+        description
         startedAt
         finishedAt
         isStatus
@@ -349,6 +482,63 @@ gql`
         finishedAt
         isStatus
       }
+    }
+  }
+`;
+
+// Todoを更新する
+gql`
+  mutation updateTodo($todo: TodoUpdateInput!) {
+    updateTodo(todo: $todo) {
+      status
+      node {
+        id
+        title
+        description
+        startedAt
+        finishedAt
+        isStatus
+        userId
+      }
+    }
+  }
+`;
+
+// Todoのステータスを変更する
+gql`
+  mutation ChangeTodoStatus($todoId: String!) {
+    changeTodoStatus(todoId: $todoId) {
+      status
+      node {
+        isStatus
+        title
+      }
+    }
+  }
+`;
+
+// Todoを追加する
+gql`
+  mutation AddTodo($todo: TodoAddInput!) {
+    addTodo(todo: $todo) {
+      status
+      node {
+        id
+        title
+        description
+        startedAt
+        finishedAt
+        isStatus
+      }
+    }
+  }
+`;
+
+// Todoを削除する
+gql`
+  mutation RemoveTodo($todoId: String!) {
+    removeTodo(todoId: $todoId) {
+      status
     }
   }
 `;

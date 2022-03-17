@@ -13,6 +13,7 @@ export type TechBranchType = {
 export type TechTreeType = {
   techTree: {
     name: string;
+    color: string;
     techArea_id: string;
   };
 };

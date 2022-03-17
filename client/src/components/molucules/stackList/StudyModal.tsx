@@ -12,24 +12,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FC, memo } from "react";
 import { useForm } from "react-hook-form";
-import { useGetStudyStackByIdQuery } from "../../types/generated/graphql";
-import { StackButton } from "../atoms/study/StackBotton";
-import { useAddStack } from "../../hooks/study/useAddStack";
-import { useRemoveStack } from "../../hooks/study/useRemoveStack";
-import { useUpdateStack } from "../../hooks/study/useUpdateStack";
-import { StudyModalInput } from "./stackList/StudyModalInput";
+import { useGetStudyStackByIdQuery } from "../../../types/generated/graphql";
+import { StackButton } from "../../atoms/study/StackBotton";
+import { useAddStack } from "../../../hooks/study/useAddStack";
+import { useRemoveStack } from "../../../hooks/study/useRemoveStack";
+import { useUpdateStack } from "../../../hooks/study/useUpdateStack";
+import { StudyModalInput } from "./StudyModalInput";
+import { AddStack } from "../../../types/types";
+import { format } from "date-fns";
 
 type Props = {
   title: string;
   buttonTitle: string;
   stackId: string;
-};
-
-type AddStack = {
-  createdAt: string;
-  skillTagId: string;
-  timeStack: number;
-  content: string;
 };
 
 //バリデーションチェック
@@ -80,7 +75,10 @@ export const StudyModal: FC<Props> = memo((props) => {
   const openMethod = () => {
     //編集ボタンをクリックしたときには初期値をセットする
     if (data) {
-      setValue("createdAt", data?.getStudyStackById.node.createdAt as string);
+      setValue(
+        "createdAt",
+        format(new Date(data?.getStudyStackById.node.createdAt), "yyyy-MM-dd"),
+      );
       setValue("skillTagId", data?.getStudyStackById.node.skillTagId as string);
       setValue("timeStack", data?.getStudyStackById.node.timeStack as number);
       setValue("content", data?.getStudyStackById.node.content as string);
@@ -117,7 +115,13 @@ export const StudyModal: FC<Props> = memo((props) => {
           {title === "記録削除" && (
             <ModalBody>この記事を削除しますか</ModalBody>
           )}
-          <StudyModalInput register={register} errors={errors} />
+          {title === "記録追加" && (
+            <StudyModalInput register={register} errors={errors} />
+          )}
+          {title === "記録編集" && (
+            <StudyModalInput register={register} errors={errors} />
+          )}
+
           <ModalFooter>
             {title === "記録追加" && (
               <StackButton onClick={handleSubmit(addStack)} title="追加する" />
