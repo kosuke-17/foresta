@@ -74,8 +74,9 @@ export const Project: FC = memo(() => {
                       <Tr>
                         <Td>期間</Td>
                         <Td>
-                          {project?.startedAt}
-                          {project?.finishedAt}ヵ月
+                          {/* {new Date(project?.startedAt)} */}
+                          {/* {project?.finishedAt} */}
+                          ヵ月
                         </Td>
                       </Tr>
                       <Tr>
