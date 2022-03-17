@@ -111,7 +111,7 @@ export const useSpecProject = (
   /**
    * スペックシート開発経験更新.（リフェッチ機能）
    */
-  const [updateUserInfo] = useUpdateSpecProjectMutation({
+  const [updatePj] = useUpdateSpecProjectMutation({
     refetchQueries: [GetSheetProjectByUserIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
@@ -147,9 +147,8 @@ export const useSpecProject = (
         devRoles: dev, //担当工程
         specSheetId: projectData.specSheetId, //スプレッドシートID
       };
-      console.dir(JSON.stringify(specProject));
       try {
-        await updateUserInfo({
+        await updatePj({
           variables: { specProject },
         });
         cancel();
@@ -162,7 +161,7 @@ export const useSpecProject = (
         console.log(error);
       }
     },
-    [cancel, projectData.id, projectData.specSheetId, toast, updateUserInfo],
+    [cancel, projectData.id, projectData.specSheetId, toast, updatePj],
   );
 
   return {
@@ -173,6 +172,6 @@ export const useSpecProject = (
     errors,
     onSubmit,
     GetUserByIdDocument,
-    updateUserInfo,
+    updatePj,
   };
 };
