@@ -11,6 +11,7 @@ import { FC, memo } from "react";
 import { GetAllStudyStackQuery } from "../../../types/generated/graphql";
 import { StackList } from "../../../hooks/study/useStackList";
 import styled from "styled-components";
+import { getFormattedStackDate } from "../../../utils/methods";
 
 type Props = {
   data: GetAllStudyStackQuery | undefined; //データベースから取得した記録データ
@@ -40,8 +41,12 @@ export const StudyListTable: FC<Props> = memo((props) => {
             <Tr key={stackList.id}>
               <Td>{stackList.skillTagId}</Td>
               <Td>{stackList.timeStack}</Td>
-              <Td>{stackList.createdAtStart}</Td>
-              <Td>{stackList.createdAtLast}</Td>
+              <Td>
+                {getFormattedStackDate(new Date(stackList.createdAtStart))}
+              </Td>
+              <Td>
+                {getFormattedStackDate(new Date(stackList.createdAtLast))}
+              </Td>
               <Td>
                 <_Content>{stackList.content}</_Content>
               </Td>

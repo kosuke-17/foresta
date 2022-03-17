@@ -1,6 +1,7 @@
 import { ModalBody } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
+import { AddStack } from "../../../types/types";
 import { StackInput } from "../../atoms/study/StackInput";
 import { StackTextarea } from "../../atoms/study/StackTextarea";
 
@@ -14,12 +15,6 @@ type Props = {
   };
 };
 
-type AddStack = {
-  createdAt: string;
-  skillTagId: string;
-  timeStack: number;
-  content: string;
-};
 
 /**
  * studyModalに表示するテキストボックス

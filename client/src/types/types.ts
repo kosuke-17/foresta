@@ -1,4 +1,4 @@
-import { Todo, Portfolio, User } from "./generated/graphql";
+import { Todo, Portfolio, User, StudyStack } from "./generated/graphql";
 
 // Todoの型
 export type TodoData =
@@ -34,3 +34,9 @@ export type userInfoEditType = {
   jobType: string;
   githubURL: string;
 };
+
+//学習リストの型
+export type AddStack = Pick<
+  StudyStack,
+  "createdAt" | "skillTagId" | "timeStack" | "content"
+>;
