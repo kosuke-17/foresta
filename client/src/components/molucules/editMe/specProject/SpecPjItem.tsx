@@ -1,42 +1,21 @@
-import {
-  memo,
-  FC,
-  Dispatch,
-  SetStateAction,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
-import { useCookies } from "react-cookie";
-import {
-  Button,
-  Spinner,
-  Flex,
-  Box,
-  Input,
-  CheckboxGroup,
-  Checkbox,
-} from "@chakra-ui/react";
+import { memo, FC, Dispatch, SetStateAction } from "react";
+import { Button, Spinner, Flex } from "@chakra-ui/react";
+import styled from "styled-components";
 
-import { SelectInput } from "../../../atoms/editMe/SelectInput";
 import { TextInput } from "../../../atoms/editMe/TextInput";
+import { TextAreaInput } from "../../../atoms/editMe/TextAreaInput";
 import { useSpecProject } from "../../../../hooks/editMe/useSpecProject";
 import {
   SpecProjectSheet,
   useGetAllSkillQuery,
 } from "../../../../types/generated/graphql";
-import styled from "styled-components";
-import ro from "date-fns/esm/locale/ro/index.js";
-import { TableFlexItem } from "../../../atoms/TableFlexItem";
 import { CheckInput } from "../../../atoms/editMe/CheckInput";
-import { TextAreaInput } from "../../../atoms/editMe/TextAreaInput";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
   onClose: () => void; //モーダルを閉じるメソッド
   projectData: SpecProjectSheet;
   setIndexNum: Dispatch<SetStateAction<number>>;
-  setNewItem: Dispatch<SetStateAction<boolean>>;
 };
 
 /**
@@ -44,7 +23,7 @@ type Props = {
  * @remarks プロジェクト名, 期間(始め&終わり), 役割, 人数, 内容, OS, 言語, フレームワーク, ライブラリ, ツール, 役割
  */
 export const SpecPjItem: FC<Props> = memo(
-  ({ setMenuItem, onClose, projectData, setIndexNum, setNewItem }) => {
+  ({ setMenuItem, onClose, projectData, setIndexNum }) => {
     const { data, loading, error } = useGetAllSkillQuery();
 
     //セレクトボックス選択肢用
@@ -64,7 +43,8 @@ export const SpecPjItem: FC<Props> = memo(
     //hooksを使用
     const { handleSubmit, register, errors, onSubmit } = useSpecProject(
       projectData,
-      setMenuItem, //メニューアイテムを空にする
+      setIndexNum,
+      setMenuItem,
       onClose, //モーダルを閉じるメソッド
     );
 
@@ -205,7 +185,6 @@ export const SpecPjItem: FC<Props> = memo(
             type="button"
             onClick={() => {
               setIndexNum(-1);
-              setNewItem(false);
             }}
             _focus={{ boxShadow: "none" }}
           >

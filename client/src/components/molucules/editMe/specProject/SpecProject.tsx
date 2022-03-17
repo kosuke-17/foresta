@@ -1,10 +1,7 @@
-import { memo, FC, Dispatch, SetStateAction, useEffect, useState } from "react";
+import { memo, FC, Dispatch, SetStateAction, useState } from "react";
 import { useCookies } from "react-cookie";
-import { Button, Spinner, Flex, Box, Input } from "@chakra-ui/react";
+import { Button, Spinner, Flex, Box } from "@chakra-ui/react";
 
-import { SelectInput } from "../../../atoms/editMe/SelectInput";
-import { TextInput } from "../../../atoms/editMe/TextInput";
-import { useSpecProject } from "../../../../hooks/editMe/useSpecProject";
 import {
   SpecProjectSheet,
   useGetSheetProjectByUserIdQuery,
@@ -30,31 +27,12 @@ export const SpecProject: FC<Props> = memo(({ setMenuItem, onClose }) => {
    */
   const { data, loading, error } = useGetSheetProjectByUserIdQuery({
     variables: {
-      // userId: "6226b03e85d7777719aa5a98", //いのすけ
       userId: cookies.ForestaID,
     },
   });
   const projectData = data?.projects.node.project as Array<SpecProjectSheet>;
 
-  const [nullProjectData] = useState({
-    content: "",
-    devRoles: [],
-    finishedAt: "",
-    frameworks: [],
-    id: "",
-    languages: [],
-    libraries: [],
-    memberCount: 0,
-    name: "",
-    operationEnvs: [],
-    otherTools: [],
-    roleSharing: "",
-    specSheetId: "", //別で取得
-    startedAt: "",
-  });
-
   const [indexNum, setIndexNum] = useState(-1);
-  const [newItem, setNewItem] = useState(false);
 
   //読み込み中時の表示
   if (loading) {
@@ -64,89 +42,52 @@ export const SpecProject: FC<Props> = memo(({ setMenuItem, onClose }) => {
       </Flex>
     );
   }
+  //エラー時の表示
+  if (error) {
+    return <Flex justifyContent="center">Error</Flex>;
+  }
 
   return (
     <>
-      {error && !newItem && (
-        <Box>
-          登録がありません
-          <_BtnItem>
-            <Button onClick={() => setNewItem(true)}>登録</Button>
-          </_BtnItem>
-        </Box>
-      )}
       {projectData && (
         <>
-          {indexNum === -1 && !newItem && (
+          {indexNum === -1 && (
             <>
-              {projectData[0] ? (
-                <Box>
-                  <Flex>
+              {/* 1開発目 */}
+              <Box mt={5}>
+                <Flex alignItems="center">
+                  {projectData[0].name ? (
                     <_TextItem>{projectData[0].name}</_TextItem>
-                    <Flex gap={3}>
-                      <Button onClick={() => setIndexNum(0)}>編集</Button>
-                      <Button>削除</Button>
-                    </Flex>
-                  </Flex>
-                </Box>
-              ) : (
-                <Box>
-                  <Flex>
-                    <_TextItem>登録がありません</_TextItem>
-                    <_BtnItem>
-                      <Button onClick={() => setNewItem(true)}>登録</Button>
-                    </_BtnItem>
-                  </Flex>
-                </Box>
-              )}
-              {projectData[1] ? (
-                <Box>
-                  <Flex>
+                  ) : (
+                    <_TextItem>未登録</_TextItem>
+                  )}
+                  <Button onClick={() => setIndexNum(0)}>編集</Button>
+                </Flex>
+              </Box>
+
+              {/* 2開発目 */}
+              <Box mt={5}>
+                <Flex alignItems="center">
+                  {projectData[1].name ? (
                     <_TextItem>{projectData[1].name}</_TextItem>
-                    <Flex gap={3}>
-                      <Button onClick={() => setIndexNum(1)}>編集</Button>
-                      <Button>削除</Button>
-                    </Flex>
-                  </Flex>
-                </Box>
-              ) : (
-                <Box>
-                  <Flex>
-                    <_TextItem>登録がありません</_TextItem>
-                    <_BtnItem>
-                      <Button onClick={() => setNewItem(true)}>登録</Button>
-                    </_BtnItem>
-                  </Flex>
-                </Box>
-              )}
-              {projectData[2] ? (
-                <Box>
-                  <Flex>
+                  ) : (
+                    <_TextItem>未登録</_TextItem>
+                  )}
+                  <Button onClick={() => setIndexNum(1)}>編集</Button>
+                </Flex>
+              </Box>
+
+              {/* 3開発目 */}
+              <Box mt={5}>
+                <Flex alignItems="center">
+                  {projectData[2].name ? (
                     <_TextItem>{projectData[2].name}</_TextItem>
-                    <Flex gap={3}>
-                      <Button onClick={() => setIndexNum(2)}>編集</Button>
-                      <Button>削除</Button>
-                    </Flex>
-                  </Flex>
-                </Box>
-              ) : (
-                <Box>
-                  <Flex>
-                    <_TextItem>登録がありません</_TextItem>
-                    <_BtnItem>
-                      <Button onClick={() => setNewItem(true)}>登録</Button>
-                    </_BtnItem>
-                  </Flex>
-                </Box>
-              )}
-              <Button
-                type="button"
-                onClick={onClose}
-                _focus={{ boxShadow: "none" }}
-                mt={5}
-              >
-                キャンセル
-              </Button>
+                  ) : (
+                    <_TextItem>未登録</_TextItem>
+                  )}
+                  <Button onClick={() => setIndexNum(2)}>編集</Button>
+                </Flex>
+              </Box>
             </>
           )}
         </>
@@ -159,29 +100,12 @@ export const SpecProject: FC<Props> = memo(({ setMenuItem, onClose }) => {
             onClose={onClose}
             projectData={projectData[indexNum]}
             setIndexNum={setIndexNum}
-            setNewItem={setNewItem}
-          />
-        </>
-      )}
-
-      {newItem && (
-        <>
-          <SpecPjItem
-            setMenuItem={setMenuItem}
-            onClose={onClose}
-            projectData={nullProjectData}
-            setIndexNum={setIndexNum}
-            setNewItem={setNewItem}
           />
         </>
       )}
     </>
   );
 });
-
-const _BtnItem = styled.div`
-  margin-top: 10px;
-`;
 
 const _TextItem = styled.div`
   width: 300px;
