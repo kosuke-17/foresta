@@ -237,6 +237,8 @@ const _TextItem = styled.div`
 
 const _ListTitle = styled.div`
   width: 300px;
+  padding-left: 40px;
+  text-align: left;
 `;
 
 const _List = styled.div`
