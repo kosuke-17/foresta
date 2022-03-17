@@ -19,12 +19,11 @@ export const CheckInput: FC<Props> = memo(
       <>
         <_LabelItem>{label}</_LabelItem>
         <Flex gap={3} mt={1}>
-          {array.map((item, i) => (
-            <div key={i}>
-              <Checkbox value={item} {...registers}>
-                {item}
-              </Checkbox>
-            </div>
+          {array.map((item) => (
+            <Flex alignItems="center" gap={1} key={item}>
+              <input type="checkbox" id={item} {...registers} value={item} />
+              <label>{item}</label>
+            </Flex>
           ))}
         </Flex>
         <_ErrorMessage>{errorMessage}</_ErrorMessage>
