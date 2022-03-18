@@ -3,10 +3,10 @@ import {
   useGetStudyColorQuery,
 } from "../../types/generated/graphql";
 import { ChartData, ChartOptions } from "chart.js";
-import { addDays, addMonths } from "date-fns";
+import { addMonths } from "date-fns";
 
 /**
- * %表示用グラフ作成hooks.
+ * %表示用グラフ作成hooks(月別).
  */
 export const usePercentMonth = (
   data: Array<StudyStack>,
@@ -40,6 +40,9 @@ export const usePercentMonth = (
         new Date(item.createdAt) >= startMonth,
     );
 
+    /**
+     * カテゴリで情報をまとめて、ラベルの配列と時間の配列作成.
+     */
     for (let i = 0; i < studyData.length; i++) {
       if (studyData[i]) {
         let totalTime = studyData[i].timeStack;
@@ -60,13 +63,16 @@ export const usePercentMonth = (
     let total = 0;
 
     /**
-     * 単位を%に置き換え
+     * 時間の配列単位を%に置き換え.
      */
     for (const time of timeArray) {
       total += time;
     }
     timeArray = timeArray.map((time) => Math.round((time / total) * 100));
 
+    /**
+     * ラベルの配列を基に色の配列を作成.
+     */
     for (const label of labelArray) {
       for (const color of colorData) {
         if (label === color.name) {
@@ -76,6 +82,7 @@ export const usePercentMonth = (
     }
   }
 
+  //円グラフデータ
   const pieMonthData: ChartData<"pie"> = {
     labels: labelArray,
     datasets: [

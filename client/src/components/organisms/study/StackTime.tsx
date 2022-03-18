@@ -8,12 +8,12 @@ import { ChartOptions } from "chart.js";
 //日付を使うため
 import "chartjs-adapter-date-fns";
 import { useStackList } from "../../../hooks/study/useStackList";
+import { usePercentDate } from "../../../hooks/study/usePercentDate";
+import { usePercentMonth } from "../../../hooks/study/usePercentMonth";
 import { subDays, subMonths } from "date-fns";
 import { DayStackTimeFig } from "../../molucules/stackList/DayStackTimeFig";
 import { MonthStackTimeFig } from "../../molucules/stackList/MonthStackTimeFig";
-import { usePercentDate } from "../../../hooks/study/usePercentDate";
 import { StudyStack } from "../../../types/generated/graphql";
-import { usePercentMonth } from "../../../hooks/study/usePercentMonth";
 
 export const StackTime = memo(() => {
   //学習リストのデータを取得
@@ -193,13 +193,13 @@ export const StackTime = memo(() => {
   };
 
   //%表示用hooks使用
-  const { pieDateData, dayPercentOptions } = usePercentDate(
-    studyData,
-    dateValueDay,
-  );
   const { pieMonthData, monthPercentOptions } = usePercentMonth(
     studyData,
     dateValueMonth,
+  );
+  const { pieDateData, dayPercentOptions } = usePercentDate(
+    studyData,
+    dateValueDay,
   );
 
   return (
