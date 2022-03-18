@@ -5,6 +5,6 @@ import { useCookies } from "react-cookie";
 export const Auth = memo(() => {
   // クッキー
   const [cookies] = useCookies();
-  const auth = cookies.ForestaID;
+  const auth = cookies.token;
   return auth ? <Outlet /> : <Navigate to={"/login"} />;
 });

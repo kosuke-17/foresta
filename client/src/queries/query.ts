@@ -313,11 +313,7 @@ gql`
       status
       msg
       node {
-        id
-        name
-        userLeafs {
-          id
-        }
+        token
       }
     }
   }

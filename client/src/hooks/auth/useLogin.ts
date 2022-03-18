@@ -30,9 +30,9 @@ export const useLogin = (mailAddress: string, password: string) => {
     try {
       const response = await userLoginMutation();
       console.log(response);
-      // ログインが成功した場合はCookieにForestaIDを保存
+      // ログインが成功した場合はCookieにForestaIDを保存;
       if (response.data?.userLogin.status == "success") {
-        setCookie("ForestaID", response.data.userLogin.node.id);
+        setCookie("token", response.data.userLogin.node.token);
         toast({
           title: "ログインに成功しました",
           position: "bottom-left",
