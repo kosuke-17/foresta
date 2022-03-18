@@ -33,7 +33,13 @@ export const TodoModal: FC<Props> = memo((props) => {
   const { todo, modalMode, setModalMode } = useContext(TodoModalContext);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size="xl">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered={true}
+      size="xl"
+      scrollBehavior={"inside"}
+    >
       <ModalOverlay />
       <ModalContent bg="green.50">
         {/* 編集モードもしくは追加モード */}
