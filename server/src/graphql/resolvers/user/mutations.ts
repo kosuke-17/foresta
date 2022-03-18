@@ -12,6 +12,7 @@ import {
 } from "../../../models";
 import { error, success } from "../responseStatus";
 import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
+import jwt from "jsonwebtoken";
 
 /**
  * ## ユーザーの変更処理
@@ -167,7 +168,14 @@ const userMutations = {
         return error("該当のユーザーが見つかりませんでした");
       }
 
-      return success(result, "ログインできました。");
+      const jwtUser = {
+        _id: result._id,
+      };
+
+      const token = jwt.sign({ user: jwtUser }, "loginSecretUserId");
+      const userToken = { token: token };
+
+      return success(userToken, "ログインできました。");
     } catch {
       return error("ログインできませんでした。");
     }

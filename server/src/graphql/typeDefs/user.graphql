@@ -11,6 +11,9 @@ type User {
   userUrls: UserUrls!
   portfolio: [Portfolio]!
 }
+type Token {
+  token: String!
+}
 
 ################
 #リクエストボディ
@@ -46,5 +49,10 @@ input UserLoginInput {
 type ResponseUser {
   status: String!
   node: User!
+  msg: String!
+}
+type ResponseToken {
+  status: String!
+  node: Token!
   msg: String!
 }
