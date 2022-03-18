@@ -160,19 +160,21 @@ const userMutations = {
   userLogin: async (_: any, { user }: UserLoginType) => {
     const { email, password } = user;
     try {
-      const result = await Users.findOne({
+      const existUser = await Users.findOne({
         email: email,
         password: password,
       });
-      if (result === null) {
+      if (existUser === null) {
         return error("該当のユーザーが見つかりませんでした");
       }
 
       const jwtUser = {
-        _id: result._id,
+        _id: existUser._id,
       };
 
-      const token = jwt.sign({ user: jwtUser }, "loginSecretUserId");
+      const token = jwt.sign({ user: jwtUser }, "loginSecretUserId", {
+        expiresIn: 60 * 60,
+      });
       const userToken = { token: token };
 
       return success(userToken, "ログインできました。");
@@ -185,6 +187,7 @@ const userMutations = {
    *
    * @param user - 更新ユーザー情報
    * @returns ステータス 更新ユーザーの情報
+   * `https://lunchkus.net/user/${}`
    */
   updateUser: async (_: any, { user }: UserUpdateType) => {
     const { userId, name, jobType, email, password, spreadSheetID, githubURL } =
