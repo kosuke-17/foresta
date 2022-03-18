@@ -464,6 +464,16 @@ gql`
   }
 `;
 
+//学習色取得
+gql`
+  query GetStudyColor {
+    getAllTechTree {
+      name
+      color
+    }
+  }
+`;
+
 // Todoリストの取得
 gql`
   query GetAllTodoByUser($userId: String!) {
