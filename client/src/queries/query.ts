@@ -198,6 +198,16 @@ gql`
   }
 `;
 
+// スペックシートその他情報更新
+gql`
+  mutation UpdateSpecSheet($specSheet: SpecSheetUpdateInput!) {
+    updateSpecSheet(specSheet: $specSheet) {
+      status
+      msg
+    }
+  }
+`;
+
 //ユーザ情報(public基本情報)編集
 gql`
   mutation UpdateUser($user: UserUpdateInput!) {
@@ -297,18 +307,69 @@ gql`
 // `;
 
 // ログイン処理
-export const LOGIN_QUERY = gql`
+gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
       status
+      msg
       node {
         id
         name
-        jobType
-        email
-        password
-        githubURL
+        userLeafs {
+          id
+        }
       }
+    }
+  }
+`;
+
+// 技術エリアを全件取得
+gql`
+  query GetAllTechArea {
+    getAllTechArea {
+      id
+      name
+    }
+  }
+`;
+
+// 特定のユーザーが保持している技術を全件取得
+gql`
+  query GetUserLeafsById($userId: String!) {
+    getUserLeafsById(userId: $userId) {
+      status
+      node {
+        id
+        myForest {
+          id
+          treeId
+          areaId
+          treeName
+          achievementRate
+          color
+          branches {
+            id
+            name
+            leafs {
+              id
+              name
+              techBranch_id
+              techTree_id
+              isStatus
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+// 技術ツリーのステータスを変更
+gql`
+  mutation ChangeLeafStatus($techLeafInfo: UserTechLeafUpdateInput!) {
+    changeLeafStatus(techLeafInfo: $techLeafInfo) {
+      status
+      msg
     }
   }
 `;

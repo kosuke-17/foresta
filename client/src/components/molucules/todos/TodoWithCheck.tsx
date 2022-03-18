@@ -1,12 +1,11 @@
 import { FC, memo } from "react";
 import { Checkbox, Flex } from "@chakra-ui/react";
 import styled from "styled-components";
-import { getformattedTodoDate } from "../../../utils/methods";
 
+import { getformattedTodoDate } from "../../../utils/methods";
 import type { TodoData } from "../../../types/types";
 import { useChangeTodoStatus } from "../../../hooks/study/useChangeTodoStatus";
 
-// 自動生成したTodoの型から使用したいプロパティ名だけを指定
 type Props = {
   todo: TodoData;
   openReadModal: (todo: TodoData) => void;
