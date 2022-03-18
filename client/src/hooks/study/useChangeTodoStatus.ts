@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useCallback } from "react";
 import { useChangeTodoStatusMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
 
 /**
@@ -15,7 +15,7 @@ export const useChangeTodoStatus = (todoId: string) => {
   /**
    * チェックボックス押下時にTodoの完了/未完了を切り替える.
    */
-  const onChangeTodoStatus: MouseEventHandler<HTMLDivElement> = (e) => {
+  const onChangeTodoStatus: MouseEventHandler<HTMLDivElement> = useCallback((e) => {
     // 親要素への伝播を止める(チェックボックス押下時にモーダルを開かないようにする)
     e.stopPropagation();
 
@@ -24,7 +24,7 @@ export const useChangeTodoStatus = (todoId: string) => {
         todoId
       }
     });
-  };
+  }, [changeTodoStatus, todoId]);
 
   return { onChangeTodoStatus };
 };
