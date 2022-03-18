@@ -1,8 +1,9 @@
 import React, { FC, memo } from "react";
+import { TechArea } from "../../../types/generated/graphql";
 import { Button, Text } from "@chakra-ui/react";
 
 type AreaSelect = {
-  techAreaData: any;
+  techAreaData: TechArea;
   indexOfTechArea: number;
   changeArea: (indexOfTechArea: number) => void;
 };
