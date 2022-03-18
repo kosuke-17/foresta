@@ -13,7 +13,7 @@ import {
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import styled from "styled-components";
 
-import { TodoEditForm } from "./TodoEditForm";
+import { TodoEditForm } from "../../molucules/todos/TodoEditForm";
 import { TodoHeaderButtons } from "../../molucules/todos/TodoHeaderButtons";
 import { DeleteConfirm } from "../../molucules/todos/DeleteConfirm";
 import { getformattedTodoDate, returnCodeToBr } from "../../../utils/methods";

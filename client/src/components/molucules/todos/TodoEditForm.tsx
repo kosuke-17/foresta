@@ -11,7 +11,7 @@ import {
 import styled from "styled-components";
 
 import { DateRangePicker } from "../../atoms/study/DateRangePicker";
-import { TodoHeaderButtons } from "../../molucules/todos/TodoHeaderButtons";
+import { TodoHeaderButtons } from "./TodoHeaderButtons";
 import type { TodoData, TodoModalModeType } from "../../../types/types";
 import { useEditTodo } from "../../../hooks/study/useEditTodo";
 import { TodoModalContext } from "../../../Providers/TodoModalProvider";
