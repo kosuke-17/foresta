@@ -32,7 +32,6 @@ export type UserTechLeafsType = {
 
 export type UserLoginType = {
   user: {
-    _id: string;
     email: string;
     password: string;
   };
