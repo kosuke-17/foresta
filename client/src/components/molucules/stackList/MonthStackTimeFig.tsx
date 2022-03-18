@@ -1,7 +1,8 @@
 import { Box, Button } from "@chakra-ui/react";
+import { ChartData, ChartOptions } from "chart.js";
 import { format, subMonths } from "date-fns";
 import { FC } from "react";
-import { Bar } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 
 type Props = {
   subDateBtn: () => void;
@@ -20,6 +21,8 @@ type Props = {
     }[];
   };
   monthOptions: any;
+  pieMonthData: ChartData<"pie">;
+  monthPercentOptions: ChartOptions<"pie">;
 };
 
 /**
@@ -28,8 +31,16 @@ type Props = {
  * @returns 月ごとの学習時間を表す積み上げ棒グラフ
  */
 export const MonthStackTimeFig: FC<Props> = (props) => {
-  const { subDateBtn, dateValueMonth, addDateBtn, chartDatas, monthOptions } =
-    props;
+  const {
+    subDateBtn,
+    dateValueMonth,
+    addDateBtn,
+    chartDatas,
+    monthOptions,
+    pieMonthData,
+    monthPercentOptions,
+  } = props;
+
   return (
     <>
       <Box>
@@ -43,6 +54,7 @@ export const MonthStackTimeFig: FC<Props> = (props) => {
           height={400}
           width={500}
         />
+        <Pie data={pieMonthData} options={monthPercentOptions} />
       </Box>
     </>
   );
