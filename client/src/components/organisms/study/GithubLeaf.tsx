@@ -1,5 +1,3 @@
-// import { useGithubLeaf } from "../../../hooks/study/useGithubleaf";
-
 import {
   ApolloClient,
   createHttpLink,
@@ -7,7 +5,10 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { Button } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { GithubLeafType } from "../../../types/types";
+
+//GithubAPI用のクエリー
 const query = gql`
   {
     user(login: "hiroki-yama-1118") {
@@ -28,41 +29,53 @@ const query = gql`
   }
 `;
 
+/**
+ * Github草データを表示
+ * @returns Github草データ
+ */
 export const GithubLeaf = () => {
-  const getGithubLeaf = async () => {
-    const TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
-    // useGithubLeaf();
+  //GithubAPIのアクセスするためのトークン
+  const TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 
-    const httpLink = createHttpLink({
-      uri: "https://api.github.com/graphql",
-    });
+  //GithubAPIのリンク
+  const httpLink = createHttpLink({
+    uri: "https://api.github.com/graphql",
+  });
 
-    const authLink = setContext((_, { headers }) => {
-      return {
-        headers: {
-          ...headers,
-          authorization: `Bearer ${TOKEN}`,
-        },
-      };
-    });
+  //Linkのheadersにトークン埋め込み、認証
+  const authLink = setContext((_, { headers }) => {
+    return {
+      headers: {
+        ...headers,
+        authorization: `Bearer ${TOKEN}`,
+      },
+    };
+  });
 
-    const client = new ApolloClient({
-      link: authLink.concat(httpLink),
-      cache: new InMemoryCache(),
-    });
+  //新たにGithubAPI用のアポロクライアント作成
+  const client = new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
+  });
 
-    const datas = await client.query({
-      query: query,
-    });
-    console.log(
-      datas.data.user.contributionsCollection.contributionCalendar
-        .totalContributions,
-    );
-  };
+  //取得したGithubデータを格納
+  const [getData, setGetData] = useState<GithubLeafType>();
+
+  //データをメソッドとして取得してきて、useEffectで更新させる
+  useEffect(() => {
+    (async () => {
+      const { data, error, loading } = await client.query({
+        query: query,
+      });
+      setGetData(data);
+    })();
+  }, []);
 
   return (
     <>
-      <Button onClick={getGithubLeaf}>Github草</Button>
+      {getData &&
+        getData.user.contributionsCollection.contributionCalendar
+          .totalContributions}
     </>
   );
 };
