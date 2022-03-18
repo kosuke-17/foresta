@@ -8,6 +8,25 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { Button } from "@chakra-ui/react";
+const query = gql`
+  {
+    user(login: "hiroki-yama-1118") {
+      login
+      contributionsCollection {
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              contributionCount
+              date
+              color
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export const GithubLeaf = () => {
   const getGithubLeaf = async () => {
@@ -32,28 +51,13 @@ export const GithubLeaf = () => {
       cache: new InMemoryCache(),
     });
 
-    const { data } = await client.query({
-      query: gql`
-        {
-          user(login: "hiroki-yama-1118") {
-            login
-            contributionsCollection {
-              contributionCalendar {
-                totalContributions
-                weeks {
-                  contributionDays {
-                    contributionCount
-                    date
-                    color
-                  }
-                }
-              }
-            }
-          }
-        }
-      `,
+    const datas = await client.query({
+      query: query,
     });
-    console.log(data);
+    console.log(
+      datas.data.user.contributionsCollection.contributionCalendar
+        .totalContributions,
+    );
   };
 
   return (
