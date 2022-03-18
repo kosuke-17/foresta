@@ -44,14 +44,35 @@ export const DayStackTimeFig: FC<Props> = (props) => {
   return (
     <>
       <Box>
-        <Button onClick={subDateBtn}>⏪</Button>
-        {format(subDays(new Date(), 7 + dateValueDay), "yyyy年MM月dd日")}~
-        {format(subDays(new Date(), dateValueDay), "yyyy年MM月dd日")}
-        <Button onClick={addDateBtn}>⏩</Button>
-        {/* <Flex> */}
-        <Bar data={chartDatas} options={dayOptions} height={400} width={500} />
-        <Pie data={pieDateData} options={dayPercentOptions} />
-        {/* </Flex> */}
+        <Flex justifyContent="center" alignItems="center" mb={20}>
+          <Button onClick={subDateBtn}>⏪</Button>
+          {format(subDays(new Date(), 7 + dateValueDay), "yyyy年MM月dd日")}~
+          {format(subDays(new Date(), dateValueDay), "yyyy年MM月dd日")}
+          <Button onClick={addDateBtn}>⏩</Button>
+        </Flex>
+        <Flex gap={10} mb={30}>
+          <Box height={500} width={600}>
+            <Bar data={chartDatas} options={dayOptions} />
+          </Box>
+          <Box height={300} width={300} alignItems="center">
+            {pieDateData && pieDateData.labels?.length != 0 ? (
+              <Pie data={pieDateData} options={dayPercentOptions} />
+            ) : (
+              <Flex
+                justifyContent="center"
+                alignItems="center"
+                backgroundColor="gray.100"
+                width={250}
+                height={250}
+                borderRadius={500}
+                ml="30px"
+                mt="30px"
+              >
+                データがありません
+              </Flex>
+            )}
+          </Box>
+        </Flex>
       </Box>
     </>
   );

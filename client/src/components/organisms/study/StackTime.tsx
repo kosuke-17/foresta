@@ -204,9 +204,9 @@ export const StackTime = memo(() => {
 
   return (
     <>
-      <Box width={600}>
+      <Box width="100%">
         <Stack>
-          <Flex>
+          <Flex justifyContent="center" gap={5} my={5}>
             <Button colorScheme="green" onClick={monthBtn}>
               月別
             </Button>
@@ -215,7 +215,7 @@ export const StackTime = memo(() => {
             </Button>
           </Flex>
 
-          <Flex>
+          <Flex justifyContent="center">
             <Box>
               {isDay ? (
                 <DayStackTimeFig
