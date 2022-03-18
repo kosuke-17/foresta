@@ -6,7 +6,7 @@ import { Box } from "@chakra-ui/react";
 import type { ApolloError } from "@apollo/client";
 
 import type { TodoData } from "../../../types/types";
-import { isNonNullTodoData } from "../../organisms/study/TodoList";
+import { isNonNullTodoData } from "../../../hooks/study/useTodoList";
 import { useHandleCalendar } from "../../../hooks/study/useHandleCalendar";
 
 type Props = {
@@ -38,7 +38,7 @@ export const Calendar: FC<Props> = memo((props) => {
   useEffect(() => {
     // todosの中身がnullかどうかで型ガード
     if (!isNonNullTodoData(todos)) {
-      return;
+      return setEvents([]); // todosがnullの場合はカレンダーに表示するイベントを空にする
     }
     const events = todos.map((todo) => {
       return {
@@ -62,16 +62,16 @@ export const Calendar: FC<Props> = memo((props) => {
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        eventColor="#48BB78"
+        eventColor="#319896"
         businessHours={true} // 休日に色をつけるかどうか
-        editable={true} // イベントを編集できるかどうか(移動可能に)
-        eventDrop={(info) => onEventDrop(info)}
         contentHeight="auto" // カレンダーの高さ
         dayMaxEvents={3} // 1日に表示できるイベント数
         events={events} // イベントを設定
         eventClick={(info) => onEventClick(info)} // イベントをクリックした時に呼ばれる
         selectable={true} // 日付を選択できるかどうか
         select={(info) => onDateSelect(info)} // 日付を選択した時に呼ばれる
+        editable={true} // イベントを編集できるかどうか(移動可能に)
+        eventDrop={(info) => onEventDrop(info)} // イベントを移動し終えたときに呼ばれる
       />
       {error && (
         <p>なんらかのエラーが発生してイベントを取得できませんでした。</p>

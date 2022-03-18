@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useContext, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/react";
-// import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 import { useUpdateTodoMutation, useAddTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
-import { TodoData, TodoModalModeType } from "../../types/types";
+import type { TodoData, TodoModalModeType } from "../../types/types";
 import { TodoModalContext } from "../../Providers/TodoModalProvider";
 
 //バリデーションチェック
@@ -32,8 +32,8 @@ type Data = {
  * @param setModalMode Todoモーダルのモードの更新関数
  */
 export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateAction<TodoModalModeType>>, onClose: () => void) => {
-  //cookie情報取得
-  // const [cookies] = useCookies();
+  // cookie情報取得
+  const [cookies] = useCookies();
   //トーストアラート
   const toast = useToast();
 
@@ -76,15 +76,14 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
    * Todoを新規作成する.
    * @param data フォームのデータ
    */
-  const onCreateTodo = async (data: Data) => {
+  const onCreateTodo = useCallback(async (data: Data) => {
     const newData = {
       title: data.title,
       description: data.description,
       startedAt,
       finishedAt: finishedAt || "",
       isStatus: data.isStatus,
-      userId: "621f1cba386085f036353ecd",
-      // userId: cookies.ForestaID,
+      userId: cookies.ForestaID,
     };
     try {
       const addTodoData = await addTodo({
@@ -93,25 +92,40 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         }
       });
       if (addTodoData.data?.addTodo.status === "success") {
-        toast({ title: "Todoを追加しました", status: "success" });
+        toast({
+          title: "Todoを追加しました",
+          status: "success",
+          position: "bottom-left",
+          isClosable: true
+        });
         onClose();
 
       } else if (addTodoData.data?.addTodo.status === "error") {
-        toast({ title: "Todoの追加に失敗しました", status: "error" });
+        toast({
+          title: "Todoの追加に失敗しました",
+          status: "error",
+          position: "bottom-left",
+          isClosable: true
+        });
       }
 
     } catch (error) {
       if (error instanceof Error) { // errorがunknown型で返ってくるので型ガード
-        toast({ title: "Todoの追加に失敗しました", status: "error" });
+        toast({
+          title: "Todoの追加に失敗しました",
+          status: "error",
+          position: "bottom-left",
+          isClosable: true
+        });
       }
     }
-  };
+  }, [addTodo, finishedAt, onClose, startedAt, toast, cookies]);
 
   /**
    * Todoを更新する.
    * @param data フォームのデータ
    */
-  const onUpdateTodo = async (data: Data) => {
+  const onUpdateTodo = useCallback(async (data: Data) => {
     const newData = {
       todoId: todo.id,
       title: data.title,
@@ -119,8 +133,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
       startedAt,
       finishedAt: finishedAt || "",
       isStatus: data.isStatus,
-      userId: "621f1cba386085f036353ecd",
-      // userId: cookies.ForestaID,
+      userId: cookies.ForestaID,
     };
 
     try {
@@ -130,8 +143,13 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         }
       });
       if (updateTodoData.data?.updateTodo.status === "success") {
-        toast({ title: "Todoを更新しました", status: "success" });
-    
+        toast({
+          title: "Todoを更新しました",
+          status: "success",
+          position: "bottom-left",
+          isClosable: true
+        });
+
         // 表示させるTodoを手動で更新
         setTodo({
           ...todo,
@@ -145,16 +163,25 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         setModalMode("read");
 
       } else if (updateTodoData.data?.updateTodo.status === "error") {
-        toast({ title: "Todoの更新に失敗しました", status: "error" });
+        toast({
+          title: "Todoの更新に失敗しました",
+          status: "error",
+          position: "bottom-left",
+          isClosable: true
+        });
       }
 
     } catch (error) {
       if (error instanceof Error) { // errorがunknown型で返ってくるので型ガード
-        toast({ title: "Todoの更新に失敗しました", status: "error" });
+        toast({
+          title: "Todoの更新に失敗しました",
+          status: "error",
+          position: "bottom-left",
+          isClosable: true
+        });
       }
     }
-
-  };
+  }, [finishedAt, setModalMode, setTodo, startedAt, toast, todo, updateTodo, cookies]);
 
   return {
     register,

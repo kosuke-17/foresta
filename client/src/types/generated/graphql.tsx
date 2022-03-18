@@ -552,6 +552,7 @@ export type SpecTechInfoSheet = {
   __typename?: "SpecTechInfoSheet";
   devRoles: Array<Scalars["String"]>;
   frameworks: Array<Scalars["String"]>;
+  id: Scalars["ID"];
   languages: Array<Scalars["String"]>;
   libraries: Array<Scalars["String"]>;
   operationEnvs: Array<Scalars["String"]>;
@@ -573,6 +574,7 @@ export type SpecUserInfoSheet = {
   __typename?: "SpecUserInfoSheet";
   age: Scalars["Int"];
   gender: Scalars["String"];
+  id: Scalars["ID"];
   itExpAmount: Scalars["Int"];
   nearestStation: Scalars["String"];
   pgExpAmount: Scalars["Int"];
@@ -1042,6 +1044,19 @@ export type GetPrAndSheetByUserIdQuery = {
   };
 };
 
+export type UpdateSpecSheetMutationVariables = Exact<{
+  specSheet: SpecSheetUpdateInput;
+}>;
+
+export type UpdateSpecSheetMutation = {
+  __typename?: "Mutation";
+  updateSpecSheet: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+  };
+};
+
 export type UpdateUserMutationVariables = Exact<{
   user: UserUpdateInput;
 }>;
@@ -1156,14 +1171,12 @@ export type UserLoginMutation = {
   userLogin: {
     __typename?: "ResponseUser";
     status: string;
+    msg: string;
     node: {
       __typename?: "User";
       id: string;
       name: string;
-      jobType: string;
-      email: string;
-      password: string;
-      githubURL: string;
+      userLeafs: { __typename?: "UserLeafs"; id: string };
     };
   };
 };
@@ -2123,6 +2136,57 @@ export type GetPrAndSheetByUserIdQueryResult = Apollo.QueryResult<
   GetPrAndSheetByUserIdQuery,
   GetPrAndSheetByUserIdQueryVariables
 >;
+export const UpdateSpecSheetDocument = gql`
+  mutation UpdateSpecSheet($specSheet: SpecSheetUpdateInput!) {
+    updateSpecSheet(specSheet: $specSheet) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpecSheetMutationFn = Apollo.MutationFunction<
+  UpdateSpecSheetMutation,
+  UpdateSpecSheetMutationVariables
+>;
+
+/**
+ * __useUpdateSpecSheetMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpecSheetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpecSheetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpecSheetMutation, { data, loading, error }] = useUpdateSpecSheetMutation({
+ *   variables: {
+ *      specSheet: // value for 'specSheet'
+ *   },
+ * });
+ */
+export function useUpdateSpecSheetMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpecSheetMutation,
+    UpdateSpecSheetMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpecSheetMutation,
+    UpdateSpecSheetMutationVariables
+  >(UpdateSpecSheetDocument, options);
+}
+export type UpdateSpecSheetMutationHookResult = ReturnType<
+  typeof useUpdateSpecSheetMutation
+>;
+export type UpdateSpecSheetMutationResult =
+  Apollo.MutationResult<UpdateSpecSheetMutation>;
+export type UpdateSpecSheetMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpecSheetMutation,
+  UpdateSpecSheetMutationVariables
+>;
 export const UpdateUserDocument = gql`
   mutation UpdateUser($user: UserUpdateInput!) {
     updateUser(user: $user) {
@@ -2510,13 +2574,13 @@ export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
       status
+      msg
       node {
         id
         name
-        jobType
-        email
-        password
-        githubURL
+        userLeafs {
+          id
+        }
       }
     }
   }
