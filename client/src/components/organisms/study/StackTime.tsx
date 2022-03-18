@@ -11,10 +11,14 @@ import { useStackList } from "../../../hooks/study/useStackList";
 import { subDays, subMonths } from "date-fns";
 import { DayStackTimeFig } from "../../molucules/stackList/DayStackTimeFig";
 import { MonthStackTimeFig } from "../../molucules/stackList/MonthStackTimeFig";
+import { usePercentDate } from "../../../hooks/study/usePercentDate";
+import { StudyStack } from "../../../types/generated/graphql";
+import { usePercentMonth } from "../../../hooks/study/usePercentMonth";
 
 export const StackTime = memo(() => {
   //学習リストのデータを取得
   const { data } = useStackList();
+  const studyData = data?.getAllStudyStack.node as Array<StudyStack>;
 
   //色サンプル（背景）
   const backgroundColors = [
@@ -188,6 +192,16 @@ export const StackTime = memo(() => {
     },
   };
 
+  //%表示用hooks使用
+  const { pieDateData, dayPercentOptions } = usePercentDate(
+    studyData,
+    dateValueDay,
+  );
+  const { pieMonthData, monthPercentOptions } = usePercentMonth(
+    studyData,
+    dateValueMonth,
+  );
+
   return (
     <>
       <Box width={600}>
@@ -210,6 +224,8 @@ export const StackTime = memo(() => {
                   addDateBtn={addDateBtn}
                   chartDatas={chartDatas}
                   dayOptions={dayOptions}
+                  pieDateData={pieDateData}
+                  dayPercentOptions={dayPercentOptions}
                 />
               ) : (
                 <MonthStackTimeFig
@@ -218,6 +234,8 @@ export const StackTime = memo(() => {
                   addDateBtn={addDateBtn}
                   chartDatas={chartDatas}
                   monthOptions={monthOptions}
+                  pieMonthData={pieMonthData}
+                  monthPercentOptions={monthPercentOptions}
                 />
               )}
             </Box>
