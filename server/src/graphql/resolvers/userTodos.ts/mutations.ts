@@ -67,7 +67,8 @@ const userTodosMutations = {
             finishedAt: finishedAt,
             isStatus: isStatus,
           },
-        }
+        },
+        { new: true }
       );
       return success(result, "更新に成功しました。");
     } catch {
@@ -87,7 +88,8 @@ const userTodosMutations = {
     try {
       const result = await UserTodos.findByIdAndUpdate(
         { _id: todoId },
-        { $set: { isStatus: updateStatus } }
+        { $set: { isStatus: updateStatus } },
+        { new: true }
       );
       return success(result, "更新に成功しました。");
     } catch {
