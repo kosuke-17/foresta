@@ -103,9 +103,7 @@ export const useSpecSheet = (
       });
 
       //空白の入力欄は削除
-      const formatJobs = jobs.filter((x) => {
-        return !(x === null || x === undefined || x === "");
-      });
+      const formatJobs = jobs.filter((blank) => blank);
 
       try {
         await updateSpecSheet({
