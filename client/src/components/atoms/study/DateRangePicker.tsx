@@ -7,7 +7,7 @@ import {
 } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { IconButton } from "@chakra-ui/react";
+import { Flex, IconButton } from "@chakra-ui/react";
 
 import { getFormattedDate } from "../../../utils/methods";
 
@@ -44,11 +44,11 @@ export const DateRangePicker: FC<Props> = memo((props) => {
       selectsRange
       minDate={new Date()}
       customInput={
-        <div>
+        <Flex align="center">
           {getFormattedDate(startedAt)}
           {finishedAt && <> - {getFormattedDate(finishedAt)}</>}
           <IconButton isRound aria-label="Edit date" icon={<>🗓</>} />
-        </div>
+        </Flex>
       }
     />
   );
