@@ -125,6 +125,10 @@ type Mutation {
   """
   userLogin(user: UserLoginInput!): ResponseToken!
   """
+  自動ログインのための処理.
+  """
+  userAutoLogin(userToken: String!): ResStatus!
+  """
   ユーザーの学習記録を追加.
   """
   addStudyStack(stack: StudyStackAddInput!): ResponseStudyStack!

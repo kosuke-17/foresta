@@ -56,3 +56,8 @@ type ResponseToken {
   node: Token!
   msg: String!
 }
+
+type ResStatus {
+  status: String!
+  msg: String!
+}
