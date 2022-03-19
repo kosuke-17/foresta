@@ -66,7 +66,7 @@ type Query {
   """
   スプレッドシートを取得
   """
-  getSpreadSheet(userId: String!): Res!
+  getSpreadSheet(userToken: String!): Res!
   """
   それぞれのTechを取得.
   """
@@ -147,23 +147,23 @@ type Mutation {
   """
   スプレッドシートの自己PRなどを更新.
   """
-  updateSpeadSelfPR(userId: String!): Res!
+  updateSpeadSelfPR(userToken: String!): Res!
   """
   スプレッドシートのポートフォリオURLを更新.
   """
-  updateSpreadPortfolioUrl(userId: String!): Res!
+  updateSpreadPortfolioUrl(userToken: String!): Res!
   """
   スプレッドシートの基本情報を更新.
   """
-  updateSpreadUserInfo(userId: String!): Res!
+  updateSpreadUserInfo(userToken: String!): Res!
   """
   スプレッドシートのスキル要約を更新.
   """
-  updateSpreadTechInfo(userId: String!): Res!
+  updateSpreadTechInfo(userToken: String!): Res!
   """
   スプレッドシートの開発経験を更新.
   """
-  updateSpreadProject(userId: String!, projectIndex: Int!): Res!
+  updateSpreadProject(userToken: String!, projectIndex: Int!): Res!
 
   """
   基本情報を更新.

@@ -1,17 +1,19 @@
 import { google } from "googleapis";
 import { GoogleAuth } from "google-auth-library";
 import { Users } from "../../../models";
-import { UserIdType } from "../../../types";
+import { UserToken } from "../../../types";
 import { error, success } from "../responseStatus";
+import { verifyJwtToken } from "../../../utli/fncJwtToken";
 
 const sepreadSheetQueries = {
   /**
    * ユーザーのスプレッドシートのデータを取得する.
    *
-   * @param userID - ユーザーID
+   * @param userToken - ユーザートークン
    * @returns 取得ステータス
    */
-  getSpreadSheet: async (_: any, { userId }: UserIdType) => {
+  getSpreadSheet: async (_: any, { userToken }: UserToken) => {
+    const userId = verifyJwtToken(userToken);
     const user = await Users.findById({ _id: userId });
     if (user === null) {
       return error("該当のユーザーがいませんでした。");
