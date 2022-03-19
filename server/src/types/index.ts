@@ -27,6 +27,7 @@ export {
   UserLoginType,
   TokenPayload,
   UserToken,
+  TokenUserData,
 } from "./user";
 export { ChangeLeafInfoType } from "./userLeafs";
 export { TodoAddType, TodoIdType, TodoUpdateType } from "./userTodos";

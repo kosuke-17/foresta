@@ -46,3 +46,4 @@ export type TokenPayload = {
 };
 
 export type UserToken = { userToken: string };
+export type TokenUserData = { _id: string };
