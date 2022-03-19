@@ -18,7 +18,7 @@ type Query {
   """
   ユーザーのTodo一覧情報を取得.
   """
-  getAllTodoByUser(userId: String!): ResponseTodoArr!
+  getAllTodoByUser(userToken: String!): ResponseTodoArr!
   """
   TodoIdに紐づいたTodo情報を取得.
   """
