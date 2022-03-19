@@ -198,10 +198,7 @@ const userMutations = {
    */
   userAutoLogin: async (_: any, { userToken }: UserToken) => {
     try {
-      //  verifyJwtToken
-
       const userId = verifyJwtToken(userToken);
-
       const exitsUser = await Users.findById({ _id: userId });
       if (exitsUser._id) {
         return success(null, "ユーザーが見つかりました。");
@@ -228,8 +225,16 @@ const userMutations = {
    * `https://lunchkus.net/user/${}`
    */
   updateUser: async (_: any, { user }: UserUpdateType) => {
-    const { userId, name, jobType, email, password, spreadSheetID, githubURL } =
-      user;
+    const {
+      userToken,
+      name,
+      jobType,
+      email,
+      password,
+      spreadSheetID,
+      githubURL,
+    } = user;
+    const userId = verifyJwtToken(userToken);
     try {
       const result = await Users.findOneAndUpdate(
         { _id: userId },

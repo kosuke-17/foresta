@@ -28,7 +28,7 @@ input UserCreateInput {
   githubURL: String!
 }
 input UserUpdateInput {
-  userId: String!
+  userToken: String!
   name: String!
   jobType: String!
   email: String

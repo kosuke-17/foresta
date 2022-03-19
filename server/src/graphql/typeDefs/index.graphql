@@ -10,7 +10,7 @@ type Query {
   """
   ユーザーidに紐づくユーザー情報を取得.
   """
-  getUserById(_id: String!): ResponseUser!
+  getUserById(userToken: String!): ResponseUser!
   """
   エリアidに紐づく技術情報を取得.
   """
