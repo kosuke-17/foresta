@@ -20,6 +20,7 @@ import {
 } from "../../../types";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { signJwtToken, verifyJwtToken } from "../../../utli/verifyJwtToken";
 
 dotenv.config();
 
@@ -181,13 +182,11 @@ const userMutations = {
       }
 
       // トークンデータ
-      const jwtUser = {
-        _id: existUser._id,
+      const TokenUserData = {
+        _id: existUser._id as string,
       };
-      const expirationSeconds = 60 * 60; //有効期限
-      const token = jwt.sign({ user: jwtUser }, jwtKey, {
-        expiresIn: expirationSeconds,
-      });
+
+      const token = signJwtToken(TokenUserData);
       const userToken = { token: token };
 
       return success(userToken, "ログインできました。");
@@ -203,8 +202,9 @@ const userMutations = {
    */
   userAutoLogin: async (_: any, { userToken }: UserToken) => {
     try {
-      const certifiedData = jwt.verify(userToken, jwtKey) as TokenPayload;
-      const userId = certifiedData.user._id;
+      //  verifyJwtToken
+
+      const userId = verifyJwtToken(userToken);
 
       const exitsUser = await Users.findById({ _id: userId });
       if (exitsUser._id) {
