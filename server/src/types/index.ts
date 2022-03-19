@@ -25,12 +25,9 @@ export {
   UserIdType,
   UserTechLeafsType,
   UserLoginType,
+  TokenPayload,
+  UserToken,
 } from "./user";
 export { ChangeLeafInfoType } from "./userLeafs";
 export { TodoAddType, TodoIdType, TodoUpdateType } from "./userTodos";
-export {
-  UrlDataCreateType,
-  UrlDataAddType,
-  UrlDataRemoveType,
-  UrlType,
-} from "./userUrl";
+export { UrlDataAddType, UrlDataRemoveType, UrlType } from "./userUrl";

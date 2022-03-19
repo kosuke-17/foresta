@@ -36,3 +36,13 @@ export type UserLoginType = {
     password: string;
   };
 };
+
+export type TokenPayload = {
+  user: {
+    _id: string;
+  };
+  iat: number;
+  exp: number;
+};
+
+export type UserToken = { userToken: string };
