@@ -11,8 +11,20 @@ import {
   UserUrls,
 } from "../../../models";
 import { error, success } from "../responseStatus";
-import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
+import {
+  UserLoginType,
+  UserCreateType,
+  UserUpdateType,
+  TokenPayload,
+  UserToken,
+} from "../../../types";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+// jwtの鍵
+const jwtKey = process.env.JWT_PRIVATE_KEY || "";
 
 /**
  * ## ユーザーの変更処理
@@ -168,18 +180,48 @@ const userMutations = {
         return error("該当のユーザーが見つかりませんでした");
       }
 
+      // トークンデータ
       const jwtUser = {
         _id: existUser._id,
       };
-
-      const token = jwt.sign({ user: jwtUser }, "loginSecretUserId", {
-        expiresIn: 60 * 60,
+      const expirationSeconds = 60 * 60; //有効期限
+      const token = jwt.sign({ user: jwtUser }, jwtKey, {
+        expiresIn: expirationSeconds,
       });
       const userToken = { token: token };
 
       return success(userToken, "ログインできました。");
     } catch {
       return error("ログインできませんでした。");
+    }
+  },
+  /**
+   * 自動ログイン用の処理.
+   *
+   * @param userToken - ユーザートークン
+   * @returns ステータス
+   */
+  userAutoLogin: async (_: any, { userToken }: UserToken) => {
+    try {
+      const certifiedData = jwt.verify(userToken, jwtKey) as TokenPayload;
+      const userId = certifiedData.user._id;
+
+      const exitsUser = await Users.findById({ _id: userId });
+      if (exitsUser._id) {
+        return success(null, "ユーザーが見つかりました。");
+      } else {
+        return error("ユーザーが見つかりませんでした。");
+      }
+    } catch (e) {
+      // jwtのエラーハンドリング
+      if (e instanceof jwt.TokenExpiredError) {
+        console.error("トークンの有効期限が切れています。", e);
+      } else if (e instanceof jwt.JsonWebTokenError) {
+        console.error("トークンが不正です。", e);
+      } else {
+        console.error("トークンの検証でその他のエラーが発生しました。", e);
+      }
+      throw e;
     }
   },
   /**
