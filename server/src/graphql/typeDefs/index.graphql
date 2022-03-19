@@ -26,7 +26,7 @@ type Query {
   """
   ユーザーのTodo一覧情報を取得.
   """
-  getAllStudyStack(userId: String!): ResponseStudyStackArr!
+  getAllStudyStack(userToken: String!): ResponseStudyStackArr!
   """
   StudyStackIdに紐づいたStudyStack情報を取得.
   """
