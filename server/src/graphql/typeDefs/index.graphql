@@ -34,11 +34,11 @@ type Query {
   """
   ユーザーIDに紐づくスペックシート情報を取得.
   """
-  getSheetByUserId(userId: String!): ResponseSpecSheet!
+  getSheetByUserId(userToken: String!): ResponseSpecSheet!
   """
   ユーザーIDに紐づくポートフォリオ情報を取得.
   """
-  getPortfolioByUserId(userId: String!): ResponsePortfolio!
+  getPortfolioByUserId(userToken: String!): ResponsePortfolio!
   """
   スキル取得.
   """

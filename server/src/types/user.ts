@@ -21,9 +21,7 @@ export type UserUpdateType = {
 };
 
 // ユーザーIDは受け取り方が２種類ある
-export type UserIdType = {
-  userId: string;
-};
+export type UserIdType = { userId: string };
 
 export type UserTechLeafsType = {
   _id: string;

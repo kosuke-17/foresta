@@ -15,17 +15,13 @@ import {
   UserLoginType,
   UserCreateType,
   UserUpdateType,
-  TokenPayload,
   UserToken,
 } from "../../../types";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { signJwtToken, verifyJwtToken } from "../../../utli/verifyJwtToken";
+import { signJwtToken, verifyJwtToken } from "../../../utli/fncJwtToken";
 
 dotenv.config();
-
-// jwtの鍵
-const jwtKey = process.env.JWT_PRIVATE_KEY || "";
 
 /**
  * ## ユーザーの変更処理
