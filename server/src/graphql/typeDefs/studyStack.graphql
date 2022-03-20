@@ -15,7 +15,7 @@ input StudyStackAddInput {
   timeStack: Int!
   createdAt: Date!
   skillTagId: ID!
-  userId: ID!
+  userToken: String!
 }
 input StudyStackUpdateInput {
   studyStackId: ID!

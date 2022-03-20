@@ -147,7 +147,7 @@ input PortfolioCreateInput {
   img: String
   portfolioURL: String
   skills: [String]!
-  userId: ID!
+  userToken: String!
   specSheetId: ID!
 }
 # ポートフォリオ更新
