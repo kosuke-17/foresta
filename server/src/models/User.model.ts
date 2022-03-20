@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   spreadSheetID: { type: String },
   githubURL: { type: String },
+  token: { type: String },
 });
 
 /**
