@@ -1,5 +1,6 @@
 import { StudyStack } from "../../../models";
-import { StudyStackIdType, UserIdType } from "../../../types";
+import { StudyStackIdType, UserToken } from "../../../types";
+import { verifyJwtToken } from "../../../utli/fncJwtToken";
 import { error, success } from "../responseStatus";
 /**
  * ## 学習記録の取得
@@ -8,10 +9,11 @@ const studyStackQueries = {
   /**
    * ユーザーのStudyStack一覧情報を取得する.
    *
-   * @param userId - userID
+   * @param userToken - ユーザートークン
    * @returns StudyStack一覧情報
    */
-  getAllStudyStack: async (_: any, { userId }: UserIdType) => {
+  getAllStudyStack: async (_: any, { userToken }: UserToken) => {
+    const userId = verifyJwtToken(userToken);
     try {
       const result = await StudyStack.find({ userId: userId });
       return success(result, "取得に成功しました。");

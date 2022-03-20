@@ -7,10 +7,12 @@ type User {
   password: String!
   spreadSheetID: String!
   githubURL: String!
+  token: String!
   userLeafs: UserLeafs!
   userUrls: UserUrls!
   portfolio: [Portfolio]!
 }
+
 type Token {
   token: String!
 }
@@ -28,7 +30,7 @@ input UserCreateInput {
   githubURL: String!
 }
 input UserUpdateInput {
-  userId: String!
+  userToken: String!
   name: String!
   jobType: String!
   email: String
@@ -54,5 +56,10 @@ type ResponseUser {
 type ResponseToken {
   status: String!
   node: Token!
+  msg: String!
+}
+
+type ResStatus {
+  status: String!
   msg: String!
 }

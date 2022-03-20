@@ -19,7 +19,7 @@ input TodoAddInput {
   startedAt: Date!
   finishedAt: Date
   isStatus: Boolean!
-  userId: ID!
+  userToken: String!
 }
 input TodoUpdateInput {
   todoId: ID!
@@ -28,7 +28,6 @@ input TodoUpdateInput {
   startedAt: Date!
   finishedAt: Date
   isStatus: Boolean!
-  userId: ID!
 }
 
 ################################

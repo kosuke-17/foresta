@@ -10,7 +10,7 @@ export type UserCreateType = {
 };
 export type UserUpdateType = {
   user: {
-    userId: string;
+    userToken: string;
     name: string;
     jobType: string;
     email: string;
@@ -20,10 +20,7 @@ export type UserUpdateType = {
   };
 };
 
-// ユーザーIDは受け取り方が２種類ある
-export type UserIdType = {
-  userId: string;
-};
+export type UserIdType = { userId: string };
 
 export type UserTechLeafsType = {
   _id: string;
@@ -36,3 +33,14 @@ export type UserLoginType = {
     password: string;
   };
 };
+
+export type TokenPayload = {
+  user: {
+    _id: string;
+  };
+  iat: number;
+  exp: number;
+};
+
+export type UserToken = { userToken: string };
+export type TokenUserData = { _id: string };

@@ -9,7 +9,7 @@ export type PortfolioType = {
     img: string;
     portfolioURL: string;
     skills: string[];
-    userId: string;
+    userToken: string;
     specSheetId: string;
   };
 };
@@ -21,6 +21,5 @@ export type PortfolioUpdateType = {
     img: string;
     skills: string[];
     portfolioURL: string;
-    userId: string;
   };
 };

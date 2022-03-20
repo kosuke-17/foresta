@@ -14,6 +14,7 @@ import {
   SpecUserInfoType,
   PortfolioUpdateType,
 } from "../../../types";
+import { verifyJwtToken } from "../../../utli/fncJwtToken";
 import { error, success } from "../responseStatus";
 
 /**
@@ -295,9 +296,10 @@ const specSheetMutations = {
       img,
       portfolioURL,
       skills,
-      userId,
+      userToken,
       specSheetId,
     } = portfolio;
+    const userId = verifyJwtToken(userToken);
     const newPortfolio = new Portfolio({
       title,
       description,
