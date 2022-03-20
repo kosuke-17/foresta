@@ -1418,7 +1418,7 @@ export type ChangeTodoStatusMutation = {
   changeTodoStatus: {
     __typename?: "ResponseTodo";
     status: string;
-    node: { __typename?: "Todo"; isStatus: boolean; title: string };
+    node: { __typename?: "Todo"; id: string; isStatus: boolean };
   };
 };
 
@@ -3366,8 +3366,8 @@ export const ChangeTodoStatusDocument = gql`
     changeTodoStatus(todoId: $todoId) {
       status
       node {
+        id
         isStatus
-        title
       }
     }
   }

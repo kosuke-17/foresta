@@ -520,8 +520,8 @@ gql`
     changeTodoStatus(todoId: $todoId) {
       status
       node {
+        id
         isStatus
-        title
       }
     }
   }
