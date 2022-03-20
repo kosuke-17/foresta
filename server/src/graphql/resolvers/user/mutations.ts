@@ -20,6 +20,7 @@ import {
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { signJwtToken, verifyJwtToken } from "../../../utli/fncJwtToken";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -43,16 +44,28 @@ const userMutations = {
       githubURL = "";
     }
 
+    // パスワードをハッシュ化
+    const encryptedPassword = await bcrypt.hash(password, 10);
+
     try {
       // ユーザーオブジェクト生成
-      const createUser = new Users({
+      let createUser = new Users({
         name,
         jobType,
         email,
-        password,
+        password: encryptedPassword,
         spreadSheetID,
         githubURL,
       });
+      // トークンデータ
+      const TokenUserData = {
+        _id: createUser._id as string,
+      };
+
+      // ユーザーIDのトークン作成
+      const token = signJwtToken(TokenUserData);
+      // オブジェクトにトークン代入
+      createUser.token = token;
       const result = await createUser.save();
 
       // ユーザー技術情報オブジェクトを生成
@@ -169,23 +182,24 @@ const userMutations = {
   userLogin: async (_: any, { user }: UserLoginType) => {
     const { email, password } = user;
     try {
-      const existUser = await Users.findOne({
+      let existUser = await Users.findOne({
         email: email,
-        password: password,
       });
-      if (existUser === null) {
+
+      // 当てはまるユーザーが存在したらtokenを再発行
+      if (existUser && (await bcrypt.compare(password, existUser.password))) {
+        // トークンデータ
+        const TokenUserData = {
+          _id: existUser._id as string,
+        };
+        const token = signJwtToken(TokenUserData);
+        existUser.token = token;
+        await existUser.save();
+        const userToken = { token: token };
+        return success(userToken, "ログインできました。");
+      } else {
         return error("該当のユーザーが見つかりませんでした");
       }
-
-      // トークンデータ
-      const TokenUserData = {
-        _id: existUser._id as string,
-      };
-
-      const token = signJwtToken(TokenUserData);
-      const userToken = { token: token };
-
-      return success(userToken, "ログインできました。");
     } catch {
       return error("ログインできませんでした。");
     }
