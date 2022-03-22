@@ -8,7 +8,7 @@ export const LogoutButton: FC = memo(() => {
   // クッキー
   const [, , removeCookie] = useCookies();
   const doLogout = () => {
-    removeCookie("ForestaID");
+    removeCookie("token");
     toast({
       title: "ログアウトしました",
       position: "top-right",

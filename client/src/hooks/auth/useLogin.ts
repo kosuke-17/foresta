@@ -25,6 +25,7 @@ export const useLogin = (mailAddress: string, password: string) => {
       },
     },
   });
+
   // ログイン処理
   const doLogin = async () => {
     try {
