@@ -33,7 +33,7 @@ export const useLogin = (mailAddress: string, password: string) => {
       console.log(response);
       // ログインが成功した場合はCookieにForestaIDを保存;
       if (response.data?.userLogin.status == "success") {
-        setCookie("token", response.data.userLogin.node.token);
+        setCookie("ForestaID", response.data.userLogin.node.token);
         toast({
           title: "ログインに成功しました",
           position: "bottom-left",
