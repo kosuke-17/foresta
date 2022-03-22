@@ -464,6 +464,18 @@ gql`
   }
 `;
 
+//技術リストを取得する
+gql`
+  query GetAllTechTree {
+    getAllTechTree {
+      id
+      name
+      color
+      techArea_id
+    }
+  }
+`;
+
 // Todoリストの取得
 gql`
   query GetAllTodoByUser($userId: String!) {

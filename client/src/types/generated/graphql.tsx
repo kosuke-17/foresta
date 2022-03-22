@@ -1347,6 +1347,19 @@ export type RemoveStudyStackMutation = {
   removeStudyStack: { __typename?: "ResponseStudyStack"; status: string };
 };
 
+export type GetAllTechTreeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllTechTreeQuery = {
+  __typename?: "Query";
+  getAllTechTree: Array<{
+    __typename?: "TechTree";
+    id: string;
+    name: string;
+    color: string;
+    techArea_id: string;
+  }>;
+};
+
 export type GetAllTodoByUserQueryVariables = Exact<{
   userId: Scalars["String"];
 }>;
@@ -3173,6 +3186,66 @@ export type RemoveStudyStackMutationResult =
 export type RemoveStudyStackMutationOptions = Apollo.BaseMutationOptions<
   RemoveStudyStackMutation,
   RemoveStudyStackMutationVariables
+>;
+export const GetAllTechTreeDocument = gql`
+  query GetAllTechTree {
+    getAllTechTree {
+      id
+      name
+      color
+      techArea_id
+    }
+  }
+`;
+
+/**
+ * __useGetAllTechTreeQuery__
+ *
+ * To run a query within a React component, call `useGetAllTechTreeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllTechTreeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllTechTreeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllTechTreeQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllTechTreeQuery,
+    GetAllTechTreeQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAllTechTreeQuery, GetAllTechTreeQueryVariables>(
+    GetAllTechTreeDocument,
+    options,
+  );
+}
+export function useGetAllTechTreeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllTechTreeQuery,
+    GetAllTechTreeQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAllTechTreeQuery, GetAllTechTreeQueryVariables>(
+    GetAllTechTreeDocument,
+    options,
+  );
+}
+export type GetAllTechTreeQueryHookResult = ReturnType<
+  typeof useGetAllTechTreeQuery
+>;
+export type GetAllTechTreeLazyQueryHookResult = ReturnType<
+  typeof useGetAllTechTreeLazyQuery
+>;
+export type GetAllTechTreeQueryResult = Apollo.QueryResult<
+  GetAllTechTreeQuery,
+  GetAllTechTreeQueryVariables
 >;
 export const GetAllTodoByUserDocument = gql`
   query GetAllTodoByUser($userId: String!) {
