@@ -104,7 +104,7 @@ export type Mutation = {
   /** ユーザーを編集. */
   updateUser: ResponseUser;
   /** ユーザーがログイン. */
-  userLogin: ResponseUser;
+  userLogin: ResponseToken;
 };
 
 /** データを変更する */
@@ -464,6 +464,13 @@ export type ResponseTodoArr = {
   status: Scalars["String"];
 };
 
+export type ResponseToken = {
+  __typename?: "ResponseToken";
+  msg: Scalars["String"];
+  node: Token;
+  status: Scalars["String"];
+};
+
 export type ResponseUser = {
   __typename?: "ResponseUser";
   msg: Scalars["String"];
@@ -701,6 +708,11 @@ export type TodoUpdateInput = {
   title: Scalars["String"];
   todoId: Scalars["ID"];
   userId: Scalars["ID"];
+};
+
+export type Token = {
+  __typename?: "Token";
+  token: Scalars["String"];
 };
 
 export type Url = {
@@ -1169,15 +1181,10 @@ export type UserLoginMutationVariables = Exact<{
 export type UserLoginMutation = {
   __typename?: "Mutation";
   userLogin: {
-    __typename?: "ResponseUser";
+    __typename?: "ResponseToken";
     status: string;
     msg: string;
-    node: {
-      __typename?: "User";
-      id: string;
-      name: string;
-      userLeafs: { __typename?: "UserLeafs"; id: string };
-    };
+    node: { __typename?: "Token"; token: string };
   };
 };
 
@@ -2576,11 +2583,7 @@ export const UserLoginDocument = gql`
       status
       msg
       node {
-        id
-        name
-        userLeafs {
-          id
-        }
+        token
       }
     }
   }
