@@ -6,24 +6,24 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { Box, Flex } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { GithubLeafType } from "../../../types/types";
 import styled from "styled-components";
+import { useCookies } from "react-cookie";
+import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 
 //GithubAPI用のクエリー
-//userはキャッシュからID取得してそれぞれのGithubIDを記載
 const query = gql`
-  {
-    user(login: "hiroki-yama-1118") {
-      login
+  query ($githubUrl: String!) {
+    user(login: $githubUrl) {
       contributionsCollection {
         contributionCalendar {
           totalContributions
           weeks {
             contributionDays {
+              color
               contributionCount
               date
-              color
             }
           }
         }
@@ -34,9 +34,22 @@ const query = gql`
 
 /**
  * Github草データを表示
- * @returns Github草データ
+ * @returns Github草データ.
  */
-export const GithubLeaf = () => {
+export const GithubLeaf = memo(() => {
+  //クッキーからユーザーID取得
+  const [cookies] = useCookies();
+  console.log(cookies.ForestaID);
+
+  //ユーザーIDからGithubURL取得
+  const { data: githubDatas } = useGetUserByIdQuery({
+    //Githubデータ取得
+    variables: { id: cookies.ForestaID },
+  });
+
+  //取得したGithubURLを格納する
+  const getGithubUrl = githubDatas?.user.node.githubURL;
+
   //GithubAPIのアクセスするためのトークン
   const TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 
@@ -61,22 +74,24 @@ export const GithubLeaf = () => {
     cache: new InMemoryCache(),
   });
 
-  //取得したGithubデータを格納
+  //取得したGithubデータを表示用配列に格納
   const [getData, setGetData] = useState<GithubLeafType>();
 
   //データをメソッドとして取得してきて、useEffectで更新させる
   useEffect(() => {
     (async () => {
+      console.log(getGithubUrl);
       const { data } = await client.query({
+        variables: { githubUrl: getGithubUrl },
         query: query,
       });
       setGetData(data);
     })();
-  }, []);
+  }, [getGithubUrl]);
 
   return (
     <>
-      <Box>GithubID :{getData && getData.user.login}</Box>
+      {/* <Box>GithubID :{getData && getData.user.login}</Box> */}
       <Box>
         年間のコミット数：
         {getData &&
@@ -84,8 +99,9 @@ export const GithubLeaf = () => {
             .totalContributions}
         回
       </Box>
-      <Box mx="50px" my="20px">
-        <Box w="20px">
+
+      <Box mx="70px" my="20px">
+        <Box w="15px">
           <Flex>
             {getData &&
               getData.user.contributionsCollection.contributionCalendar.weeks.map(
@@ -95,8 +111,8 @@ export const GithubLeaf = () => {
                       {githubWeeks.contributionDays.map((data) => (
                         <div key={data.date}>
                           <Box
-                            w="20px"
-                            h="20px"
+                            w="15px"
+                            h="15px"
                             bg={data.color}
                             m="2px"
                             rounded="base"
@@ -115,7 +131,7 @@ export const GithubLeaf = () => {
       </Box>
     </>
   );
-};
+});
 
 const _container = styled.span`
   flex-direction: column;
