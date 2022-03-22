@@ -1,7 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useGetUserByIdQuery } from "../../types/generated/graphql";
+import { useCookies } from "react-cookie";
 
 import {
   GetUserByIdDocument,
@@ -38,36 +40,40 @@ const schema = yup.object().shape({
  * @params userData - 初期表示用データ
  */
 export const useUserInfo = (
-  userData: {
-    name: string | undefined;
-    jobType: string | undefined;
-    github: string | undefined;
-  },
+  // userData: UserType,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
+  //cookieからID取得
+  const [cookies] = useCookies();
+  const { data: userData } = useGetUserByIdQuery({
+    variables: {
+      id: cookies.ForestaID,
+    },
+  });
+  const user = userData?.user.node;
+
   // バリデーション機能を呼び出し
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    //初期値はログインしている人のデータを入れる
-    defaultValues: {
-      name: userData.name,
-      jobType: userData.jobType,
-      githubURL: userData.github,
-    },
   });
+  //初期値はログインしている人のデータを入れる
+  setValue("name", user?.name);
+  setValue("jobType", user?.jobType);
+  setValue("githubURL", user?.githubURL);
 
   /**
-   * キャンセルボタンを押した時に呼ばれる
+   * キャンセルボタンを押した時に呼ばれる.
    */
-  const cancel = () => {
+  const cancel = useCallback(() => {
     onClose();
     setMenuItem("");
-  };
+  }, [onClose, setMenuItem]);
 
   /**
    * ユーザ情報更新.（リフェッチ機能）
@@ -81,27 +87,27 @@ export const useUserInfo = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = async (data: any) => {
-    try {
-      await updateUserInfo({
-        variables: {
-          user: {
-            password: "",
-            email: "",
-            userId: "621b4b55e9204efe7d8f594a",
-            name: data.name,
-            jobType: data.jobType,
-            githubURL: data.githubURL,
-            spreadSheetID: "10vrGz168VXtEPCjXv7bvEbz4_TFZhHvo5mu5HUqgXr4",
+  const onSubmit = useCallback(
+    async (data: any) => {
+      try {
+        await updateUserInfo({
+          variables: {
+            user: {
+              userId: cookies.ForestaID, //受け取ったデータそのまま
+              name: data.name,
+              jobType: data.jobType,
+              githubURL: data.githubURL,
+              spreadSheetID: user?.spreadSheetID || "", //受け取ったデータそのまま
+            },
           },
-        },
-      });
-      onClose();
-      setMenuItem("");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        });
+        cancel();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [cancel, cookies.ForestaID, updateUserInfo, user?.spreadSheetID],
+  );
 
   return {
     useUpdateUserMutation,
@@ -110,7 +116,6 @@ export const useUserInfo = (
     register,
     errors,
     onSubmit,
-    userData,
     GetUserByIdDocument,
     updateUserInfo,
   };

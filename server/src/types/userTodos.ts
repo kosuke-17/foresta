@@ -5,7 +5,7 @@ export type TodoAddType = {
     startedAt: string;
     finishedAt: string;
     isStatus: boolean;
-    userId: string;
+    userToken: string;
   };
 };
 

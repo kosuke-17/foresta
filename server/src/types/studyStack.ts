@@ -7,7 +7,7 @@ export type StackAddType = {
     timeStack: string;
     createdAt: string;
     skillTagId: string;
-    userId: string;
+    userToken: string;
   };
 };
 export type StackUpdateType = {
@@ -17,6 +17,6 @@ export type StackUpdateType = {
     timeStack: string;
     createdAt: string;
     skillTagId: string;
-    userId: string;
+    userToken: string;
   };
 };

@@ -15,6 +15,7 @@ type TechBranch {
 type TechTree {
   id: ID!
   name: String!
+  color: String!
   techArea_id: ID!
   techBranches: [TechBranch!]!
 }
@@ -38,6 +39,7 @@ input TechBranchCreateInput {
 }
 input TechTreeCreateInput {
   name: String!
+  color: String!
   techArea_id: ID!
 }
 input TechAreaCreateInput {

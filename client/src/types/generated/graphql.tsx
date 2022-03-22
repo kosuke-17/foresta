@@ -19,6 +19,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** Date custom scalar type */
+  Date: any;
 };
 
 export type CreatedTechArea = {
@@ -52,6 +54,7 @@ export type Mutation = {
   addStudyStack: ResponseStudyStack;
   /** Todoを追加. */
   addTodo: ResponseTodo;
+  /** ユーザーの持つUrlを追加. */
   addUserUrls: ResponseUserUrls;
   /** ユーザー習得技術を更新. */
   changeLeafStatus: ResponseUserTechLeaf;
@@ -66,14 +69,13 @@ export type Mutation = {
   createTechTree: CreatedTechTree;
   /** ユーザーを追加. */
   createUser: ResponseUser;
-  /** ユーザーの持つUrlを作成. */
-  createUserUrls: ResponseUserUrls;
   /** ポートフォリオを削除. */
   removePortfolio: Res;
   /** ユーザーの学習記録を削除. */
   removeStudyStack: ResponseStudyStack;
   /** Todoを削除. */
   removeTodo: ResponseTodo;
+  /** ユーザーの持つUrlを削除. */
   removeUserUrls: ResponseUserUrls;
   /** ポートフォリオを更新. */
   updatePortfolio: ResponsePortfolio;
@@ -158,11 +160,6 @@ export type MutationCreateTechTreeArgs = {
 /** データを変更する */
 export type MutationCreateUserArgs = {
   user: UserCreateInput;
-};
-
-/** データを変更する */
-export type MutationCreateUserUrlsArgs = {
-  urlData: UserUrlsCreateInput;
 };
 
 /** データを変更する */
@@ -262,6 +259,7 @@ export type Portfolio = {
   id: Scalars["ID"];
   img: Scalars["String"];
   portfolioURL: Scalars["String"];
+  skills: Array<Scalars["String"]>;
   specSheetId: Scalars["ID"];
   title: Scalars["String"];
   userId: Scalars["ID"];
@@ -271,6 +269,7 @@ export type PortfolioCreateInput = {
   description: Scalars["String"];
   img?: InputMaybe<Scalars["String"]>;
   portfolioURL?: InputMaybe<Scalars["String"]>;
+  skills: Array<InputMaybe<Scalars["String"]>>;
   specSheetId: Scalars["ID"];
   title: Scalars["String"];
   userId: Scalars["ID"];
@@ -281,6 +280,7 @@ export type PortfolioUpdateInput = {
   img?: InputMaybe<Scalars["String"]>;
   portfolioId: Scalars["ID"];
   portfolioURL?: InputMaybe<Scalars["String"]>;
+  skills: Array<InputMaybe<Scalars["String"]>>;
   title: Scalars["String"];
 };
 
@@ -322,6 +322,7 @@ export type Query = {
   getTodoById: ResponseTodo;
   /** ユーザーidに紐づくユーザー情報を取得. */
   getUserById: ResponseUser;
+  /** エリアidに紐づく技術情報を取得. */
   getUserLeafsById: ResponseUserTechLeaf;
 };
 
@@ -404,35 +405,35 @@ export type Res = {
 export type ResponsePortfolio = {
   __typename?: "ResponsePortfolio";
   msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<Portfolio>;
+  node: Portfolio;
   status: Scalars["String"];
 };
 
 export type ResponseSpecProject = {
   __typename?: "ResponseSpecProject";
   msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<SpecProjectSheet>;
+  node: SpecProjectSheet;
   status: Scalars["String"];
 };
 
 export type ResponseSpecSheet = {
   __typename?: "ResponseSpecSheet";
   msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<SpecSheet>;
+  node: SpecSheet;
   status: Scalars["String"];
 };
 
 export type ResponseSpecTechInfo = {
   __typename?: "ResponseSpecTechInfo";
   msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<SpecTechInfoSheet>;
+  node: SpecTechInfoSheet;
   status: Scalars["String"];
 };
 
 export type ResponseSpecUserInfo = {
   __typename?: "ResponseSpecUserInfo";
   msg?: Maybe<Scalars["String"]>;
-  node?: Maybe<SpecUserInfoSheet>;
+  node: SpecUserInfoSheet;
   status: Scalars["String"];
 };
 
@@ -495,7 +496,7 @@ export type SpecProjectSheet = {
   __typename?: "SpecProjectSheet";
   content: Scalars["String"];
   devRoles: Array<Scalars["String"]>;
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   frameworks: Array<Scalars["String"]>;
   id: Scalars["String"];
   languages: Array<Scalars["String"]>;
@@ -506,13 +507,13 @@ export type SpecProjectSheet = {
   otherTools: Array<Scalars["String"]>;
   roleSharing: Scalars["String"];
   specSheetId: Scalars["ID"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
 };
 
 export type SpecProjectUpdateInput = {
   content: Scalars["String"];
   devRoles: Array<Scalars["String"]>;
-  finishedAt: Scalars["String"];
+  finishedAt: Scalars["Date"];
   frameworks: Array<Scalars["String"]>;
   languages: Array<Scalars["String"]>;
   libraries: Array<Scalars["String"]>;
@@ -523,7 +524,7 @@ export type SpecProjectUpdateInput = {
   roleSharing: Scalars["String"];
   specProjectId: Scalars["ID"];
   specSheetId: Scalars["ID"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
 };
 
 export type SpecSheet = {
@@ -551,6 +552,7 @@ export type SpecTechInfoSheet = {
   __typename?: "SpecTechInfoSheet";
   devRoles: Array<Scalars["String"]>;
   frameworks: Array<Scalars["String"]>;
+  id: Scalars["ID"];
   languages: Array<Scalars["String"]>;
   libraries: Array<Scalars["String"]>;
   operationEnvs: Array<Scalars["String"]>;
@@ -572,6 +574,7 @@ export type SpecUserInfoSheet = {
   __typename?: "SpecUserInfoSheet";
   age: Scalars["Int"];
   gender: Scalars["String"];
+  id: Scalars["ID"];
   itExpAmount: Scalars["Int"];
   nearestStation: Scalars["String"];
   pgExpAmount: Scalars["Int"];
@@ -596,7 +599,7 @@ export type SpecUserInfoUpdateInput = {
 export type StudyStack = {
   __typename?: "StudyStack";
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   id: Scalars["ID"];
   skillTagId: Scalars["ID"];
   timeStack: Scalars["Int"];
@@ -605,7 +608,7 @@ export type StudyStack = {
 
 export type StudyStackAddInput = {
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   skillTagId: Scalars["ID"];
   timeStack: Scalars["Int"];
   userId: Scalars["ID"];
@@ -613,7 +616,7 @@ export type StudyStackAddInput = {
 
 export type StudyStackUpdateInput = {
   content: Scalars["String"];
-  createdAt: Scalars["String"];
+  createdAt: Scalars["Date"];
   skillTagId: Scalars["ID"];
   studyStackId: Scalars["ID"];
   timeStack: Scalars["Int"];
@@ -657,6 +660,7 @@ export type TechLeafCreateInput = {
 
 export type TechTree = {
   __typename?: "TechTree";
+  color: Scalars["String"];
   id: Scalars["ID"];
   name: Scalars["String"];
   techArea_id: Scalars["ID"];
@@ -664,6 +668,7 @@ export type TechTree = {
 };
 
 export type TechTreeCreateInput = {
+  color: Scalars["String"];
   name: Scalars["String"];
   techArea_id: Scalars["ID"];
 };
@@ -671,28 +676,28 @@ export type TechTreeCreateInput = {
 export type Todo = {
   __typename?: "Todo";
   description?: Maybe<Scalars["String"]>;
-  finishedAt?: Maybe<Scalars["String"]>;
+  finishedAt?: Maybe<Scalars["Date"]>;
   id: Scalars["ID"];
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   userId: Scalars["ID"];
 };
 
 export type TodoAddInput = {
-  description: Scalars["String"];
-  finishedAt: Scalars["String"];
+  description?: InputMaybe<Scalars["String"]>;
+  finishedAt?: InputMaybe<Scalars["Date"]>;
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   userId: Scalars["ID"];
 };
 
 export type TodoUpdateInput = {
-  description: Scalars["String"];
-  finishedAt: Scalars["String"];
+  description?: InputMaybe<Scalars["String"]>;
+  finishedAt?: InputMaybe<Scalars["Date"]>;
   isStatus: Scalars["Boolean"];
-  startedAt: Scalars["String"];
+  startedAt: Scalars["Date"];
   title: Scalars["String"];
   todoId: Scalars["ID"];
   userId: Scalars["ID"];
@@ -700,6 +705,7 @@ export type TodoUpdateInput = {
 
 export type Url = {
   __typename?: "URL";
+  id: Scalars["ID"];
   url: Scalars["String"];
   urlName: Scalars["String"];
 };
@@ -730,7 +736,7 @@ export type UserCreateInput = {
 export type UserLeafs = {
   __typename?: "UserLeafs";
   id: Scalars["ID"];
-  myTech: Array<TreeInfo>;
+  myForest: Array<TreeInfo>;
   userId: Scalars["ID"];
 };
 
@@ -740,7 +746,7 @@ export type UserLoginInput = {
 };
 
 export type UserTechLeafUpdateInput = {
-  achievementRate: Scalars["Int"];
+  branchId: Scalars["ID"];
   currentStatus: Scalars["Boolean"];
   leafId: Scalars["ID"];
   treeId: Scalars["ID"];
@@ -748,19 +754,20 @@ export type UserTechLeafUpdateInput = {
 };
 
 export type UserUpdateInput = {
-  email: Scalars["String"];
+  email?: InputMaybe<Scalars["String"]>;
   githubURL: Scalars["String"];
   jobType: Scalars["String"];
   name: Scalars["String"];
-  password: Scalars["String"];
+  password?: InputMaybe<Scalars["String"]>;
   spreadSheetID: Scalars["String"];
   userId: Scalars["String"];
 };
 
 export type UserUrls = {
   __typename?: "UserUrls";
+  id: Scalars["ID"];
   userId: Scalars["ID"];
-  user_urls: Array<Url>;
+  user_urls: Array<Maybe<Url>>;
 };
 
 export type UserUrlsAddInput = {
@@ -769,19 +776,21 @@ export type UserUrlsAddInput = {
   urlName: Scalars["String"];
 };
 
-export type UserUrlsCreateInput = {
-  url: Scalars["String"];
-  urlName: Scalars["String"];
-  userId: Scalars["ID"];
-};
-
 export type UserUrlsRemoveInput = {
   urlId: Scalars["ID"];
   userUrlsId: Scalars["ID"];
 };
 
+export type BranchInfo = {
+  __typename?: "branchInfo";
+  id: Scalars["ID"];
+  leafs: Array<LeafInfo>;
+  name: Scalars["String"];
+};
+
 export type LeafInfo = {
   __typename?: "leafInfo";
+  id: Scalars["String"];
   isStatus: Scalars["Boolean"];
   name: Scalars["String"];
   techBranch_id: Scalars["String"];
@@ -796,7 +805,10 @@ export type PrevJobsContent = {
 export type TreeInfo = {
   __typename?: "treeInfo";
   achievementRate: Scalars["Int"];
-  leafs: Array<LeafInfo>;
+  areaId: Scalars["ID"];
+  branches: Array<BranchInfo>;
+  color: Scalars["String"];
+  id: Scalars["ID"];
   treeId: Scalars["ID"];
   treeName: Scalars["String"];
 };
@@ -809,24 +821,239 @@ export type GetUserByIdQuery = {
   __typename?: "Query";
   user: {
     __typename?: "ResponseUser";
+    status: string;
+    msg: string;
     node: {
       __typename?: "User";
       name: string;
       jobType: string;
       spreadSheetID: string;
       githubURL: string;
+    };
+  };
+};
+
+export type GetUserPortfolioByIdQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type GetUserPortfolioByIdQuery = {
+  __typename?: "Query";
+  portfolios: {
+    __typename?: "ResponseUser";
+    status: string;
+    msg: string;
+    node: {
+      __typename?: "User";
       portfolio: Array<{
         __typename?: "Portfolio";
+        id: string;
         title: string;
         description: string;
         img: string;
         portfolioURL: string;
+        skills: Array<string>;
+        specSheetId: string;
       } | null>;
+    };
+  };
+};
+
+export type GetUrlByIdQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type GetUrlByIdQuery = {
+  __typename?: "Query";
+  urls: {
+    __typename?: "ResponseUser";
+    status: string;
+    msg: string;
+    node: {
+      __typename?: "User";
       userUrls: {
         __typename?: "UserUrls";
-        user_urls: Array<{ __typename?: "URL"; urlName: string; url: string }>;
+        user_urls: Array<{
+          __typename?: "URL";
+          urlName: string;
+          url: string;
+        } | null>;
       };
     };
+  };
+};
+
+export type GetSheetByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetSheetByUserIdQuery = {
+  __typename?: "Query";
+  user: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      userInfo: {
+        __typename?: "SpecUserInfoSheet";
+        stuffID: string;
+        age: number;
+        gender: string;
+        nearestStation: string;
+        startWorkDate: string;
+        seExpAmount: number;
+        pgExpAmount: number;
+        itExpAmount: number;
+        specSheetId: string;
+      };
+    };
+  };
+};
+
+export type GetSheetPrByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetSheetPrByUserIdQuery = {
+  __typename?: "Query";
+  pr: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: { __typename?: "SpecSheet"; id: string; selfIntro: string };
+  };
+};
+
+export type GetSheetSkillByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetSheetSkillByUserIdQuery = {
+  __typename?: "Query";
+  skills: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      techInfo: {
+        __typename?: "SpecTechInfoSheet";
+        operationEnvs: Array<string>;
+        languages: Array<string>;
+        frameworks: Array<string>;
+        libraries: Array<string>;
+        otherTools: Array<string>;
+        devRoles: Array<string>;
+        specSheetId: string;
+      };
+    };
+  };
+};
+
+export type GetSheetOtherByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetSheetOtherByUserIdQuery = {
+  __typename?: "Query";
+  other: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      id: string;
+      studyOnOwnTime: string;
+      certification: string;
+      prevJobs: Array<{ __typename?: "prevJobsContent"; content: string }>;
+    };
+  };
+};
+
+export type GetSheetProjectByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetSheetProjectByUserIdQuery = {
+  __typename?: "Query";
+  projects: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      project: Array<{
+        __typename?: "SpecProjectSheet";
+        id: string;
+        name: string;
+        startedAt: any;
+        finishedAt: any;
+        roleSharing: string;
+        memberCount: number;
+        content: string;
+        operationEnvs: Array<string>;
+        languages: Array<string>;
+        frameworks: Array<string>;
+        libraries: Array<string>;
+        otherTools: Array<string>;
+        devRoles: Array<string>;
+        specSheetId: string;
+      }>;
+    };
+  };
+};
+
+export type GetSpreadSheetIdQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type GetSpreadSheetIdQuery = {
+  __typename?: "Query";
+  getUserById: {
+    __typename?: "ResponseUser";
+    status: string;
+    msg: string;
+    node: { __typename?: "User"; spreadSheetID: string };
+  };
+};
+
+export type GetPrAndSheetByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetPrAndSheetByUserIdQuery = {
+  __typename?: "Query";
+  pr: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: { __typename?: "SpecSheet"; id: string; selfIntro: string };
+  };
+  other: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      id: string;
+      studyOnOwnTime: string;
+      certification: string;
+      prevJobs: Array<{ __typename?: "prevJobsContent"; content: string }>;
+    };
+  };
+};
+
+export type UpdateSpecSheetMutationVariables = Exact<{
+  specSheet: SpecSheetUpdateInput;
+}>;
+
+export type UpdateSpecSheetMutation = {
+  __typename?: "Mutation";
+  updateSpecSheet: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
   };
 };
 
@@ -839,6 +1066,102 @@ export type UpdateUserMutation = {
   updateUser: { __typename?: "ResponseUser"; status: string; msg: string };
 };
 
+export type CreatePortfolioMutationVariables = Exact<{
+  portfolio: PortfolioCreateInput;
+}>;
+
+export type CreatePortfolioMutation = {
+  __typename?: "Mutation";
+  createPortfolio: {
+    __typename?: "ResponsePortfolio";
+    status: string;
+    msg?: string | null;
+  };
+};
+
+export type UpdatePortfolioMutationVariables = Exact<{
+  portfolio: PortfolioUpdateInput;
+}>;
+
+export type UpdatePortfolioMutation = {
+  __typename?: "Mutation";
+  updatePortfolio: {
+    __typename?: "ResponsePortfolio";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "Portfolio";
+      id: string;
+      title: string;
+      description: string;
+      img: string;
+      portfolioURL: string;
+      skills: Array<string>;
+      userId: string;
+      specSheetId: string;
+    };
+  };
+};
+
+export type RemovePortfolioMutationVariables = Exact<{
+  portfolioId: Scalars["String"];
+}>;
+
+export type RemovePortfolioMutation = {
+  __typename?: "Mutation";
+  removePortfolio: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
+};
+
+export type GetUserUrlByIdQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type GetUserUrlByIdQuery = {
+  __typename?: "Query";
+  urls: {
+    __typename?: "ResponseUser";
+    node: {
+      __typename?: "User";
+      userUrls: {
+        __typename?: "UserUrls";
+        id: string;
+        user_urls: Array<{
+          __typename?: "URL";
+          urlName: string;
+          url: string;
+          id: string;
+        } | null>;
+      };
+    };
+  };
+};
+
+export type AddUserUrlsMutationVariables = Exact<{
+  urlData: UserUrlsAddInput;
+}>;
+
+export type AddUserUrlsMutation = {
+  __typename?: "Mutation";
+  addUserUrls: { __typename?: "ResponseUserUrls"; status: string; msg: string };
+};
+
+export type RemoveUserUrlsMutationVariables = Exact<{
+  urlData: UserUrlsRemoveInput;
+}>;
+
+export type RemoveUserUrlsMutation = {
+  __typename?: "Mutation";
+  removeUserUrls: {
+    __typename?: "ResponseUserUrls";
+    status: string;
+    msg: string;
+  };
+};
+
 export type UserLoginMutationVariables = Exact<{
   user: UserLoginInput;
 }>;
@@ -848,15 +1171,71 @@ export type UserLoginMutation = {
   userLogin: {
     __typename?: "ResponseUser";
     status: string;
+    msg: string;
     node: {
       __typename?: "User";
       id: string;
       name: string;
-      jobType: string;
-      email: string;
-      password: string;
-      githubURL: string;
+      userLeafs: { __typename?: "UserLeafs"; id: string };
     };
+  };
+};
+
+export type GetAllTechAreaQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllTechAreaQuery = {
+  __typename?: "Query";
+  getAllTechArea: Array<{ __typename?: "TechArea"; id: string; name: string }>;
+};
+
+export type GetUserLeafsByIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetUserLeafsByIdQuery = {
+  __typename?: "Query";
+  getUserLeafsById: {
+    __typename?: "ResponseUserTechLeaf";
+    status: string;
+    node: {
+      __typename?: "UserLeafs";
+      id: string;
+      myForest: Array<{
+        __typename?: "treeInfo";
+        id: string;
+        treeId: string;
+        areaId: string;
+        treeName: string;
+        achievementRate: number;
+        color: string;
+        branches: Array<{
+          __typename?: "branchInfo";
+          id: string;
+          name: string;
+          leafs: Array<{
+            __typename?: "leafInfo";
+            id: string;
+            name: string;
+            techBranch_id: string;
+            techTree_id: string;
+            isStatus: boolean;
+          }>;
+        }>;
+      }>;
+    };
+  };
+};
+
+export type ChangeLeafStatusMutationVariables = Exact<{
+  techLeafInfo: UserTechLeafUpdateInput;
+}>;
+
+export type ChangeLeafStatusMutation = {
+  __typename?: "Mutation";
+  changeLeafStatus: {
+    __typename?: "ResponseUserTechLeaf";
+    status: string;
+    msg: string;
   };
 };
 
@@ -889,7 +1268,7 @@ export type GetAllStudyStackQuery = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     }>;
@@ -910,7 +1289,7 @@ export type GetStudyStackByIdQuery = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -931,7 +1310,7 @@ export type AddStudyStackMutation = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -952,7 +1331,7 @@ export type UpdateStudyStackMutation = {
       id: string;
       content: string;
       timeStack: number;
-      createdAt: string;
+      createdAt: any;
       skillTagId: string;
       userId: string;
     };
@@ -980,8 +1359,9 @@ export type GetAllTodoByUserQuery = {
       __typename?: "Todo";
       id: string;
       title: string;
-      startedAt: string;
-      finishedAt?: string | null;
+      description?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
       isStatus: boolean;
     }>;
   };
@@ -1000,33 +1380,88 @@ export type GetTodoByIdQuery = {
       id: string;
       title: string;
       description?: string | null;
-      startedAt: string;
-      finishedAt?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
       isStatus: boolean;
     };
   };
 };
 
+export type UpdateTodoMutationVariables = Exact<{
+  todo: TodoUpdateInput;
+}>;
+
+export type UpdateTodoMutation = {
+  __typename?: "Mutation";
+  updateTodo: {
+    __typename?: "ResponseTodo";
+    status: string;
+    node: {
+      __typename?: "Todo";
+      id: string;
+      title: string;
+      description?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
+      isStatus: boolean;
+      userId: string;
+    };
+  };
+};
+
+export type ChangeTodoStatusMutationVariables = Exact<{
+  todoId: Scalars["String"];
+}>;
+
+export type ChangeTodoStatusMutation = {
+  __typename?: "Mutation";
+  changeTodoStatus: {
+    __typename?: "ResponseTodo";
+    status: string;
+    node: { __typename?: "Todo"; isStatus: boolean; title: string };
+  };
+};
+
+export type AddTodoMutationVariables = Exact<{
+  todo: TodoAddInput;
+}>;
+
+export type AddTodoMutation = {
+  __typename?: "Mutation";
+  addTodo: {
+    __typename?: "ResponseTodo";
+    status: string;
+    node: {
+      __typename?: "Todo";
+      id: string;
+      title: string;
+      description?: string | null;
+      startedAt: any;
+      finishedAt?: any | null;
+      isStatus: boolean;
+    };
+  };
+};
+
+export type RemoveTodoMutationVariables = Exact<{
+  todoId: Scalars["String"];
+}>;
+
+export type RemoveTodoMutation = {
+  __typename?: "Mutation";
+  removeTodo: { __typename?: "ResponseTodo"; status: string };
+};
+
 export const GetUserByIdDocument = gql`
   query GetUserById($id: String!) {
     user: getUserById(_id: $id) {
+      status
+      msg
       node {
         name
         jobType
         spreadSheetID
         githubURL
-        portfolio {
-          title
-          description
-          img
-          portfolioURL
-        }
-        userUrls {
-          user_urls {
-            urlName
-            url
-          }
-        }
       }
     }
   }
@@ -1080,6 +1515,678 @@ export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserByIdQuery,
   GetUserByIdQueryVariables
 >;
+export const GetUserPortfolioByIdDocument = gql`
+  query GetUserPortfolioById($id: String!) {
+    portfolios: getUserById(_id: $id) {
+      status
+      msg
+      node {
+        portfolio {
+          id
+          title
+          description
+          img
+          portfolioURL
+          skills
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUserPortfolioByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserPortfolioByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserPortfolioByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserPortfolioByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserPortfolioByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >(GetUserPortfolioByIdDocument, options);
+}
+export function useGetUserPortfolioByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >(GetUserPortfolioByIdDocument, options);
+}
+export type GetUserPortfolioByIdQueryHookResult = ReturnType<
+  typeof useGetUserPortfolioByIdQuery
+>;
+export type GetUserPortfolioByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserPortfolioByIdLazyQuery
+>;
+export type GetUserPortfolioByIdQueryResult = Apollo.QueryResult<
+  GetUserPortfolioByIdQuery,
+  GetUserPortfolioByIdQueryVariables
+>;
+export const GetUrlByIdDocument = gql`
+  query GetUrlById($id: String!) {
+    urls: getUserById(_id: $id) {
+      status
+      msg
+      node {
+        userUrls {
+          user_urls {
+            urlName
+            url
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUrlByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUrlByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUrlByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUrlByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUrlByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUrlByIdQuery,
+    GetUrlByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUrlByIdQuery, GetUrlByIdQueryVariables>(
+    GetUrlByIdDocument,
+    options,
+  );
+}
+export function useGetUrlByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUrlByIdQuery,
+    GetUrlByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetUrlByIdQuery, GetUrlByIdQueryVariables>(
+    GetUrlByIdDocument,
+    options,
+  );
+}
+export type GetUrlByIdQueryHookResult = ReturnType<typeof useGetUrlByIdQuery>;
+export type GetUrlByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUrlByIdLazyQuery
+>;
+export type GetUrlByIdQueryResult = Apollo.QueryResult<
+  GetUrlByIdQuery,
+  GetUrlByIdQueryVariables
+>;
+export const GetSheetByUserIdDocument = gql`
+  query GetSheetByUserId($userId: String!) {
+    user: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        userInfo {
+          stuffID
+          age
+          gender
+          nearestStation
+          startWorkDate
+          seExpAmount
+          pgExpAmount
+          itExpAmount
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSheetByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetSheetByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSheetByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSheetByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSheetByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSheetByUserIdQuery,
+    GetSheetByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetSheetByUserIdQuery, GetSheetByUserIdQueryVariables>(
+    GetSheetByUserIdDocument,
+    options,
+  );
+}
+export function useGetSheetByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSheetByUserIdQuery,
+    GetSheetByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSheetByUserIdQuery,
+    GetSheetByUserIdQueryVariables
+  >(GetSheetByUserIdDocument, options);
+}
+export type GetSheetByUserIdQueryHookResult = ReturnType<
+  typeof useGetSheetByUserIdQuery
+>;
+export type GetSheetByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetSheetByUserIdLazyQuery
+>;
+export type GetSheetByUserIdQueryResult = Apollo.QueryResult<
+  GetSheetByUserIdQuery,
+  GetSheetByUserIdQueryVariables
+>;
+export const GetSheetPrByUserIdDocument = gql`
+  query GetSheetPrByUserId($userId: String!) {
+    pr: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        selfIntro
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSheetPrByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetSheetPrByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSheetPrByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSheetPrByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSheetPrByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSheetPrByUserIdQuery,
+    GetSheetPrByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetSheetPrByUserIdQuery,
+    GetSheetPrByUserIdQueryVariables
+  >(GetSheetPrByUserIdDocument, options);
+}
+export function useGetSheetPrByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSheetPrByUserIdQuery,
+    GetSheetPrByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSheetPrByUserIdQuery,
+    GetSheetPrByUserIdQueryVariables
+  >(GetSheetPrByUserIdDocument, options);
+}
+export type GetSheetPrByUserIdQueryHookResult = ReturnType<
+  typeof useGetSheetPrByUserIdQuery
+>;
+export type GetSheetPrByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetSheetPrByUserIdLazyQuery
+>;
+export type GetSheetPrByUserIdQueryResult = Apollo.QueryResult<
+  GetSheetPrByUserIdQuery,
+  GetSheetPrByUserIdQueryVariables
+>;
+export const GetSheetSkillByUserIdDocument = gql`
+  query GetSheetSkillByUserId($userId: String!) {
+    skills: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        techInfo {
+          operationEnvs
+          languages
+          frameworks
+          libraries
+          otherTools
+          devRoles
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSheetSkillByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetSheetSkillByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSheetSkillByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSheetSkillByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSheetSkillByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSheetSkillByUserIdQuery,
+    GetSheetSkillByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetSheetSkillByUserIdQuery,
+    GetSheetSkillByUserIdQueryVariables
+  >(GetSheetSkillByUserIdDocument, options);
+}
+export function useGetSheetSkillByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSheetSkillByUserIdQuery,
+    GetSheetSkillByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSheetSkillByUserIdQuery,
+    GetSheetSkillByUserIdQueryVariables
+  >(GetSheetSkillByUserIdDocument, options);
+}
+export type GetSheetSkillByUserIdQueryHookResult = ReturnType<
+  typeof useGetSheetSkillByUserIdQuery
+>;
+export type GetSheetSkillByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetSheetSkillByUserIdLazyQuery
+>;
+export type GetSheetSkillByUserIdQueryResult = Apollo.QueryResult<
+  GetSheetSkillByUserIdQuery,
+  GetSheetSkillByUserIdQueryVariables
+>;
+export const GetSheetOtherByUserIdDocument = gql`
+  query GetSheetOtherByUserId($userId: String!) {
+    other: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        studyOnOwnTime
+        certification
+        prevJobs {
+          content
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSheetOtherByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetSheetOtherByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSheetOtherByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSheetOtherByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSheetOtherByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSheetOtherByUserIdQuery,
+    GetSheetOtherByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetSheetOtherByUserIdQuery,
+    GetSheetOtherByUserIdQueryVariables
+  >(GetSheetOtherByUserIdDocument, options);
+}
+export function useGetSheetOtherByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSheetOtherByUserIdQuery,
+    GetSheetOtherByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSheetOtherByUserIdQuery,
+    GetSheetOtherByUserIdQueryVariables
+  >(GetSheetOtherByUserIdDocument, options);
+}
+export type GetSheetOtherByUserIdQueryHookResult = ReturnType<
+  typeof useGetSheetOtherByUserIdQuery
+>;
+export type GetSheetOtherByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetSheetOtherByUserIdLazyQuery
+>;
+export type GetSheetOtherByUserIdQueryResult = Apollo.QueryResult<
+  GetSheetOtherByUserIdQuery,
+  GetSheetOtherByUserIdQueryVariables
+>;
+export const GetSheetProjectByUserIdDocument = gql`
+  query GetSheetProjectByUserId($userId: String!) {
+    projects: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        project {
+          id
+          name
+          startedAt
+          finishedAt
+          roleSharing
+          memberCount
+          content
+          operationEnvs
+          languages
+          frameworks
+          libraries
+          otherTools
+          devRoles
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSheetProjectByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetSheetProjectByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSheetProjectByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSheetProjectByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetSheetProjectByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSheetProjectByUserIdQuery,
+    GetSheetProjectByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetSheetProjectByUserIdQuery,
+    GetSheetProjectByUserIdQueryVariables
+  >(GetSheetProjectByUserIdDocument, options);
+}
+export function useGetSheetProjectByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSheetProjectByUserIdQuery,
+    GetSheetProjectByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSheetProjectByUserIdQuery,
+    GetSheetProjectByUserIdQueryVariables
+  >(GetSheetProjectByUserIdDocument, options);
+}
+export type GetSheetProjectByUserIdQueryHookResult = ReturnType<
+  typeof useGetSheetProjectByUserIdQuery
+>;
+export type GetSheetProjectByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetSheetProjectByUserIdLazyQuery
+>;
+export type GetSheetProjectByUserIdQueryResult = Apollo.QueryResult<
+  GetSheetProjectByUserIdQuery,
+  GetSheetProjectByUserIdQueryVariables
+>;
+export const GetSpreadSheetIdDocument = gql`
+  query GetSpreadSheetID($id: String!) {
+    getUserById(_id: $id) {
+      status
+      msg
+      node {
+        spreadSheetID
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSpreadSheetIdQuery__
+ *
+ * To run a query within a React component, call `useGetSpreadSheetIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSpreadSheetIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSpreadSheetIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetSpreadSheetIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSpreadSheetIdQuery,
+    GetSpreadSheetIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetSpreadSheetIdQuery, GetSpreadSheetIdQueryVariables>(
+    GetSpreadSheetIdDocument,
+    options,
+  );
+}
+export function useGetSpreadSheetIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSpreadSheetIdQuery,
+    GetSpreadSheetIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetSpreadSheetIdQuery,
+    GetSpreadSheetIdQueryVariables
+  >(GetSpreadSheetIdDocument, options);
+}
+export type GetSpreadSheetIdQueryHookResult = ReturnType<
+  typeof useGetSpreadSheetIdQuery
+>;
+export type GetSpreadSheetIdLazyQueryHookResult = ReturnType<
+  typeof useGetSpreadSheetIdLazyQuery
+>;
+export type GetSpreadSheetIdQueryResult = Apollo.QueryResult<
+  GetSpreadSheetIdQuery,
+  GetSpreadSheetIdQueryVariables
+>;
+export const GetPrAndSheetByUserIdDocument = gql`
+  query GetPrAndSheetByUserId($userId: String!) {
+    pr: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        selfIntro
+      }
+    }
+    other: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        id
+        studyOnOwnTime
+        certification
+        prevJobs {
+          content
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetPrAndSheetByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetPrAndSheetByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPrAndSheetByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPrAndSheetByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetPrAndSheetByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >(GetPrAndSheetByUserIdDocument, options);
+}
+export function useGetPrAndSheetByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetPrAndSheetByUserIdQuery,
+    GetPrAndSheetByUserIdQueryVariables
+  >(GetPrAndSheetByUserIdDocument, options);
+}
+export type GetPrAndSheetByUserIdQueryHookResult = ReturnType<
+  typeof useGetPrAndSheetByUserIdQuery
+>;
+export type GetPrAndSheetByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetPrAndSheetByUserIdLazyQuery
+>;
+export type GetPrAndSheetByUserIdQueryResult = Apollo.QueryResult<
+  GetPrAndSheetByUserIdQuery,
+  GetPrAndSheetByUserIdQueryVariables
+>;
+export const UpdateSpecSheetDocument = gql`
+  mutation UpdateSpecSheet($specSheet: SpecSheetUpdateInput!) {
+    updateSpecSheet(specSheet: $specSheet) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpecSheetMutationFn = Apollo.MutationFunction<
+  UpdateSpecSheetMutation,
+  UpdateSpecSheetMutationVariables
+>;
+
+/**
+ * __useUpdateSpecSheetMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpecSheetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpecSheetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpecSheetMutation, { data, loading, error }] = useUpdateSpecSheetMutation({
+ *   variables: {
+ *      specSheet: // value for 'specSheet'
+ *   },
+ * });
+ */
+export function useUpdateSpecSheetMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpecSheetMutation,
+    UpdateSpecSheetMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpecSheetMutation,
+    UpdateSpecSheetMutationVariables
+  >(UpdateSpecSheetDocument, options);
+}
+export type UpdateSpecSheetMutationHookResult = ReturnType<
+  typeof useUpdateSpecSheetMutation
+>;
+export type UpdateSpecSheetMutationResult =
+  Apollo.MutationResult<UpdateSpecSheetMutation>;
+export type UpdateSpecSheetMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpecSheetMutation,
+  UpdateSpecSheetMutationVariables
+>;
 export const UpdateUserDocument = gql`
   mutation UpdateUser($user: UserUpdateInput!) {
     updateUser(user: $user) {
@@ -1131,17 +2238,349 @@ export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
   UpdateUserMutation,
   UpdateUserMutationVariables
 >;
+export const CreatePortfolioDocument = gql`
+  mutation CreatePortfolio($portfolio: PortfolioCreateInput!) {
+    createPortfolio(portfolio: $portfolio) {
+      status
+      msg
+    }
+  }
+`;
+export type CreatePortfolioMutationFn = Apollo.MutationFunction<
+  CreatePortfolioMutation,
+  CreatePortfolioMutationVariables
+>;
+
+/**
+ * __useCreatePortfolioMutation__
+ *
+ * To run a mutation, you first call `useCreatePortfolioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePortfolioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPortfolioMutation, { data, loading, error }] = useCreatePortfolioMutation({
+ *   variables: {
+ *      portfolio: // value for 'portfolio'
+ *   },
+ * });
+ */
+export function useCreatePortfolioMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreatePortfolioMutation,
+    CreatePortfolioMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreatePortfolioMutation,
+    CreatePortfolioMutationVariables
+  >(CreatePortfolioDocument, options);
+}
+export type CreatePortfolioMutationHookResult = ReturnType<
+  typeof useCreatePortfolioMutation
+>;
+export type CreatePortfolioMutationResult =
+  Apollo.MutationResult<CreatePortfolioMutation>;
+export type CreatePortfolioMutationOptions = Apollo.BaseMutationOptions<
+  CreatePortfolioMutation,
+  CreatePortfolioMutationVariables
+>;
+export const UpdatePortfolioDocument = gql`
+  mutation UpdatePortfolio($portfolio: PortfolioUpdateInput!) {
+    updatePortfolio(portfolio: $portfolio) {
+      status
+      msg
+      node {
+        id
+        title
+        description
+        img
+        portfolioURL
+        skills
+        userId
+        specSheetId
+      }
+    }
+  }
+`;
+export type UpdatePortfolioMutationFn = Apollo.MutationFunction<
+  UpdatePortfolioMutation,
+  UpdatePortfolioMutationVariables
+>;
+
+/**
+ * __useUpdatePortfolioMutation__
+ *
+ * To run a mutation, you first call `useUpdatePortfolioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePortfolioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePortfolioMutation, { data, loading, error }] = useUpdatePortfolioMutation({
+ *   variables: {
+ *      portfolio: // value for 'portfolio'
+ *   },
+ * });
+ */
+export function useUpdatePortfolioMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdatePortfolioMutation,
+    UpdatePortfolioMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdatePortfolioMutation,
+    UpdatePortfolioMutationVariables
+  >(UpdatePortfolioDocument, options);
+}
+export type UpdatePortfolioMutationHookResult = ReturnType<
+  typeof useUpdatePortfolioMutation
+>;
+export type UpdatePortfolioMutationResult =
+  Apollo.MutationResult<UpdatePortfolioMutation>;
+export type UpdatePortfolioMutationOptions = Apollo.BaseMutationOptions<
+  UpdatePortfolioMutation,
+  UpdatePortfolioMutationVariables
+>;
+export const RemovePortfolioDocument = gql`
+  mutation RemovePortfolio($portfolioId: String!) {
+    removePortfolio(portfolioId: $portfolioId) {
+      status
+      msg
+    }
+  }
+`;
+export type RemovePortfolioMutationFn = Apollo.MutationFunction<
+  RemovePortfolioMutation,
+  RemovePortfolioMutationVariables
+>;
+
+/**
+ * __useRemovePortfolioMutation__
+ *
+ * To run a mutation, you first call `useRemovePortfolioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemovePortfolioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removePortfolioMutation, { data, loading, error }] = useRemovePortfolioMutation({
+ *   variables: {
+ *      portfolioId: // value for 'portfolioId'
+ *   },
+ * });
+ */
+export function useRemovePortfolioMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemovePortfolioMutation,
+    RemovePortfolioMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    RemovePortfolioMutation,
+    RemovePortfolioMutationVariables
+  >(RemovePortfolioDocument, options);
+}
+export type RemovePortfolioMutationHookResult = ReturnType<
+  typeof useRemovePortfolioMutation
+>;
+export type RemovePortfolioMutationResult =
+  Apollo.MutationResult<RemovePortfolioMutation>;
+export type RemovePortfolioMutationOptions = Apollo.BaseMutationOptions<
+  RemovePortfolioMutation,
+  RemovePortfolioMutationVariables
+>;
+export const GetUserUrlByIdDocument = gql`
+  query GetUserUrlById($id: String!) {
+    urls: getUserById(_id: $id) {
+      node {
+        userUrls {
+          user_urls {
+            urlName
+            url
+            id
+          }
+          id
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUserUrlByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserUrlByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserUrlByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserUrlByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserUrlByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserUrlByIdQuery,
+    GetUserUrlByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUserUrlByIdQuery, GetUserUrlByIdQueryVariables>(
+    GetUserUrlByIdDocument,
+    options,
+  );
+}
+export function useGetUserUrlByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserUrlByIdQuery,
+    GetUserUrlByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetUserUrlByIdQuery, GetUserUrlByIdQueryVariables>(
+    GetUserUrlByIdDocument,
+    options,
+  );
+}
+export type GetUserUrlByIdQueryHookResult = ReturnType<
+  typeof useGetUserUrlByIdQuery
+>;
+export type GetUserUrlByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserUrlByIdLazyQuery
+>;
+export type GetUserUrlByIdQueryResult = Apollo.QueryResult<
+  GetUserUrlByIdQuery,
+  GetUserUrlByIdQueryVariables
+>;
+export const AddUserUrlsDocument = gql`
+  mutation AddUserUrls($urlData: UserUrlsAddInput!) {
+    addUserUrls(urlData: $urlData) {
+      status
+      msg
+    }
+  }
+`;
+export type AddUserUrlsMutationFn = Apollo.MutationFunction<
+  AddUserUrlsMutation,
+  AddUserUrlsMutationVariables
+>;
+
+/**
+ * __useAddUserUrlsMutation__
+ *
+ * To run a mutation, you first call `useAddUserUrlsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddUserUrlsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addUserUrlsMutation, { data, loading, error }] = useAddUserUrlsMutation({
+ *   variables: {
+ *      urlData: // value for 'urlData'
+ *   },
+ * });
+ */
+export function useAddUserUrlsMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddUserUrlsMutation,
+    AddUserUrlsMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddUserUrlsMutation, AddUserUrlsMutationVariables>(
+    AddUserUrlsDocument,
+    options,
+  );
+}
+export type AddUserUrlsMutationHookResult = ReturnType<
+  typeof useAddUserUrlsMutation
+>;
+export type AddUserUrlsMutationResult =
+  Apollo.MutationResult<AddUserUrlsMutation>;
+export type AddUserUrlsMutationOptions = Apollo.BaseMutationOptions<
+  AddUserUrlsMutation,
+  AddUserUrlsMutationVariables
+>;
+export const RemoveUserUrlsDocument = gql`
+  mutation RemoveUserUrls($urlData: UserUrlsRemoveInput!) {
+    removeUserUrls(urlData: $urlData) {
+      status
+      msg
+    }
+  }
+`;
+export type RemoveUserUrlsMutationFn = Apollo.MutationFunction<
+  RemoveUserUrlsMutation,
+  RemoveUserUrlsMutationVariables
+>;
+
+/**
+ * __useRemoveUserUrlsMutation__
+ *
+ * To run a mutation, you first call `useRemoveUserUrlsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveUserUrlsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeUserUrlsMutation, { data, loading, error }] = useRemoveUserUrlsMutation({
+ *   variables: {
+ *      urlData: // value for 'urlData'
+ *   },
+ * });
+ */
+export function useRemoveUserUrlsMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemoveUserUrlsMutation,
+    RemoveUserUrlsMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    RemoveUserUrlsMutation,
+    RemoveUserUrlsMutationVariables
+  >(RemoveUserUrlsDocument, options);
+}
+export type RemoveUserUrlsMutationHookResult = ReturnType<
+  typeof useRemoveUserUrlsMutation
+>;
+export type RemoveUserUrlsMutationResult =
+  Apollo.MutationResult<RemoveUserUrlsMutation>;
+export type RemoveUserUrlsMutationOptions = Apollo.BaseMutationOptions<
+  RemoveUserUrlsMutation,
+  RemoveUserUrlsMutationVariables
+>;
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
       status
+      msg
       node {
         id
         name
-        jobType
-        email
-        password
-        githubURL
+        userLeafs {
+          id
+        }
       }
     }
   }
@@ -1187,6 +2626,195 @@ export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
 export type UserLoginMutationOptions = Apollo.BaseMutationOptions<
   UserLoginMutation,
   UserLoginMutationVariables
+>;
+export const GetAllTechAreaDocument = gql`
+  query GetAllTechArea {
+    getAllTechArea {
+      id
+      name
+    }
+  }
+`;
+
+/**
+ * __useGetAllTechAreaQuery__
+ *
+ * To run a query within a React component, call `useGetAllTechAreaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllTechAreaQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllTechAreaQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllTechAreaQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllTechAreaQuery,
+    GetAllTechAreaQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAllTechAreaQuery, GetAllTechAreaQueryVariables>(
+    GetAllTechAreaDocument,
+    options,
+  );
+}
+export function useGetAllTechAreaLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllTechAreaQuery,
+    GetAllTechAreaQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAllTechAreaQuery, GetAllTechAreaQueryVariables>(
+    GetAllTechAreaDocument,
+    options,
+  );
+}
+export type GetAllTechAreaQueryHookResult = ReturnType<
+  typeof useGetAllTechAreaQuery
+>;
+export type GetAllTechAreaLazyQueryHookResult = ReturnType<
+  typeof useGetAllTechAreaLazyQuery
+>;
+export type GetAllTechAreaQueryResult = Apollo.QueryResult<
+  GetAllTechAreaQuery,
+  GetAllTechAreaQueryVariables
+>;
+export const GetUserLeafsByIdDocument = gql`
+  query GetUserLeafsById($userId: String!) {
+    getUserLeafsById(userId: $userId) {
+      status
+      node {
+        id
+        myForest {
+          id
+          treeId
+          areaId
+          treeName
+          achievementRate
+          color
+          branches {
+            id
+            name
+            leafs {
+              id
+              name
+              techBranch_id
+              techTree_id
+              isStatus
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUserLeafsByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserLeafsByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserLeafsByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserLeafsByIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetUserLeafsByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserLeafsByIdQuery,
+    GetUserLeafsByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUserLeafsByIdQuery, GetUserLeafsByIdQueryVariables>(
+    GetUserLeafsByIdDocument,
+    options,
+  );
+}
+export function useGetUserLeafsByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserLeafsByIdQuery,
+    GetUserLeafsByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetUserLeafsByIdQuery,
+    GetUserLeafsByIdQueryVariables
+  >(GetUserLeafsByIdDocument, options);
+}
+export type GetUserLeafsByIdQueryHookResult = ReturnType<
+  typeof useGetUserLeafsByIdQuery
+>;
+export type GetUserLeafsByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserLeafsByIdLazyQuery
+>;
+export type GetUserLeafsByIdQueryResult = Apollo.QueryResult<
+  GetUserLeafsByIdQuery,
+  GetUserLeafsByIdQueryVariables
+>;
+export const ChangeLeafStatusDocument = gql`
+  mutation ChangeLeafStatus($techLeafInfo: UserTechLeafUpdateInput!) {
+    changeLeafStatus(techLeafInfo: $techLeafInfo) {
+      status
+      msg
+    }
+  }
+`;
+export type ChangeLeafStatusMutationFn = Apollo.MutationFunction<
+  ChangeLeafStatusMutation,
+  ChangeLeafStatusMutationVariables
+>;
+
+/**
+ * __useChangeLeafStatusMutation__
+ *
+ * To run a mutation, you first call `useChangeLeafStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeLeafStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeLeafStatusMutation, { data, loading, error }] = useChangeLeafStatusMutation({
+ *   variables: {
+ *      techLeafInfo: // value for 'techLeafInfo'
+ *   },
+ * });
+ */
+export function useChangeLeafStatusMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ChangeLeafStatusMutation,
+    ChangeLeafStatusMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ChangeLeafStatusMutation,
+    ChangeLeafStatusMutationVariables
+  >(ChangeLeafStatusDocument, options);
+}
+export type ChangeLeafStatusMutationHookResult = ReturnType<
+  typeof useChangeLeafStatusMutation
+>;
+export type ChangeLeafStatusMutationResult =
+  Apollo.MutationResult<ChangeLeafStatusMutation>;
+export type ChangeLeafStatusMutationOptions = Apollo.BaseMutationOptions<
+  ChangeLeafStatusMutation,
+  ChangeLeafStatusMutationVariables
 >;
 export const GetAllUserDocument = gql`
   query GetAllUser {
@@ -1552,6 +3180,7 @@ export const GetAllTodoByUserDocument = gql`
       node {
         id
         title
+        description
         startedAt
         finishedAt
         isStatus
@@ -1672,4 +3301,222 @@ export type GetTodoByIdLazyQueryHookResult = ReturnType<
 export type GetTodoByIdQueryResult = Apollo.QueryResult<
   GetTodoByIdQuery,
   GetTodoByIdQueryVariables
+>;
+export const UpdateTodoDocument = gql`
+  mutation updateTodo($todo: TodoUpdateInput!) {
+    updateTodo(todo: $todo) {
+      status
+      node {
+        id
+        title
+        description
+        startedAt
+        finishedAt
+        isStatus
+        userId
+      }
+    }
+  }
+`;
+export type UpdateTodoMutationFn = Apollo.MutationFunction<
+  UpdateTodoMutation,
+  UpdateTodoMutationVariables
+>;
+
+/**
+ * __useUpdateTodoMutation__
+ *
+ * To run a mutation, you first call `useUpdateTodoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTodoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTodoMutation, { data, loading, error }] = useUpdateTodoMutation({
+ *   variables: {
+ *      todo: // value for 'todo'
+ *   },
+ * });
+ */
+export function useUpdateTodoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateTodoMutation,
+    UpdateTodoMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateTodoMutation, UpdateTodoMutationVariables>(
+    UpdateTodoDocument,
+    options,
+  );
+}
+export type UpdateTodoMutationHookResult = ReturnType<
+  typeof useUpdateTodoMutation
+>;
+export type UpdateTodoMutationResult =
+  Apollo.MutationResult<UpdateTodoMutation>;
+export type UpdateTodoMutationOptions = Apollo.BaseMutationOptions<
+  UpdateTodoMutation,
+  UpdateTodoMutationVariables
+>;
+export const ChangeTodoStatusDocument = gql`
+  mutation ChangeTodoStatus($todoId: String!) {
+    changeTodoStatus(todoId: $todoId) {
+      status
+      node {
+        isStatus
+        title
+      }
+    }
+  }
+`;
+export type ChangeTodoStatusMutationFn = Apollo.MutationFunction<
+  ChangeTodoStatusMutation,
+  ChangeTodoStatusMutationVariables
+>;
+
+/**
+ * __useChangeTodoStatusMutation__
+ *
+ * To run a mutation, you first call `useChangeTodoStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeTodoStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeTodoStatusMutation, { data, loading, error }] = useChangeTodoStatusMutation({
+ *   variables: {
+ *      todoId: // value for 'todoId'
+ *   },
+ * });
+ */
+export function useChangeTodoStatusMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ChangeTodoStatusMutation,
+    ChangeTodoStatusMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ChangeTodoStatusMutation,
+    ChangeTodoStatusMutationVariables
+  >(ChangeTodoStatusDocument, options);
+}
+export type ChangeTodoStatusMutationHookResult = ReturnType<
+  typeof useChangeTodoStatusMutation
+>;
+export type ChangeTodoStatusMutationResult =
+  Apollo.MutationResult<ChangeTodoStatusMutation>;
+export type ChangeTodoStatusMutationOptions = Apollo.BaseMutationOptions<
+  ChangeTodoStatusMutation,
+  ChangeTodoStatusMutationVariables
+>;
+export const AddTodoDocument = gql`
+  mutation AddTodo($todo: TodoAddInput!) {
+    addTodo(todo: $todo) {
+      status
+      node {
+        id
+        title
+        description
+        startedAt
+        finishedAt
+        isStatus
+      }
+    }
+  }
+`;
+export type AddTodoMutationFn = Apollo.MutationFunction<
+  AddTodoMutation,
+  AddTodoMutationVariables
+>;
+
+/**
+ * __useAddTodoMutation__
+ *
+ * To run a mutation, you first call `useAddTodoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddTodoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addTodoMutation, { data, loading, error }] = useAddTodoMutation({
+ *   variables: {
+ *      todo: // value for 'todo'
+ *   },
+ * });
+ */
+export function useAddTodoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddTodoMutation,
+    AddTodoMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddTodoMutation, AddTodoMutationVariables>(
+    AddTodoDocument,
+    options,
+  );
+}
+export type AddTodoMutationHookResult = ReturnType<typeof useAddTodoMutation>;
+export type AddTodoMutationResult = Apollo.MutationResult<AddTodoMutation>;
+export type AddTodoMutationOptions = Apollo.BaseMutationOptions<
+  AddTodoMutation,
+  AddTodoMutationVariables
+>;
+export const RemoveTodoDocument = gql`
+  mutation RemoveTodo($todoId: String!) {
+    removeTodo(todoId: $todoId) {
+      status
+    }
+  }
+`;
+export type RemoveTodoMutationFn = Apollo.MutationFunction<
+  RemoveTodoMutation,
+  RemoveTodoMutationVariables
+>;
+
+/**
+ * __useRemoveTodoMutation__
+ *
+ * To run a mutation, you first call `useRemoveTodoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveTodoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeTodoMutation, { data, loading, error }] = useRemoveTodoMutation({
+ *   variables: {
+ *      todoId: // value for 'todoId'
+ *   },
+ * });
+ */
+export function useRemoveTodoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemoveTodoMutation,
+    RemoveTodoMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<RemoveTodoMutation, RemoveTodoMutationVariables>(
+    RemoveTodoDocument,
+    options,
+  );
+}
+export type RemoveTodoMutationHookResult = ReturnType<
+  typeof useRemoveTodoMutation
+>;
+export type RemoveTodoMutationResult =
+  Apollo.MutationResult<RemoveTodoMutation>;
+export type RemoveTodoMutationOptions = Apollo.BaseMutationOptions<
+  RemoveTodoMutation,
+  RemoveTodoMutationVariables
 >;

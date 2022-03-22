@@ -1,23 +1,17 @@
-import React, { FC } from "react";
+import { FC, memo } from "react";
 import { Link } from "react-router-dom";
-import { SimpleGrid, Box, Center, Text, Spacer } from "@chakra-ui/react";
-import { Avatar } from "@chakra-ui/react";
+import { Engineer } from "../../../types/types";
 import { FollowButton } from "../../atoms/engineers/FollowButton";
+import {
+  SimpleGrid,
+  Box,
+  Center,
+  Text,
+  Spacer,
+  Avatar,
+} from "@chakra-ui/react";
 
-export type Engineer = {
-  engineerData: {
-    __typename?: "User" | undefined;
-    id: string;
-    name: string;
-    jobType: string;
-    email: string;
-    password: string;
-    githubURL: string;
-  };
-  key: number;
-};
-
-export const EngineerComp: FC<Engineer> = (props) => {
+export const EngineerComp: FC<Engineer> = memo((props) => {
   const { engineerData } = props;
   return (
     <Box
@@ -52,4 +46,4 @@ export const EngineerComp: FC<Engineer> = (props) => {
       </Center>
     </Box>
   );
-};
+});

@@ -1,5 +1,6 @@
 import { UserLeafs } from "../../../models";
 import { ChangeLeafInfoType } from "../../../types";
+import { calcUserLeafsRate } from "../../../utli/calcLeafRate";
 import { error, success } from "../responseStatus";
 /**
  * ## 習得技術の変更処理
@@ -15,16 +16,17 @@ const userLeafsMutations = {
    * @returns error : errorステータス
    */
   changeLeafStatus: async (_: any, { techLeafInfo }: ChangeLeafInfoType) => {
-    const {
+    const { userLeafsId, treeId, branchId, leafId, currentStatus } =
+      techLeafInfo;
+    const changedStatus = !currentStatus;
+
+    // 習得率の計算を行い値を受け取る
+    const achievementRate = await calcUserLeafsRate(
       userLeafsId,
       treeId,
-      branchId,
-      achievementRate,
-      leafId,
-      currentStatus,
-    } = techLeafInfo;
+      changedStatus
+    );
 
-    const changedStatus = !currentStatus;
     try {
       const result = await UserLeafs.findOneAndUpdate(
         { _id: userLeafsId },
@@ -41,6 +43,7 @@ const userLeafsMutations = {
             { "branchInfo._id": { $eq: branchId } },
             { "leafInfo._id": { $eq: leafId } },
           ],
+          new: true,
         }
       );
       return success(result, "更新に成功しました。");

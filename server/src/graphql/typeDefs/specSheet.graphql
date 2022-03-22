@@ -16,6 +16,7 @@ type prevJobsContent {
 }
 # スペックシートユーザー基本情報
 type SpecUserInfoSheet {
+  id: ID!
   stuffID: ID!
   age: Int!
   gender: String!
@@ -28,6 +29,7 @@ type SpecUserInfoSheet {
 }
 # スペックシート技術情報
 type SpecTechInfoSheet {
+  id: ID!
   operationEnvs: [String!]!
   languages: [String!]!
   frameworks: [String!]!
@@ -41,8 +43,8 @@ type SpecTechInfoSheet {
 type SpecProjectSheet {
   id: String!
   name: String!
-  startedAt: String!
-  finishedAt: String!
+  startedAt: Date!
+  finishedAt: Date!
   roleSharing: String!
   memberCount: Int!
   content: String!
@@ -109,8 +111,8 @@ input SpecTechInfoUpdateInput {
 input SpecProjectUpdateInput {
   specProjectId: ID!
   name: String!
-  startedAt: String!
-  finishedAt: String!
+  startedAt: Date!
+  finishedAt: Date!
   roleSharing: String!
   memberCount: Int!
   content: String!
@@ -145,7 +147,7 @@ input PortfolioCreateInput {
   img: String
   portfolioURL: String
   skills: [String]!
-  userId: ID!
+  userToken: String!
   specSheetId: ID!
 }
 # ポートフォリオ更新

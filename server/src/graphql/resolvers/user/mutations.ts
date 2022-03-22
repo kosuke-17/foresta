@@ -8,9 +8,21 @@ import {
   SpecProjectSheet,
   TechLeaf,
   TechBranch,
+  UserUrls,
 } from "../../../models";
 import { error, success } from "../responseStatus";
-import { UserLoginType, UserCreateType, UserUpdateType } from "../../../types";
+import {
+  UserLoginType,
+  UserCreateType,
+  UserUpdateType,
+  UserToken,
+} from "../../../types";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import { signJwtToken, verifyJwtToken } from "../../../utli/fncJwtToken";
+import bcrypt from "bcrypt";
+
+dotenv.config();
 
 /**
  * ## ユーザーの変更処理
@@ -32,16 +44,28 @@ const userMutations = {
       githubURL = "";
     }
 
+    // パスワードをハッシュ化
+    const encryptedPassword = await bcrypt.hash(password, 10);
+
     try {
       // ユーザーオブジェクト生成
-      const createUser = new Users({
+      let createUser = new Users({
         name,
         jobType,
         email,
-        password,
+        password: encryptedPassword,
         spreadSheetID,
         githubURL,
       });
+      // トークンデータ
+      const TokenUserData = {
+        _id: createUser._id as string,
+      };
+
+      // ユーザーIDのトークン作成
+      const token = signJwtToken(TokenUserData);
+      // オブジェクトにトークン代入
+      createUser.token = token;
       const result = await createUser.save();
 
       // ユーザー技術情報オブジェクトを生成
@@ -68,6 +92,7 @@ const userMutations = {
             areaId: tree.techArea_id,
             treeName: tree.name,
             achievementRate: 0,
+            color: tree.color,
             branches: techBranches,
           });
           techLeafInfo.myForest.push(userTechInfo);
@@ -106,6 +131,12 @@ const userMutations = {
           specSheetId: createdSpecSheet._id,
         });
 
+        // ユーザーの持つURLオブジェクトを作成
+        const createUserUrls = new UserUrls({
+          user_urls: [],
+          userId: createUser._id,
+        });
+
         // ユーザーの開発経験(3つ)のオブジェクト作成・保存
         for (let i = 0; i < 3; i++) {
           const createdSpecProjectSheet = new SpecProjectSheet({
@@ -128,6 +159,8 @@ const userMutations = {
 
         // ユーザーの技術オブジェクトを保存
         await createdTechLeafs.save();
+        // ユーザーのURLオブジェクトを保存
+        await createUserUrls.save();
         // スペックシート関連のオブジェクト保存
         await createdSpecSheet.save();
         await createdSpecUserInfoSheet.save();
@@ -149,17 +182,53 @@ const userMutations = {
   userLogin: async (_: any, { user }: UserLoginType) => {
     const { email, password } = user;
     try {
-      const result = await Users.findOne({
+      let existUser = await Users.findOne({
         email: email,
-        password: password,
       });
-      if (result === null) {
+
+      // 当てはまるユーザーが存在したらtokenを再発行
+      if (existUser && (await bcrypt.compare(password, existUser.password))) {
+        // トークンデータ
+        const TokenUserData = {
+          _id: existUser._id as string,
+        };
+        const token = signJwtToken(TokenUserData);
+        existUser.token = token;
+        await existUser.save();
+        const userToken = { token: token };
+        return success(userToken, "ログインできました。");
+      } else {
         return error("該当のユーザーが見つかりませんでした");
       }
-
-      return success(result, "ログインできました。");
     } catch {
       return error("ログインできませんでした。");
+    }
+  },
+  /**
+   * 自動ログイン用の処理.
+   *
+   * @param userToken - ユーザートークン
+   * @returns ステータス
+   */
+  userAutoLogin: async (_: any, { userToken }: UserToken) => {
+    try {
+      const userId = verifyJwtToken(userToken);
+      const exitsUser = await Users.findById({ _id: userId });
+      if (exitsUser._id) {
+        return success(null, "ユーザーが見つかりました。");
+      } else {
+        return error("ユーザーが見つかりませんでした。");
+      }
+    } catch (e) {
+      // jwtのエラーハンドリング
+      if (e instanceof jwt.TokenExpiredError) {
+        console.error("トークンの有効期限が切れています。", e);
+      } else if (e instanceof jwt.JsonWebTokenError) {
+        console.error("トークンが不正です。", e);
+      } else {
+        console.error("トークンの検証でその他のエラーが発生しました。", e);
+      }
+      throw e;
     }
   },
   /**
@@ -167,10 +236,19 @@ const userMutations = {
    *
    * @param user - 更新ユーザー情報
    * @returns ステータス 更新ユーザーの情報
+   * `https://lunchkus.net/user/${}`
    */
   updateUser: async (_: any, { user }: UserUpdateType) => {
-    const { userId, name, jobType, email, password, spreadSheetID, githubURL } =
-      user;
+    const {
+      userToken,
+      name,
+      jobType,
+      email,
+      password,
+      spreadSheetID,
+      githubURL,
+    } = user;
+    const userId = verifyJwtToken(userToken);
     try {
       const result = await Users.findOneAndUpdate(
         { _id: userId },

@@ -3,19 +3,21 @@ import mongoose from "mongoose";
 /**
  *  ユーザースキーマ.
  *  @remarks
+ * getUserでエラーが出るため、_idはコメントアウトした
  *  - ユーザー名 : string
  *  - 職業タイプ : string
  *  - スプレッドシートURL : string
  *  - GithubURL : string
  */
 const UserSchema = new mongoose.Schema({
-  _id: { type: String, required: true },
+  // _id: { type: String, required: true },
   name: { type: String, required: true },
   jobType: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   spreadSheetID: { type: String },
   githubURL: { type: String },
+  token: { type: String },
 });
 
 /**
@@ -49,7 +51,7 @@ const UserUrlsSchema = new mongoose.Schema({
  */
 const UseTodoSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String },
   startedAt: { type: String, required: true },
   finishedAt: { type: String, required: true },
   isStatus: { type: Boolean, required: true },
@@ -68,10 +70,11 @@ const UseTodoSchema = new mongoose.Schema({
 const UserLeafsSchema = new mongoose.Schema({
   myForest: [
     {
-      treeId: { type: String, required: true },
+      treeId: { type: mongoose.Types.ObjectId, required: true },
       areaId: { type: String, required: true },
       treeName: { type: String, required: true },
       achievementRate: { type: Number, required: true },
+      color: { type: String, required: true },
       branches: [
         {
           name: { type: String },

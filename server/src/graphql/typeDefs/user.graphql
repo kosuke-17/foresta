@@ -7,9 +7,14 @@ type User {
   password: String!
   spreadSheetID: String!
   githubURL: String!
+  token: String!
   userLeafs: UserLeafs!
   userUrls: UserUrls!
   portfolio: [Portfolio]!
+}
+
+type Token {
+  token: String!
 }
 
 ################
@@ -25,7 +30,7 @@ input UserCreateInput {
   githubURL: String!
 }
 input UserUpdateInput {
-  userId: String!
+  userToken: String!
   name: String!
   jobType: String!
   email: String
@@ -46,5 +51,15 @@ input UserLoginInput {
 type ResponseUser {
   status: String!
   node: User!
+  msg: String!
+}
+type ResponseToken {
+  status: String!
+  node: Token!
+  msg: String!
+}
+
+type ResStatus {
+  status: String!
   msg: String!
 }
