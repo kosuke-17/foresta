@@ -5,12 +5,13 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { Box, Wrap, WrapItem } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { GithubLeafType } from "../../../types/types";
 import styled from "styled-components";
 
 //GithubAPI用のクエリー
+//userはキャッシュからID取得してそれぞれのGithubIDを記載
 const query = gql`
   {
     user(login: "hiroki-yama-1118") {
@@ -83,31 +84,36 @@ export const GithubLeaf = () => {
             .totalContributions}
         回
       </Box>
-      <Box>
-        {getData &&
-          getData.user.contributionsCollection.contributionCalendar.weeks.map(
-            (githubWeeks, index) => (
-              <div key={index}>
-                {githubWeeks.contributionDays.map((data) => (
-                  <div key={data.date}>
-                    <Wrap>
-                      {data.date}：コミット数
-                      {data.contributionCount}
-                      <Box w="20px" h="20px" bg={data.color} />
-                    </Wrap>
+      <Box mx="50px" my="20px">
+        <Box w="20px">
+          <Flex>
+            {getData &&
+              getData.user.contributionsCollection.contributionCalendar.weeks.map(
+                (githubWeeks, index) => (
+                  <div key={index}>
+                    <_container>
+                      {githubWeeks.contributionDays.map((data) => (
+                        <div key={data.date}>
+                          <Box
+                            w="20px"
+                            h="20px"
+                            bg={data.color}
+                            m="2px"
+                            rounded="base"
+                          />
+                        </div>
+                      ))}
+                    </_container>
                   </div>
-                ))}
-              </div>
-            ),
-          )}
+                ),
+              )}
+          </Flex>
+        </Box>
       </Box>
     </>
   );
 };
 
-// const _square = styled.span`
-//   width: 200px;
-//   height: 200px;
-//   background: #0099cc;
-//   color: #0099cc;
-// `;
+const _container = styled.span`
+  flex-direction: column;
+`;
