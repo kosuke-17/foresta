@@ -10,6 +10,7 @@ import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 import { UrlList } from "../../molucules/aboutMePublic/UrlList";
 import { MenuBar } from "./MenuBar";
+import { SpreadMenuBar } from "./SpreadMenuBar";
 
 /**
  * AboutMeパブリックゾーン.
@@ -44,8 +45,9 @@ export const Public: FC = memo(() => {
       <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">
         {user && (
           <>
-            <Flex justifyContent="right">
+            <Flex justifyContent="right" gap={3}>
               <MenuBar />
+              <SpreadMenuBar />
             </Flex>
             <_User>
               <Flex justifyContent="center">
