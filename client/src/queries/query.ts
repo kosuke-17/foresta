@@ -306,7 +306,7 @@ gql`
 //   }
 // `;
 
-// ログイン処理
+// 手動ログイン処理
 gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
@@ -315,6 +315,16 @@ gql`
       node {
         token
       }
+    }
+  }
+`;
+
+// 自動ログイン処理
+gql`
+  mutation userAutoLogin($userToken: String!) {
+    userAutoLogin(userToken: $userToken) {
+      status
+      msg
     }
   }
 `;
@@ -331,11 +341,13 @@ gql`
 
 // 特定のユーザーが保持している技術を全件取得
 gql`
-  query GetUserLeafsById($userId: String!) {
-    getUserLeafsById(userId: $userId) {
+  query GetUserLeafsById($userToken: String!) {
+    getUserLeafsById(userToken: $userToken) {
       status
+      msg
       node {
         id
+        userId
         myForest {
           id
           treeId
@@ -374,11 +386,14 @@ gql`
 gql`
   query GetAllUser {
     getAllUser {
+      id
       name
       jobType
       email
       password
+      spreadSheetID
       githubURL
+      token
     }
   }
 `;
