@@ -67,7 +67,7 @@ export const GithubLeaf = () => {
   //データをメソッドとして取得してきて、useEffectで更新させる
   useEffect(() => {
     (async () => {
-      const { data, error, loading } = await client.query({
+      const { data } = await client.query({
         query: query,
       });
       setGetData(data);
@@ -100,6 +100,9 @@ export const GithubLeaf = () => {
                             bg={data.color}
                             m="2px"
                             rounded="base"
+                            _hover={{
+                              background: "white",
+                            }}
                           />
                         </div>
                       ))}
