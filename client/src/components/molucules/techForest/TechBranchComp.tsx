@@ -1,5 +1,4 @@
 import { FC, memo } from "react";
-import { TechBranch } from "../../../types/types";
 import { TechLeafComp } from "../../atoms/techForest/TechLeafComp";
 import {
   Box,
@@ -13,14 +12,15 @@ import {
   AccordionIcon,
 } from "@chakra-ui/react";
 
-export const TechBranchComp: FC<TechBranch> = memo(
-  ({
-    treeData,
-    indexOfTreeData,
-    techBranchData,
-    indexOfBranchData,
-    cheakedLeaf,
-  }) => {
+type Prpps = {
+  treeData: any;
+  indexOfTreeData: number;
+  techBranchText: string;
+  indexOfBranchData: number;
+};
+
+export const TechBranchComp: FC<Prpps> = memo(
+  ({ treeData, indexOfTreeData, techBranchText, indexOfBranchData }) => {
     return (
       <HStack key={indexOfBranchData}>
         <Accordion defaultIndex={[0]} allowMultiple>
@@ -28,7 +28,7 @@ export const TechBranchComp: FC<TechBranch> = memo(
             <AccordionButton>
               <Box flex="1" textAlign="left">
                 <Text color="gray.600" fontSize="2xl">
-                  {techBranchData.name}
+                  {techBranchText}
                 </Text>
               </Box>
               <AccordionIcon />
@@ -44,12 +44,11 @@ export const TechBranchComp: FC<TechBranch> = memo(
                       <TechLeafComp
                         key={indexOfLeafData}
                         treeData={treeData}
-                        techLeafData={techLeafData}
-                        techBranchData={techBranchData}
+                        techLeafTextData={techLeafData.name}
+                        techLeafStatus={techLeafData.isStatus}
                         indexOfTreeData={indexOfTreeData}
                         indexOfBranchData={indexOfBranchData}
                         indexOfLeafData={indexOfLeafData}
-                        cheakedLeaf={cheakedLeaf}
                       />
                     );
                   })}

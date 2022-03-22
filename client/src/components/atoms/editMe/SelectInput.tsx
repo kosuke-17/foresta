@@ -1,5 +1,6 @@
 import { FC, memo } from "react";
-import { Select } from "@chakra-ui/react";
+import { Select, Flex } from "@chakra-ui/react";
+import styled from "styled-components";
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,8 +18,10 @@ export const SelectInput: FC<Props> = memo(
   ({ registers, errorMessage, options, label, placeholder }) => {
     return (
       <>
-        {errorMessage}
-        {label}
+        <Flex gap={3}>
+          <_LabelItem> {label}</_LabelItem>
+          <_ErrorMessage>{errorMessage}</_ErrorMessage>
+        </Flex>
         <Select {...registers} placeholder={placeholder}>
           {options.map((optionItem, index) => (
             <option key={index} value={optionItem}>
@@ -30,3 +33,14 @@ export const SelectInput: FC<Props> = memo(
     );
   },
 );
+
+const _LabelItem = styled.div`
+  text-align: left;
+  font-weight: bold;
+`;
+
+const _ErrorMessage = styled.div`
+  color: red;
+  height: 10px;
+  text-align: left;
+`;
