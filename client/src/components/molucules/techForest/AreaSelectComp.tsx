@@ -23,7 +23,7 @@ export const AreaSelectComp: FC<Props> = ({ setAreaId }) => {
             return (
               <AreaSelectButton
                 key={indexOfTechArea}
-                techAreaData={techAreaData}
+                techAreaTextData={techAreaData.name}
                 indexOfTechArea={indexOfTechArea}
                 changeArea={changeArea}
               />
