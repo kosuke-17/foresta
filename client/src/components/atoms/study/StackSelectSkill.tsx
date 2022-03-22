@@ -14,7 +14,14 @@ type Props = {
 export const StackSelectSkill: FC<Props> = memo((props) => {
   const { label, registers } = props;
 
-  const { skillTagIdListDatas } = useStackList();
+  const { skillTagIdListDatas, skillTagIdLoading, skillTagIdError } =
+    useStackList();
+  if (skillTagIdLoading) {
+    <p>Loading...</p>;
+  }
+  if (skillTagIdError) {
+    <p>error</p>;
+  }
 
   return (
     <>
