@@ -5,8 +5,10 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { Box, Wrap, WrapItem } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { GithubLeafType } from "../../../types/types";
+import styled from "styled-components";
 
 //GithubAPI用のクエリー
 const query = gql`
@@ -73,9 +75,39 @@ export const GithubLeaf = () => {
 
   return (
     <>
-      {getData &&
-        getData.user.contributionsCollection.contributionCalendar
-          .totalContributions}
+      <Box>GithubID :{getData && getData.user.login}</Box>
+      <Box>
+        年間のコミット数：
+        {getData &&
+          getData.user.contributionsCollection.contributionCalendar
+            .totalContributions}
+        回
+      </Box>
+      <Box>
+        {getData &&
+          getData.user.contributionsCollection.contributionCalendar.weeks.map(
+            (githubWeeks, index) => (
+              <div key={index}>
+                {githubWeeks.contributionDays.map((data) => (
+                  <div key={data.date}>
+                    <Wrap>
+                      {data.date}：コミット数
+                      {data.contributionCount}
+                      <Box w="20px" h="20px" bg={data.color} />
+                    </Wrap>
+                  </div>
+                ))}
+              </div>
+            ),
+          )}
+      </Box>
     </>
   );
 };
+
+// const _square = styled.span`
+//   width: 200px;
+//   height: 200px;
+//   background: #0099cc;
+//   color: #0099cc;
+// `;
