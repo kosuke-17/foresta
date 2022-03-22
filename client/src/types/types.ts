@@ -99,13 +99,17 @@ export type GithubLeafType = {
     contributionsCollection: {
       contributionCalendar: {
         totalContributions: number;
-        weeks: {
-          contributionDays: {
-            contributionCount: number;
-            date: string;
-            color: string;
-          };
-        };
+        weeks: [
+          {
+            contributionDays: [
+              {
+                contributionCount: number;
+                date: string;
+                color: string;
+              },
+            ];
+          },
+        ];
       };
     };
   };
