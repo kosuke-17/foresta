@@ -1,5 +1,8 @@
 import { useCookies } from "react-cookie";
-import { useGetAllStudyStackQuery } from "../../types/generated/graphql";
+import {
+  useGetAllStudyStackQuery,
+  useGetAllTechTreeQuery,
+} from "../../types/generated/graphql";
 
 //学習リスト表示用の型定義
 export type StackList = {
@@ -28,6 +31,9 @@ export const useStackList = () => {
     //クッキーからユーザーID取得
     variables: { userId: cookies.ForestaID },
   });
+
+  //テックツリーから技術リストデータを取得
+  const { data: skillTagIdListDatas } = useGetAllTechTreeQuery();
 
   //学習リストの詳細内容一つ一つを格納する新しい配列を作成
   const timeStackDatas = new Array<number>(); //学習時間
@@ -87,5 +93,5 @@ export const useStackList = () => {
     }
   }
 
-  return { error, loading, data, stackSumList, cookies };
+  return { error, loading, data, stackSumList, cookies, skillTagIdListDatas };
 };

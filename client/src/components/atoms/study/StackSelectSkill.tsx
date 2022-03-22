@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
 import { FormLabel, Select } from "@chakra-ui/react";
-import { useGetAllTechTreeQuery } from "../../../types/generated/graphql";
+import { useStackList } from "../../../hooks/study/useStackList";
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,15 +12,16 @@ type Props = {
  * 学習記録用技術リストselectboxコンポ―ネント.
  */
 export const StackSelectSkill: FC<Props> = memo((props) => {
-  const { data } = useGetAllTechTreeQuery();
   const { label, registers } = props;
+
+  const { skillTagIdListDatas } = useStackList();
 
   return (
     <>
       <FormLabel>{label}</FormLabel>
       <Select {...registers}>
-        {data &&
-          data.getAllTechTree.map((skillTag) => (
+        {skillTagIdListDatas &&
+          skillTagIdListDatas.getAllTechTree.map((skillTag) => (
             <option key={skillTag.id} value={skillTag.name}>
               {skillTag.name}
             </option>
