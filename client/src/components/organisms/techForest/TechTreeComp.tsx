@@ -26,8 +26,8 @@ export const TechTreeComp: FC<Props> = memo(({ treeData }) => {
               >
                 <SimpleGrid columns={1} spacing={3}>
                   <ProgressComp
-                    TreeName={techTreeData.name}
-                    AchievementRate={techTreeData.AchievementRate}
+                    TreeName={techTreeData.treeName}
+                    AchievementRate={techTreeData.achievementRate}
                   />
                   {treeData?.[indexOfTreeData].branches &&
                     treeData?.[indexOfTreeData].branches.map(
