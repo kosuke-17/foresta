@@ -71,6 +71,7 @@ export const TodoEditForm: FC<Props> = memo((props) => {
               focusBorderColor="green.200"
               bg="white"
               {...register("title")}
+              placeholder="必須・50文字以内"
             />
             <Box textColor="red" fontSize="xs">
               {errors.title?.message}

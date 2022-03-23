@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
 
-import { useUpdateTodoMutation, useAddTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
+import { useUpdateTodoMutation, useAddTodoMutation } from "../../types/generated/graphql";
 import type { TodoData, TodoModalModeType } from "../../types/types";
 import { TodoModalContext } from "../../Providers/TodoModalProvider";
 
