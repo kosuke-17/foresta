@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useCookies } from "react-cookie";
 

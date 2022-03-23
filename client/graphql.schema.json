@@ -758,7 +758,7 @@
             "description": "スプレッドシートの自己PRなどを更新.",
             "args": [
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -923,7 +923,7 @@
             "description": "スプレッドシートのポートフォリオURLを更新.",
             "args": [
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -972,7 +972,7 @@
                 "deprecationReason": null
               },
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1005,7 +1005,7 @@
             "description": "スプレッドシートのスキル要約を更新.",
             "args": [
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1038,7 +1038,7 @@
             "description": "スプレッドシートの基本情報を更新.",
             "args": [
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1159,6 +1159,39 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "ResponseUser",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userAutoLogin",
+            "description": "自動ログインのための処理.",
+            "args": [
+              {
+                "name": "userToken",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ResStatus",
                 "ofType": null
               }
             },
@@ -1450,14 +1483,14 @@
             "deprecationReason": null
           },
           {
-            "name": "userId",
+            "name": "userToken",
             "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "ID",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -1607,7 +1640,7 @@
             "description": "ユーザーのTodo一覧情報を取得.",
             "args": [
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1736,7 +1769,7 @@
             "description": "ユーザーのTodo一覧情報を取得.",
             "args": [
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1958,7 +1991,7 @@
             "description": "ユーザーIDに紐づくポートフォリオ情報を取得.",
             "args": [
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1991,7 +2024,7 @@
             "description": "ユーザーIDに紐づくスペックシート情報を取得.",
             "args": [
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -2024,7 +2057,7 @@
             "description": "スプレッドシートを取得",
             "args": [
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -2123,7 +2156,7 @@
             "description": "ユーザーidに紐づくユーザー情報を取得.",
             "args": [
               {
-                "name": "_id",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -2156,7 +2189,7 @@
             "description": "エリアidに紐づく技術情報を取得.",
             "args": [
               {
-                "name": "userId",
+                "name": "userToken",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -2215,6 +2248,49 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ResStatus",
+        "description": null,
+        "fields": [
+          {
+            "name": "msg",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4747,14 +4823,14 @@
             "deprecationReason": null
           },
           {
-            "name": "userId",
+            "name": "userToken",
             "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "ID",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -5532,14 +5608,14 @@
             "deprecationReason": null
           },
           {
-            "name": "userId",
+            "name": "userToken",
             "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "ID",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -5632,22 +5708,6 @@
           },
           {
             "name": "todoId",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "userId",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -5876,6 +5936,22 @@
           },
           {
             "name": "spreadSheetID",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "token",
             "description": null,
             "args": [],
             "type": {
@@ -6331,7 +6407,7 @@
             "deprecationReason": null
           },
           {
-            "name": "userId",
+            "name": "userToken",
             "description": null,
             "type": {
               "kind": "NON_NULL",

@@ -5,7 +5,7 @@ import { PasswordInput } from "../../atoms/auth/PasswordInput";
 import { LoginButton } from "../../atoms/auth/LoginButton";
 import { Center, Box, SimpleGrid } from "@chakra-ui/react";
 
-const LoginForm: FC = memo(() => {
+export const LoginForm: FC = memo(() => {
   // メールアドレス
   const [mailAddress, setMailAddress] = useState<string>("");
   // テキストボックス入力時に入力内容をStateに設定
@@ -48,5 +48,3 @@ const LoginForm: FC = memo(() => {
     </div>
   );
 });
-
-export default LoginForm;
