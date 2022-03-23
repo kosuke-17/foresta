@@ -75,22 +75,14 @@ export const GithubLeaf = memo(() => {
 
   //取得したGithubデータを表示用配列に格納
   const [getData, setGetData] = useState<GithubLeafType>();
-  let githubUrl = "";
 
-  //GithubURLからIDを取得する
-  if (getGithubUrl) {
-    //URLからcom/以降の文字を取得
-    const index = getGithubUrl?.indexOf("com/");
-    const preUrl = getGithubUrl?.substring(index);
-    //com/を削除する
-    githubUrl = preUrl.slice(4);
-  }
+
   //データをメソッドとして取得してきて、useEffectで更新させる
   useEffect(() => {
     (async () => {
       console.log(getGithubUrl);
       const { data } = await client.query({
-        variables: { githubUrl: githubUrl },
+        variables: { githubUrl: getGithubUrl },
         query: query,
       });
       setGetData(data);
