@@ -17,7 +17,7 @@ export const SpecPr: FC = memo(() => {
    */
   const { data, loading, error } = useGetSheetPrByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const prData = String(data?.pr.node.selfIntro);

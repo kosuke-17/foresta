@@ -19,7 +19,7 @@ export const OtherData: FC = memo(() => {
    */
   const { data, loading, error } = useGetSheetOtherByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
 

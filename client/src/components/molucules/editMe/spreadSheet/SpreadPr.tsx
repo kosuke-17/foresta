@@ -34,7 +34,7 @@ export const SpreadPr: FC<Props> = memo(({ onClose, setMenuItem }) => {
   const [updateSpeadSelfPrMutation, { loading, error }] =
     useUpdateSpeadSelfPrMutation({
       variables: {
-        userId: cookies.ForestaID,
+        userToken: cookies.ForestaID,
       },
     });
 

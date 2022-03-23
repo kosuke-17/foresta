@@ -57,7 +57,7 @@ export const useUserInfo = (
   const [cookies] = useCookies();
   const { data: userData } = useGetUserByIdQuery({
     variables: {
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const user = userData?.user.node;

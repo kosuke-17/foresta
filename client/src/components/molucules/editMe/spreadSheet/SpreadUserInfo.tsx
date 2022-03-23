@@ -34,7 +34,7 @@ export const SpreadUserInfo: FC<Props> = memo(({ onClose, setMenuItem }) => {
   const [updateSpreadUserInfoMutation, { loading, error }] =
     useUpdateSpreadUserInfoMutation({
       variables: {
-        userId: cookies.ForestaID,
+        userToken: cookies.ForestaID,
       },
     });
 
