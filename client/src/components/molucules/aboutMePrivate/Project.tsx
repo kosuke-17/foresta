@@ -34,7 +34,7 @@ export const Project: FC = memo(() => {
    */
   const { data, loading, error } = useGetSheetProjectByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const projectData = data?.projects.node.project as Array<SpecProjectSheet>;

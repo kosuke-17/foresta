@@ -1,4 +1,4 @@
-import { memo, FC, Dispatch, SetStateAction, useState } from "react";
+import { memo, FC, Dispatch, SetStateAction } from "react";
 import { Button, Spinner, Flex } from "@chakra-ui/react";
 import styled from "styled-components";
 
@@ -9,7 +9,7 @@ import {
   SpecProjectSheet,
   useGetAllSkillQuery,
 } from "../../../../types/generated/graphql";
-import { CheckInput } from "../../../atoms/editMe/CheckInput";
+import { CheckBoxInput } from "../../../atoms/editMe/CheckBoxInput";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
@@ -107,7 +107,7 @@ export const SpecPjItem: FC<Props> = memo(
 
         {/* 担当工程 */}
         <_TextItem>
-          <CheckInput
+          <CheckBoxInput
             label="担当工程"
             registers={register("devRoles")}
             array={rol}
@@ -126,7 +126,7 @@ export const SpecPjItem: FC<Props> = memo(
 
         {/* OS */}
         <_TextItem>
-          <CheckInput
+          <CheckBoxInput
             label="動作環境（OS）"
             registers={register("operationEnvs")}
             array={os}
@@ -135,7 +135,7 @@ export const SpecPjItem: FC<Props> = memo(
 
         {/* 言語 */}
         <_TextItem>
-          <CheckInput
+          <CheckBoxInput
             label="言語"
             registers={register("languages")}
             array={lang}
@@ -144,7 +144,7 @@ export const SpecPjItem: FC<Props> = memo(
 
         {/* フレームワーク */}
         <_TextItem>
-          <CheckInput
+          <CheckBoxInput
             label="フレームワーク"
             registers={register("frameworks")}
             array={frame}
@@ -153,7 +153,7 @@ export const SpecPjItem: FC<Props> = memo(
 
         {/* ライブラリ */}
         <_TextItem>
-          <CheckInput
+          <CheckBoxInput
             label="ライブラリ"
             registers={register("libraries")}
             array={lib}
@@ -162,7 +162,7 @@ export const SpecPjItem: FC<Props> = memo(
 
         {/* ツール */}
         <_TextItem>
-          <CheckInput
+          <CheckBoxInput
             label="ツール,その他"
             registers={register("otherTools")}
             array={other}

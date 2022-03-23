@@ -17,7 +17,7 @@ export const UrlList: FC = memo(() => {
    */
   const { data, loading, error } = useGetUrlByIdQuery({
     variables: {
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const urlData = data?.urls.node.userUrls.user_urls as Array<Url>;

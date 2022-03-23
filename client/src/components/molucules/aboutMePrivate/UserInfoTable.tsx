@@ -30,7 +30,7 @@ export const UserInfoTable: FC = memo(() => {
    */
   const { data, loading, error } = useGetSheetByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const userData = data?.user.node.userInfo as SpecUserInfoSheet;

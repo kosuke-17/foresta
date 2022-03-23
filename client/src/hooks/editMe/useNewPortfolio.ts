@@ -45,7 +45,7 @@ export const useNewPortfolio = (
 
   const { data } = useGetSpreadSheetIdQuery({
     variables: {
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
 

@@ -1,5 +1,5 @@
 import { FC, memo } from "react";
-import { Checkbox, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import styled from "styled-components";
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 /**
  * チェックボックスコンポ―ネント.
  */
-export const CheckInput: FC<Props> = memo(
+export const CheckBoxInput: FC<Props> = memo(
   ({ registers, errorMessage, label, array }) => {
     return (
       <>

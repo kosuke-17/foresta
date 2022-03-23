@@ -55,7 +55,7 @@ export const useSpecTechInfo = (
 
   const { data: skillData } = useGetSheetSkillByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   // バリデーション機能を呼び出し

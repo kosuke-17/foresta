@@ -21,7 +21,7 @@ export const SetUp: FC<Props> = memo(({ onClose, setMenuItem }) => {
    */
   const { data } = useGetSpreadSheetIdQuery({
     variables: {
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
 

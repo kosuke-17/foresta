@@ -23,7 +23,7 @@ export const Public: FC = memo(() => {
    * @remarks 取得情報:名前、職種、GitHub
    */
   const { loading, error, data } = useGetUserByIdQuery({
-    variables: { id: cookies.ForestaID },
+    variables: { userToken: cookies.ForestaID },
   });
   const user = data?.user.node;
 

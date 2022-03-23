@@ -27,8 +27,7 @@ export const UserUrls: FC<Props> = memo(({ setMenuItem, onClose }) => {
 
   const { data, loading, error } = useGetUserUrlByIdQuery({
     variables: {
-      // id: "6226adfa85d7777719aa5a96", //nezu
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
 

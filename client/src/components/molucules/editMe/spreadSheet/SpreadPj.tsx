@@ -32,7 +32,7 @@ export const SpreadPj: FC<Props> = memo(({ onClose, setMenuItem }) => {
    */
   const { data } = useGetPjNameByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const projectData = data?.pj.node.project as Array<{ name: string }>;

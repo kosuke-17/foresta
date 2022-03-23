@@ -1521,6 +1521,17 @@ export type RemoveStudyStackMutation = {
   removeStudyStack: { __typename?: "ResponseStudyStack"; status: string };
 };
 
+export type GetStudyColorQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetStudyColorQuery = {
+  __typename?: "Query";
+  getAllTechTree: Array<{
+    __typename?: "TechTree";
+    name: string;
+    color: string;
+  }>;
+};
+
 export type GetAllTodoByUserQueryVariables = Exact<{
   userId: Scalars["String"];
 }>;
@@ -3951,6 +3962,64 @@ export type RemoveStudyStackMutationResult =
 export type RemoveStudyStackMutationOptions = Apollo.BaseMutationOptions<
   RemoveStudyStackMutation,
   RemoveStudyStackMutationVariables
+>;
+export const GetStudyColorDocument = gql`
+  query GetStudyColor {
+    getAllTechTree {
+      name
+      color
+    }
+  }
+`;
+
+/**
+ * __useGetStudyColorQuery__
+ *
+ * To run a query within a React component, call `useGetStudyColorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStudyColorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStudyColorQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetStudyColorQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetStudyColorQuery,
+    GetStudyColorQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetStudyColorQuery, GetStudyColorQueryVariables>(
+    GetStudyColorDocument,
+    options,
+  );
+}
+export function useGetStudyColorLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetStudyColorQuery,
+    GetStudyColorQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetStudyColorQuery, GetStudyColorQueryVariables>(
+    GetStudyColorDocument,
+    options,
+  );
+}
+export type GetStudyColorQueryHookResult = ReturnType<
+  typeof useGetStudyColorQuery
+>;
+export type GetStudyColorLazyQueryHookResult = ReturnType<
+  typeof useGetStudyColorLazyQuery
+>;
+export type GetStudyColorQueryResult = Apollo.QueryResult<
+  GetStudyColorQuery,
+  GetStudyColorQueryVariables
 >;
 export const GetAllTodoByUserDocument = gql`
   query GetAllTodoByUser($userId: String!) {

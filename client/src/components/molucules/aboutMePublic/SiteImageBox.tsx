@@ -18,7 +18,7 @@ export const SiteImageBox: FC = memo(() => {
   const [cookies] = useCookies();
   const { data, loading, error } = useGetUserPortfolioByIdQuery({
     variables: {
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const portfolioData = data?.portfolios.node.portfolio as Array<PortfolioType>;
