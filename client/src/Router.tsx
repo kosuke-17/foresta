@@ -8,11 +8,13 @@ import { Login } from "./container/templates/Login";
 import { Auth } from "./components/atoms/auth/Auth";
 import { TechForest } from "./container/templates/TechForest";
 import { EngineerList } from "./container/templates/EngineerList";
+import { Header } from "./components/_layout/Header";
 
 export const Router: React.VFC = () => {
   return (
     <>
       <BrowserRouter>
+        <Header />
         {/* cookieに値が入っていない場合(ログインしてない場合は)ログイン画面に遷移する。 */}
         {/* ログイン画面を表示させるには、下記のように<Route>を<Route>で囲む */}
         <Routes>
