@@ -34,7 +34,7 @@ export const SpreadTech: FC<Props> = memo(({ onClose, setMenuItem }) => {
   const [updateSpreadTechInfoMutation, { loading, error }] =
     useUpdateSpreadTechInfoMutation({
       variables: {
-        userId: cookies.ForestaID,
+        userToken: cookies.ForestaID,
       },
     });
 

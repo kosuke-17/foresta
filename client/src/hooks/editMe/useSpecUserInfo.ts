@@ -89,7 +89,7 @@ export const useSpecUserInfo = (
    */
   const { data: userData } = useGetSheetByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
 

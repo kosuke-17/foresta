@@ -34,7 +34,7 @@ export const SpreadAll: FC<Props> = memo(({ onClose, setMenuItem }) => {
   const [updateSpreadSheetMutation, { loading, error }] =
     useUpdateSpreadSheetMutation({
       variables: {
-        userId: cookies.ForestaID,
+        userToken: cookies.ForestaID,
       },
     });
 

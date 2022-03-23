@@ -28,7 +28,7 @@ export const SkillTable: FC = memo(() => {
    */
   const { data, loading, error } = useGetSheetSkillByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const skillData = data?.skills.node.techInfo as SpecTechInfoSheet;

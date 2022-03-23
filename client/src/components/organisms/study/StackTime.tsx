@@ -8,13 +8,17 @@ import { ChartOptions } from "chart.js";
 //日付を使うため
 import "chartjs-adapter-date-fns";
 import { useStackList } from "../../../hooks/study/useStackList";
+import { usePercentDate } from "../../../hooks/study/usePercentDate";
+import { usePercentMonth } from "../../../hooks/study/usePercentMonth";
 import { subDays, subMonths } from "date-fns";
 import { DayStackTimeFig } from "../../molucules/stackList/DayStackTimeFig";
 import { MonthStackTimeFig } from "../../molucules/stackList/MonthStackTimeFig";
+import { StudyStack } from "../../../types/generated/graphql";
 
 export const StackTime = memo(() => {
   //学習リストのデータを取得
   const { data } = useStackList();
+  const studyData = data?.getAllStudyStack.node as Array<StudyStack>;
 
   //色サンプル（背景）
   const backgroundColors = [
@@ -188,11 +192,21 @@ export const StackTime = memo(() => {
     },
   };
 
+  //%表示用hooks使用
+  const { pieMonthData, monthPercentOptions } = usePercentMonth(
+    studyData,
+    dateValueMonth,
+  );
+  const { pieDateData, dayPercentOptions } = usePercentDate(
+    studyData,
+    dateValueDay,
+  );
+
   return (
     <>
-      <Box width={600}>
+      <Box width="100%">
         <Stack>
-          <Flex>
+          <Flex justifyContent="center" gap={5} my={5}>
             <Button colorScheme="green" onClick={monthBtn}>
               月別
             </Button>
@@ -201,7 +215,7 @@ export const StackTime = memo(() => {
             </Button>
           </Flex>
 
-          <Flex>
+          <Flex justifyContent="center">
             <Box>
               {isDay ? (
                 <DayStackTimeFig
@@ -210,6 +224,8 @@ export const StackTime = memo(() => {
                   addDateBtn={addDateBtn}
                   chartDatas={chartDatas}
                   dayOptions={dayOptions}
+                  pieDateData={pieDateData}
+                  dayPercentOptions={dayPercentOptions}
                 />
               ) : (
                 <MonthStackTimeFig
@@ -218,6 +234,8 @@ export const StackTime = memo(() => {
                   addDateBtn={addDateBtn}
                   chartDatas={chartDatas}
                   monthOptions={monthOptions}
+                  pieMonthData={pieMonthData}
+                  monthPercentOptions={monthPercentOptions}
                 />
               )}
             </Box>
