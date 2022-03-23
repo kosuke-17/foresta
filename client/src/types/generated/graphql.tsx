@@ -24,32 +24,27 @@ export type Scalars = {
 };
 
 export type CreatedTechArea = {
-  __typename?: "CreatedTechArea";
   node: TechArea;
   status: Scalars["String"];
 };
 
 export type CreatedTechBranch = {
-  __typename?: "CreatedTechBranch";
   node: TechBranch;
   status: Scalars["String"];
 };
 
 export type CreatedTechLeaf = {
-  __typename?: "CreatedTechLeaf";
   node: TechLeaf;
   status: Scalars["String"];
 };
 
 export type CreatedTechTree = {
-  __typename?: "CreatedTechTree";
   node: TechTree;
   status: Scalars["String"];
 };
 
 /** データを変更する */
 export type Mutation = {
-  __typename?: "Mutation";
   /** ユーザーの学習記録を追加. */
   addStudyStack: ResponseStudyStack;
   /** Todoを追加. */
@@ -261,7 +256,6 @@ export type MutationUserLoginArgs = {
 };
 
 export type Portfolio = {
-  __typename?: "Portfolio";
   description: Scalars["String"];
   id: Scalars["ID"];
   img: Scalars["String"];
@@ -293,7 +287,6 @@ export type PortfolioUpdateInput = {
 
 /** データを取得する */
 export type Query = {
-  __typename?: "Query";
   /** スキル取得. */
   getAllSkill: Array<Skill>;
   /** ユーザーのTodo一覧情報を取得. */
@@ -404,116 +397,99 @@ export type QueryGetUserLeafsByIdArgs = {
 };
 
 export type Res = {
-  __typename?: "Res";
   msg?: Maybe<Scalars["String"]>;
   status?: Maybe<Scalars["String"]>;
 };
 
 export type ResStatus = {
-  __typename?: "ResStatus";
   msg: Scalars["String"];
   status: Scalars["String"];
 };
 
 export type ResponsePortfolio = {
-  __typename?: "ResponsePortfolio";
   msg?: Maybe<Scalars["String"]>;
   node: Portfolio;
   status: Scalars["String"];
 };
 
 export type ResponseSpecProject = {
-  __typename?: "ResponseSpecProject";
   msg?: Maybe<Scalars["String"]>;
   node: SpecProjectSheet;
   status: Scalars["String"];
 };
 
 export type ResponseSpecSheet = {
-  __typename?: "ResponseSpecSheet";
   msg?: Maybe<Scalars["String"]>;
   node: SpecSheet;
   status: Scalars["String"];
 };
 
 export type ResponseSpecTechInfo = {
-  __typename?: "ResponseSpecTechInfo";
   msg?: Maybe<Scalars["String"]>;
   node: SpecTechInfoSheet;
   status: Scalars["String"];
 };
 
 export type ResponseSpecUserInfo = {
-  __typename?: "ResponseSpecUserInfo";
   msg?: Maybe<Scalars["String"]>;
   node: SpecUserInfoSheet;
   status: Scalars["String"];
 };
 
 export type ResponseStudyStack = {
-  __typename?: "ResponseStudyStack";
   node: StudyStack;
   status: Scalars["String"];
 };
 
 export type ResponseStudyStackArr = {
-  __typename?: "ResponseStudyStackArr";
   msg: Scalars["String"];
   node: Array<StudyStack>;
   status: Scalars["String"];
 };
 
 export type ResponseTodo = {
-  __typename?: "ResponseTodo";
   msg: Scalars["String"];
   node: Todo;
   status: Scalars["String"];
 };
 
 export type ResponseTodoArr = {
-  __typename?: "ResponseTodoArr";
   msg: Scalars["String"];
   node: Array<Todo>;
   status: Scalars["String"];
 };
 
 export type ResponseToken = {
-  __typename?: "ResponseToken";
   msg: Scalars["String"];
   node: Token;
   status: Scalars["String"];
 };
 
 export type ResponseUser = {
-  __typename?: "ResponseUser";
   msg: Scalars["String"];
   node: User;
   status: Scalars["String"];
 };
 
 export type ResponseUserTechLeaf = {
-  __typename?: "ResponseUserTechLeaf";
   msg: Scalars["String"];
   node: UserLeafs;
   status: Scalars["String"];
 };
 
 export type ResponseUserUrls = {
-  __typename?: "ResponseUserUrls";
   msg: Scalars["String"];
   node: UserUrls;
   status: Scalars["String"];
 };
 
 export type Skill = {
-  __typename?: "Skill";
   data: Array<Scalars["String"]>;
   id: Scalars["ID"];
   name: Scalars["String"];
 };
 
 export type SpecProjectSheet = {
-  __typename?: "SpecProjectSheet";
   content: Scalars["String"];
   devRoles: Array<Scalars["String"]>;
   finishedAt: Scalars["Date"];
@@ -548,7 +524,6 @@ export type SpecProjectUpdateInput = {
 };
 
 export type SpecSheet = {
-  __typename?: "SpecSheet";
   certification: Scalars["String"];
   id: Scalars["ID"];
   prevJobs: Array<PrevJobsContent>;
@@ -569,7 +544,6 @@ export type SpecSheetUpdateInput = {
 };
 
 export type SpecTechInfoSheet = {
-  __typename?: "SpecTechInfoSheet";
   devRoles: Array<Scalars["String"]>;
   frameworks: Array<Scalars["String"]>;
   id: Scalars["ID"];
@@ -591,7 +565,6 @@ export type SpecTechInfoUpdateInput = {
 };
 
 export type SpecUserInfoSheet = {
-  __typename?: "SpecUserInfoSheet";
   age: Scalars["Int"];
   gender: Scalars["String"];
   id: Scalars["ID"];
@@ -617,7 +590,6 @@ export type SpecUserInfoUpdateInput = {
 };
 
 export type StudyStack = {
-  __typename?: "StudyStack";
   content: Scalars["String"];
   createdAt: Scalars["Date"];
   id: Scalars["ID"];
@@ -643,7 +615,6 @@ export type StudyStackUpdateInput = {
 };
 
 export type TechArea = {
-  __typename?: "TechArea";
   id: Scalars["ID"];
   name: Scalars["String"];
   techTrees: Array<TechTree>;
@@ -654,7 +625,6 @@ export type TechAreaCreateInput = {
 };
 
 export type TechBranch = {
-  __typename?: "TechBranch";
   id: Scalars["ID"];
   name: Scalars["String"];
   techLeafs: Array<TechLeaf>;
@@ -667,7 +637,6 @@ export type TechBranchCreateInput = {
 };
 
 export type TechLeaf = {
-  __typename?: "TechLeaf";
   id: Scalars["ID"];
   name: Scalars["String"];
   techBranch_id: Scalars["ID"];
@@ -679,7 +648,6 @@ export type TechLeafCreateInput = {
 };
 
 export type TechTree = {
-  __typename?: "TechTree";
   color: Scalars["String"];
   id: Scalars["ID"];
   name: Scalars["String"];
@@ -694,7 +662,6 @@ export type TechTreeCreateInput = {
 };
 
 export type Todo = {
-  __typename?: "Todo";
   description?: Maybe<Scalars["String"]>;
   finishedAt?: Maybe<Scalars["Date"]>;
   id: Scalars["ID"];
@@ -723,19 +690,16 @@ export type TodoUpdateInput = {
 };
 
 export type Token = {
-  __typename?: "Token";
   token: Scalars["String"];
 };
 
 export type Url = {
-  __typename?: "URL";
   id: Scalars["ID"];
   url: Scalars["String"];
   urlName: Scalars["String"];
 };
 
 export type User = {
-  __typename?: "User";
   email: Scalars["String"];
   githubURL: Scalars["String"];
   id: Scalars["ID"];
@@ -759,7 +723,6 @@ export type UserCreateInput = {
 };
 
 export type UserLeafs = {
-  __typename?: "UserLeafs";
   id: Scalars["ID"];
   myForest: Array<TreeInfo>;
   userId: Scalars["ID"];
@@ -789,7 +752,6 @@ export type UserUpdateInput = {
 };
 
 export type UserUrls = {
-  __typename?: "UserUrls";
   id: Scalars["ID"];
   userId: Scalars["ID"];
   user_urls: Array<Maybe<Url>>;
@@ -807,14 +769,12 @@ export type UserUrlsRemoveInput = {
 };
 
 export type BranchInfo = {
-  __typename?: "branchInfo";
   id: Scalars["ID"];
   leafs: Array<LeafInfo>;
   name: Scalars["String"];
 };
 
 export type LeafInfo = {
-  __typename?: "leafInfo";
   id: Scalars["String"];
   isStatus: Scalars["Boolean"];
   name: Scalars["String"];
@@ -823,12 +783,10 @@ export type LeafInfo = {
 };
 
 export type PrevJobsContent = {
-  __typename?: "prevJobsContent";
   content: Scalars["String"];
 };
 
 export type TreeInfo = {
-  __typename?: "treeInfo";
   achievementRate: Scalars["Int"];
   areaId: Scalars["ID"];
   branches: Array<BranchInfo>;
@@ -843,13 +801,10 @@ export type GetUserByIdQueryVariables = Exact<{
 }>;
 
 export type GetUserByIdQuery = {
-  __typename?: "Query";
   user: {
-    __typename?: "ResponseUser";
     status: string;
     msg: string;
     node: {
-      __typename?: "User";
       name: string;
       jobType: string;
       spreadSheetID: string;
@@ -863,11 +818,8 @@ export type GetPortfolioByUserIdQueryVariables = Exact<{
 }>;
 
 export type GetPortfolioByUserIdQuery = {
-  __typename?: "Query";
   getPortfolioByUserId: {
-    __typename?: "ResponsePortfolio";
     node: {
-      __typename?: "Portfolio";
       id: string;
       title: string;
       description: string;
@@ -884,21 +836,11 @@ export type GetUrlByIdQueryVariables = Exact<{
 }>;
 
 export type GetUrlByIdQuery = {
-  __typename?: "Query";
   urls: {
-    __typename?: "ResponseUser";
     status: string;
     msg: string;
     node: {
-      __typename?: "User";
-      userUrls: {
-        __typename?: "UserUrls";
-        user_urls: Array<{
-          __typename?: "URL";
-          urlName: string;
-          url: string;
-        } | null>;
-      };
+      userUrls: { user_urls: Array<{ urlName: string; url: string } | null> };
     };
   };
 };
@@ -908,15 +850,11 @@ export type GetSheetByUserIdQueryVariables = Exact<{
 }>;
 
 export type GetSheetByUserIdQuery = {
-  __typename?: "Query";
   user: {
-    __typename?: "ResponseSpecSheet";
     status: string;
     msg?: string | null;
     node: {
-      __typename?: "SpecSheet";
       userInfo: {
-        __typename?: "SpecUserInfoSheet";
         id: string;
         stuffID: string;
         age: number;
@@ -937,12 +875,10 @@ export type GetSheetPrByUserIdQueryVariables = Exact<{
 }>;
 
 export type GetSheetPrByUserIdQuery = {
-  __typename?: "Query";
   pr: {
-    __typename?: "ResponseSpecSheet";
     status: string;
     msg?: string | null;
-    node: { __typename?: "SpecSheet"; id: string; selfIntro: string };
+    node: { id: string; selfIntro: string };
   };
 };
 
@@ -951,15 +887,11 @@ export type GetSheetSkillByUserIdQueryVariables = Exact<{
 }>;
 
 export type GetSheetSkillByUserIdQuery = {
-  __typename?: "Query";
   skills: {
-    __typename?: "ResponseSpecSheet";
     status: string;
     msg?: string | null;
     node: {
-      __typename?: "SpecSheet";
       techInfo: {
-        __typename?: "SpecTechInfoSheet";
         id: string;
         operationEnvs: Array<string>;
         languages: Array<string>;
@@ -978,17 +910,14 @@ export type GetSheetOtherByUserIdQueryVariables = Exact<{
 }>;
 
 export type GetSheetOtherByUserIdQuery = {
-  __typename?: "Query";
   other: {
-    __typename?: "ResponseSpecSheet";
     status: string;
     msg?: string | null;
     node: {
-      __typename?: "SpecSheet";
       id: string;
       studyOnOwnTime: string;
       certification: string;
-      prevJobs: Array<{ __typename?: "prevJobsContent"; content: string }>;
+      prevJobs: Array<{ content: string }>;
     };
   };
 };
@@ -998,15 +927,11 @@ export type GetSheetProjectByUserIdQueryVariables = Exact<{
 }>;
 
 export type GetSheetProjectByUserIdQuery = {
-  __typename?: "Query";
   projects: {
-    __typename?: "ResponseSpecSheet";
     status: string;
     msg?: string | null;
     node: {
-      __typename?: "SpecSheet";
       project: Array<{
-        __typename?: "SpecProjectSheet";
         id: string;
         name: string;
         startedAt: any;
@@ -1031,13 +956,7 @@ export type GetSpreadSheetIdQueryVariables = Exact<{
 }>;
 
 export type GetSpreadSheetIdQuery = {
-  __typename?: "Query";
-  getUserById: {
-    __typename?: "ResponseUser";
-    status: string;
-    msg: string;
-    node: { __typename?: "User"; spreadSheetID: string };
-  };
+  getUserById: { status: string; msg: string; node: { spreadSheetID: string } };
 };
 
 export type GetPjNameByUserIdQueryVariables = Exact<{
@@ -1045,15 +964,10 @@ export type GetPjNameByUserIdQueryVariables = Exact<{
 }>;
 
 export type GetPjNameByUserIdQuery = {
-  __typename?: "Query";
   pj: {
-    __typename?: "ResponseSpecSheet";
     status: string;
     msg?: string | null;
-    node: {
-      __typename?: "SpecSheet";
-      project: Array<{ __typename?: "SpecProjectSheet"; name: string }>;
-    };
+    node: { project: Array<{ name: string }> };
   };
 };
 
@@ -1062,23 +976,19 @@ export type GetPrAndSheetByUserIdQueryVariables = Exact<{
 }>;
 
 export type GetPrAndSheetByUserIdQuery = {
-  __typename?: "Query";
   pr: {
-    __typename?: "ResponseSpecSheet";
     status: string;
     msg?: string | null;
-    node: { __typename?: "SpecSheet"; id: string; selfIntro: string };
+    node: { id: string; selfIntro: string };
   };
   other: {
-    __typename?: "ResponseSpecSheet";
     status: string;
     msg?: string | null;
     node: {
-      __typename?: "SpecSheet";
       id: string;
       studyOnOwnTime: string;
       certification: string;
-      prevJobs: Array<{ __typename?: "prevJobsContent"; content: string }>;
+      prevJobs: Array<{ content: string }>;
     };
   };
 };
@@ -1088,12 +998,7 @@ export type UpdateSpecSheetMutationVariables = Exact<{
 }>;
 
 export type UpdateSpecSheetMutation = {
-  __typename?: "Mutation";
-  updateSpecSheet: {
-    __typename?: "ResponseSpecSheet";
-    status: string;
-    msg?: string | null;
-  };
+  updateSpecSheet: { status: string; msg?: string | null };
 };
 
 export type UpdateUserMutationVariables = Exact<{
@@ -1101,8 +1006,7 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 export type UpdateUserMutation = {
-  __typename?: "Mutation";
-  updateUser: { __typename?: "ResponseUser"; status: string; msg: string };
+  updateUser: { status: string; msg: string };
 };
 
 export type CreatePortfolioMutationVariables = Exact<{
@@ -1110,12 +1014,7 @@ export type CreatePortfolioMutationVariables = Exact<{
 }>;
 
 export type CreatePortfolioMutation = {
-  __typename?: "Mutation";
-  createPortfolio: {
-    __typename?: "ResponsePortfolio";
-    status: string;
-    msg?: string | null;
-  };
+  createPortfolio: { status: string; msg?: string | null };
 };
 
 export type UpdatePortfolioMutationVariables = Exact<{
@@ -1123,13 +1022,10 @@ export type UpdatePortfolioMutationVariables = Exact<{
 }>;
 
 export type UpdatePortfolioMutation = {
-  __typename?: "Mutation";
   updatePortfolio: {
-    __typename?: "ResponsePortfolio";
     status: string;
     msg?: string | null;
     node: {
-      __typename?: "Portfolio";
       id: string;
       title: string;
       description: string;
@@ -1147,12 +1043,7 @@ export type RemovePortfolioMutationVariables = Exact<{
 }>;
 
 export type RemovePortfolioMutation = {
-  __typename?: "Mutation";
-  removePortfolio: {
-    __typename?: "Res";
-    status?: string | null;
-    msg?: string | null;
-  };
+  removePortfolio: { status?: string | null; msg?: string | null };
 };
 
 export type UpdateSpecUserInfoMutationVariables = Exact<{
@@ -1160,12 +1051,7 @@ export type UpdateSpecUserInfoMutationVariables = Exact<{
 }>;
 
 export type UpdateSpecUserInfoMutation = {
-  __typename?: "Mutation";
-  updateSpecUserInfo: {
-    __typename?: "ResponseSpecUserInfo";
-    status: string;
-    msg?: string | null;
-  };
+  updateSpecUserInfo: { status: string; msg?: string | null };
 };
 
 export type UpdateSpecProjectMutationVariables = Exact<{
@@ -1173,12 +1059,7 @@ export type UpdateSpecProjectMutationVariables = Exact<{
 }>;
 
 export type UpdateSpecProjectMutation = {
-  __typename?: "Mutation";
-  updateSpecProject: {
-    __typename?: "ResponseSpecProject";
-    status: string;
-    msg?: string | null;
-  };
+  updateSpecProject: { status: string; msg?: string | null };
 };
 
 export type GetUserUrlByIdQueryVariables = Exact<{
@@ -1186,20 +1067,11 @@ export type GetUserUrlByIdQueryVariables = Exact<{
 }>;
 
 export type GetUserUrlByIdQuery = {
-  __typename?: "Query";
   urls: {
-    __typename?: "ResponseUser";
     node: {
-      __typename?: "User";
       userUrls: {
-        __typename?: "UserUrls";
         id: string;
-        user_urls: Array<{
-          __typename?: "URL";
-          urlName: string;
-          url: string;
-          id: string;
-        } | null>;
+        user_urls: Array<{ urlName: string; url: string; id: string } | null>;
       };
     };
   };
@@ -1210,12 +1082,7 @@ export type UpdateSpecTechInfoMutationVariables = Exact<{
 }>;
 
 export type UpdateSpecTechInfoMutation = {
-  __typename?: "Mutation";
-  updateSpecTechInfo: {
-    __typename?: "ResponseSpecTechInfo";
-    status: string;
-    msg?: string | null;
-  };
+  updateSpecTechInfo: { status: string; msg?: string | null };
 };
 
 export type AddUserUrlsMutationVariables = Exact<{
@@ -1223,20 +1090,13 @@ export type AddUserUrlsMutationVariables = Exact<{
 }>;
 
 export type AddUserUrlsMutation = {
-  __typename?: "Mutation";
-  addUserUrls: { __typename?: "ResponseUserUrls"; status: string; msg: string };
+  addUserUrls: { status: string; msg: string };
 };
 
 export type GetAllSkillQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllSkillQuery = {
-  __typename?: "Query";
-  skills: Array<{
-    __typename?: "Skill";
-    id: string;
-    name: string;
-    data: Array<string>;
-  }>;
+  skills: Array<{ id: string; name: string; data: Array<string> }>;
 };
 
 export type RemoveUserUrlsMutationVariables = Exact<{
@@ -1244,12 +1104,7 @@ export type RemoveUserUrlsMutationVariables = Exact<{
 }>;
 
 export type RemoveUserUrlsMutation = {
-  __typename?: "Mutation";
-  removeUserUrls: {
-    __typename?: "ResponseUserUrls";
-    status: string;
-    msg: string;
-  };
+  removeUserUrls: { status: string; msg: string };
 };
 
 export type UpdateSpreadSheetMutationVariables = Exact<{
@@ -1257,30 +1112,13 @@ export type UpdateSpreadSheetMutationVariables = Exact<{
 }>;
 
 export type UpdateSpreadSheetMutation = {
-  __typename?: "Mutation";
-  updateSpreadUserInfo: {
-    __typename?: "Res";
-    status?: string | null;
-    msg?: string | null;
-  };
-  updateSpeadSelfPR: {
-    __typename?: "Res";
-    status?: string | null;
-    msg?: string | null;
-  };
-  updateSpreadPortfolioUrl: {
-    __typename?: "Res";
-    status?: string | null;
-    msg?: string | null;
-  };
-  updateSpreadTechInfo: {
-    __typename?: "Res";
-    status?: string | null;
-    msg?: string | null;
-  };
-  pj1: { __typename?: "Res"; status?: string | null; msg?: string | null };
-  pj2: { __typename?: "Res"; status?: string | null; msg?: string | null };
-  pj3: { __typename?: "Res"; status?: string | null; msg?: string | null };
+  updateSpreadUserInfo: { status?: string | null; msg?: string | null };
+  updateSpeadSelfPR: { status?: string | null; msg?: string | null };
+  updateSpreadPortfolioUrl: { status?: string | null; msg?: string | null };
+  updateSpreadTechInfo: { status?: string | null; msg?: string | null };
+  pj1: { status?: string | null; msg?: string | null };
+  pj2: { status?: string | null; msg?: string | null };
+  pj3: { status?: string | null; msg?: string | null };
 };
 
 export type UpdateSpreadUserInfoMutationVariables = Exact<{
@@ -1288,12 +1126,7 @@ export type UpdateSpreadUserInfoMutationVariables = Exact<{
 }>;
 
 export type UpdateSpreadUserInfoMutation = {
-  __typename?: "Mutation";
-  updateSpreadUserInfo: {
-    __typename?: "Res";
-    status?: string | null;
-    msg?: string | null;
-  };
+  updateSpreadUserInfo: { status?: string | null; msg?: string | null };
 };
 
 export type UpdateSpeadSelfPrMutationVariables = Exact<{
@@ -1301,12 +1134,7 @@ export type UpdateSpeadSelfPrMutationVariables = Exact<{
 }>;
 
 export type UpdateSpeadSelfPrMutation = {
-  __typename?: "Mutation";
-  updateSpeadSelfPR: {
-    __typename?: "Res";
-    status?: string | null;
-    msg?: string | null;
-  };
+  updateSpeadSelfPR: { status?: string | null; msg?: string | null };
 };
 
 export type UpdateSpreadPortfolioUrlMutationVariables = Exact<{
@@ -1314,12 +1142,7 @@ export type UpdateSpreadPortfolioUrlMutationVariables = Exact<{
 }>;
 
 export type UpdateSpreadPortfolioUrlMutation = {
-  __typename?: "Mutation";
-  updateSpreadPortfolioUrl: {
-    __typename?: "Res";
-    status?: string | null;
-    msg?: string | null;
-  };
+  updateSpreadPortfolioUrl: { status?: string | null; msg?: string | null };
 };
 
 export type UpdateSpreadTechInfoMutationVariables = Exact<{
@@ -1327,12 +1150,7 @@ export type UpdateSpreadTechInfoMutationVariables = Exact<{
 }>;
 
 export type UpdateSpreadTechInfoMutation = {
-  __typename?: "Mutation";
-  updateSpreadTechInfo: {
-    __typename?: "Res";
-    status?: string | null;
-    msg?: string | null;
-  };
+  updateSpreadTechInfo: { status?: string | null; msg?: string | null };
 };
 
 export type UpdateSpreadProjectMutationVariables = Exact<{
@@ -1341,12 +1159,7 @@ export type UpdateSpreadProjectMutationVariables = Exact<{
 }>;
 
 export type UpdateSpreadProjectMutation = {
-  __typename?: "Mutation";
-  updateSpreadProject: {
-    __typename?: "Res";
-    status?: string | null;
-    msg?: string | null;
-  };
+  updateSpreadProject: { status?: string | null; msg?: string | null };
 };
 
 export type UserLoginMutationVariables = Exact<{
@@ -1354,13 +1167,7 @@ export type UserLoginMutationVariables = Exact<{
 }>;
 
 export type UserLoginMutation = {
-  __typename?: "Mutation";
-  userLogin: {
-    __typename?: "ResponseToken";
-    status: string;
-    msg: string;
-    node: { __typename?: "Token"; token: string };
-  };
+  userLogin: { status: string; msg: string; node: { token: string } };
 };
 
 export type UserAutoLoginMutationVariables = Exact<{
@@ -1368,15 +1175,13 @@ export type UserAutoLoginMutationVariables = Exact<{
 }>;
 
 export type UserAutoLoginMutation = {
-  __typename?: "Mutation";
-  userAutoLogin: { __typename?: "ResStatus"; status: string; msg: string };
+  userAutoLogin: { status: string; msg: string };
 };
 
 export type GetAllTechAreaQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllTechAreaQuery = {
-  __typename?: "Query";
-  getAllTechArea: Array<{ __typename?: "TechArea"; id: string; name: string }>;
+  getAllTechArea: Array<{ id: string; name: string }>;
 };
 
 export type GetUserLeafsByIdQueryVariables = Exact<{
@@ -1384,17 +1189,13 @@ export type GetUserLeafsByIdQueryVariables = Exact<{
 }>;
 
 export type GetUserLeafsByIdQuery = {
-  __typename?: "Query";
   getUserLeafsById: {
-    __typename?: "ResponseUserTechLeaf";
     status: string;
     msg: string;
     node: {
-      __typename?: "UserLeafs";
       id: string;
       userId: string;
       myForest: Array<{
-        __typename?: "treeInfo";
         id: string;
         treeId: string;
         areaId: string;
@@ -1402,11 +1203,9 @@ export type GetUserLeafsByIdQuery = {
         achievementRate: number;
         color: string;
         branches: Array<{
-          __typename?: "branchInfo";
           id: string;
           name: string;
           leafs: Array<{
-            __typename?: "leafInfo";
             id: string;
             name: string;
             techBranch_id: string;
@@ -1424,20 +1223,13 @@ export type ChangeLeafStatusMutationVariables = Exact<{
 }>;
 
 export type ChangeLeafStatusMutation = {
-  __typename?: "Mutation";
-  changeLeafStatus: {
-    __typename?: "ResponseUserTechLeaf";
-    status: string;
-    msg: string;
-  };
+  changeLeafStatus: { status: string; msg: string };
 };
 
 export type GetAllUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllUserQuery = {
-  __typename?: "Query";
   getAllUser: Array<{
-    __typename?: "User";
     id: string;
     name: string;
     jobType: string;
@@ -1454,13 +1246,10 @@ export type GetAllStudyStackQueryVariables = Exact<{
 }>;
 
 export type GetAllStudyStackQuery = {
-  __typename?: "Query";
   getAllStudyStack: {
-    __typename?: "ResponseStudyStackArr";
     status: string;
     msg: string;
     node: Array<{
-      __typename?: "StudyStack";
       id: string;
       content: string;
       timeStack: number;
@@ -1476,12 +1265,9 @@ export type GetStudyStackByIdQueryVariables = Exact<{
 }>;
 
 export type GetStudyStackByIdQuery = {
-  __typename?: "Query";
   getStudyStackById: {
-    __typename?: "ResponseStudyStack";
     status: string;
     node: {
-      __typename?: "StudyStack";
       id: string;
       content: string;
       timeStack: number;
@@ -1497,12 +1283,9 @@ export type AddStudyStackMutationVariables = Exact<{
 }>;
 
 export type AddStudyStackMutation = {
-  __typename?: "Mutation";
   addStudyStack: {
-    __typename?: "ResponseStudyStack";
     status: string;
     node: {
-      __typename?: "StudyStack";
       id: string;
       content: string;
       timeStack: number;
@@ -1518,12 +1301,9 @@ export type UpdateStudyStackMutationVariables = Exact<{
 }>;
 
 export type UpdateStudyStackMutation = {
-  __typename?: "Mutation";
   updateStudyStack: {
-    __typename?: "ResponseStudyStack";
     status: string;
     node: {
-      __typename?: "StudyStack";
       id: string;
       content: string;
       timeStack: number;
@@ -1538,17 +1318,12 @@ export type RemoveStudyStackMutationVariables = Exact<{
   studyStackId: Scalars["String"];
 }>;
 
-export type RemoveStudyStackMutation = {
-  __typename?: "Mutation";
-  removeStudyStack: { __typename?: "ResponseStudyStack"; status: string };
-};
+export type RemoveStudyStackMutation = { removeStudyStack: { status: string } };
 
 export type GetAllTechTreeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllTechTreeQuery = {
-  __typename?: "Query";
   getAllTechTree: Array<{
-    __typename?: "TechTree";
     id: string;
     name: string;
     color: string;
@@ -1559,12 +1334,7 @@ export type GetAllTechTreeQuery = {
 export type GetStudyColorQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetStudyColorQuery = {
-  __typename?: "Query";
-  getAllTechTree: Array<{
-    __typename?: "TechTree";
-    name: string;
-    color: string;
-  }>;
+  getAllTechTree: Array<{ name: string; color: string }>;
 };
 
 export type GetAllTodoByUserQueryVariables = Exact<{
@@ -1572,11 +1342,8 @@ export type GetAllTodoByUserQueryVariables = Exact<{
 }>;
 
 export type GetAllTodoByUserQuery = {
-  __typename?: "Query";
   todos: {
-    __typename?: "ResponseTodoArr";
     node: Array<{
-      __typename?: "Todo";
       id: string;
       title: string;
       description?: string | null;
@@ -1592,11 +1359,8 @@ export type GetTodoByIdQueryVariables = Exact<{
 }>;
 
 export type GetTodoByIdQuery = {
-  __typename?: "Query";
   todo: {
-    __typename?: "ResponseTodo";
     node: {
-      __typename?: "Todo";
       id: string;
       title: string;
       description?: string | null;
@@ -1612,12 +1376,9 @@ export type UpdateTodoMutationVariables = Exact<{
 }>;
 
 export type UpdateTodoMutation = {
-  __typename?: "Mutation";
   updateTodo: {
-    __typename?: "ResponseTodo";
     status: string;
     node: {
-      __typename?: "Todo";
       id: string;
       title: string;
       description?: string | null;
@@ -1633,11 +1394,9 @@ export type ChangeTodoStatusMutationVariables = Exact<{
 }>;
 
 export type ChangeTodoStatusMutation = {
-  __typename?: "Mutation";
   changeTodoStatus: {
-    __typename?: "ResponseTodo";
     status: string;
-    node: { __typename?: "Todo"; isStatus: boolean; title: string };
+    node: { isStatus: boolean; title: string };
   };
 };
 
@@ -1646,12 +1405,9 @@ export type AddTodoMutationVariables = Exact<{
 }>;
 
 export type AddTodoMutation = {
-  __typename?: "Mutation";
   addTodo: {
-    __typename?: "ResponseTodo";
     status: string;
     node: {
-      __typename?: "Todo";
       id: string;
       title: string;
       description?: string | null;
@@ -1666,10 +1422,7 @@ export type RemoveTodoMutationVariables = Exact<{
   todoId: Scalars["String"];
 }>;
 
-export type RemoveTodoMutation = {
-  __typename?: "Mutation";
-  removeTodo: { __typename?: "ResponseTodo"; status: string };
-};
+export type RemoveTodoMutation = { removeTodo: { status: string } };
 
 export const GetUserByIdDocument = gql`
   query GetUserById($userToken: String!) {
