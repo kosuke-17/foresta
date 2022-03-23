@@ -39,12 +39,11 @@ const query = gql`
 export const GithubLeaf = memo(() => {
   //クッキーからユーザーID取得
   const [cookies] = useCookies();
-  console.log(cookies.ForestaID);
 
   //ユーザーIDからGithubURL取得
   const { data: githubDatas } = useGetUserByIdQuery({
     //Githubデータ取得
-    variables: { id: cookies.ForestaID },
+    variables: { userToken: cookies.ForestaID },
   });
 
   //取得したGithubURLを格納する
@@ -76,6 +75,7 @@ export const GithubLeaf = memo(() => {
 
   //取得したGithubデータを表示用配列に格納
   const [getData, setGetData] = useState<GithubLeafType>();
+
 
   //データをメソッドとして取得してきて、useEffectで更新させる
   useEffect(() => {
