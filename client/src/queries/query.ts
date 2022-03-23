@@ -609,8 +609,8 @@ gql`
 
 // Todoリストの取得
 gql`
-  query GetAllTodoByUser($userId: String!) {
-    todos: getAllTodoByUser(userId: $userId) {
+  query GetAllTodoByUser($userToken: String!) {
+    todos: getAllTodoByUser(userToken: $userToken) {
       node {
         id
         title
@@ -651,7 +651,6 @@ gql`
         startedAt
         finishedAt
         isStatus
-        userId
       }
     }
   }
