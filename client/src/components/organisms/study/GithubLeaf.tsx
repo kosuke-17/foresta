@@ -44,7 +44,7 @@ export const GithubLeaf = memo(() => {
   //ユーザーIDからGithubURL取得
   const { data: githubDatas } = useGetUserByIdQuery({
     //Githubデータ取得
-    variables: { id: cookies.ForestaID },
+    variables: { userToken: cookies.ForestaID },
   });
 
   //取得したGithubURLを格納する
