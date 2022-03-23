@@ -79,9 +79,9 @@ export const StudyModal: FC<Props> = memo((props) => {
         "createdAt",
         format(new Date(data?.getStudyStackById.node.createdAt), "yyyy-MM-dd"),
       );
-      setValue("skillTagId", data?.getStudyStackById.node.skillTagId as string);
-      setValue("timeStack", data?.getStudyStackById.node.timeStack as number);
-      setValue("content", data?.getStudyStackById.node.content as string);
+      setValue("skillTagId", data?.getStudyStackById.node.skillTagId);
+      setValue("timeStack", data?.getStudyStackById.node.timeStack);
+      setValue("content", data?.getStudyStackById.node.content);
     }
     onOpen();
     if (loading || error) {

@@ -45,7 +45,7 @@ export const useSpecSheet = (
   const [cookies] = useCookies();
   const { data: specSheetData } = useGetPrAndSheetByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
 

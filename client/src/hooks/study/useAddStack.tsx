@@ -41,7 +41,7 @@ export const useAddStack = (
               skillTagId: data.skillTagId,
               timeStack: data.timeStack,
               content: data.content,
-              userId: cookies.ForestaID,
+              userToken: cookies.ForestaID,
             },
           },
         });

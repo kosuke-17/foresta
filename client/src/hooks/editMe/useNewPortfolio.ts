@@ -45,7 +45,7 @@ export const useNewPortfolio = (
 
   const { data } = useGetSpreadSheetIdQuery({
     variables: {
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
 
@@ -120,14 +120,20 @@ export const useNewPortfolio = (
             },
           },
         });
+        cancel();
         toast({
           title: "追加しました",
+          position: "bottom-left",
           status: "success",
           isClosable: true,
         });
-        cancel();
       } catch (error) {
-        console.log(error);
+        toast({
+          title: "失敗しました",
+          position: "bottom-left",
+          status: "error",
+          isClosable: true,
+        });
       }
     },
     [cancel, cookies.ForestaID, hookSkillArray, toast, updatePortfolio],

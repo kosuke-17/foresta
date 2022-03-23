@@ -1,5 +1,5 @@
 import { Portfolio, Skill, SpecSheet } from "../../../models";
-import { NameType, UserIdType, UserToken } from "../../../types";
+import { NameType, UserToken } from "../../../types";
 import { verifyJwtToken } from "../../../utli/fncJwtToken";
 import { error, success } from "../responseStatus";
 
@@ -33,7 +33,7 @@ const specSheetQueries = {
   getPortfolioByUserId: async (_: any, { userToken }: UserToken) => {
     const userId = verifyJwtToken(userToken);
     try {
-      const result = await Portfolio.findOne({ userId: userId });
+      const result = await Portfolio.find({ userId: userId });
       if (result === null) {
         return error("該当のポートフォリオが見つかりません。");
       }

@@ -41,21 +41,6 @@ export type TechTree = {
   indexOfTreeData: number;
 };
 
-//技術ブランチの型
-export type TechBranch = {
-  treeData: any;
-  techTreeData: any;
-  indexOfTreeData: number;
-  techBranchData: any;
-  indexOfBranchData: number;
-  cheakedLeaf: (
-    treeId: string,
-    branchId: string,
-    leafId: string,
-    isStatus: boolean,
-  ) => void;
-};
-
 //技術リーフの型
 export type TechLeaf = {
   treeData: any;
@@ -91,3 +76,26 @@ export type AddStack = Pick<
   StudyStack,
   "createdAt" | "skillTagId" | "timeStack" | "content"
 >;
+
+//Githubの草データを取得するときの型
+export type GithubLeafType = {
+  user: {
+    login: string;
+    contributionsCollection: {
+      contributionCalendar: {
+        totalContributions: number;
+        weeks: [
+          {
+            contributionDays: [
+              {
+                contributionCount: number;
+                date: string;
+                color: string;
+              },
+            ];
+          },
+        ];
+      };
+    };
+  };
+};
