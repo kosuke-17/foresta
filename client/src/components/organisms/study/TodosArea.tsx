@@ -14,7 +14,7 @@ import { useTodoModal } from "../../../hooks/study/useTodoModal";
 export const TodosArea: FC = memo(() => {
   //cookie情報取得
   const [cookies] = useCookies();
-  const userId = cookies.ForestaID;
+  const userToken = cookies.ForestaID;
 
   // Todoのモーダルを使用するためのhookを使用する
   const { isOpen, onClose, openReadModal, openAddModal } = useTodoModal();
@@ -22,7 +22,7 @@ export const TodosArea: FC = memo(() => {
   // Todoリストを取得するためのqueryを使用する
   const { data, error, loading } = useGetAllTodoByUserQuery({
     variables: {
-      userId,
+      userToken,
     },
   });
 
