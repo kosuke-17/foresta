@@ -112,14 +112,20 @@ export const useUserPortfolio = (
             },
           },
         });
+        cancel();
         toast({
-          title: "変更しました",
+          title: "更新しました",
+          position: "bottom-left",
           status: "success",
           isClosable: true,
         });
-        cancel();
       } catch (error) {
-        console.log(error);
+        toast({
+          title: "失敗しました",
+          position: "bottom-left",
+          status: "error",
+          isClosable: true,
+        });
       }
     },
     [cancel, hookSkillArray, portfolioData.id, toast, updatePortfolio],
@@ -143,12 +149,18 @@ export const useUserPortfolio = (
       });
       toast({
         title: "削除しました",
+        position: "bottom-left",
         status: "success",
         isClosable: true,
       });
       cancel();
     } catch (error) {
-      console.log(error);
+      toast({
+        title: "失敗しました",
+        position: "bottom-left",
+        status: "error",
+        isClosable: true,
+      });
     }
   }, [cancel, deletePortfolio, portfolioData.id, toast]);
 

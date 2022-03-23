@@ -1,14 +1,14 @@
-import React, { FC, memo } from "react";
+import { FC, memo } from "react";
 import { Button, Text } from "@chakra-ui/react";
 
-type AreaSelect = {
-  techAreaData: any;
+type Props = {
+  techAreaTextData: string;
   indexOfTechArea: number;
   changeArea: (indexOfTechArea: number) => void;
 };
 
-export const AreaSelectButton: FC<AreaSelect> = memo(
-  ({ techAreaData, indexOfTechArea, changeArea }) => {
+export const AreaSelectButton: FC<Props> = memo(
+  ({ techAreaTextData, indexOfTechArea, changeArea }) => {
     return (
       <Button
         bg="gray.100"
@@ -16,7 +16,7 @@ export const AreaSelectButton: FC<AreaSelect> = memo(
         onClick={() => changeArea(indexOfTechArea)}
       >
         <Text color="gray.600" fontSize="sm">
-          {techAreaData.name}
+          {techAreaTextData}
         </Text>
       </Button>
     );

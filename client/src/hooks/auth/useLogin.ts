@@ -25,14 +25,15 @@ export const useLogin = (mailAddress: string, password: string) => {
       },
     },
   });
+
   // ログイン処理
   const doLogin = async () => {
     try {
       const response = await userLoginMutation();
       console.log(response);
-      // ログインが成功した場合はCookieにForestaIDを保存
+      // ログインが成功した場合はCookieにForestaIDを保存;
       if (response.data?.userLogin.status == "success") {
-        setCookie("ForestaID", response.data.userLogin.node.id);
+        setCookie("ForestaID", response.data.userLogin.node.token);
         toast({
           title: "ログインに成功しました",
           position: "bottom-left",

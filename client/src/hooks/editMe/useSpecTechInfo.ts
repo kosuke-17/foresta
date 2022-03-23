@@ -1,35 +1,36 @@
-/**
- * 一旦コピペしただけ(未完成)
- */
-import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useCookies } from "react-cookie";
 import * as yup from "yup";
 
 import {
+  GetSheetSkillByUserIdDocument,
   GetUserByIdDocument,
-  useUpdateUserMutation,
+  useGetSheetSkillByUserIdQuery,
+  useUpdateSpecProjectMutation,
+  useUpdateSpecTechInfoMutation,
 } from "../../types/generated/graphql";
-import { userInfoEditType, UserType } from "../../types/types";
+import { useToast } from "@chakra-ui/react";
 
 /**
  * バリデーションチェック.
  */
 const schema = yup.object().shape({
-  //氏名のバリデーション
-  name: yup
-    .string()
-    .trim()
-    .required("氏名を入力してください")
-    .max(15, "氏名は15文字以内で入力してください"),
-  //職種のバリデーション
-  jobType: yup.string().required("職種を入力して下さい"),
-  //Githubアカウントのバリデーション
-  githubURL: yup
-    .string()
-    .trim()
-    .required("GitHubアカウント名を入力して下さい")
-    .max(39, "39文字以内で入力して下さい"),
+  //ID
+  id: yup.string(),
+  //担当工程
+  devRoles: yup.array().nullable(),
+  //OS
+  operationEnvs: yup.array().nullable(),
+  //言語
+  languages: yup.array().nullable(),
+  //フレームワーク
+  frameworks: yup.array().nullable(),
+  //ライブラリ
+  libraries: yup.array().nullable(),
+  //その他ツール
+  otherTools: yup.array().nullable(),
 });
 
 /**
@@ -42,36 +43,52 @@ const schema = yup.object().shape({
  * @params userData - 初期表示用データ
  */
 export const useSpecTechInfo = (
-  userData: UserType,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
+  //cookieからID取得
+  const [cookies] = useCookies();
+
+  /**
+   * スキル要約取得.
+   */
+
+  const { data: skillData } = useGetSheetSkillByUserIdQuery({
+    variables: {
+      userId: cookies.ForestaID,
+    },
+  });
   // バリデーション機能を呼び出し
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    //初期値はログインしている人のデータを入れる
-    defaultValues: {
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
-    },
+    // defaultValues: {
+    //   id: skillData?.skills.node.techInfo.id,
+    //   devRoles: String(skillData?.skills.node.techInfo.devRoles),
+    //   operationEnvs: skillData?.skills.node.techInfo.operationEnvs,
+    //   languages: skillData?.skills.node.techInfo.languages,
+    //   frameworks: skillData?.skills.node.techInfo.frameworks,
+    //   libraries: skillData?.skills.node.techInfo.libraries,
+    //   otherTools: skillData?.skills.node.techInfo.otherTools,
+    //   specSheetId: skillData?.skills.node.techInfo.specSheetId,
+    // },
   });
 
-  /**
-   * デフォルト値読み込み直し用.
-   */
-  useEffect(() => {
-    reset({
-      name: userData?.name,
-      jobType: userData?.jobType,
-      githubURL: userData?.githubURL,
-    });
-  }, [reset, userData?.githubURL, userData?.jobType, userData?.name]);
+  setValue("id", skillData?.skills.node.techInfo.id);
+  setValue("devRoles", skillData?.skills.node.techInfo.devRoles);
+  setValue("operationEnvs", skillData?.skills.node.techInfo.operationEnvs);
+  setValue("languages", skillData?.skills.node.techInfo.languages);
+  setValue("frameworks", skillData?.skills.node.techInfo.frameworks);
+  setValue("libraries", skillData?.skills.node.techInfo.libraries);
+  setValue("otherTools", skillData?.skills.node.techInfo.otherTools);
+  setValue("specSheetId", skillData?.skills.node.techInfo.specSheetId);
+
+  //トーストの使用
+  const toast = useToast();
 
   /**
    * キャンセルボタンを押した時に呼ばれる.
@@ -82,10 +99,10 @@ export const useSpecTechInfo = (
   }, [onClose, setMenuItem]);
 
   /**
-   * ユーザ情報更新.（リフェッチ機能）
+   * スペックシートスキル要約更新.（リフェッチ機能）
    */
-  const [updateUserInfo] = useUpdateUserMutation({
-    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
+  const [updateSpecSkill] = useUpdateSpecTechInfoMutation({
+    refetchQueries: [GetSheetSkillByUserIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -94,36 +111,57 @@ export const useSpecTechInfo = (
    * @param data - 入力したデータ
    */
   const onSubmit = useCallback(
-    async (data: userInfoEditType) => {
+    async (data: any) => {
+      //nullだった場合、[]に置き換える
+      const os = data.operationEnvs != null ? data.operationEnvs : [];
+      const lang = data.languages != null ? data.languages : [];
+      const frame = data.frameworks != null ? data.frameworks : [];
+      const lib = data.libraries != null ? data.libraries : [];
+      const other = data.otherTools != null ? data.otherTools : [];
+      const rol = data.devRoles != null ? data.devRoles : [];
+
+      //送るデータ
+      const specTechInfo = {
+        specTechInfoId: data.id,
+        operationEnvs: os,
+        languages: lang,
+        frameworks: frame,
+        libraries: lib,
+        otherTools: other,
+        devRoles: rol,
+      };
+
       try {
-        await updateUserInfo({
-          variables: {
-            user: {
-              userId: userData.id, //受け取ったデータそのまま
-              name: data.name,
-              jobType: data.jobType,
-              githubURL: data.githubURL,
-              spreadSheetID: userData.spreadSheetID, //受け取ったデータそのまま
-            },
-          },
+        await updateSpecSkill({
+          variables: { specTechInfo },
         });
         cancel();
+        toast({
+          title: "更新しました",
+          position: "bottom-left",
+          status: "success",
+          isClosable: true,
+        });
       } catch (error) {
-        console.log(error);
+        toast({
+          title: "失敗しました",
+          position: "bottom-left",
+          status: "error",
+          isClosable: true,
+        });
       }
     },
-    [cancel, updateUserInfo, userData],
+    [cancel, toast, updateSpecSkill],
   );
 
   return {
-    useUpdateUserMutation,
+    useUpdateSpecProjectMutation,
     handleSubmit,
     cancel,
     register,
     errors,
     onSubmit,
-    userData,
     GetUserByIdDocument,
-    updateUserInfo,
+    updateSpecSkill,
   };
 };

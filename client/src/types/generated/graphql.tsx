@@ -104,7 +104,7 @@ export type Mutation = {
   /** ユーザーを編集. */
   updateUser: ResponseUser;
   /** ユーザーがログイン. */
-  userLogin: ResponseUser;
+  userLogin: ResponseToken;
 };
 
 /** データを変更する */
@@ -464,6 +464,13 @@ export type ResponseTodoArr = {
   status: Scalars["String"];
 };
 
+export type ResponseToken = {
+  __typename?: "ResponseToken";
+  msg: Scalars["String"];
+  node: Token;
+  status: Scalars["String"];
+};
+
 export type ResponseUser = {
   __typename?: "ResponseUser";
   msg: Scalars["String"];
@@ -703,6 +710,11 @@ export type TodoUpdateInput = {
   userId: Scalars["ID"];
 };
 
+export type Token = {
+  __typename?: "Token";
+  token: Scalars["String"];
+};
+
 export type Url = {
   __typename?: "URL";
   id: Scalars["ID"];
@@ -897,6 +909,7 @@ export type GetSheetByUserIdQuery = {
       __typename?: "SpecSheet";
       userInfo: {
         __typename?: "SpecUserInfoSheet";
+        id: string;
         stuffID: string;
         age: number;
         gender: string;
@@ -939,6 +952,7 @@ export type GetSheetSkillByUserIdQuery = {
       __typename?: "SpecSheet";
       techInfo: {
         __typename?: "SpecTechInfoSheet";
+        id: string;
         operationEnvs: Array<string>;
         languages: Array<string>;
         frameworks: Array<string>;
@@ -1015,6 +1029,23 @@ export type GetSpreadSheetIdQuery = {
     status: string;
     msg: string;
     node: { __typename?: "User"; spreadSheetID: string };
+  };
+};
+
+export type GetPjNameByUserIdQueryVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type GetPjNameByUserIdQuery = {
+  __typename?: "Query";
+  pj: {
+    __typename?: "ResponseSpecSheet";
+    status: string;
+    msg?: string | null;
+    node: {
+      __typename?: "SpecSheet";
+      project: Array<{ __typename?: "SpecProjectSheet"; name: string }>;
+    };
   };
 };
 
@@ -1116,6 +1147,32 @@ export type RemovePortfolioMutation = {
   };
 };
 
+export type UpdateSpecUserInfoMutationVariables = Exact<{
+  specUserInfo: SpecUserInfoUpdateInput;
+}>;
+
+export type UpdateSpecUserInfoMutation = {
+  __typename?: "Mutation";
+  updateSpecUserInfo: {
+    __typename?: "ResponseSpecUserInfo";
+    status: string;
+    msg?: string | null;
+  };
+};
+
+export type UpdateSpecProjectMutationVariables = Exact<{
+  specProject: SpecProjectUpdateInput;
+}>;
+
+export type UpdateSpecProjectMutation = {
+  __typename?: "Mutation";
+  updateSpecProject: {
+    __typename?: "ResponseSpecProject";
+    status: string;
+    msg?: string | null;
+  };
+};
+
 export type GetUserUrlByIdQueryVariables = Exact<{
   id: Scalars["String"];
 }>;
@@ -1140,6 +1197,19 @@ export type GetUserUrlByIdQuery = {
   };
 };
 
+export type UpdateSpecTechInfoMutationVariables = Exact<{
+  specTechInfo: SpecTechInfoUpdateInput;
+}>;
+
+export type UpdateSpecTechInfoMutation = {
+  __typename?: "Mutation";
+  updateSpecTechInfo: {
+    __typename?: "ResponseSpecTechInfo";
+    status: string;
+    msg?: string | null;
+  };
+};
+
 export type AddUserUrlsMutationVariables = Exact<{
   urlData: UserUrlsAddInput;
 }>;
@@ -1147,6 +1217,18 @@ export type AddUserUrlsMutationVariables = Exact<{
 export type AddUserUrlsMutation = {
   __typename?: "Mutation";
   addUserUrls: { __typename?: "ResponseUserUrls"; status: string; msg: string };
+};
+
+export type GetAllSkillQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllSkillQuery = {
+  __typename?: "Query";
+  skills: Array<{
+    __typename?: "Skill";
+    id: string;
+    name: string;
+    data: Array<string>;
+  }>;
 };
 
 export type RemoveUserUrlsMutationVariables = Exact<{
@@ -1162,6 +1244,103 @@ export type RemoveUserUrlsMutation = {
   };
 };
 
+export type UpdateSpreadSheetMutationVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type UpdateSpreadSheetMutation = {
+  __typename?: "Mutation";
+  updateSpreadUserInfo: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
+  updateSpeadSelfPR: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
+  updateSpreadPortfolioUrl: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
+  updateSpreadTechInfo: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
+  pj1: { __typename?: "Res"; status?: string | null; msg?: string | null };
+  pj2: { __typename?: "Res"; status?: string | null; msg?: string | null };
+  pj3: { __typename?: "Res"; status?: string | null; msg?: string | null };
+};
+
+export type UpdateSpreadUserInfoMutationVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type UpdateSpreadUserInfoMutation = {
+  __typename?: "Mutation";
+  updateSpreadUserInfo: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
+};
+
+export type UpdateSpeadSelfPrMutationVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type UpdateSpeadSelfPrMutation = {
+  __typename?: "Mutation";
+  updateSpeadSelfPR: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
+};
+
+export type UpdateSpreadPortfolioUrlMutationVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type UpdateSpreadPortfolioUrlMutation = {
+  __typename?: "Mutation";
+  updateSpreadPortfolioUrl: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
+};
+
+export type UpdateSpreadTechInfoMutationVariables = Exact<{
+  userId: Scalars["String"];
+}>;
+
+export type UpdateSpreadTechInfoMutation = {
+  __typename?: "Mutation";
+  updateSpreadTechInfo: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
+};
+
+export type UpdateSpreadProjectMutationVariables = Exact<{
+  userId: Scalars["String"];
+  projectIndex: Scalars["Int"];
+}>;
+
+export type UpdateSpreadProjectMutation = {
+  __typename?: "Mutation";
+  updateSpreadProject: {
+    __typename?: "Res";
+    status?: string | null;
+    msg?: string | null;
+  };
+};
+
 export type UserLoginMutationVariables = Exact<{
   user: UserLoginInput;
 }>;
@@ -1169,15 +1348,10 @@ export type UserLoginMutationVariables = Exact<{
 export type UserLoginMutation = {
   __typename?: "Mutation";
   userLogin: {
-    __typename?: "ResponseUser";
+    __typename?: "ResponseToken";
     status: string;
     msg: string;
-    node: {
-      __typename?: "User";
-      id: string;
-      name: string;
-      userLeafs: { __typename?: "UserLeafs"; id: string };
-    };
+    node: { __typename?: "Token"; token: string };
   };
 };
 
@@ -1668,6 +1842,7 @@ export const GetSheetByUserIdDocument = gql`
       msg
       node {
         userInfo {
+          id
           stuffID
           age
           gender
@@ -1803,6 +1978,7 @@ export const GetSheetSkillByUserIdDocument = gql`
       msg
       node {
         techInfo {
+          id
           operationEnvs
           languages
           frameworks
@@ -2071,6 +2247,70 @@ export type GetSpreadSheetIdLazyQueryHookResult = ReturnType<
 export type GetSpreadSheetIdQueryResult = Apollo.QueryResult<
   GetSpreadSheetIdQuery,
   GetSpreadSheetIdQueryVariables
+>;
+export const GetPjNameByUserIdDocument = gql`
+  query GetPjNameByUserId($userId: String!) {
+    pj: getSheetByUserId(userId: $userId) {
+      status
+      msg
+      node {
+        project {
+          name
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetPjNameByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetPjNameByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPjNameByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPjNameByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetPjNameByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetPjNameByUserIdQuery,
+    GetPjNameByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetPjNameByUserIdQuery,
+    GetPjNameByUserIdQueryVariables
+  >(GetPjNameByUserIdDocument, options);
+}
+export function useGetPjNameByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPjNameByUserIdQuery,
+    GetPjNameByUserIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetPjNameByUserIdQuery,
+    GetPjNameByUserIdQueryVariables
+  >(GetPjNameByUserIdDocument, options);
+}
+export type GetPjNameByUserIdQueryHookResult = ReturnType<
+  typeof useGetPjNameByUserIdQuery
+>;
+export type GetPjNameByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetPjNameByUserIdLazyQuery
+>;
+export type GetPjNameByUserIdQueryResult = Apollo.QueryResult<
+  GetPjNameByUserIdQuery,
+  GetPjNameByUserIdQueryVariables
 >;
 export const GetPrAndSheetByUserIdDocument = gql`
   query GetPrAndSheetByUserId($userId: String!) {
@@ -2412,6 +2652,108 @@ export type RemovePortfolioMutationOptions = Apollo.BaseMutationOptions<
   RemovePortfolioMutation,
   RemovePortfolioMutationVariables
 >;
+export const UpdateSpecUserInfoDocument = gql`
+  mutation UpdateSpecUserInfo($specUserInfo: SpecUserInfoUpdateInput!) {
+    updateSpecUserInfo(specUserInfo: $specUserInfo) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpecUserInfoMutationFn = Apollo.MutationFunction<
+  UpdateSpecUserInfoMutation,
+  UpdateSpecUserInfoMutationVariables
+>;
+
+/**
+ * __useUpdateSpecUserInfoMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpecUserInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpecUserInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpecUserInfoMutation, { data, loading, error }] = useUpdateSpecUserInfoMutation({
+ *   variables: {
+ *      specUserInfo: // value for 'specUserInfo'
+ *   },
+ * });
+ */
+export function useUpdateSpecUserInfoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpecUserInfoMutation,
+    UpdateSpecUserInfoMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpecUserInfoMutation,
+    UpdateSpecUserInfoMutationVariables
+  >(UpdateSpecUserInfoDocument, options);
+}
+export type UpdateSpecUserInfoMutationHookResult = ReturnType<
+  typeof useUpdateSpecUserInfoMutation
+>;
+export type UpdateSpecUserInfoMutationResult =
+  Apollo.MutationResult<UpdateSpecUserInfoMutation>;
+export type UpdateSpecUserInfoMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpecUserInfoMutation,
+  UpdateSpecUserInfoMutationVariables
+>;
+export const UpdateSpecProjectDocument = gql`
+  mutation UpdateSpecProject($specProject: SpecProjectUpdateInput!) {
+    updateSpecProject(specProject: $specProject) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpecProjectMutationFn = Apollo.MutationFunction<
+  UpdateSpecProjectMutation,
+  UpdateSpecProjectMutationVariables
+>;
+
+/**
+ * __useUpdateSpecProjectMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpecProjectMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpecProjectMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpecProjectMutation, { data, loading, error }] = useUpdateSpecProjectMutation({
+ *   variables: {
+ *      specProject: // value for 'specProject'
+ *   },
+ * });
+ */
+export function useUpdateSpecProjectMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpecProjectMutation,
+    UpdateSpecProjectMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpecProjectMutation,
+    UpdateSpecProjectMutationVariables
+  >(UpdateSpecProjectDocument, options);
+}
+export type UpdateSpecProjectMutationHookResult = ReturnType<
+  typeof useUpdateSpecProjectMutation
+>;
+export type UpdateSpecProjectMutationResult =
+  Apollo.MutationResult<UpdateSpecProjectMutation>;
+export type UpdateSpecProjectMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpecProjectMutation,
+  UpdateSpecProjectMutationVariables
+>;
 export const GetUserUrlByIdDocument = gql`
   query GetUserUrlById($id: String!) {
     urls: getUserById(_id: $id) {
@@ -2479,6 +2821,57 @@ export type GetUserUrlByIdQueryResult = Apollo.QueryResult<
   GetUserUrlByIdQuery,
   GetUserUrlByIdQueryVariables
 >;
+export const UpdateSpecTechInfoDocument = gql`
+  mutation UpdateSpecTechInfo($specTechInfo: SpecTechInfoUpdateInput!) {
+    updateSpecTechInfo(specTechInfo: $specTechInfo) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpecTechInfoMutationFn = Apollo.MutationFunction<
+  UpdateSpecTechInfoMutation,
+  UpdateSpecTechInfoMutationVariables
+>;
+
+/**
+ * __useUpdateSpecTechInfoMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpecTechInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpecTechInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpecTechInfoMutation, { data, loading, error }] = useUpdateSpecTechInfoMutation({
+ *   variables: {
+ *      specTechInfo: // value for 'specTechInfo'
+ *   },
+ * });
+ */
+export function useUpdateSpecTechInfoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpecTechInfoMutation,
+    UpdateSpecTechInfoMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpecTechInfoMutation,
+    UpdateSpecTechInfoMutationVariables
+  >(UpdateSpecTechInfoDocument, options);
+}
+export type UpdateSpecTechInfoMutationHookResult = ReturnType<
+  typeof useUpdateSpecTechInfoMutation
+>;
+export type UpdateSpecTechInfoMutationResult =
+  Apollo.MutationResult<UpdateSpecTechInfoMutation>;
+export type UpdateSpecTechInfoMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpecTechInfoMutation,
+  UpdateSpecTechInfoMutationVariables
+>;
 export const AddUserUrlsDocument = gql`
   mutation AddUserUrls($urlData: UserUrlsAddInput!) {
     addUserUrls(urlData: $urlData) {
@@ -2529,6 +2922,63 @@ export type AddUserUrlsMutationResult =
 export type AddUserUrlsMutationOptions = Apollo.BaseMutationOptions<
   AddUserUrlsMutation,
   AddUserUrlsMutationVariables
+>;
+export const GetAllSkillDocument = gql`
+  query GetAllSkill {
+    skills: getAllSkill {
+      id
+      name
+      data
+    }
+  }
+`;
+
+/**
+ * __useGetAllSkillQuery__
+ *
+ * To run a query within a React component, call `useGetAllSkillQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllSkillQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllSkillQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllSkillQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllSkillQuery,
+    GetAllSkillQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAllSkillQuery, GetAllSkillQueryVariables>(
+    GetAllSkillDocument,
+    options,
+  );
+}
+export function useGetAllSkillLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllSkillQuery,
+    GetAllSkillQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAllSkillQuery, GetAllSkillQueryVariables>(
+    GetAllSkillDocument,
+    options,
+  );
+}
+export type GetAllSkillQueryHookResult = ReturnType<typeof useGetAllSkillQuery>;
+export type GetAllSkillLazyQueryHookResult = ReturnType<
+  typeof useGetAllSkillLazyQuery
+>;
+export type GetAllSkillQueryResult = Apollo.QueryResult<
+  GetAllSkillQuery,
+  GetAllSkillQueryVariables
 >;
 export const RemoveUserUrlsDocument = gql`
   mutation RemoveUserUrls($urlData: UserUrlsRemoveInput!) {
@@ -2581,17 +3031,345 @@ export type RemoveUserUrlsMutationOptions = Apollo.BaseMutationOptions<
   RemoveUserUrlsMutation,
   RemoveUserUrlsMutationVariables
 >;
+export const UpdateSpreadSheetDocument = gql`
+  mutation UpdateSpreadSheet($userId: String!) {
+    updateSpreadUserInfo(userId: $userId) {
+      status
+      msg
+    }
+    updateSpeadSelfPR(userId: $userId) {
+      status
+      msg
+    }
+    updateSpreadPortfolioUrl(userId: $userId) {
+      status
+      msg
+    }
+    updateSpreadTechInfo(userId: $userId) {
+      status
+      msg
+    }
+    pj1: updateSpreadProject(userId: $userId, projectIndex: 0) {
+      status
+      msg
+    }
+    pj2: updateSpreadProject(userId: $userId, projectIndex: 1) {
+      status
+      msg
+    }
+    pj3: updateSpreadProject(userId: $userId, projectIndex: 2) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpreadSheetMutationFn = Apollo.MutationFunction<
+  UpdateSpreadSheetMutation,
+  UpdateSpreadSheetMutationVariables
+>;
+
+/**
+ * __useUpdateSpreadSheetMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpreadSheetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpreadSheetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpreadSheetMutation, { data, loading, error }] = useUpdateSpreadSheetMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useUpdateSpreadSheetMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpreadSheetMutation,
+    UpdateSpreadSheetMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpreadSheetMutation,
+    UpdateSpreadSheetMutationVariables
+  >(UpdateSpreadSheetDocument, options);
+}
+export type UpdateSpreadSheetMutationHookResult = ReturnType<
+  typeof useUpdateSpreadSheetMutation
+>;
+export type UpdateSpreadSheetMutationResult =
+  Apollo.MutationResult<UpdateSpreadSheetMutation>;
+export type UpdateSpreadSheetMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpreadSheetMutation,
+  UpdateSpreadSheetMutationVariables
+>;
+export const UpdateSpreadUserInfoDocument = gql`
+  mutation UpdateSpreadUserInfo($userId: String!) {
+    updateSpreadUserInfo(userId: $userId) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpreadUserInfoMutationFn = Apollo.MutationFunction<
+  UpdateSpreadUserInfoMutation,
+  UpdateSpreadUserInfoMutationVariables
+>;
+
+/**
+ * __useUpdateSpreadUserInfoMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpreadUserInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpreadUserInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpreadUserInfoMutation, { data, loading, error }] = useUpdateSpreadUserInfoMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useUpdateSpreadUserInfoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpreadUserInfoMutation,
+    UpdateSpreadUserInfoMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpreadUserInfoMutation,
+    UpdateSpreadUserInfoMutationVariables
+  >(UpdateSpreadUserInfoDocument, options);
+}
+export type UpdateSpreadUserInfoMutationHookResult = ReturnType<
+  typeof useUpdateSpreadUserInfoMutation
+>;
+export type UpdateSpreadUserInfoMutationResult =
+  Apollo.MutationResult<UpdateSpreadUserInfoMutation>;
+export type UpdateSpreadUserInfoMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpreadUserInfoMutation,
+  UpdateSpreadUserInfoMutationVariables
+>;
+export const UpdateSpeadSelfPrDocument = gql`
+  mutation UpdateSpeadSelfPR($userId: String!) {
+    updateSpeadSelfPR(userId: $userId) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpeadSelfPrMutationFn = Apollo.MutationFunction<
+  UpdateSpeadSelfPrMutation,
+  UpdateSpeadSelfPrMutationVariables
+>;
+
+/**
+ * __useUpdateSpeadSelfPrMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpeadSelfPrMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpeadSelfPrMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpeadSelfPrMutation, { data, loading, error }] = useUpdateSpeadSelfPrMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useUpdateSpeadSelfPrMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpeadSelfPrMutation,
+    UpdateSpeadSelfPrMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpeadSelfPrMutation,
+    UpdateSpeadSelfPrMutationVariables
+  >(UpdateSpeadSelfPrDocument, options);
+}
+export type UpdateSpeadSelfPrMutationHookResult = ReturnType<
+  typeof useUpdateSpeadSelfPrMutation
+>;
+export type UpdateSpeadSelfPrMutationResult =
+  Apollo.MutationResult<UpdateSpeadSelfPrMutation>;
+export type UpdateSpeadSelfPrMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpeadSelfPrMutation,
+  UpdateSpeadSelfPrMutationVariables
+>;
+export const UpdateSpreadPortfolioUrlDocument = gql`
+  mutation UpdateSpreadPortfolioUrl($userId: String!) {
+    updateSpreadPortfolioUrl(userId: $userId) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpreadPortfolioUrlMutationFn = Apollo.MutationFunction<
+  UpdateSpreadPortfolioUrlMutation,
+  UpdateSpreadPortfolioUrlMutationVariables
+>;
+
+/**
+ * __useUpdateSpreadPortfolioUrlMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpreadPortfolioUrlMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpreadPortfolioUrlMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpreadPortfolioUrlMutation, { data, loading, error }] = useUpdateSpreadPortfolioUrlMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useUpdateSpreadPortfolioUrlMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpreadPortfolioUrlMutation,
+    UpdateSpreadPortfolioUrlMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpreadPortfolioUrlMutation,
+    UpdateSpreadPortfolioUrlMutationVariables
+  >(UpdateSpreadPortfolioUrlDocument, options);
+}
+export type UpdateSpreadPortfolioUrlMutationHookResult = ReturnType<
+  typeof useUpdateSpreadPortfolioUrlMutation
+>;
+export type UpdateSpreadPortfolioUrlMutationResult =
+  Apollo.MutationResult<UpdateSpreadPortfolioUrlMutation>;
+export type UpdateSpreadPortfolioUrlMutationOptions =
+  Apollo.BaseMutationOptions<
+    UpdateSpreadPortfolioUrlMutation,
+    UpdateSpreadPortfolioUrlMutationVariables
+  >;
+export const UpdateSpreadTechInfoDocument = gql`
+  mutation UpdateSpreadTechInfo($userId: String!) {
+    updateSpreadTechInfo(userId: $userId) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpreadTechInfoMutationFn = Apollo.MutationFunction<
+  UpdateSpreadTechInfoMutation,
+  UpdateSpreadTechInfoMutationVariables
+>;
+
+/**
+ * __useUpdateSpreadTechInfoMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpreadTechInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpreadTechInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpreadTechInfoMutation, { data, loading, error }] = useUpdateSpreadTechInfoMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useUpdateSpreadTechInfoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpreadTechInfoMutation,
+    UpdateSpreadTechInfoMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpreadTechInfoMutation,
+    UpdateSpreadTechInfoMutationVariables
+  >(UpdateSpreadTechInfoDocument, options);
+}
+export type UpdateSpreadTechInfoMutationHookResult = ReturnType<
+  typeof useUpdateSpreadTechInfoMutation
+>;
+export type UpdateSpreadTechInfoMutationResult =
+  Apollo.MutationResult<UpdateSpreadTechInfoMutation>;
+export type UpdateSpreadTechInfoMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpreadTechInfoMutation,
+  UpdateSpreadTechInfoMutationVariables
+>;
+export const UpdateSpreadProjectDocument = gql`
+  mutation UpdateSpreadProject($userId: String!, $projectIndex: Int!) {
+    updateSpreadProject(userId: $userId, projectIndex: $projectIndex) {
+      status
+      msg
+    }
+  }
+`;
+export type UpdateSpreadProjectMutationFn = Apollo.MutationFunction<
+  UpdateSpreadProjectMutation,
+  UpdateSpreadProjectMutationVariables
+>;
+
+/**
+ * __useUpdateSpreadProjectMutation__
+ *
+ * To run a mutation, you first call `useUpdateSpreadProjectMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSpreadProjectMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSpreadProjectMutation, { data, loading, error }] = useUpdateSpreadProjectMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      projectIndex: // value for 'projectIndex'
+ *   },
+ * });
+ */
+export function useUpdateSpreadProjectMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSpreadProjectMutation,
+    UpdateSpreadProjectMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateSpreadProjectMutation,
+    UpdateSpreadProjectMutationVariables
+  >(UpdateSpreadProjectDocument, options);
+}
+export type UpdateSpreadProjectMutationHookResult = ReturnType<
+  typeof useUpdateSpreadProjectMutation
+>;
+export type UpdateSpreadProjectMutationResult =
+  Apollo.MutationResult<UpdateSpreadProjectMutation>;
+export type UpdateSpreadProjectMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSpreadProjectMutation,
+  UpdateSpreadProjectMutationVariables
+>;
 export const UserLoginDocument = gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
       status
       msg
       node {
-        id
-        name
-        userLeafs {
-          id
-        }
+        token
       }
     }
   }
