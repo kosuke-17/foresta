@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import LoginForm from "../../components/organisms/auth/LoginForm";
+import { FC } from "react";
+import { LoginForm } from "../../components/organisms/auth/LoginForm";
 
 export const Login: FC = () => {
   return (
