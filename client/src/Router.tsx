@@ -17,11 +17,7 @@ export const Router: React.VFC = () => {
         {/* ログイン画面を表示させるには、下記のように<Route>を<Route>で囲む */}
         <Routes>
           <Route path="/" element={<Auth />}>
-            <Route path={"/"} element={<TodosArea />} />
-          </Route>
-
-          <Route path="/todos" element={<Auth />}>
-            <Route path={"/todos"} element={<TodosArea />} />
+            <Route path={"/"} element={<Study />} />
           </Route>
 
           <Route path="/study" element={<Auth />}>
@@ -42,7 +38,6 @@ export const Router: React.VFC = () => {
 
           <Route path="study" element={<Study />} />
           <Route path="login" element={<Login />} />
-          <Route path="todos" element={<TodosArea />} />
           <Route path="aboutme" element={<AboutMe />} />
           <Route path="engineerlist" element={<EngineerList />} />
           <Route path="*" element={<NotFound />} />
