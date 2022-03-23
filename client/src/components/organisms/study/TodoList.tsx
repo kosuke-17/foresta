@@ -7,7 +7,7 @@ import {
   Tab,
   TabPanel,
   Box,
-  Heading,
+  Text,
   List,
   ListItem,
   IconButton,
@@ -43,9 +43,9 @@ export const TodoList: FC<Props> = memo((props) => {
   return (
     <>
       <Flex align="center" gap={1} mb={1}>
-        <Heading as="h2" size="lg">
-          Todoリスト
-        </Heading>
+        <Text fontSize="3xl" ml={5}>
+          Todos
+        </Text>
         <IconButton
           size="sm"
           aria-label="Add Todo"

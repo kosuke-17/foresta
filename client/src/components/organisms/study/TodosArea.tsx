@@ -30,7 +30,7 @@ export const TodosArea: FC = memo(() => {
   const todos = data?.todos.node;
 
   return (
-    <Container maxW="5xl">
+    <Container maxW="5xl" pt={10}>
       {/* Todoリストエリア */}
       <TodoList
         todos={todos || []} // todosがなければ空配列を渡す
