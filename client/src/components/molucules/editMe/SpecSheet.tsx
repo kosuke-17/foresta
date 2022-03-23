@@ -51,6 +51,7 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
               const newVal = [...prevJobs];
               newVal.splice(index, 1);
               setPrevJobs(newVal);
+              // prevJobが削除された時はデータをつめるように移動させる。（データが入っていない空箱があるため。）
               prevJobs.forEach((_, idx) => {
                 if (index > idx) return;
                 setValue(`prevJobs_${idx}`, watch(`prevJobs_${idx + 1}`));

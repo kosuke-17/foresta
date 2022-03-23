@@ -23,7 +23,6 @@ import {
  * - onSubmit:更新ボタンを押した時のメソッド
  */
 export const useSpecSheet = (
-  // userData: UserType,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
@@ -71,6 +70,7 @@ export const useSpecSheet = (
     resolver: yupResolver(schema),
   });
   const { data: specSheetData } = useGetPrAndSheetByUserIdQuery({
+    // データ取得後に表示
     onCompleted: ({ other, pr }: any) => {
       // デフォルト値をセット
       reset({
@@ -85,6 +85,7 @@ export const useSpecSheet = (
         }, {}),
       });
 
+      // 空の入力欄のみを用意（デフォルト値はresetでセット）
       setPrevJobs(other.node.prevJobs.map(() => ""));
     },
     variables: {
@@ -115,7 +116,11 @@ export const useSpecSheet = (
   const onSubmit = useCallback(
     async (data: any) => {
       const body = Object.keys(data).reduce((acc: any, cur: string) => {
+        console.log("カレント", cur);
+
+        // データがない時は送信しない
         if (cur.includes("prevJobs") && !data[cur]) return acc;
+        // prevJobsが送信するデータに含まれる時はprevJobsの配列を作る
         if (cur.includes("prevJobs"))
           return {
             ...acc,
