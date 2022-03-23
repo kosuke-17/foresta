@@ -63,7 +63,6 @@ export const useHandleCalendar = (openReadModal: (todo: TodoData) => void, openA
       startedAt: info.event.start, // 移動先の開始日
       finishedAt, // 移動先の終了日
       isStatus: info.event.extendedProps.isStatus,
-      userId: cookies.ForestaID,
     };
     try {
       const updateTodoData = await updateTodo({
@@ -98,7 +97,7 @@ export const useHandleCalendar = (openReadModal: (todo: TodoData) => void, openA
         });
       }
     }
-  }, [toast, updateTodo, cookies]);
+  }, [toast, updateTodo]);
 
   return { onEventClick, onDateSelect, onEventDrop };
 };

@@ -6,7 +6,7 @@ export const todoMocks = [
     request: {
       query: GetAllTodoByUserDocument, // Codegenで生成されたクエリ Documentで終わるもの。
       variables: {
-        userId: "621f1cba386085f036353ecd"
+        userToken: "621f1cba386085f036353ecd"
       }
     },
     result: {
