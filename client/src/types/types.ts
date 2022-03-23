@@ -76,3 +76,26 @@ export type AddStack = Pick<
   StudyStack,
   "createdAt" | "skillTagId" | "timeStack" | "content"
 >;
+
+//Githubの草データを取得するときの型
+export type GithubLeafType = {
+  user: {
+    login: string;
+    contributionsCollection: {
+      contributionCalendar: {
+        totalContributions: number;
+        weeks: [
+          {
+            contributionDays: [
+              {
+                contributionCount: number;
+                date: string;
+                color: string;
+              },
+            ];
+          },
+        ];
+      };
+    };
+  };
+};
