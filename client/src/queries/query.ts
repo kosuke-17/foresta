@@ -2,8 +2,8 @@ import { gql } from "@apollo/client";
 
 //ユーザ情報取得.
 gql`
-  query GetUserById($id: String!) {
-    user: getUserById(_id: $id) {
+  query GetUserById($userToken: String!) {
+    user: getUserById(userToken: $userToken) {
       status
       msg
       node {
@@ -18,20 +18,16 @@ gql`
 
 //ユーザ情報:制作物取得.
 gql`
-  query GetUserPortfolioById($id: String!) {
-    portfolios: getUserById(_id: $id) {
-      status
-      msg
+  query GetPortfolioByUserId($userToken: String!) {
+    getPortfolioByUserId(userToken: $userToken) {
       node {
-        portfolio {
-          id
-          title
-          description
-          img
-          portfolioURL
-          skills
-          specSheetId
-        }
+        id
+        title
+        description
+        img
+        portfolioURL
+        skills
+        specSheetId
       }
     }
   }
@@ -39,8 +35,8 @@ gql`
 
 //ユーザ情報:URL取得.
 gql`
-  query GetUrlById($id: String!) {
-    urls: getUserById(_id: $id) {
+  query GetUrlById($userToken: String!) {
+    urls: getUserById(userToken: $userToken) {
       status
       msg
       node {
@@ -57,8 +53,8 @@ gql`
 
 //ユーザ情報:スペックシート基本情報取得
 gql`
-  query GetSheetByUserId($userId: String!) {
-    user: getSheetByUserId(userId: $userId) {
+  query GetSheetByUserId($userToken: String!) {
+    user: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -81,8 +77,8 @@ gql`
 
 //ユーザ情報:スペックシート自己PR取得
 gql`
-  query GetSheetPrByUserId($userId: String!) {
-    pr: getSheetByUserId(userId: $userId) {
+  query GetSheetPrByUserId($userToken: String!) {
+    pr: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -95,8 +91,8 @@ gql`
 
 //ユーザ情報:スペックシートスキル要約取得
 gql`
-  query GetSheetSkillByUserId($userId: String!) {
-    skills: getSheetByUserId(userId: $userId) {
+  query GetSheetSkillByUserId($userToken: String!) {
+    skills: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -117,8 +113,8 @@ gql`
 
 //ユーザ情報:スペックシートその他の情報取得
 gql`
-  query GetSheetOtherByUserId($userId: String!) {
-    other: getSheetByUserId(userId: $userId) {
+  query GetSheetOtherByUserId($userToken: String!) {
+    other: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -135,8 +131,8 @@ gql`
 
 //ユーザ情報:スペックシート開発経験取得
 gql`
-  query GetSheetProjectByUserId($userId: String!) {
-    projects: getSheetByUserId(userId: $userId) {
+  query GetSheetProjectByUserId($userToken: String!) {
+    projects: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -163,8 +159,8 @@ gql`
 
 //ユーザ情報:スペックシートIDのみ取得.
 gql`
-  query GetSpreadSheetID($id: String!) {
-    getUserById(_id: $id) {
+  query GetSpreadSheetID($userToken: String!) {
+    getUserById(userToken: $userToken) {
       status
       msg
       node {
@@ -176,8 +172,8 @@ gql`
 
 //ユーザ情報:開発経験名前のみ取得.
 gql`
-  query GetPjNameByUserId($userId: String!) {
-    pj: getSheetByUserId(userId: $userId) {
+  query GetPjNameByUserId($userToken: String!) {
+    pj: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -191,8 +187,8 @@ gql`
 
 //ユーザ情報:自己PR取得+スペックシートその他情報同時取得.
 gql`
-  query GetPrAndSheetByUserId($userId: String!) {
-    pr: getSheetByUserId(userId: $userId) {
+  query GetPrAndSheetByUserId($userToken: String!) {
+    pr: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -200,7 +196,7 @@ gql`
         selfIntro
       }
     }
-    other: getSheetByUserId(userId: $userId) {
+    other: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -297,8 +293,8 @@ gql`
 
 //ユーザ情報:URL編集用取得
 gql`
-  query GetUserUrlById($id: String!) {
-    urls: getUserById(_id: $id) {
+  query GetUserUrlById($userToken: String!) {
+    urls: getUserById(userToken: $userToken) {
       node {
         userUrls {
           user_urls {
@@ -356,32 +352,32 @@ gql`
 
 //ユーザ情報:スプレッドシートに全情報出力
 gql`
-  mutation UpdateSpreadSheet($userId: String!) {
-    updateSpreadUserInfo(userId: $userId) {
+  mutation UpdateSpreadSheet($userToken: String!) {
+    updateSpreadUserInfo(userToken: $userToken) {
       status
       msg
     }
-    updateSpeadSelfPR(userId: $userId) {
+    updateSpeadSelfPR(userToken: $userToken) {
       status
       msg
     }
-    updateSpreadPortfolioUrl(userId: $userId) {
+    updateSpreadPortfolioUrl(userToken: $userToken) {
       status
       msg
     }
-    updateSpreadTechInfo(userId: $userId) {
+    updateSpreadTechInfo(userToken: $userToken) {
       status
       msg
     }
-    pj1: updateSpreadProject(userId: $userId, projectIndex: 0) {
+    pj1: updateSpreadProject(userToken: $userToken, projectIndex: 0) {
       status
       msg
     }
-    pj2: updateSpreadProject(userId: $userId, projectIndex: 1) {
+    pj2: updateSpreadProject(userToken: $userToken, projectIndex: 1) {
       status
       msg
     }
-    pj3: updateSpreadProject(userId: $userId, projectIndex: 2) {
+    pj3: updateSpreadProject(userToken: $userToken, projectIndex: 2) {
       status
       msg
     }
@@ -390,8 +386,8 @@ gql`
 
 //ユーザ情報:スプレッドシートに基本情報書き出し
 gql`
-  mutation UpdateSpreadUserInfo($userId: String!) {
-    updateSpreadUserInfo(userId: $userId) {
+  mutation UpdateSpreadUserInfo($userToken: String!) {
+    updateSpreadUserInfo(userToken: $userToken) {
       status
       msg
     }
@@ -400,8 +396,8 @@ gql`
 
 //ユーザ情報:スプレッドシートに自己PR書き出し
 gql`
-  mutation UpdateSpeadSelfPR($userId: String!) {
-    updateSpeadSelfPR(userId: $userId) {
+  mutation UpdateSpeadSelfPR($userToken: String!) {
+    updateSpeadSelfPR(userToken: $userToken) {
       status
       msg
     }
@@ -410,8 +406,8 @@ gql`
 
 //ユーザ情報:スプレッドシートにURL書き出し
 gql`
-  mutation UpdateSpreadPortfolioUrl($userId: String!) {
-    updateSpreadPortfolioUrl(userId: $userId) {
+  mutation UpdateSpreadPortfolioUrl($userToken: String!) {
+    updateSpreadPortfolioUrl(userToken: $userToken) {
       status
       msg
     }
@@ -420,8 +416,8 @@ gql`
 
 //ユーザ情報:スプレッドシートにスキル要約書き出し
 gql`
-  mutation UpdateSpreadTechInfo($userId: String!) {
-    updateSpreadTechInfo(userId: $userId) {
+  mutation UpdateSpreadTechInfo($userToken: String!) {
+    updateSpreadTechInfo(userToken: $userToken) {
       status
       msg
     }
@@ -430,8 +426,8 @@ gql`
 
 //ユーザ情報:スプレッドシートに開発経験書き出し
 gql`
-  mutation UpdateSpreadProject($userId: String!, $projectIndex: Int!) {
-    updateSpreadProject(userId: $userId, projectIndex: $projectIndex) {
+  mutation UpdateSpreadProject($userToken: String!, $projectIndex: Int!) {
+    updateSpreadProject(userToken: $userToken, projectIndex: $projectIndex) {
       status
       msg
     }

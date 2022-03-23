@@ -26,7 +26,7 @@ export const SpreadUrl: FC<Props> = memo(({ onClose, setMenuItem }) => {
   const [updateSpreadPortfolioUrlMutation, { loading, error }] =
     useUpdateSpreadPortfolioUrlMutation({
       variables: {
-        userId: cookies.ForestaID,
+        userToken: cookies.ForestaID,
       },
     });
 

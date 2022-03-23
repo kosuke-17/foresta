@@ -42,7 +42,7 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
    */
   const { data, loading, error } = useGetUserPortfolioByIdQuery({
     variables: {
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const portfolioData = data?.portfolios.node.portfolio as Array<Portfolio>;
