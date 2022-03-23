@@ -1,17 +1,13 @@
 import "./App.css";
-import { Footer } from "./components/_layout/Footer";
-import { Header } from "./components/_layout/Header";
 import { Router } from "./Router";
 import styled from "styled-components";
 
 function App() {
   return (
     <_App>
-      <Header />
       <_Main>
         <Router />
       </_Main>
-      <Footer />
     </_App>
   );
 }
