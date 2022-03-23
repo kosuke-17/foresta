@@ -8,7 +8,7 @@ type Props = {
 
 export const ProfileAvatar: FC<Props> = memo((engineerId) => {
   return (
-    <Link to="/aboutme" state={{ state: engineerId }}>
+    <Link to="/aboutme" state={{ engineerId: engineerId.engineerId }}>
       <Avatar size="2xl" />
     </Link>
   );
