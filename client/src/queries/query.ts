@@ -528,8 +528,8 @@ gql`
 
 //学習リスト全件表示
 gql`
-  query GetAllStudyStack($userId: String!) {
-    getAllStudyStack(userId: $userId) {
+  query GetAllStudyStack($userToken: String!) {
+    getAllStudyStack(userToken: $userToken) {
       status
       node {
         id
@@ -599,6 +599,18 @@ gql`
   mutation RemoveStudyStack($studyStackId: String!) {
     removeStudyStack(studyStackId: $studyStackId) {
       status
+    }
+  }
+`;
+
+//技術リストを取得する
+gql`
+  query GetAllTechTree {
+    getAllTechTree {
+      id
+      name
+      color
+      techArea_id
     }
   }
 `;
