@@ -29,7 +29,7 @@ export const useStackList = () => {
   //userIdから学習記録データを取得する
   const { loading, data, error } = useGetAllStudyStackQuery({
     //クッキーからユーザーID取得
-    variables: { userId: cookies.ForestaID },
+    variables: { userToken: cookies.ForestaID },
   });
 
   //テックツリーから技術リストデータを取得
