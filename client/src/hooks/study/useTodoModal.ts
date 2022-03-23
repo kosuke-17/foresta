@@ -35,13 +35,24 @@ export const useTodoModal = () => {
     if (startedAt && finishedAt) {
       // カレンダーの日付変更がトリガーとなった時
       setTodo({
+        id: "",
+        title: "",
+        description: "",
         startedAt,
-        finishedAt: isSameDay(startedAt, finishedAt) ? null : finishedAt // 単一日の場合終了日をnullに
-      } as TodoData);
+        finishedAt: isSameDay(startedAt, finishedAt) ? null : finishedAt, // 単一日の場合終了日をnullに
+        isStatus: false,
+      });
     } else {
       // Todo追加ボタンがトリガーとなった時
-      // Todoは空のオブジェクトを設定
-      setTodo({} as TodoData);
+      // Todoはデフォルト値で初期化
+      setTodo({
+        id: "",
+        title: "",
+        description: "",
+        startedAt: "",
+        finishedAt: "",
+        isStatus: false,
+      });
     }
 
     onOpen();
