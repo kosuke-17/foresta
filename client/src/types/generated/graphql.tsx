@@ -408,7 +408,7 @@ export type ResStatus = {
 
 export type ResponsePortfolio = {
   msg?: Maybe<Scalars["String"]>;
-  node: Portfolio;
+  node: Array<Portfolio>;
   status: Scalars["String"];
 };
 
@@ -819,7 +819,7 @@ export type GetPortfolioByUserIdQueryVariables = Exact<{
 
 export type GetPortfolioByUserIdQuery = {
   getPortfolioByUserId: {
-    node: {
+    node: Array<{
       id: string;
       title: string;
       description: string;
@@ -827,7 +827,7 @@ export type GetPortfolioByUserIdQuery = {
       portfolioURL: string;
       skills: Array<string>;
       specSheetId: string;
-    };
+    }>;
   };
 };
 
@@ -1025,7 +1025,7 @@ export type UpdatePortfolioMutation = {
   updatePortfolio: {
     status: string;
     msg?: string | null;
-    node: {
+    node: Array<{
       id: string;
       title: string;
       description: string;
@@ -1034,7 +1034,7 @@ export type UpdatePortfolioMutation = {
       skills: Array<string>;
       userId: string;
       specSheetId: string;
-    };
+    }>;
   };
 };
 
