@@ -532,8 +532,8 @@ gql`
 
 //学習リスト全件表示
 gql`
-  query GetAllStudyStack($userId: String!) {
-    getAllStudyStack(userId: $userId) {
+  query GetAllStudyStack($userToken: String!) {
+    getAllStudyStack(userToken: $userToken) {
       status
       node {
         id
