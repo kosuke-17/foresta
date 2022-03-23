@@ -11,11 +11,20 @@ import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 import { UrlList } from "../../molucules/aboutMePublic/UrlList";
 import { MenuBar } from "./MenuBar";
 import { SpreadMenuBar } from "./SpreadMenuBar";
+import { useLocation } from "react-router-dom";
+
+interface State {
+  engineerId: string;
+}
 
 /**
  * AboutMeパブリックゾーン.
  */
 export const Public: FC = memo(() => {
+  // エンジニア一覧からengineerIdの値を渡す
+  const location = useLocation();
+  const { engineerId } = location.state as State;
+  console.log(engineerId);
   //cookieからID取得
   const [cookies] = useCookies();
   /**
