@@ -1,5 +1,5 @@
-import { memo, FC, Dispatch, SetStateAction, useState } from "react";
-import { Button, FormControl } from "@chakra-ui/react";
+import { memo, FC, Dispatch, SetStateAction } from "react";
+import { Button } from "@chakra-ui/react";
 
 import { TextInput } from "../../atoms/editMe/TextInput";
 import { useSpecSheet } from "../../../hooks/editMe/useSpecSheet";
@@ -42,7 +42,7 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
       {prevJobs?.map((item: any, index: number) => (
         <>
           <TextArea
-            key={index}
+            key={item.id}
             registers={register(`prevJobs_${index}` as any)}
           />
           <Button
