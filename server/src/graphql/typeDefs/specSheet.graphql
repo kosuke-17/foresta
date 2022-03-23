@@ -186,7 +186,7 @@ type ResponseSpecProject {
 
 type ResponsePortfolio {
   status: String!
-  node: Portfolio!
+  node: [Portfolio!]!
   msg: String
 }
 
