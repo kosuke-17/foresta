@@ -13,72 +13,58 @@ import { usePercentMonth } from "../../../hooks/study/usePercentMonth";
 import { subDays, subMonths } from "date-fns";
 import { DayStackTimeFig } from "../../molucules/stackList/DayStackTimeFig";
 import { MonthStackTimeFig } from "../../molucules/stackList/MonthStackTimeFig";
-import { StudyStack } from "../../../types/generated/graphql";
+import {
+  StudyStack,
+  useGetStudyColorQuery,
+} from "../../../types/generated/graphql";
 
 export const StackTime = memo(() => {
   //学習リストのデータを取得
   const { data } = useStackList();
   const studyData = data?.getAllStudyStack.node as Array<StudyStack>;
 
-  //色サンプル（背景）
-  const backgroundColors = [
-    "rgba(255, 99, 132, 0.2)",
-    "rgba(54, 162, 235, 0.2)",
-    "rgba(255, 206, 86, 0.2)",
-    "rgba(75, 192, 192, 0.2)",
-    "rgba(153, 102, 255, 0.2)",
-    "rgba(255, 188, 188, 0.2)",
-    "rgba(255, 127, 127, 0.2)",
-    "rgba(127, 255, 255, 0.2)",
-    "rgba(255, 99, 132, 0.2)",
-    "rgba(54, 162, 235, 0.2)",
-    "rgba(255, 206, 86, 0.2)",
-    "rgba(75, 192, 192, 0.2)",
-    "rgba(153, 102, 255, 0.2)",
-    "rgba(255, 188, 188, 0.2)",
-    "rgba(255, 127, 127, 0.2)",
-    "rgba(127, 255, 255, 0.2)",
-  ];
-  //色サンプル（線）
-  const borderColors = [
-    "rgba(255, 99, 132, 1)",
-    "rgba(54, 162, 235, 1)",
-    "rgba(255, 206, 86, 1)",
-    "rgba(75, 192, 192, 1)",
-    "rgba(153, 102, 255, 1)",
-    "rgba(255, 188, 188, 1)",
-    "rgba(255, 127, 127, 1)",
-    "rgba(127, 255, 255, 1)",
-    "rgba(255, 99, 132, 1)",
-    "rgba(54, 162, 235, 1)",
-    "rgba(255, 206, 86, 1)",
-    "rgba(75, 192, 192, 1)",
-    "rgba(153, 102, 255, 1)",
-    "rgba(255, 188, 188, 1)",
-    "rgba(255, 127, 127, 1)",
-    "rgba(127, 255, 255, 1)",
-  ];
+  /**
+   * 技術の色データを取得.
+   */
+  const { data: colors } = useGetStudyColorQuery();
+  console.log(colors);
+
+  //色（背景）
+  const backgroundColors = new Array<string>();
+  //色（線）
+  const borderColors = new Array<string>();
 
   //データ変換用
   const firstDatasets = [];
   //グラフ用
   const datasets = [];
 
-  if (data) {
+  if (data && colors) {
     const stackDatas = [...data.getAllStudyStack.node];
+    const colorData = [...colors.getAllTechTree];
     //学習リストで取得したデータをグラフ用に変換する
     for (const stackData of stackDatas) {
+      for (const color of colorData) {
+        //ラベル名と同じ色をプッシュする
+        if (stackData.skillTagId === color.name) {
+          backgroundColors.push(`#${color.color}`);
+          borderColors.push(`#${color.color}`);
+        }
+      }
+
       firstDatasets.push({
         label: stackData.skillTagId,
         data: [
           {
-            // x: format(new Date(stackData.createdAt), "yyyy-MM-dd"),
             x: new Date(stackData.createdAt).getTime(),
             y: stackData.timeStack,
           },
         ],
+        backgroundColor: backgroundColors,
+        borderColor: borderColors,
       });
     }
+
     //グラフ用に変換したデータを同じ技術内容ごとに振り分けて技術内容ごとに色分けする
     for (let i = 0; i < firstDatasets.length; i++) {
       if (firstDatasets[i]) {
@@ -94,13 +80,14 @@ export const StackTime = memo(() => {
         datasets.push({
           label: firstDatasets[i].label,
           data: firstDatasets[i].data,
+          borderWidth: 1,
           backgroundColor: backgroundColors[i],
           borderColor: borderColors[i],
-          borderWidth: 1,
         });
       }
     }
   }
+  console.log(firstDatasets);
   //グラフ表示用
   const chartDatas = { datasets };
 
@@ -166,8 +153,6 @@ export const StackTime = memo(() => {
     },
   };
   const monthOptions: ChartOptions<any> = {
-    //アスペクト比
-    // maintainAspectRatio: false,
     scales: {
       xAxes: {
         stacked: true,
