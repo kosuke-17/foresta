@@ -15,7 +15,7 @@ const navMenu = [
  */
 export const HeaderNav: FC = () => {
   return (
-    <Flex gap={5} marginLeft={10}>
+    <Flex gap={8} marginLeft={10}>
       {navMenu.map((nav) => (
         <NavLink
           key={nav.link}

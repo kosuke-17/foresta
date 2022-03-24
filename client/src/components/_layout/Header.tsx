@@ -15,7 +15,7 @@ export const Header: FC = memo(() => {
   const auth = cookies.ForestaID;
 
   return (
-    <Flex direction="column" borderBottom="3px solid #48bb78">
+    <Flex direction="column" borderBottom="3px solid #48bb78" px={4}>
       <_Header>
         <Link to="/study">
           <img src="/images/header-logo.png" alt="ヘッダーロゴ" />
@@ -37,7 +37,6 @@ const _Header = styled.header`
   height: 64px;
 
   & img {
-    margin-left: 20px;
     width: 150px;
     height: auto;
     padding: 8px 0;
