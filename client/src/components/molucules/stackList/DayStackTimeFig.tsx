@@ -3,6 +3,7 @@ import { format, subDays } from "date-fns";
 import { FC } from "react";
 import { Bar, Pie } from "react-chartjs-2";
 import { DayStackTime } from "../../../types/types";
+import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 
 /**
  * 日にちごとの学習時間グラフを表すコンポーネント
@@ -23,17 +24,49 @@ export const DayStackTimeFig: FC<DayStackTime> = (props) => {
   return (
     <>
       <Box>
-        <Flex justifyContent="center" alignItems="center" mb={20}>
-          <Button onClick={subDateBtn}>⏪</Button>
-          {format(subDays(new Date(), 7 + dateValueDay), "yyyy年MM月dd日")}~
-          {format(subDays(new Date(), dateValueDay), "yyyy年MM月dd日")}
-          <Button onClick={addDateBtn}>⏩</Button>
+        <Flex justifyContent="center" alignItems="center">
+          <Button
+            mr={5}
+            color="white"
+            backgroundColor="green.300"
+            onClick={subDateBtn}
+            shadow="base"
+            _focus={{ boxShadow: "none" }}
+          >
+            <ArrowLeftIcon />
+          </Button>
+          <Box>
+            {format(subDays(new Date(), 7 + dateValueDay), "yyyy年MM月dd日")}~
+            {format(subDays(new Date(), dateValueDay), "yyyy年MM月dd日")}
+          </Box>
+          <Button
+            ml={5}
+            color="white"
+            backgroundColor="green.300"
+            onClick={addDateBtn}
+            shadow="base"
+            _focus={{ boxShadow: "none" }}
+          >
+            <ArrowRightIcon />
+          </Button>
         </Flex>
-        <Flex gap={10} mb={30}>
-          <Box height={500} width={600}>
+        <Flex gap={10} m={10}>
+          <Box
+            width={600}
+            backgroundColor="white"
+            borderRadius="md"
+            shadow="sm"
+          >
             <Bar data={chartDatas} options={dayOptions} />
           </Box>
-          <Box height={300} width={300} alignItems="center">
+          <Box
+            height={300}
+            width={300}
+            alignItems="center"
+            backgroundColor="white"
+            borderRadius="md"
+            shadow="sm"
+          >
             {pieDateData && pieDateData.labels?.length != 0 ? (
               <Pie data={pieDateData} options={dayPercentOptions} />
             ) : (

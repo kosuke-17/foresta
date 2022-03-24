@@ -2,17 +2,17 @@ import "chart.js/auto";
 import { ChartOptions } from "chart.js";
 import { subDays, subMonths } from "date-fns";
 import { memo } from "react";
-import { Box, Button, Flex, Stack } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Stack } from "@chakra-ui/react";
 //pluginを使うため
 import "chartjs-plugin-datalabels";
 //日付を使うため
 import "chartjs-adapter-date-fns";
-import { usePercentDate } from "../../../hooks/study/usePercentDate";
-import { usePercentMonth } from "../../../hooks/study/usePercentMonth";
 import { DayStackTimeFig } from "../../molucules/stackList/DayStackTimeFig";
 import { MonthStackTimeFig } from "../../molucules/stackList/MonthStackTimeFig";
 import { useTimeFig } from "../../../hooks/study/useTimeFig";
 import { useFigBtn } from "../../../hooks/study/useFigBtn";
+import { usePercentMonth } from "../../../hooks/study/usePercentMonth";
+import { usePercentDate } from "../../../hooks/study/usePercentDate";
 
 /**
  * 学習記録のグラフを表示する
@@ -98,13 +98,36 @@ export const StackTime = memo(() => {
 
   return (
     <>
-      <Box width="100%">
+      <Heading as="h2" size="lg" mr={3} mt={5} ml={5}>
+        学習時間
+      </Heading>
+      <Box
+        width="full"
+        backgroundColor="#f5f5f5"
+        borderRadius="md"
+        mr={5}
+        ml={5}
+      >
         <Stack>
           <Flex justifyContent="center" gap={5} my={5}>
-            <Button colorScheme="green" onClick={monthBtn}>
+            <Button
+              backgroundColor="green.300"
+              onClick={monthBtn}
+              shadow="base"
+              color="white"
+              _hover={{ bg: "gray.300" }}
+              _focus={{ boxShadow: "none" }}
+            >
               月別
             </Button>
-            <Button colorScheme="green" onClick={dayBtn}>
+            <Button
+              backgroundColor="green.300"
+              onClick={dayBtn}
+              shadow="base"
+              color="white"
+              _hover={{ bg: "gray.300" }}
+              _focus={{ boxShadow: "none" }}
+            >
               日別
             </Button>
           </Flex>
