@@ -1,20 +1,21 @@
 import { FC, memo, useCallback, useState } from "react";
 import { Textarea, Flex } from "@chakra-ui/react";
 import styled from "styled-components";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 type Props = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  registers: any; //value(テキストボックスの値と紐づけ用)
+  registers: UseFormRegisterReturn; //value(テキストボックスの値と紐づけ用)
   errorMessage?: string | undefined; //エラーメッセージ(errors.registers?.messageの形で渡す)
   label?: string;
   placeholder?: string;
+  counter?: boolean; //カウンターの表示(デフォは非表示)
 };
 
 /**
  * テキストエリアコンポ―ネント.
  */
-export const TextAreaInput: FC<Props> = memo(
-  ({ registers, errorMessage, label, placeholder }) => {
+export const TextAreaWithCounter: FC<Props> = memo(
+  ({ registers, errorMessage, label, placeholder, counter = false }) => {
     const [textLength, setTextLength] = useState(150);
     /**
      * 文字を数える.
@@ -27,15 +28,17 @@ export const TextAreaInput: FC<Props> = memo(
     return (
       <>
         <_LabelItem>{label}</_LabelItem>
-        <Flex gap={2}>
-          残り文字数:
-          {textLength >= 0 ? (
-            <div>{textLength}</div>
-          ) : (
-            <_Length>{textLength}</_Length>
-          )}
-          文字
-        </Flex>
+        {counter && (
+          <Flex gap={2}>
+            残り文字数:
+            {textLength >= 0 ? (
+              <div>{textLength}</div>
+            ) : (
+              <_Length>{textLength}</_Length>
+            )}
+            文字
+          </Flex>
+        )}
         <Textarea {...registers} placeholder={placeholder} onChange={count} />
         <_ErrorMessage>{errorMessage}</_ErrorMessage>
       </>

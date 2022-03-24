@@ -3,7 +3,7 @@ import { Button, Spinner, Flex } from "@chakra-ui/react";
 import styled from "styled-components";
 
 import { TextInput } from "../../../atoms/editMe/TextInput";
-import { TextAreaInput } from "../../../atoms/editMe/TextAreaInput";
+import { TextAreaWithCounter } from "../../../atoms/editMe/TextAreaWithCounter";
 import { useSpecProject } from "../../../../hooks/editMe/useSpecProject";
 import {
   SpecProjectSheet,
@@ -171,11 +171,12 @@ export const SpecPjItem: FC<Props> = memo(
 
         {/* 詳細 */}
         <_TextItem>
-          <TextAreaInput
+          <TextAreaWithCounter
             registers={register("content")}
             errorMessage={errors.content?.message}
             label="詳細"
             placeholder="詳細"
+            counter={true}
           />
         </_TextItem>
 
