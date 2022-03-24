@@ -29,7 +29,9 @@ export const StudyListTable: FC<Props> = memo((props) => {
       <Thead>
         <Tr>
           <Th>技術内容</Th>
-          <Th>学習時間(累計)</Th>
+          <_Content>
+            <Th>学習時間(累計)</Th>
+          </_Content>
           <Th>開始日</Th>
           <Th>最終学習日</Th>
           <Th>メモ</Th>
@@ -39,13 +41,21 @@ export const StudyListTable: FC<Props> = memo((props) => {
         {stackSumList &&
           stackSumList.map((stackList) => (
             <Tr key={stackList.id}>
-              <Td>{stackList.skillTagId}</Td>
-              <Td>{stackList.timeStack}</Td>
               <Td>
-                {getFormattedStackDate(new Date(stackList.createdAtStart))}
+                <_Content>{stackList.skillTagId}</_Content>
               </Td>
               <Td>
-                {getFormattedStackDate(new Date(stackList.createdAtLast))}
+                <_Content>{stackList.timeStack}分</_Content>
+              </Td>
+              <Td>
+                <_Content>
+                  {getFormattedStackDate(new Date(stackList.createdAtStart))}
+                </_Content>
+              </Td>
+              <Td>
+                <_Content>
+                  {getFormattedStackDate(new Date(stackList.createdAtLast))}
+                </_Content>
               </Td>
               <Td>
                 <_Content>{stackList.content}</_Content>
