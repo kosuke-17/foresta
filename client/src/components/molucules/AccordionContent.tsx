@@ -20,7 +20,7 @@ type Props = {
 export const AccordionContent: FC<Props> = memo(({ title, content, size }) => {
   return (
     <>
-      <Accordion allowMultiple backgroundColor="white">
+      <Accordion allowMultiple backgroundColor="white" defaultIndex={[0]}>
         <AccordionItem outlineOffset={0}>
           <AccordionButton _focus={{ boxShadow: "none" }}>
             {size === "lg" ? (

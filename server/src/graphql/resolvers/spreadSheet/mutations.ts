@@ -6,19 +6,21 @@ import {
   Users,
   UserUrls,
 } from "../../../models";
-import { UrlType, UserIdType } from "../../../types";
+import { UrlType, UserToken } from "../../../types";
 import { getGoogleAuth } from "../../../utli/googleUtil";
 import { error, success } from "../responseStatus";
 import { format } from "date-fns";
+import { verifyJwtToken } from "../../../utli/fncJwtToken";
 
 const spreadSheetMutations = {
   /**
    * スプレッドシートに基本情報データを追加する.
    *
-   * @param userId - ユーザーID
+   * @param userToken - ユーザートークン
    * @returns 処理ステータス
    */
-  updateSpreadUserInfo: async (_: any, { userId }: UserIdType) => {
+  updateSpreadUserInfo: async (_: any, { userToken }: UserToken) => {
+    const userId = verifyJwtToken(userToken);
     const user = await Users.findById({ _id: userId });
     const specSheet = await SpecSheet.findOne({ userId: userId });
     const specSheetUserInfo = await SpecUserInfoSheet.findOne({
@@ -197,10 +199,11 @@ const spreadSheetMutations = {
   /**
    * ポートフォリオのためのUrlデータを出力する.
    *
-   * @param userID - ユーザーID
+   * @param userToken - ユーザートークン
    * @returns 処理のステータス
    */
-  updateSpreadPortfolioUrl: async (_: any, { userId }: UserIdType) => {
+  updateSpreadPortfolioUrl: async (_: any, { userToken }: UserToken) => {
+    const userId = verifyJwtToken(userToken);
     const user = await Users.findById({ _id: userId });
     const userUrls = await UserUrls.findOne({ userId: userId });
     if (!userUrls) {
@@ -247,10 +250,11 @@ const spreadSheetMutations = {
   /**
    * 自己PR、勤務時間外の学習、資格、前職経験を出力する.
    *
-   * @param userID - ユーザーID
+   * @param userToken - ユーザートークン
    * @returns 処理のステータス
    */
-  updateSpeadSelfPR: async (_: any, { userId }: UserIdType) => {
+  updateSpeadSelfPR: async (_: any, { userToken }: UserToken) => {
+    const userId = verifyJwtToken(userToken);
     const user = await Users.findById({ _id: userId });
     const { selfIntro, studyOnOwnTime, certification, prevJobs } =
       await SpecSheet.findOne({
@@ -303,7 +307,14 @@ const spreadSheetMutations = {
       return error("更新に失敗しました。");
     }
   },
-  updateSpreadTechInfo: async (_: any, { userId }: UserIdType) => {
+  /**
+   * スキル要約を出力する.
+   *
+   * @param userToken - ユーザートークン
+   * @returns 処理のステータス
+   */
+  updateSpreadTechInfo: async (_: any, { userToken }: UserToken) => {
+    const userId = verifyJwtToken(userToken);
     const user = await Users.findById({ _id: userId });
     const {
       operationEnvs,
@@ -361,7 +372,17 @@ const spreadSheetMutations = {
       return error("更新に失敗しました。");
     }
   },
-  updateSpreadProject: async (_: any, { userId, projectIndex }: any) => {
+  /**
+   * 開発経験を出力する.
+   * @param userToken - ユーザートークン
+   * @param projectIndex - 開発経験の番号
+   * @returns 処理のステータス
+   */
+  updateSpreadProject: async (
+    _: any,
+    { userToken, projectIndex }: { userToken: string; projectIndex: number }
+  ) => {
+    const userId = verifyJwtToken(userToken);
     const user = await Users.findById({ _id: userId });
     const { _id } = await SpecSheet.findOne({ userId: userId });
     const {

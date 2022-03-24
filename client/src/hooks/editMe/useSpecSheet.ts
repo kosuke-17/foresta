@@ -89,7 +89,7 @@ export const useSpecSheet = (
       setPrevJobs(other.node.prevJobs.map(() => ""));
     },
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
 

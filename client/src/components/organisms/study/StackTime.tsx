@@ -1,138 +1,48 @@
 import "chart.js/auto";
-import { memo, useState } from "react";
+import { ChartOptions } from "chart.js";
+import { subDays, subMonths } from "date-fns";
+import { memo } from "react";
 import { Box, Button, Flex, Stack } from "@chakra-ui/react";
 //pluginを使うため
 import "chartjs-plugin-datalabels";
-//optionを追加するため
-import { ChartOptions } from "chart.js";
 //日付を使うため
 import "chartjs-adapter-date-fns";
-import { useStackList } from "../../../hooks/study/useStackList";
-import { subDays, subMonths } from "date-fns";
+import { usePercentDate } from "../../../hooks/study/usePercentDate";
+import { usePercentMonth } from "../../../hooks/study/usePercentMonth";
 import { DayStackTimeFig } from "../../molucules/stackList/DayStackTimeFig";
 import { MonthStackTimeFig } from "../../molucules/stackList/MonthStackTimeFig";
+import { useTimeFig } from "../../../hooks/study/useTimeFig";
+import { useFigBtn } from "../../../hooks/study/useFigBtn";
 
+/**
+ * 学習記録のグラフを表示する
+ */
 export const StackTime = memo(() => {
-  //学習リストのデータを取得
-  const { data } = useStackList();
+  //学習時間グラフ表示用hooks使用
+  const { studyData, chartDatas } = useTimeFig();
 
-  //色サンプル（背景）
-  const backgroundColors = [
-    "rgba(255, 99, 132, 0.2)",
-    "rgba(54, 162, 235, 0.2)",
-    "rgba(255, 206, 86, 0.2)",
-    "rgba(75, 192, 192, 0.2)",
-    "rgba(153, 102, 255, 0.2)",
-    "rgba(255, 188, 188, 0.2)",
-    "rgba(255, 127, 127, 0.2)",
-    "rgba(127, 255, 255, 0.2)",
-    "rgba(255, 99, 132, 0.2)",
-    "rgba(54, 162, 235, 0.2)",
-    "rgba(255, 206, 86, 0.2)",
-    "rgba(75, 192, 192, 0.2)",
-    "rgba(153, 102, 255, 0.2)",
-    "rgba(255, 188, 188, 0.2)",
-    "rgba(255, 127, 127, 0.2)",
-    "rgba(127, 255, 255, 0.2)",
-  ];
-  //色サンプル（線）
-  const borderColors = [
-    "rgba(255, 99, 132, 1)",
-    "rgba(54, 162, 235, 1)",
-    "rgba(255, 206, 86, 1)",
-    "rgba(75, 192, 192, 1)",
-    "rgba(153, 102, 255, 1)",
-    "rgba(255, 188, 188, 1)",
-    "rgba(255, 127, 127, 1)",
-    "rgba(127, 255, 255, 1)",
-    "rgba(255, 99, 132, 1)",
-    "rgba(54, 162, 235, 1)",
-    "rgba(255, 206, 86, 1)",
-    "rgba(75, 192, 192, 1)",
-    "rgba(153, 102, 255, 1)",
-    "rgba(255, 188, 188, 1)",
-    "rgba(255, 127, 127, 1)",
-    "rgba(127, 255, 255, 1)",
-  ];
+  //グラフ表示切り替えボタン用hooks使用
+  const {
+    monthBtn,
+    dayBtn,
+    subDateBtn,
+    addDateBtn,
+    dateValueDay,
+    dateValueMonth,
+    isDay,
+  } = useFigBtn();
 
-  //データ変換用
-  const firstDatasets = [];
-  //グラフ用
-  const datasets = [];
+  //%表示用hooks使用
+  const { pieMonthData, monthPercentOptions } = usePercentMonth(
+    studyData,
+    dateValueMonth,
+  );
+  const { pieDateData, dayPercentOptions } = usePercentDate(
+    studyData,
+    dateValueDay,
+  );
 
-  if (data) {
-    const stackDatas = [...data.getAllStudyStack.node];
-    //学習リストで取得したデータをグラフ用に変換する
-    for (const stackData of stackDatas) {
-      firstDatasets.push({
-        label: stackData.skillTagId,
-        data: [
-          {
-            // x: format(new Date(stackData.createdAt), "yyyy-MM-dd"),
-            x: new Date(stackData.createdAt).getTime(),
-            y: stackData.timeStack,
-          },
-        ],
-      });
-    }
-    //グラフ用に変換したデータを同じ技術内容ごとに振り分けて技術内容ごとに色分けする
-    for (let i = 0; i < firstDatasets.length; i++) {
-      if (firstDatasets[i]) {
-        for (let j = i + 1; j < firstDatasets.length; j++) {
-          if (firstDatasets[j]) {
-            if (firstDatasets[i].label === firstDatasets[j].label) {
-              firstDatasets[i].data.push(firstDatasets[j].data[0]);
-              delete firstDatasets[j];
-            }
-          }
-        }
-        //それぞれのデータをグラフ用datasetsにpushする
-        datasets.push({
-          label: firstDatasets[i].label,
-          data: firstDatasets[i].data,
-          backgroundColor: backgroundColors[i],
-          borderColor: borderColors[i],
-          borderWidth: 1,
-        });
-      }
-    }
-  }
-  //グラフ表示用
-  const chartDatas = { datasets };
-
-  //月ごとか日毎か
-  const [isDay, setIsDay] = useState(true);
-  //月ごと表示ボタン
-  const monthBtn = () => {
-    setIsDay(false);
-  };
-  //日毎表示ボタン
-  const dayBtn = () => {
-    setIsDay(true);
-  };
-
-  //日付用グラフの変化させる日にち
-  const [dateValueDay, setDateValueDay] = useState(0);
-  //月用グラフの変化させる月
-  const [dateValueMonth, setDateValueMonth] = useState(0);
-  //過去の記録を見るメソッド
-  const subDateBtn = () => {
-    if (isDay) {
-      setDateValueDay(dateValueDay + 7);
-    } else {
-      setDateValueMonth(dateValueMonth + 1);
-    }
-  };
-  //未来の記録を見るメソッド
-  const addDateBtn = () => {
-    if (isDay) {
-      setDateValueDay(dateValueDay - 7);
-    } else {
-      setDateValueMonth(dateValueMonth - 1);
-    }
-  };
-
-  //グラフのオプションを指定
+  //棒グラフのオプションを指定
   const dayOptions: ChartOptions<any> = {
     scales: {
       xAxes: {
@@ -162,12 +72,10 @@ export const StackTime = memo(() => {
     },
   };
   const monthOptions: ChartOptions<any> = {
-    //アスペクト比
-    // maintainAspectRatio: false,
     scales: {
       xAxes: {
         stacked: true,
-        min: subMonths(new Date(), 3 + dateValueMonth).getTime(),
+        min: subMonths(new Date(), 1 + dateValueMonth).getTime(),
         max: subMonths(new Date(), dateValueMonth).getTime(),
         title: {
           display: true,
@@ -190,9 +98,9 @@ export const StackTime = memo(() => {
 
   return (
     <>
-      <Box width={600}>
+      <Box width="100%">
         <Stack>
-          <Flex>
+          <Flex justifyContent="center" gap={5} my={5}>
             <Button colorScheme="green" onClick={monthBtn}>
               月別
             </Button>
@@ -201,7 +109,7 @@ export const StackTime = memo(() => {
             </Button>
           </Flex>
 
-          <Flex>
+          <Flex justifyContent="center">
             <Box>
               {isDay ? (
                 <DayStackTimeFig
@@ -210,6 +118,8 @@ export const StackTime = memo(() => {
                   addDateBtn={addDateBtn}
                   chartDatas={chartDatas}
                   dayOptions={dayOptions}
+                  pieDateData={pieDateData}
+                  dayPercentOptions={dayPercentOptions}
                 />
               ) : (
                 <MonthStackTimeFig
@@ -218,6 +128,8 @@ export const StackTime = memo(() => {
                   addDateBtn={addDateBtn}
                   chartDatas={chartDatas}
                   monthOptions={monthOptions}
+                  pieMonthData={pieMonthData}
+                  monthPercentOptions={monthPercentOptions}
                 />
               )}
             </Box>

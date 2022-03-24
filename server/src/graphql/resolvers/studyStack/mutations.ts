@@ -4,6 +4,7 @@ import {
   StackAddType,
   StackUpdateType,
 } from "../../../types/studyStack";
+import { verifyJwtToken } from "../../../utli/fncJwtToken";
 import { success, error } from "../responseStatus";
 
 /**
@@ -18,7 +19,8 @@ const studyStackMutations = {
    * @returns errorステータス
    */
   addStudyStack: async (_: any, { stack }: StackAddType) => {
-    const { content, timeStack, createdAt, skillTagId, userId } = stack;
+    const { content, timeStack, createdAt, skillTagId, userToken } = stack;
+    const userId = verifyJwtToken(userToken);
     try {
       const newStudyStack = new StudyStack({
         content,
@@ -55,8 +57,15 @@ const studyStackMutations = {
    * @returns errorステータス
    */
   updateStudyStack: async (_: any, { stack }: StackUpdateType) => {
-    const { studyStackId, content, timeStack, createdAt, skillTagId, userId } =
-      stack;
+    const {
+      studyStackId,
+      content,
+      timeStack,
+      createdAt,
+      skillTagId,
+      userToken,
+    } = stack;
+    const userId = verifyJwtToken(userToken);
     try {
       const result = await StudyStack.findByIdAndUpdate(
         { _id: studyStackId },

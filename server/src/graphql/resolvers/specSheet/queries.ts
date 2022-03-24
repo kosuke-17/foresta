@@ -1,5 +1,6 @@
 import { Portfolio, Skill, SpecSheet } from "../../../models";
-import { NameType, UserIdType } from "../../../types";
+import { NameType, UserToken } from "../../../types";
+import { verifyJwtToken } from "../../../utli/fncJwtToken";
 import { error, success } from "../responseStatus";
 
 /**
@@ -8,10 +9,11 @@ import { error, success } from "../responseStatus";
 const specSheetQueries = {
   /**
    * ユーザーIDに紐づくスペックシートの取得.
-   * @param userId - ユーザーID
+   * @param userToken - ユーザートークン
    * @returns ユーザーIDに紐づくスペックシート
    */
-  getSheetByUserId: async (_: any, { userId }: UserIdType) => {
+  getSheetByUserId: async (_: any, { userToken }: UserToken) => {
+    const userId = verifyJwtToken(userToken);
     try {
       const result = await SpecSheet.findOne({ userId: userId });
       if (result === null) {
@@ -28,9 +30,10 @@ const specSheetQueries = {
    * @param userId - ユーザーID
    * @returns ユーザーIDに紐づくポートフォリオ
    */
-  getPortfolioByUserId: async (_: any, { userId }: UserIdType) => {
+  getPortfolioByUserId: async (_: any, { userToken }: UserToken) => {
+    const userId = verifyJwtToken(userToken);
     try {
-      const result = await Portfolio.findOne({ userId: userId });
+      const result = await Portfolio.find({ userId: userId });
       if (result === null) {
         return error("該当のポートフォリオが見つかりません。");
       }

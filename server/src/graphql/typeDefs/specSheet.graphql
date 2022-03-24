@@ -147,7 +147,7 @@ input PortfolioCreateInput {
   img: String
   portfolioURL: String
   skills: [String]!
-  userId: ID!
+  userToken: String!
   specSheetId: ID!
 }
 # ポートフォリオ更新
@@ -186,7 +186,7 @@ type ResponseSpecProject {
 
 type ResponsePortfolio {
   status: String!
-  node: Portfolio!
+  node: [Portfolio!]!
   msg: String
 }
 

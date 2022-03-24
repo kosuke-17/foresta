@@ -1,3 +1,4 @@
+import { ChartData, ChartOptions } from "chart.js";
 import { Todo, Portfolio, User, StudyStack } from "./generated/graphql";
 
 // Todoの型
@@ -41,21 +42,6 @@ export type TechTree = {
   indexOfTreeData: number;
 };
 
-//技術ブランチの型
-export type TechBranch = {
-  treeData: any;
-  techTreeData: any;
-  indexOfTreeData: number;
-  techBranchData: any;
-  indexOfBranchData: number;
-  cheakedLeaf: (
-    treeId: string,
-    branchId: string,
-    leafId: string,
-    isStatus: boolean,
-  ) => void;
-};
-
 //技術リーフの型
 export type TechLeaf = {
   treeData: any;
@@ -91,3 +77,70 @@ export type AddStack = Pick<
   StudyStack,
   "createdAt" | "skillTagId" | "timeStack" | "content"
 >;
+
+//Githubの草データを取得するときの型
+export type GithubLeafType = {
+  user: {
+    login: string;
+    contributionsCollection: {
+      contributionCalendar: {
+        totalContributions: number;
+        weeks: [
+          {
+            contributionDays: [
+              {
+                contributionCount: number;
+                date: string;
+                color: string;
+              },
+            ];
+          },
+        ];
+      };
+    };
+  };
+};
+
+//日にち毎の学習時間グラフ用
+export type DayStackTime = {
+  subDateBtn: () => void;
+  dateValueDay: number;
+  addDateBtn: () => void;
+  chartDatas: {
+    datasets: {
+      label: string;
+      data: {
+        x: number;
+        y: number;
+      }[];
+      backgroundColor: string;
+      borderColor: string;
+      borderWidth: number;
+    }[];
+  };
+  dayOptions: any;
+  pieDateData: ChartData<"pie">;
+  dayPercentOptions: any;
+};
+
+//月毎の学習時間グラフ用
+export type MonthStackTime = {
+  subDateBtn: () => void;
+  dateValueMonth: number;
+  addDateBtn: () => void;
+  chartDatas: {
+    datasets: {
+      label: string;
+      data: {
+        x: number;
+        y: number;
+      }[];
+      backgroundColor: string;
+      borderColor: string;
+      borderWidth: number;
+    }[];
+  };
+  monthOptions: any;
+  pieMonthData: ChartData<"pie">;
+  monthPercentOptions: ChartOptions<"pie">;
+};

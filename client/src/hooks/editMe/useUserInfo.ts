@@ -9,6 +9,7 @@ import {
   GetUserByIdDocument,
   useUpdateUserMutation,
 } from "../../types/generated/graphql";
+import { useToast } from "@chakra-ui/react";
 
 /**
  * バリデーションチェック.
@@ -28,6 +29,11 @@ const schema = yup.object().shape({
     .trim()
     .required("GitHubアカウント名を入力して下さい")
     .max(39, "39文字以内で入力して下さい"),
+  //スプレッドシートID
+  spreadSheetID: yup
+    .string()
+    .trim()
+    .required("スプレッドシートIDを入力して下さい"),
 });
 
 /**
@@ -44,11 +50,14 @@ export const useUserInfo = (
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
+  //トーストの使用
+  const toast = useToast();
+
   //cookieからID取得
   const [cookies] = useCookies();
   const { data: userData } = useGetUserByIdQuery({
     variables: {
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const user = userData?.user.node;
@@ -66,6 +75,7 @@ export const useUserInfo = (
   setValue("name", user?.name);
   setValue("jobType", user?.jobType);
   setValue("githubURL", user?.githubURL);
+  setValue("spreadSheetID", user?.spreadSheetID);
 
   /**
    * キャンセルボタンを押した時に呼ばれる.
@@ -97,16 +107,27 @@ export const useUserInfo = (
               name: data.name,
               jobType: data.jobType,
               githubURL: data.githubURL,
-              spreadSheetID: user?.spreadSheetID || "", //受け取ったデータそのまま
+              spreadSheetID: data.spreadSheetID,
             },
           },
         });
         cancel();
+        toast({
+          title: "更新しました",
+          position: "bottom-left",
+          status: "success",
+          isClosable: true,
+        });
       } catch (error) {
-        console.log(error);
+        toast({
+          title: "失敗しました",
+          position: "bottom-left",
+          status: "error",
+          isClosable: true,
+        });
       }
     },
-    [cancel, cookies.ForestaID, updateUserInfo, user?.spreadSheetID],
+    [cancel, cookies.ForestaID, toast, updateUserInfo],
   );
 
   return {

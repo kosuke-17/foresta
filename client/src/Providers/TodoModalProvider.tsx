@@ -32,7 +32,14 @@ export const TodoModalProvider: FC<Props> = (props) => {
   // モーダルのモード (read, edit, add, delete)
   const [modalMode, setModalMode] = useState<TodoModalModeType>("read");
   // モーダルに表示する対象のTodo
-  const [todo, setTodo] = useState<TodoData>({} as TodoData);
+  const [todo, setTodo] = useState<TodoData>({
+    id: "",
+    title: "",
+    description: "",
+    startedAt: "",
+    finishedAt: "",
+    isStatus: false,
+  });
 
   return (
     <TodoModalContext.Provider

@@ -85,11 +85,17 @@ export const useUserUrls = (
         toast({
           title: "追加しました",
           status: "success",
+          position: "bottom-left",
           isClosable: true,
         });
         cancel();
       } catch (error) {
-        console.log(error);
+        toast({
+          title: "失敗しました",
+          position: "bottom-left",
+          status: "error",
+          isClosable: true,
+        });
       }
     },
     [cancel, toast, updatePortfolio, urlTableId],
@@ -120,11 +126,17 @@ export const useUserUrls = (
         toast({
           title: "削除しました",
           status: "success",
+          position: "bottom-left",
           isClosable: true,
         });
         cancel();
       } catch (error) {
-        console.log(error);
+        toast({
+          title: "失敗しました",
+          position: "bottom-left",
+          status: "error",
+          isClosable: true,
+        });
       }
     },
     [cancel, deleteUrl, toast, urlTableId],
