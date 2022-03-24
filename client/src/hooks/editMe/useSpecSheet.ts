@@ -15,21 +15,6 @@ import {
 } from "../../types/generated/graphql";
 
 /**
- * バリデーションチェック.
- */
-const schema = yup.object().shape({
-  //業務外のバリデーション
-  studyOnOwnTime: yup
-    .string()
-    .trim()
-    .required("業務外の取り組みを入力してください"),
-  //資格アカウントのバリデーション
-  certification: yup.string().trim().required("資格を入力してください"),
-  // PRのバリデーション
-  selfIntro: yup.string().trim().required("PRを入力してください"),
-});
-
-/**
  * public部分スペックシートその他情報編集メソッド.
  * @returns
  * - register:入力したデータ
@@ -38,16 +23,40 @@ const schema = yup.object().shape({
  * - onSubmit:更新ボタンを押した時のメソッド
  */
 export const useSpecSheet = (
-  // userData: UserType,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
   const [cookies] = useCookies();
-  const { data: specSheetData } = useGetPrAndSheetByUserIdQuery({
-    variables: {
-      userToken: cookies.ForestaID,
-    },
-  });
+
+  const [prevJobs, setPrevJobs] = useState([""]);
+
+  /**
+   * バリデーションチェック.
+   */
+  const schema = yup.object().shape(
+    prevJobs.reduce(
+      (acc, _, index) => {
+        return {
+          ...acc,
+          [`prevJobs_${index}`]: yup
+            .string()
+            .trim()
+            .required("前職を入力してください"),
+        };
+      },
+      {
+        //業務外のバリデーション
+        studyOnOwnTime: yup
+          .string()
+          .trim()
+          .required("業務外の取り組みを入力してください"),
+        //資格アカウントのバリデーション
+        certification: yup.string().trim().required("資格を入力してください"),
+        // PRのバリデーション
+        selfIntro: yup.string().trim().required("PRを入力してください"),
+      },
+    ),
+  );
 
   // バリデーション機能を呼び出し
   const {
@@ -55,24 +64,34 @@ export const useSpecSheet = (
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    //デフォルト値をセット
-    defaultValues: {
-      studyOnOwnTime: specSheetData?.other.node.studyOnOwnTime,
-      certification: specSheetData?.other.node.certification,
-      selfIntro: specSheetData?.pr.node.selfIntro,
+  });
+  const { data: specSheetData } = useGetPrAndSheetByUserIdQuery({
+    // データ取得後に表示
+    onCompleted: ({ other, pr }: any) => {
+      // デフォルト値をセット
+      reset({
+        certification: other.node.certification,
+        selfIntro: pr.node.selfIntro,
+        studyOnOwnTime: other.node.studyOnOwnTime,
+        ...other.node.prevJobs?.reduce((acc: any, cur: any, index: number) => {
+          return {
+            ...acc,
+            [`prevJobs_${index}`]: cur?.content,
+          };
+        }, {}),
+      });
+
+      // 空の入力欄のみを用意（デフォルト値はresetでセット）
+      setPrevJobs(other.node.prevJobs.map(() => ""));
+    },
+    variables: {
+      userToken: cookies.ForestaID,
     },
   });
-
-  // 前職のデータの型を指定
-  const preData = specSheetData?.other.node.prevJobs as Array<{
-    content: string;
-  }>;
-
-  // 前職のデフォルト値をセット
-  const [prevJobs, setPrevJobs] = useState(preData);
 
   /**
    * キャンセルボタンを押した時に呼ばれる.
@@ -96,24 +115,29 @@ export const useSpecSheet = (
    */
   const onSubmit = useCallback(
     async (data: any) => {
-      // データ送信用にフォーマット
-      const jobs = new Array<string>();
-      prevJobs?.map((item) => {
-        jobs.push(item.content);
-      });
+      const body = Object.keys(data).reduce((acc: any, cur: string) => {
+        console.log("カレント", cur);
 
-      //空白の入力欄は削除
-      const formatJobs = jobs.filter((blank) => blank);
+        // データがない時は送信しない
+        if (cur.includes("prevJobs") && !data[cur]) return acc;
+        // prevJobsが送信するデータに含まれる時はprevJobsの配列を作る
+        if (cur.includes("prevJobs"))
+          return {
+            ...acc,
+            prevJobs: acc.prevJobs ? [...acc.prevJobs, data[cur]] : [data[cur]],
+          };
+        return {
+          ...acc,
+          [cur]: data[cur],
+        };
+      }, {});
 
       try {
         await updateSpecSheet({
           variables: {
             specSheet: {
               specSheetId: specSheetData?.other.node.id as string,
-              certification: data.certification,
-              prevJobs: formatJobs,
-              selfIntro: data.selfIntro,
-              studyOnOwnTime: data.studyOnOwnTime,
+              ...body,
             },
           },
         });
@@ -123,7 +147,7 @@ export const useSpecSheet = (
       }
     },
 
-    [cancel, prevJobs, specSheetData?.other.node.id, updateSpecSheet],
+    [cancel, specSheetData?.other.node.id, updateSpecSheet],
   );
 
   return {
