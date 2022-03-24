@@ -1,10 +1,10 @@
 import { FC, memo } from "react";
 import { Input, Flex } from "@chakra-ui/react";
 import styled from "styled-components";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 type Props = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  registers: any; //value(テキストボックスの値と紐づけ用)
+  registers: UseFormRegisterReturn; //value(テキストボックスの値と紐づけ用)
   errorMessage?: string | undefined; //エラーメッセージ(errors.registers?.messageの形で渡す)
   label?: string;
   placeholder?: string;
