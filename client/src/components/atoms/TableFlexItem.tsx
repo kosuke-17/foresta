@@ -1,6 +1,5 @@
 import { memo, FC, useCallback, SetStateAction, Dispatch } from "react";
-import { Box, Flex, Button, color, background } from "@chakra-ui/react";
-import { graphqlSync } from "graphql";
+import { Box, Flex, Button } from "@chakra-ui/react";
 import { XIcon } from "@primer/octicons-react";
 
 type Props = {
