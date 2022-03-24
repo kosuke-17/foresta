@@ -36,7 +36,10 @@ const schema = yup.object().shape({
     .min(0, "0以上の値を入力してください")
     .integer("整数で入力してください")
     .typeError("学習時間を入力してください"),
-  content: yup.string().required("メモを入力してください"),
+  content: yup
+    .string()
+    .trim("メモを入力してくだざい")
+    .required("メモを入力してください"),
 });
 
 /**
