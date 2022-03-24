@@ -818,7 +818,7 @@ export type GetPortfolioByUserIdQueryVariables = Exact<{
 }>;
 
 export type GetPortfolioByUserIdQuery = {
-  getPortfolioByUserId: {
+  portfolios: {
     node: Array<{
       id: string;
       title: string;
@@ -1489,7 +1489,7 @@ export type GetUserByIdQueryResult = Apollo.QueryResult<
 >;
 export const GetPortfolioByUserIdDocument = gql`
   query GetPortfolioByUserId($userToken: String!) {
-    getPortfolioByUserId(userToken: $userToken) {
+    portfolios: getPortfolioByUserId(userToken: $userToken) {
       node {
         id
         title
