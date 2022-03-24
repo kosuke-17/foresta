@@ -1,5 +1,8 @@
+import { AddIcon } from "@chakra-ui/icons";
 import {
-  Center,
+  Box,
+  Flex,
+  Heading,
   Tab,
   TabList,
   TabPanel,
@@ -25,8 +28,14 @@ export const StackList = memo(() => {
   const { error, loading, data, stackSumList } = useStackList();
 
   return (
-    <div>
-      <Center>
+    <>
+      <Flex align="center" gap={1} mb={1}>
+        <Heading as="h2" size="lg" mr={3} ml={5}>
+          学習記録
+        </Heading>
+        <StudyModal title="記録追加" stackId="" icon={<AddIcon />} />
+      </Flex>
+      <Box mr={5} ml={5}>
         <Tabs
           isFitted
           isLazy
@@ -45,6 +54,7 @@ export const StackList = memo(() => {
                 _selected={{ color: "white", bg: "green.300" }}
                 _hover={{ bg: "gray.300" }}
                 backgroundColor="white"
+                shadow="base"
               >
                 {tab}
               </Tab>
@@ -73,9 +83,7 @@ export const StackList = memo(() => {
             <p>学習記録が1件もありません</p>
           )}
         </Tabs>
-      </Center>
-      {/* 仮の学習記録ボタン */}
-      <StudyModal title="記録追加" buttonTitle="記録" stackId="" />
-    </div>
+      </Box>
+    </>
   );
 });

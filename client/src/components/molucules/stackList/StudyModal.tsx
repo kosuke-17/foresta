@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { FC, memo } from "react";
+import { FC, JSXElementConstructor, memo, ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { useGetStudyStackByIdQuery } from "../../../types/generated/graphql";
 import { StackButton } from "../../atoms/study/StackBotton";
@@ -23,8 +23,8 @@ import { format } from "date-fns";
 
 type Props = {
   title: string;
-  buttonTitle: string;
   stackId: string;
+  icon: ReactElement<any, string | JSXElementConstructor<any>> | undefined;
 };
 
 //バリデーションチェック
@@ -49,7 +49,7 @@ export const StudyModal: FC<Props> = memo((props) => {
   //モーダルの開閉
   const { isOpen, onOpen, onClose } = useDisclosure();
   //propsでもらうもの
-  const { title, buttonTitle, stackId } = props;
+  const { title, icon, stackId } = props;
   //学習記録を１件取得クエリー（本当はdaleyを使いたい）
   const { loading, data, error } = useGetStudyStackByIdQuery({
     variables: { studyStackId: stackId },
@@ -100,8 +100,15 @@ export const StudyModal: FC<Props> = memo((props) => {
 
   return (
     <>
-      <Button onClick={openMethod} _focus={{ boxShadow: "none" }}>
-        {buttonTitle}
+      <Button
+        onClick={openMethod}
+        _focus={{ boxShadow: "none" }}
+        backgroundColor="green.300"
+        color="white"
+        shadow="base"
+        _hover={{ bg: "gray.300" }}
+      >
+        {icon}
       </Button>
 
       <Modal
@@ -143,6 +150,7 @@ export const StudyModal: FC<Props> = memo((props) => {
               mx={3}
               _focus={{ boxShadow: "none" }}
               onClick={closeMethod}
+              shadow="base"
             >
               キャンセル
             </Button>
