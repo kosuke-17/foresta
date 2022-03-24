@@ -24,7 +24,6 @@ export type StackList = {
  */
 export const useStackList = () => {
   const [cookies] = useCookies();
-  console.log(cookies.ForestaID);
 
   //userIdから学習記録データを取得する
   const { loading, data, error } = useGetAllStudyStackQuery({
