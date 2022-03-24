@@ -103,7 +103,7 @@ export const useUserInfo = (
         await updateUserInfo({
           variables: {
             user: {
-              userId: cookies.ForestaID, //受け取ったデータそのまま
+              userToken: cookies.ForestaID, //受け取ったデータそのまま
               name: data.name,
               jobType: data.jobType,
               githubURL: data.githubURL,

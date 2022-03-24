@@ -16,18 +16,13 @@ import { EditPortfolio } from "./EditPortfolio";
 import { useNewPortfolio } from "../../../../hooks/editMe/useNewPortfolio";
 import {
   Portfolio,
-  useGetUserPortfolioByIdQuery,
+  useGetPortfolioByUserIdQuery,
 } from "../../../../types/generated/graphql";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
   onClose: () => void; //モーダルを閉じるメソッド
 };
-
-//やること:
-//CSS
-//バリデーション
-//asを処理
 
 /**
  * 制作物編集画面.
@@ -40,12 +35,12 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
   /**
    * 制作物情報デフォルト値取得.
    */
-  const { data, loading, error } = useGetUserPortfolioByIdQuery({
+  const { data, loading, error } = useGetPortfolioByUserIdQuery({
     variables: {
       userToken: cookies.ForestaID,
     },
   });
-  const portfolioData = data?.portfolios.node.portfolio as Array<Portfolio>;
+  const portfolioData = data?.portfolios.node as Array<Portfolio>;
 
   //編集モード
   const [editMode, setEditMode] = useState("");

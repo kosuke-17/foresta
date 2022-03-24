@@ -33,7 +33,7 @@ export const StudyModalInput: FC<Props> = memo((props) => {
       />
       <StackSelectSkill registers={register("skillTagId")} label="技術" />
       <StackInput
-        label="時間"
+        label="時間（分）"
         type="number"
         placeholder="時間"
         registers={register("timeStack")}
