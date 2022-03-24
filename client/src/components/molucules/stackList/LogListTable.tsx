@@ -1,17 +1,8 @@
-import {
-  Table,
-  TableCaption,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-} from "@chakra-ui/react";
+import { Table, Thead, Tr, Th, Tbody, Td } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { GetAllStudyStackQuery } from "../../../types/generated/graphql";
 import { getFormattedStackDate } from "../../../utils/methods";
 import { StudyModal } from "./StudyModal";
-
 
 type Props = {
   data: GetAllStudyStackQuery | undefined; //データベースから取得した記録データ
@@ -24,8 +15,7 @@ export const LogListTable: FC<Props> = memo((props) => {
   const { data } = props;
 
   return (
-    <Table size="md" variant="simple" colorScheme="green">
-      <TableCaption>更新情報</TableCaption>
+    <Table variant="simple" colorScheme="green">
       <Thead>
         <Tr>
           <Th>記録日時</Th>

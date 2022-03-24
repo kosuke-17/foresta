@@ -1,12 +1,4 @@
-import {
-  Table,
-  TableCaption,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-} from "@chakra-ui/react";
+import { Table, Thead, Tr, Th, Tbody, Td } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { GetAllStudyStackQuery } from "../../../types/generated/graphql";
 import { StackList } from "../../../hooks/study/useStackList";
@@ -24,14 +16,15 @@ type Props = {
 export const StudyListTable: FC<Props> = memo((props) => {
   const { stackSumList } = props;
   return (
-    <Table size="md" variant="simple" colorScheme="green">
-      <TableCaption>学習の記録</TableCaption>
+    <Table variant="simple" colorScheme="green">
       <Thead>
         <Tr>
-          <Th>技術内容</Th>
-          <_Content>
-            <Th>学習時間(累計)</Th>
-          </_Content>
+          <Th>
+            <_Content>技術内容</_Content>
+          </Th>
+          <Th>
+            <_Content>学習時間(累計)</_Content>
+          </Th>
           <Th>開始日</Th>
           <Th>最終学習日</Th>
           <Th>メモ</Th>

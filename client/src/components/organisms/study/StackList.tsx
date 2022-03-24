@@ -13,7 +13,6 @@ import { LogListTable } from "../../molucules/stackList/LogListTable";
 import { StudyListTable } from "../../molucules/stackList/StudyListTable";
 import { StudyModal } from "../../molucules/stackList/StudyModal";
 
-
 //タブ名
 const tabNames = ["学習リスト", "更新情報"] as const;
 
@@ -34,9 +33,9 @@ export const StackList = memo(() => {
           variant="soft-rounded"
           colorScheme="green"
           width="full"
-          backgroundColor="gray.100"
-          margin="20px"
+          backgroundColor="#f5f5f5"
           padding="20px"
+          w="full"
         >
           <TabList>
             {tabNames.map((tab, index) => (
@@ -58,8 +57,6 @@ export const StackList = memo(() => {
           ) : data?.getAllStudyStack.node.length ? (
             <TabPanels
               overflowY="auto"
-              overflowX="visible"
-              white-space="nowrap"
               height="300px"
               backgroundColor="white"
               margin="30px"
@@ -67,6 +64,7 @@ export const StackList = memo(() => {
               <TabPanel>
                 <StudyListTable data={data} stackSumList={stackSumList} />
               </TabPanel>
+
               <TabPanel>
                 <LogListTable data={data} />
               </TabPanel>
