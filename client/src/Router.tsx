@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { TodosArea } from "./components/organisms/study/TodosArea";
 import { NotFound } from "./container/pages/NotFound";
 import { Study } from "./container/templates/Study";
 import { AboutMe } from "./container/templates/AboutMe";

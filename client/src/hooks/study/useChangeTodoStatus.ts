@@ -1,5 +1,5 @@
 import { MouseEventHandler, useCallback } from "react";
-import { useChangeTodoStatusMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
+import { useChangeTodoStatusMutation } from "../../types/generated/graphql";
 
 /**
  * Todoの完了/未完了を切り替えるためのHook.
@@ -8,9 +8,7 @@ import { useChangeTodoStatusMutation, GetAllTodoByUserDocument } from "../../typ
 export const useChangeTodoStatus = (todoId: string) => {
 
   // Todoの完了/未完了を切り替えるためのmutation
-  const [changeTodoStatus] = useChangeTodoStatusMutation({
-    refetchQueries: [GetAllTodoByUserDocument],
-  });
+  const [changeTodoStatus] = useChangeTodoStatusMutation();
 
   /**
    * チェックボックス押下時にTodoの完了/未完了を切り替える.

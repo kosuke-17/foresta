@@ -11,7 +11,7 @@ import {
 import styled from "styled-components";
 
 import { DateRangePicker } from "../../atoms/study/DateRangePicker";
-import { TodoHeaderButtons } from "../../molucules/todos/TodoHeaderButtons";
+import { TodoHeaderButtons } from "./TodoHeaderButtons";
 import type { TodoData, TodoModalModeType } from "../../../types/types";
 import { useEditTodo } from "../../../hooks/study/useEditTodo";
 import { TodoModalContext } from "../../../Providers/TodoModalProvider";
@@ -71,6 +71,7 @@ export const TodoEditForm: FC<Props> = memo((props) => {
               focusBorderColor="green.200"
               bg="white"
               {...register("title")}
+              placeholder="必須・50文字以内"
             />
             <Box textColor="red" fontSize="xs">
               {errors.title?.message}

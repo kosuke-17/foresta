@@ -1394,10 +1394,7 @@ export type ChangeTodoStatusMutationVariables = Exact<{
 }>;
 
 export type ChangeTodoStatusMutation = {
-  changeTodoStatus: {
-    status: string;
-    node: { isStatus: boolean; title: string };
-  };
+  changeTodoStatus: { status: string; node: { id: string; isStatus: boolean } };
 };
 
 export type AddTodoMutationVariables = Exact<{
@@ -4111,8 +4108,8 @@ export const ChangeTodoStatusDocument = gql`
     changeTodoStatus(todoId: $todoId) {
       status
       node {
+        id
         isStatus
-        title
       }
     }
   }

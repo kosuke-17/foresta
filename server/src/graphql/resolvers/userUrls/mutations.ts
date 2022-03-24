@@ -14,7 +14,8 @@ const userUrlsMutations = {
     try {
       const result = await UserUrls.findByIdAndUpdate(
         { _id: urlData.urlId },
-        { $addToSet: { user_urls: urlData } }
+        { $addToSet: { user_urls: urlData } },
+        { new: true }
       );
       return success(result, "追加に成功しました。");
     } catch {
