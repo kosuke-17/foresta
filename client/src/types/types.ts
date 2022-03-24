@@ -1,3 +1,5 @@
+import { ChartData, ChartOptions } from "chart.js";
+import { string } from "yup";
 import { Todo, Portfolio, User, StudyStack } from "./generated/graphql";
 
 // Todoの型
@@ -32,6 +34,15 @@ export type userInfoEditType = {
   name: string;
   jobType: string;
   githubURL: string;
+};
+
+//制作物入力値
+export type portfolioInputType = {
+  title: string;
+  description: string;
+  img: string;
+  portfolioURL: string;
+  specSheetId: string;
 };
 
 //技術ツリーの型
@@ -98,4 +109,48 @@ export type GithubLeafType = {
       };
     };
   };
+};
+
+//日にち毎の学習時間グラフ用
+export type DayStackTime = {
+  subDateBtn: () => void;
+  dateValueDay: number;
+  addDateBtn: () => void;
+  chartDatas: {
+    datasets: {
+      label: string;
+      data: {
+        x: number;
+        y: number;
+      }[];
+      backgroundColor: string;
+      borderColor: string;
+      borderWidth: number;
+    }[];
+  };
+  dayOptions: any;
+  pieDateData: ChartData<"pie">;
+  dayPercentOptions: any;
+};
+
+//月毎の学習時間グラフ用
+export type MonthStackTime = {
+  subDateBtn: () => void;
+  dateValueMonth: number;
+  addDateBtn: () => void;
+  chartDatas: {
+    datasets: {
+      label: string;
+      data: {
+        x: number;
+        y: number;
+      }[];
+      backgroundColor: string;
+      borderColor: string;
+      borderWidth: number;
+    }[];
+  };
+  monthOptions: any;
+  pieMonthData: ChartData<"pie">;
+  monthPercentOptions: ChartOptions<"pie">;
 };

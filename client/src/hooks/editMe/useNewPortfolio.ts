@@ -1,15 +1,16 @@
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useCookies } from "react-cookie";
 
 import {
-  GetUserPortfolioByIdDocument,
+  GetPortfolioByUserIdDocument,
   useCreatePortfolioMutation,
   useGetSpreadSheetIdQuery,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
+import { portfolioInputType } from "../../types/types";
 
 /**
  * バリデーションチェック.
@@ -57,11 +58,11 @@ export const useNewPortfolio = (
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm({
+  } = useForm<portfolioInputType>({
     resolver: yupResolver(schema),
   });
 
-  setValue("specSheetId", specSheetId);
+  setValue("specSheetId", String(specSheetId));
 
   //トーストの使用
   const toast = useToast();
@@ -96,7 +97,7 @@ export const useNewPortfolio = (
    * 制作物情報新規追加.（リフェッチ機能）
    */
   const [updatePortfolio] = useCreatePortfolioMutation({
-    refetchQueries: [GetUserPortfolioByIdDocument], //データを表示するクエリーのDocument
+    refetchQueries: [GetPortfolioByUserIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -104,8 +105,8 @@ export const useNewPortfolio = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = useCallback(
-    async (data: any) => {
+  const onSubmit: SubmitHandler<portfolioInputType> = useCallback(
+    async (data) => {
       try {
         await updatePortfolio({
           variables: {
@@ -115,7 +116,7 @@ export const useNewPortfolio = (
               img: data.img,
               portfolioURL: data.portfolioURL,
               skills: hookSkillArray,
-              userId: cookies.ForestaID,
+              userToken: cookies.ForestaID,
               specSheetId: data.specSheetId,
             },
           },

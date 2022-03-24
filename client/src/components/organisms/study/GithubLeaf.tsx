@@ -16,6 +16,7 @@ import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 const query = gql`
   query ($githubUrl: String!) {
     user(login: $githubUrl) {
+      login
       contributionsCollection {
         contributionCalendar {
           totalContributions
@@ -76,7 +77,6 @@ export const GithubLeaf = memo(() => {
   //取得したGithubデータを表示用配列に格納
   const [getData, setGetData] = useState<GithubLeafType>();
 
-
   //データをメソッドとして取得してきて、useEffectで更新させる
   useEffect(() => {
     (async () => {
@@ -91,8 +91,8 @@ export const GithubLeaf = memo(() => {
 
   return (
     <>
-      {/* <Box>GithubID :{getData && getData.user.login}</Box> */}
       <Box>
+        <Box>GithubID :{getData && getData.user.login}</Box>
         年間のコミット数：
         {getData &&
           getData.user.contributionsCollection.contributionCalendar

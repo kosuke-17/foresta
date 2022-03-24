@@ -19,7 +19,7 @@ gql`
 //ユーザ情報:制作物取得.
 gql`
   query GetPortfolioByUserId($userToken: String!) {
-    getPortfolioByUserId(userToken: $userToken) {
+    portfolios: getPortfolioByUserId(userToken: $userToken) {
       node {
         id
         title

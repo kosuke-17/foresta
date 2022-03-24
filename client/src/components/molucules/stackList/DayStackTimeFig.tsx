@@ -1,36 +1,15 @@
 import { Box, Button, Flex } from "@chakra-ui/react";
-import { ChartData } from "chart.js";
 import { format, subDays } from "date-fns";
 import { FC } from "react";
 import { Bar, Pie } from "react-chartjs-2";
-
-type Props = {
-  subDateBtn: () => void;
-  dateValueDay: number;
-  addDateBtn: () => void;
-  chartDatas: {
-    datasets: {
-      label: string;
-      data: {
-        x: number;
-        y: number;
-      }[];
-      backgroundColor: string;
-      borderColor: string;
-      borderWidth: number;
-    }[];
-  };
-  dayOptions: any;
-  pieDateData: ChartData<"pie">;
-  dayPercentOptions: any;
-};
+import { DayStackTime } from "../../../types/types";
 
 /**
  * 日にちごとの学習時間グラフを表すコンポーネント
  * @param props
  * @returns 日ごとの学習時間を表す積み上げ棒グラフ
  */
-export const DayStackTimeFig: FC<Props> = (props) => {
+export const DayStackTimeFig: FC<DayStackTime> = (props) => {
   const {
     subDateBtn,
     dateValueDay,
