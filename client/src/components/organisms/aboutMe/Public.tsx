@@ -10,11 +10,21 @@ import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 import { useGetUserByIdQuery } from "../../../types/generated/graphql";
 import { UrlList } from "../../molucules/aboutMePublic/UrlList";
 import { MenuBar } from "./MenuBar";
+import { SpreadMenuBar } from "./SpreadMenuBar";
+import { useLocation } from "react-router-dom";
+
+interface State {
+  engineerId: string;
+}
 
 /**
  * AboutMeパブリックゾーン.
  */
 export const Public: FC = memo(() => {
+  // エンジニア一覧からengineerIdの値を渡す
+  const location = useLocation();
+  const { engineerId } = location.state as State;
+  console.log(engineerId);
   //cookieからID取得
   const [cookies] = useCookies();
   /**
@@ -22,7 +32,7 @@ export const Public: FC = memo(() => {
    * @remarks 取得情報:名前、職種、GitHub
    */
   const { loading, error, data } = useGetUserByIdQuery({
-    variables: { id: cookies.ForestaID },
+    variables: { userToken: cookies.ForestaID },
   });
   const user = data?.user.node;
 
@@ -44,8 +54,9 @@ export const Public: FC = memo(() => {
       <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">
         {user && (
           <>
-            <Flex justifyContent="right">
+            <Flex justifyContent="right" gap={3}>
               <MenuBar />
+              <SpreadMenuBar />
             </Flex>
             <_User>
               <Flex justifyContent="center">

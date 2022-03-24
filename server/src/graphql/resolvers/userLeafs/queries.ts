@@ -1,15 +1,17 @@
 import { UserLeafs } from "../../../models";
-import { UserIdType } from "../../../types";
+import { UserToken } from "../../../types";
+import { verifyJwtToken } from "../../../utli/fncJwtToken";
 import { error, success } from "../responseStatus";
 
 const userLeafsQueries = {
   /**
    * ユーザーIDに紐づく技術情報を取得する
    *
-   * @param userId - ユーザーID
+   * @param userToken - ユーザートークン
    * @returns 取得時のステータスとメッセージとデータ
    */
-  getUserLeafsById: async (_: any, { userId }: UserIdType) => {
+  getUserLeafsById: async (_: any, { userToken }: UserToken) => {
+    const userId = verifyJwtToken(userToken);
     try {
       // ユーザーに紐づく技術情報を取得
       const result = await UserLeafs.findOne({ userId: userId });

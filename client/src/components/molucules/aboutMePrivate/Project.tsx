@@ -20,6 +20,7 @@ import {
   useGetSheetProjectByUserIdQuery,
 } from "../../../types/generated/graphql";
 import { AccordionContent } from "../AccordionContent";
+import { format } from "date-fns";
 
 /**
  * 開発経験.
@@ -33,7 +34,7 @@ export const Project: FC = memo(() => {
    */
   const { data, loading, error } = useGetSheetProjectByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const projectData = data?.projects.node.project as Array<SpecProjectSheet>;
@@ -55,81 +56,104 @@ export const Project: FC = memo(() => {
       {projectData &&
         projectData.map((project) => (
           <div key={project?.id}>
-            <AccordionContent
-              title={project?.name}
-              content={
-                <>
-                  <Table variant="striped" colorScheme="gray">
-                    <Thead>
-                      <Tr>
-                        <Th>項目名</Th>
-                        <Th>内容</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      <Tr>
-                        <Td>プロジェクト名</Td>
-                        <Td>{project?.name}</Td>
-                      </Tr>
-                      <Tr>
-                        <Td>期間</Td>
-                        <Td>
-                          {project?.startedAt}
-                          {project?.finishedAt}ヵ月
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>担当役割</Td>
-                        <Td>{project?.roleSharing}</Td>
-                      </Tr>
-                      <Tr>
-                        <Td>担当工程</Td>
-                        <Td>
-                          <TableFlexItem itemArray={project?.devRoles} />
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>チーム人数</Td>
-                        <Td>{project?.memberCount}</Td>
-                      </Tr>
-                      <Tr>
-                        <Td>動作環境(OS)</Td>
-                        <Td>
-                          <TableFlexItem itemArray={project?.operationEnvs} />
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>言語</Td>
-                        <Td>
-                          <TableFlexItem itemArray={project?.languages} />
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>フレームワーク</Td>
-                        <Td>
-                          <TableFlexItem itemArray={project?.frameworks} />
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>ライブラリ</Td>
-                        <Td>
-                          <TableFlexItem itemArray={project?.libraries} />
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>ツール・その他</Td>
-                        <Td>
-                          <TableFlexItem itemArray={project?.otherTools} />
-                        </Td>
-                      </Tr>
-                    </Tbody>
-                  </Table>
-                  <_Detail>プロジェクト詳細</_Detail>
-                  <Box mx={10}>{returnCodeToBr(project?.content)}</Box>
-                </>
-              }
-              size="sm"
-            />
+            {project.name && (
+              <>
+                <AccordionContent
+                  title={project?.name}
+                  content={
+                    <>
+                      <Table variant="striped" colorScheme="gray">
+                        <Thead>
+                          <Tr>
+                            <Th>項目名</Th>
+                            <Th>内容</Th>
+                          </Tr>
+                        </Thead>
+                        <Tbody>
+                          <Tr>
+                            <Td>プロジェクト名</Td>
+                            <Td>{project?.name}</Td>
+                          </Tr>
+                          <Tr>
+                            <Td>期間</Td>
+                            <Td>
+                              <Flex gap={3}>
+                                {project?.startedAt && (
+                                  <>
+                                    {format(
+                                      new Date(project?.startedAt),
+                                      "yyyy-M-d",
+                                    )}
+                                    ~
+                                    {format(
+                                      new Date(project?.finishedAt),
+                                      "yyyy-M-d",
+                                    )}
+                                  </>
+                                )}
+                              </Flex>
+                            </Td>
+                          </Tr>
+                          <Tr>
+                            <Td>担当役割</Td>
+                            <Td>{project?.roleSharing}</Td>
+                          </Tr>
+                          <Tr>
+                            <Td>担当工程</Td>
+                            <Td>
+                              <TableFlexItem itemArray={project?.devRoles} />
+                            </Td>
+                          </Tr>
+                          <Tr>
+                            <Td>チーム人数</Td>
+                            <Td>
+                              {project?.memberCount != 0 && (
+                                <>{project?.memberCount}</>
+                              )}
+                            </Td>
+                          </Tr>
+                          <Tr>
+                            <Td>動作環境(OS)</Td>
+                            <Td>
+                              <TableFlexItem
+                                itemArray={project?.operationEnvs}
+                              />
+                            </Td>
+                          </Tr>
+                          <Tr>
+                            <Td>言語</Td>
+                            <Td>
+                              <TableFlexItem itemArray={project?.languages} />
+                            </Td>
+                          </Tr>
+                          <Tr>
+                            <Td>フレームワーク</Td>
+                            <Td>
+                              <TableFlexItem itemArray={project?.frameworks} />
+                            </Td>
+                          </Tr>
+                          <Tr>
+                            <Td>ライブラリ</Td>
+                            <Td>
+                              <TableFlexItem itemArray={project?.libraries} />
+                            </Td>
+                          </Tr>
+                          <Tr>
+                            <Td>ツール・その他</Td>
+                            <Td>
+                              <TableFlexItem itemArray={project?.otherTools} />
+                            </Td>
+                          </Tr>
+                        </Tbody>
+                      </Table>
+                      <_Detail>プロジェクト詳細</_Detail>
+                      <Box mx={10}>{returnCodeToBr(project?.content)}</Box>
+                    </>
+                  }
+                  size="sm"
+                />
+              </>
+            )}
           </div>
         ))}
     </>

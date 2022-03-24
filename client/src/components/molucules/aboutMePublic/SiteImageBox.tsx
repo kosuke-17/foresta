@@ -6,7 +6,7 @@ import { SiteDetail } from "./SiteDetail";
 import { ModalSet } from "../../molucules/ModalSet";
 import { SiteImage } from "../../atoms/aboutMePublic/SiteImage";
 import { useModal } from "../../../hooks/useModal";
-import { useGetUserPortfolioByIdQuery } from "../../../types/generated/graphql";
+import { useGetPortfolioByUserIdQuery } from "../../../types/generated/graphql";
 import { PortfolioType } from "../../../types/types";
 import { XCircleFillIcon } from "@primer/octicons-react";
 
@@ -16,12 +16,12 @@ import { XCircleFillIcon } from "@primer/octicons-react";
 export const SiteImageBox: FC = memo(() => {
   //cookieからID取得
   const [cookies] = useCookies();
-  const { data, loading, error } = useGetUserPortfolioByIdQuery({
+  const { data, loading, error } = useGetPortfolioByUserIdQuery({
     variables: {
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
-  const portfolioData = data?.portfolios.node.portfolio as Array<PortfolioType>;
+  const portfolioData = data?.portfolios.node as Array<PortfolioType>;
 
   //モーダル使用のhooks
   const modalStore = useModal();

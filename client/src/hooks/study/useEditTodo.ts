@@ -94,7 +94,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
       startedAt,
       finishedAt: finishedAt || "",
       isStatus: data.isStatus,
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     };
     try {
       const addTodoData = await addTodo({
@@ -143,8 +143,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
       description: data.description,
       startedAt,
       finishedAt: finishedAt || "",
-      isStatus: data.isStatus,
-      userId: cookies.ForestaID,
+      isStatus: data.isStatus
     };
 
     try {
@@ -192,7 +191,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
         });
       }
     }
-  }, [finishedAt, setModalMode, setTodo, startedAt, toast, todo, updateTodo, cookies]);
+  }, [finishedAt, setModalMode, setTodo, startedAt, toast, todo, updateTodo]);
 
   return {
     register,

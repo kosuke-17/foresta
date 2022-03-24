@@ -10,24 +10,19 @@ import { Button, Spinner, Flex, Input } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 
-import { TextInput } from "../../atoms/editMe/TextInput";
-import { TableFlexItem } from "../../atoms/TableFlexItem";
+import { TextInput } from "../../../atoms/editMe/TextInput";
+import { TableFlexItem } from "../../../atoms/TableFlexItem";
 import { EditPortfolio } from "./EditPortfolio";
-import { useNewPortfolio } from "../../../hooks/editMe/useNewPortfolio";
+import { useNewPortfolio } from "../../../../hooks/editMe/useNewPortfolio";
 import {
   Portfolio,
-  useGetUserPortfolioByIdQuery,
-} from "../../../types/generated/graphql";
+  useGetPortfolioByUserIdQuery,
+} from "../../../../types/generated/graphql";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
   onClose: () => void; //モーダルを閉じるメソッド
 };
-
-//やること:
-//CSS
-//バリデーション
-//asを処理
 
 /**
  * 制作物編集画面.
@@ -40,19 +35,19 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
   /**
    * 制作物情報デフォルト値取得.
    */
-  const { data, loading, error } = useGetUserPortfolioByIdQuery({
+  const { data, loading, error } = useGetPortfolioByUserIdQuery({
     variables: {
-      id: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
-  const portfolioData = data?.portfolios.node.portfolio as Array<Portfolio>;
+  const portfolioData = data?.portfolios.node as Array<Portfolio>;
 
   //編集モード
   const [editMode, setEditMode] = useState("");
   //どの制作物を編集中か判断用
   const [itemName, setItemName] = useState("");
 
-  //public部分基本情報編集hooksを使用
+  //hooksを使用
   const {
     handleSubmit,
     register,
@@ -184,7 +179,7 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
           </_TextItem>
 
           <_TextItem>
-            使用技術
+            <_LabelItem>使用技術</_LabelItem>
             <Flex>
               <Input type="text" value={skill} onChange={handleChange} />
               <Button
@@ -237,9 +232,16 @@ const _TextItem = styled.div`
 
 const _ListTitle = styled.div`
   width: 300px;
+  padding-left: 40px;
+  text-align: left;
 `;
 
 const _List = styled.div`
   margin-top: 5px;
   margin-bottom: 10px;
+`;
+
+const _LabelItem = styled.div`
+  text-align: left;
+  font-weight: bold;
 `;

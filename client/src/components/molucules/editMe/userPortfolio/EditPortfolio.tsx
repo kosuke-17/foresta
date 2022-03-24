@@ -6,13 +6,13 @@ import {
   useState,
   useCallback,
 } from "react";
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Flex, Input } from "@chakra-ui/react";
 import styled from "styled-components";
 
-import { TextInput } from "../../atoms/editMe/TextInput";
-import { TableFlexItem } from "../../atoms/TableFlexItem";
-import { Portfolio } from "../../../types/generated/graphql";
-import { useUserPortfolio } from "../../../hooks/editMe/useUserPortfolio";
+import { TextInput } from "../../../atoms/editMe/TextInput";
+import { TableFlexItem } from "../../../atoms/TableFlexItem";
+import { Portfolio } from "../../../../types/generated/graphql";
+import { useUserPortfolio } from "../../../../hooks/editMe/useUserPortfolio";
 
 type Props = {
   portfolioData: Portfolio;
@@ -81,6 +81,19 @@ export const EditPortfolio: FC<Props> = memo(
             </_TextItem>
 
             <_TextItem>
+              <_LabelItem>使用技術</_LabelItem>
+              <Flex>
+                <Input type="text" value={skill} onChange={handleChange} />
+                <Button
+                  onClick={() => {
+                    addSkill(skill);
+                    setSkill("");
+                  }}
+                  ml={3}
+                >
+                  追加
+                </Button>
+              </Flex>
               <_TextItem>
                 <TableFlexItem
                   itemArray={hookSkillArray}
@@ -88,15 +101,6 @@ export const EditPortfolio: FC<Props> = memo(
                   setArray={setHookSkillArray}
                 />
               </_TextItem>
-              <Input type="text" value={skill} onChange={handleChange} />
-              <Button
-                onClick={() => {
-                  addSkill(skill);
-                  setSkill("");
-                }}
-              >
-                追加
-              </Button>
             </_TextItem>
 
             <_TextItem>
@@ -107,14 +111,16 @@ export const EditPortfolio: FC<Props> = memo(
                 placeholder="詳細"
               />
             </_TextItem>
-            <Button onClick={handleSubmit(onSubmit)}>更新</Button>
-            <Button
-              type="button"
-              onClick={() => setEditMode("")}
-              _focus={{ boxShadow: "none" }}
-            >
-              キャンセル
-            </Button>
+            <Flex gap={3} justifyContent="center" mt={10}>
+              <Button onClick={handleSubmit(onSubmit)}>更新</Button>
+              <Button
+                type="button"
+                onClick={() => setEditMode("")}
+                _focus={{ boxShadow: "none" }}
+              >
+                キャンセル
+              </Button>
+            </Flex>
           </>
         )}
         {editMode === "削除" && (
@@ -145,4 +151,9 @@ export const EditPortfolio: FC<Props> = memo(
 const _TextItem = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
+`;
+
+const _LabelItem = styled.div`
+  text-align: left;
+  font-weight: bold;
 `;

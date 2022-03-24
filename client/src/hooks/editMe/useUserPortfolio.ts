@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import {
-  GetUserPortfolioByIdDocument,
+  GetPortfolioByUserIdDocument,
   Portfolio,
   useRemovePortfolioMutation,
   useUpdatePortfolioMutation,
@@ -89,7 +89,7 @@ export const useUserPortfolio = (
    * 制作物情報更新.（リフェッチ機能）
    */
   const [updatePortfolio] = useUpdatePortfolioMutation({
-    refetchQueries: [GetUserPortfolioByIdDocument], //データを表示するクエリーのDocument
+    refetchQueries: [GetPortfolioByUserIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -112,14 +112,20 @@ export const useUserPortfolio = (
             },
           },
         });
+        cancel();
         toast({
-          title: "変更しました",
+          title: "更新しました",
+          position: "bottom-left",
           status: "success",
           isClosable: true,
         });
-        cancel();
       } catch (error) {
-        console.log(error);
+        toast({
+          title: "失敗しました",
+          position: "bottom-left",
+          status: "error",
+          isClosable: true,
+        });
       }
     },
     [cancel, hookSkillArray, portfolioData.id, toast, updatePortfolio],
@@ -129,7 +135,7 @@ export const useUserPortfolio = (
    * 制作物情報更新(削除用).（リフェッチ機能）
    */
   const [deletePortfolio] = useRemovePortfolioMutation({
-    refetchQueries: [GetUserPortfolioByIdDocument], //データを表示するクエリーのDocument
+    refetchQueries: [GetPortfolioByUserIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -143,12 +149,18 @@ export const useUserPortfolio = (
       });
       toast({
         title: "削除しました",
+        position: "bottom-left",
         status: "success",
         isClosable: true,
       });
       cancel();
     } catch (error) {
-      console.log(error);
+      toast({
+        title: "失敗しました",
+        position: "bottom-left",
+        status: "error",
+        isClosable: true,
+      });
     }
   }, [cancel, deletePortfolio, portfolioData.id, toast]);
 

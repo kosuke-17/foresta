@@ -1,5 +1,8 @@
+import { AddIcon } from "@chakra-ui/icons";
 import {
-  Center,
+  Box,
+  Flex,
+  Heading,
   Tab,
   TabList,
   TabPanel,
@@ -13,7 +16,6 @@ import { LogListTable } from "../../molucules/stackList/LogListTable";
 import { StudyListTable } from "../../molucules/stackList/StudyListTable";
 import { StudyModal } from "../../molucules/stackList/StudyModal";
 
-
 //タブ名
 const tabNames = ["学習リスト", "更新情報"] as const;
 
@@ -26,17 +28,23 @@ export const StackList = memo(() => {
   const { error, loading, data, stackSumList } = useStackList();
 
   return (
-    <div>
-      <Center>
+    <>
+      <Flex align="center" gap={1} mb={1}>
+        <Heading as="h2" size="lg" mr={3} ml={5}>
+          学習記録
+        </Heading>
+        <StudyModal title="記録追加" stackId="" icon={<AddIcon />} />
+      </Flex>
+      <Box mr={5} ml={5}>
         <Tabs
           isFitted
           isLazy
           variant="soft-rounded"
           colorScheme="green"
           width="full"
-          backgroundColor="gray.100"
-          margin="20px"
+          backgroundColor="#f5f5f5"
           padding="20px"
+          w="full"
         >
           <TabList>
             {tabNames.map((tab, index) => (
@@ -46,6 +54,7 @@ export const StackList = memo(() => {
                 _selected={{ color: "white", bg: "green.300" }}
                 _hover={{ bg: "gray.300" }}
                 backgroundColor="white"
+                shadow="base"
               >
                 {tab}
               </Tab>
@@ -58,8 +67,6 @@ export const StackList = memo(() => {
           ) : data?.getAllStudyStack.node.length ? (
             <TabPanels
               overflowY="auto"
-              overflowX="visible"
-              white-space="nowrap"
               height="300px"
               backgroundColor="white"
               margin="30px"
@@ -67,6 +74,7 @@ export const StackList = memo(() => {
               <TabPanel>
                 <StudyListTable data={data} stackSumList={stackSumList} />
               </TabPanel>
+
               <TabPanel>
                 <LogListTable data={data} />
               </TabPanel>
@@ -75,9 +83,7 @@ export const StackList = memo(() => {
             <p>学習記録が1件もありません</p>
           )}
         </Tabs>
-      </Center>
-      {/* 仮の学習記録ボタン */}
-      <StudyModal title="記録追加" buttonTitle="記録" stackId="" />
-    </div>
+      </Box>
+    </>
   );
 });

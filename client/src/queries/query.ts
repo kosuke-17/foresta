@@ -2,8 +2,8 @@ import { gql } from "@apollo/client";
 
 //ユーザ情報取得.
 gql`
-  query GetUserById($id: String!) {
-    user: getUserById(_id: $id) {
+  query GetUserById($userToken: String!) {
+    user: getUserById(userToken: $userToken) {
       status
       msg
       node {
@@ -18,20 +18,16 @@ gql`
 
 //ユーザ情報:制作物取得.
 gql`
-  query GetUserPortfolioById($id: String!) {
-    portfolios: getUserById(_id: $id) {
-      status
-      msg
+  query GetPortfolioByUserId($userToken: String!) {
+    portfolios: getPortfolioByUserId(userToken: $userToken) {
       node {
-        portfolio {
-          id
-          title
-          description
-          img
-          portfolioURL
-          skills
-          specSheetId
-        }
+        id
+        title
+        description
+        img
+        portfolioURL
+        skills
+        specSheetId
       }
     }
   }
@@ -39,8 +35,8 @@ gql`
 
 //ユーザ情報:URL取得.
 gql`
-  query GetUrlById($id: String!) {
-    urls: getUserById(_id: $id) {
+  query GetUrlById($userToken: String!) {
+    urls: getUserById(userToken: $userToken) {
       status
       msg
       node {
@@ -57,12 +53,13 @@ gql`
 
 //ユーザ情報:スペックシート基本情報取得
 gql`
-  query GetSheetByUserId($userId: String!) {
-    user: getSheetByUserId(userId: $userId) {
+  query GetSheetByUserId($userToken: String!) {
+    user: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
         userInfo {
+          id
           stuffID
           age
           gender
@@ -80,8 +77,8 @@ gql`
 
 //ユーザ情報:スペックシート自己PR取得
 gql`
-  query GetSheetPrByUserId($userId: String!) {
-    pr: getSheetByUserId(userId: $userId) {
+  query GetSheetPrByUserId($userToken: String!) {
+    pr: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -94,12 +91,13 @@ gql`
 
 //ユーザ情報:スペックシートスキル要約取得
 gql`
-  query GetSheetSkillByUserId($userId: String!) {
-    skills: getSheetByUserId(userId: $userId) {
+  query GetSheetSkillByUserId($userToken: String!) {
+    skills: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
         techInfo {
+          id
           operationEnvs
           languages
           frameworks
@@ -115,8 +113,8 @@ gql`
 
 //ユーザ情報:スペックシートその他の情報取得
 gql`
-  query GetSheetOtherByUserId($userId: String!) {
-    other: getSheetByUserId(userId: $userId) {
+  query GetSheetOtherByUserId($userToken: String!) {
+    other: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -133,8 +131,8 @@ gql`
 
 //ユーザ情報:スペックシート開発経験取得
 gql`
-  query GetSheetProjectByUserId($userId: String!) {
-    projects: getSheetByUserId(userId: $userId) {
+  query GetSheetProjectByUserId($userToken: String!) {
+    projects: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -161,8 +159,8 @@ gql`
 
 //ユーザ情報:スペックシートIDのみ取得.
 gql`
-  query GetSpreadSheetID($id: String!) {
-    getUserById(_id: $id) {
+  query GetSpreadSheetID($userToken: String!) {
+    getUserById(userToken: $userToken) {
       status
       msg
       node {
@@ -172,10 +170,25 @@ gql`
   }
 `;
 
+//ユーザ情報:開発経験名前のみ取得.
+gql`
+  query GetPjNameByUserId($userToken: String!) {
+    pj: getSheetByUserId(userToken: $userToken) {
+      status
+      msg
+      node {
+        project {
+          name
+        }
+      }
+    }
+  }
+`;
+
 //ユーザ情報:自己PR取得+スペックシートその他情報同時取得.
 gql`
-  query GetPrAndSheetByUserId($userId: String!) {
-    pr: getSheetByUserId(userId: $userId) {
+  query GetPrAndSheetByUserId($userToken: String!) {
+    pr: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -183,7 +196,7 @@ gql`
         selfIntro
       }
     }
-    other: getSheetByUserId(userId: $userId) {
+    other: getSheetByUserId(userToken: $userToken) {
       status
       msg
       node {
@@ -258,10 +271,30 @@ gql`
   }
 `;
 
+//ユーザ情報:スペックシート基本情報更新
+gql`
+  mutation UpdateSpecUserInfo($specUserInfo: SpecUserInfoUpdateInput!) {
+    updateSpecUserInfo(specUserInfo: $specUserInfo) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スペックシート開発経験更新
+gql`
+  mutation UpdateSpecProject($specProject: SpecProjectUpdateInput!) {
+    updateSpecProject(specProject: $specProject) {
+      status
+      msg
+    }
+  }
+`;
+
 //ユーザ情報:URL編集用取得
 gql`
-  query GetUserUrlById($id: String!) {
-    urls: getUserById(_id: $id) {
+  query GetUserUrlById($userToken: String!) {
+    urls: getUserById(userToken: $userToken) {
       node {
         userUrls {
           user_urls {
@@ -276,12 +309,33 @@ gql`
   }
 `;
 
+//ユーザ情報:スペックシートスキル要約更新
+gql`
+  mutation UpdateSpecTechInfo($specTechInfo: SpecTechInfoUpdateInput!) {
+    updateSpecTechInfo(specTechInfo: $specTechInfo) {
+      status
+      msg
+    }
+  }
+`;
+
 //ユーザ情報:URL追加
 gql`
   mutation AddUserUrls($urlData: UserUrlsAddInput!) {
     addUserUrls(urlData: $urlData) {
       status
       msg
+    }
+  }
+`;
+
+//セレクトボックス用
+gql`
+  query GetAllSkill {
+    skills: getAllSkill {
+      id
+      name
+      data
     }
   }
 `;
@@ -296,29 +350,109 @@ gql`
   }
 `;
 
-//言語情報取得
-// gql`
-//   query GetLanguages {
-//     getLanguages(name: "languages") {
-//       name
-//       data
-//     }
-//   }
-// `;
+//ユーザ情報:スプレッドシートに全情報出力
+gql`
+  mutation UpdateSpreadSheet($userToken: String!) {
+    updateSpreadUserInfo(userToken: $userToken) {
+      status
+      msg
+    }
+    updateSpeadSelfPR(userToken: $userToken) {
+      status
+      msg
+    }
+    updateSpreadPortfolioUrl(userToken: $userToken) {
+      status
+      msg
+    }
+    updateSpreadTechInfo(userToken: $userToken) {
+      status
+      msg
+    }
+    pj1: updateSpreadProject(userToken: $userToken, projectIndex: 0) {
+      status
+      msg
+    }
+    pj2: updateSpreadProject(userToken: $userToken, projectIndex: 1) {
+      status
+      msg
+    }
+    pj3: updateSpreadProject(userToken: $userToken, projectIndex: 2) {
+      status
+      msg
+    }
+  }
+`;
 
-// ログイン処理
+//ユーザ情報:スプレッドシートに基本情報書き出し
+gql`
+  mutation UpdateSpreadUserInfo($userToken: String!) {
+    updateSpreadUserInfo(userToken: $userToken) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スプレッドシートに自己PR書き出し
+gql`
+  mutation UpdateSpeadSelfPR($userToken: String!) {
+    updateSpeadSelfPR(userToken: $userToken) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スプレッドシートにURL書き出し
+gql`
+  mutation UpdateSpreadPortfolioUrl($userToken: String!) {
+    updateSpreadPortfolioUrl(userToken: $userToken) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スプレッドシートにスキル要約書き出し
+gql`
+  mutation UpdateSpreadTechInfo($userToken: String!) {
+    updateSpreadTechInfo(userToken: $userToken) {
+      status
+      msg
+    }
+  }
+`;
+
+//ユーザ情報:スプレッドシートに開発経験書き出し
+gql`
+  mutation UpdateSpreadProject($userToken: String!, $projectIndex: Int!) {
+    updateSpreadProject(userToken: $userToken, projectIndex: $projectIndex) {
+      status
+      msg
+    }
+  }
+`;
+
+// 手動ログイン処理
 gql`
   mutation UserLogin($user: UserLoginInput!) {
     userLogin(user: $user) {
       status
       msg
       node {
-        id
-        name
-        userLeafs {
-          id
-        }
+        token
       }
+    }
+  }
+`;
+
+// 自動ログイン処理
+gql`
+  mutation userAutoLogin($userToken: String!) {
+    userAutoLogin(userToken: $userToken) {
+      status
+      msg
     }
   }
 `;
@@ -335,11 +469,13 @@ gql`
 
 // 特定のユーザーが保持している技術を全件取得
 gql`
-  query GetUserLeafsById($userId: String!) {
-    getUserLeafsById(userId: $userId) {
+  query GetUserLeafsById($userToken: String!) {
+    getUserLeafsById(userToken: $userToken) {
       status
+      msg
       node {
         id
+        userId
         myForest {
           id
           treeId
@@ -378,19 +514,22 @@ gql`
 gql`
   query GetAllUser {
     getAllUser {
+      id
       name
       jobType
       email
       password
+      spreadSheetID
       githubURL
+      token
     }
   }
 `;
 
 //学習リスト全件表示
 gql`
-  query GetAllStudyStack($userId: String!) {
-    getAllStudyStack(userId: $userId) {
+  query GetAllStudyStack($userToken: String!) {
+    getAllStudyStack(userToken: $userToken) {
       status
       node {
         id
@@ -464,10 +603,32 @@ gql`
   }
 `;
 
+//技術リストを取得する
+gql`
+  query GetAllTechTree {
+    getAllTechTree {
+      id
+      name
+      color
+      techArea_id
+    }
+  }
+`;
+
+//学習色取得
+gql`
+  query GetStudyColor {
+    getAllTechTree {
+      name
+      color
+    }
+  }
+`;
+
 // Todoリストの取得
 gql`
-  query GetAllTodoByUser($userId: String!) {
-    todos: getAllTodoByUser(userId: $userId) {
+  query GetAllTodoByUser($userToken: String!) {
+    todos: getAllTodoByUser(userToken: $userToken) {
       node {
         id
         title
@@ -508,7 +669,6 @@ gql`
         startedAt
         finishedAt
         isStatus
-        userId
       }
     }
   }

@@ -1,5 +1,6 @@
 import { UserTodos } from "../../../models";
 import { TodoAddType, TodoIdType, TodoUpdateType } from "../../../types";
+import { verifyJwtToken } from "../../../utli/fncJwtToken";
 import { error, success } from "../responseStatus";
 /**
  * ## todoの変更処理
@@ -13,8 +14,10 @@ const userTodosMutations = {
    * @returns error : errorステータス
    */
   addTodo: async (_: any, { todo }: TodoAddType) => {
-    const { title, description, startedAt, finishedAt, isStatus, userId } =
+    const { title, description, startedAt, finishedAt, isStatus, userToken } =
       todo;
+
+    const userId = verifyJwtToken(userToken);
     try {
       const newTodo = new UserTodos({
         title,

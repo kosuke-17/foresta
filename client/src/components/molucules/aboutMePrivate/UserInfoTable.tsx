@@ -30,7 +30,7 @@ export const UserInfoTable: FC = memo(() => {
    */
   const { data, loading, error } = useGetSheetByUserIdQuery({
     variables: {
-      userId: cookies.ForestaID,
+      userToken: cookies.ForestaID,
     },
   });
   const userData = data?.user.node.userInfo as SpecUserInfoSheet;
@@ -82,24 +82,36 @@ export const UserInfoTable: FC = memo(() => {
             <Tr>
               <Td>エンジニア歴</Td>
               <Td>
-                <Flex>
-                  {userData?.seExpAmount + userData?.pgExpAmount}
-                  <UnorderedList listStyleType="none" ml={10}>
-                    <ListItem>
-                      <_Content>SE経験:</_Content>
-                      {userData?.seExpAmount}
-                    </ListItem>
-                    <ListItem>
-                      <_Content>PG,作業員経験:</_Content>
-                      {userData?.pgExpAmount}
-                    </ListItem>
-                  </UnorderedList>
+                <Flex gap={5}>
+                  {Math.floor(
+                    (userData?.seExpAmount + userData?.pgExpAmount) / 12,
+                  )}
+                  年{(userData?.seExpAmount + userData?.pgExpAmount) % 12}ヵ月
+                  <div>
+                    <Flex gap={5}>
+                      <_HisTitle>SE経験:</_HisTitle>
+                      <div>
+                        {Math.floor(userData?.seExpAmount / 12)}年
+                        {userData?.seExpAmount % 12}ヵ月
+                      </div>
+                    </Flex>
+                    <Flex gap={5}>
+                      <_HisTitle>PG,作業員経験:</_HisTitle>
+                      <div>
+                        {Math.floor(userData?.pgExpAmount / 12)}年
+                        {userData?.pgExpAmount % 12}ヵ月
+                      </div>
+                    </Flex>
+                  </div>
                 </Flex>
               </Td>
             </Tr>
             <Tr>
               <Td>IT全体歴</Td>
-              <Td>{userData?.itExpAmount}</Td>
+              <Td>
+                {Math.floor(userData?.itExpAmount / 12)}年
+                {userData?.itExpAmount % 12}ヵ月
+              </Td>
             </Tr>
           </Tbody>
         </Table>
@@ -108,7 +120,6 @@ export const UserInfoTable: FC = memo(() => {
   );
 });
 
-//効いていない…
-const _Content = styled.span`
-  width: 100px;
+const _HisTitle = styled.div`
+  width: 150px;
 `;

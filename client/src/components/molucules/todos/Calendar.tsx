@@ -25,7 +25,7 @@ export const Calendar: FC<Props> = memo((props) => {
   const { todos, error, openReadModal, openAddModal } = props;
 
   // カレンダーに渡すデータ
-  const [events, setEvents] = useState([] as EventInput);
+  const [events, setEvents] = useState<EventInput | null>(null);
 
   const { onEventClick, onDateSelect, onEventDrop } = useHandleCalendar(
     openReadModal,
@@ -40,13 +40,13 @@ export const Calendar: FC<Props> = memo((props) => {
     if (!isNonNullTodoData(todos)) {
       return setEvents([]); // todosがnullの場合はカレンダーに表示するイベントを空にする
     }
-    const events = todos.map((todo) => {
+    const events: EventInput = todos.map((todo) => {
       return {
         ...todo,
         start: todo.startedAt,
         end: todo.finishedAt ? addDays(new Date(todo.finishedAt), 1) : null, // カレンダー上で終了日が含まれないため、終了日を1日足す
         allDay: true,
-      } as EventInput; // fullcalendarのEvent用の型に変換
+      }; // fullcalendarのEvent用の型に変換
     });
     setEvents(events);
   }, [todos]);
@@ -66,7 +66,7 @@ export const Calendar: FC<Props> = memo((props) => {
         businessHours={true} // 休日に色をつけるかどうか
         contentHeight="auto" // カレンダーの高さ
         dayMaxEvents={3} // 1日に表示できるイベント数
-        events={events} // イベントを設定
+        events={events || []} // イベントを設定
         eventClick={(info) => onEventClick(info)} // イベントをクリックした時に呼ばれる
         selectable={true} // 日付を選択できるかどうか
         select={(info) => onDateSelect(info)} // 日付を選択した時に呼ばれる

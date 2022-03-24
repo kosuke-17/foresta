@@ -3,6 +3,7 @@ import { FC, memo } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 import { AddStack } from "../../../types/types";
 import { StackInput } from "../../atoms/study/StackInput";
+import { StackSelectSkill } from "../../atoms/study/StackSelectSkill";
 import { StackTextarea } from "../../atoms/study/StackTextarea";
 
 type Props = {
@@ -15,12 +16,12 @@ type Props = {
   };
 };
 
-
 /**
- * studyModalに表示するテキストボックス
+ * studyModalに表示するテキストボックス.
  */
 export const StudyModalInput: FC<Props> = memo((props) => {
   const { register, errors } = props;
+
   return (
     <ModalBody backgroundColor="white" m={3} borderRadius="base">
       <StackInput
@@ -30,15 +31,9 @@ export const StudyModalInput: FC<Props> = memo((props) => {
         registers={register("createdAt")}
         errorMessage={errors.createdAt?.message}
       />
+      <StackSelectSkill registers={register("skillTagId")} label="技術" />
       <StackInput
-        label="技術"
-        type="text"
-        placeholder="技術"
-        registers={register("skillTagId")}
-        errorMessage={errors.skillTagId?.message}
-      />
-      <StackInput
-        label="時間"
+        label="時間（分）"
         type="number"
         placeholder="時間"
         registers={register("timeStack")}
