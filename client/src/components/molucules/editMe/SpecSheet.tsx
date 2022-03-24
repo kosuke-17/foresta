@@ -1,9 +1,9 @@
 import { memo, FC, Dispatch, SetStateAction } from "react";
-import { Button } from "@chakra-ui/react";
+import { Box, Button, Flex } from "@chakra-ui/react";
 
 import { TextInput } from "../../atoms/editMe/TextInput";
 import { useSpecSheet } from "../../../hooks/editMe/useSpecSheet";
-import { TextArea } from "../../atoms/editMe/TextArea";
+import { TextAreaWithCounter } from "../../atoms/editMe/TextAreaWithCounter";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
@@ -41,9 +41,11 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
 
       {prevJobs?.map((item: any, index: number) => (
         <>
-          <TextArea
+          <TextAreaWithCounter
             key={item.id}
             registers={register(`prevJobs_${index}` as any)}
+            label={`前職${index + 1}`}
+            placeholder={`前職${index + 1}`}
           />
           <Button
             type="button"
@@ -63,14 +65,16 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
           {errors?.[`prevJobs_${index}` as any]?.message}
         </>
       ))}
-      <Button
-        onClick={() => {
-          setPrevJobs((cur) => [...cur, ""]);
-          setValue(`prevJobs_${prevJobs.length}`, "");
-        }}
-      >
-        前職を追加
-      </Button>
+      <Box mt={3}>
+        <Button
+          onClick={() => {
+            setPrevJobs((cur) => [...cur, ""]);
+            setValue(`prevJobs_${prevJobs.length}`, "");
+          }}
+        >
+          前職を追加
+        </Button>
+      </Box>
 
       <TextInput
         registers={register("certification")}
@@ -79,17 +83,19 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
         placeholder="資格"
       />
 
-      <TextArea
+      <TextAreaWithCounter
         registers={register("selfIntro")}
         errorMessage={errors.selfIntro?.message}
-        label="PR"
-        placeholder="PR"
+        label="自己PR"
+        placeholder="自己PR"
       />
 
-      <Button onClick={handleSubmit(onSubmit)}>更新</Button>
-      <Button type="button" onClick={onClose} _focus={{ boxShadow: "none" }}>
-        キャンセル
-      </Button>
+      <Flex gap={3} justifyContent="center" mt={10}>
+        <Button onClick={handleSubmit(onSubmit)}>更新</Button>
+        <Button type="button" onClick={onClose} _focus={{ boxShadow: "none" }}>
+          キャンセル
+        </Button>
+      </Flex>
     </>
   );
 });
