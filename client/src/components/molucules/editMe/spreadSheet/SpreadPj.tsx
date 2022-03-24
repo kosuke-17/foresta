@@ -63,7 +63,7 @@ export const SpreadPj: FC<Props> = memo(({ onClose, setMenuItem }) => {
   const [updateSpreadProjectMutation, { loading, error }] =
     useUpdateSpreadProjectMutation({
       variables: {
-        userId: cookies.ForestaID,
+        userToken: cookies.ForestaID,
         projectIndex: Number(pjIndex),
       },
     });

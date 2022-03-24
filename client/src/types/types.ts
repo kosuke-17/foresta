@@ -1,4 +1,5 @@
 import { ChartData, ChartOptions } from "chart.js";
+import { string } from "yup";
 import { Todo, Portfolio, User, StudyStack } from "./generated/graphql";
 
 // Todoの型
@@ -33,6 +34,15 @@ export type userInfoEditType = {
   name: string;
   jobType: string;
   githubURL: string;
+};
+
+//制作物入力値
+export type portfolioInputType = {
+  title: string;
+  description: string;
+  img: string;
+  portfolioURL: string;
+  specSheetId: string;
 };
 
 //技術ツリーの型
