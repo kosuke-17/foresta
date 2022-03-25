@@ -1,5 +1,6 @@
 import { FC, memo, useState } from "react";
 import { Button } from "@chakra-ui/react";
+
 export const FollowButton: FC = memo(() => {
   const [status, setStatus] = useState(true);
   const change = () => {
