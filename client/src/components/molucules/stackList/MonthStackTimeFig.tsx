@@ -1,3 +1,4 @@
+import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { Box, Button, Flex } from "@chakra-ui/react";
 import { format, subMonths } from "date-fns";
 import { FC } from "react";
@@ -23,17 +24,52 @@ export const MonthStackTimeFig: FC<MonthStackTime> = (props) => {
   return (
     <>
       <Box>
-        <Flex justifyContent="center" alignItems="center" mb={20}>
-          <Button onClick={subDateBtn}>⏪</Button>
-          {format(subMonths(new Date(), 1 + dateValueMonth), "yyyy年MM月dd日")}~
-          {format(subMonths(new Date(), dateValueMonth), "yyyy年MM月dd日")}
-          <Button onClick={addDateBtn}>⏩</Button>
+        <Flex justifyContent="center" alignItems="center">
+          <Button
+            mr={5}
+            color="white"
+            backgroundColor="green.300"
+            onClick={subDateBtn}
+            shadow="base"
+            _focus={{ boxShadow: "none" }}
+          >
+            <ArrowLeftIcon />
+          </Button>
+          <Box>
+            {format(
+              subMonths(new Date(), 1 + dateValueMonth),
+              "yyyy年MM月dd日",
+            )}
+            ~{format(subMonths(new Date(), dateValueMonth), "yyyy年MM月dd日")}
+          </Box>
+          <Button
+            ml={5}
+            color="white"
+            backgroundColor="green.300"
+            onClick={addDateBtn}
+            shadow="base"
+            _focus={{ boxShadow: "none" }}
+          >
+            <ArrowRightIcon />
+          </Button>
         </Flex>
-        <Flex gap={10} mb={30}>
-          <Box height={500} width={600}>
+        <Flex gap={10} m={10}>
+          <Box
+            width={600}
+            backgroundColor="white"
+            borderRadius="md"
+            shadow="sm"
+          >
             <Bar data={chartDatas} options={monthOptions} />
           </Box>
-          <Box height={300} width={300} alignItems="center">
+          <Box
+            height={300}
+            width={300}
+            alignItems="center"
+            backgroundColor="white"
+            borderRadius="md"
+            shadow="sm"
+          >
             {pieMonthData && pieMonthData.labels?.length != 0 ? (
               <Pie data={pieMonthData} options={monthPercentOptions} />
             ) : (

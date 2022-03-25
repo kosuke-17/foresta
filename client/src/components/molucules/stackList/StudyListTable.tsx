@@ -1,12 +1,4 @@
-import {
-  Table,
-  TableCaption,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-} from "@chakra-ui/react";
+import { Table, Thead, Tr, Th, Tbody, Td } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { GetAllStudyStackQuery } from "../../../types/generated/graphql";
 import { StackList } from "../../../hooks/study/useStackList";
@@ -24,12 +16,15 @@ type Props = {
 export const StudyListTable: FC<Props> = memo((props) => {
   const { stackSumList } = props;
   return (
-    <Table size="md" variant="simple" colorScheme="green">
-      <TableCaption>学習の記録</TableCaption>
+    <Table variant="simple" colorScheme="green">
       <Thead>
         <Tr>
-          <Th>技術内容</Th>
-          <Th>学習時間(累計)</Th>
+          <Th>
+            <_Content>技術内容</_Content>
+          </Th>
+          <Th>
+            <_Content>学習時間(累計)</_Content>
+          </Th>
           <Th>開始日</Th>
           <Th>最終学習日</Th>
           <Th>メモ</Th>
@@ -39,13 +34,21 @@ export const StudyListTable: FC<Props> = memo((props) => {
         {stackSumList &&
           stackSumList.map((stackList) => (
             <Tr key={stackList.id}>
-              <Td>{stackList.skillTagId}</Td>
-              <Td>{stackList.timeStack}</Td>
               <Td>
-                {getFormattedStackDate(new Date(stackList.createdAtStart))}
+                <_Content>{stackList.skillTagId}</_Content>
               </Td>
               <Td>
-                {getFormattedStackDate(new Date(stackList.createdAtLast))}
+                <_Content>{stackList.timeStack}分</_Content>
+              </Td>
+              <Td>
+                <_Content>
+                  {getFormattedStackDate(new Date(stackList.createdAtStart))}
+                </_Content>
+              </Td>
+              <Td>
+                <_Content>
+                  {getFormattedStackDate(new Date(stackList.createdAtLast))}
+                </_Content>
               </Td>
               <Td>
                 <_Content>{stackList.content}</_Content>

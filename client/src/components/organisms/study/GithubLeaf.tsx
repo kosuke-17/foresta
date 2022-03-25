@@ -5,7 +5,7 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
 import { GithubLeafType } from "../../../types/types";
 import styled from "styled-components";
@@ -91,42 +91,47 @@ export const GithubLeaf = memo(() => {
 
   return (
     <>
-      <Box>
-        <Box>GithubID :{getData && getData.user.login}</Box>
-        年間のコミット数：
-        {getData &&
-          getData.user.contributionsCollection.contributionCalendar
-            .totalContributions}
-        回
-      </Box>
+      <Heading as="h2" size="lg" mr={3} ml={5} mt={5}>
+        Github草図
+      </Heading>
+      <Box backgroundColor="#f5f5f5" p={5} mr={5} ml={5}>
+        <Box>
+          <Box>GithubID :{getData && getData.user.login}</Box>
+          年間のコミット数：
+          {getData &&
+            getData.user.contributionsCollection.contributionCalendar
+              .totalContributions}
+          回
+        </Box>
 
-      <Box mx="70px" my="20px">
-        <Box w="15px">
-          <Flex>
-            {getData &&
-              getData.user.contributionsCollection.contributionCalendar.weeks.map(
-                (githubWeeks, index) => (
-                  <div key={index}>
-                    <_container>
-                      {githubWeeks.contributionDays.map((data) => (
-                        <div key={data.date}>
-                          <Box
-                            w="15px"
-                            h="15px"
-                            bg={data.color}
-                            m="2px"
-                            rounded="base"
-                            _hover={{
-                              background: "white",
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </_container>
-                  </div>
-                ),
-              )}
-          </Flex>
+        <Box mx="70px" my="20px" backgroundColor="white" p={5}>
+          <Box w="15px">
+            <Flex>
+              {getData &&
+                getData.user.contributionsCollection.contributionCalendar.weeks.map(
+                  (githubWeeks, index) => (
+                    <div key={index}>
+                      <_container>
+                        {githubWeeks.contributionDays.map((data) => (
+                          <div key={data.date}>
+                            <Box
+                              w="15px"
+                              h="15px"
+                              bg={data.color}
+                              m="2px"
+                              rounded="base"
+                              _hover={{
+                                background: "white",
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </_container>
+                    </div>
+                  ),
+                )}
+            </Flex>
+          </Box>
         </Box>
       </Box>
     </>
