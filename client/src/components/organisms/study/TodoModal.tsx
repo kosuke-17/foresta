@@ -1,4 +1,4 @@
-import { FC, memo, useContext } from "react";
+import { FC, memo } from "react";
 import {
   Flex,
   Modal,
@@ -17,7 +17,7 @@ import { TodoEditForm } from "../../molucules/todos/TodoEditForm";
 import { TodoHeaderButtons } from "../../molucules/todos/TodoHeaderButtons";
 import { DeleteConfirm } from "../../molucules/todos/DeleteConfirm";
 import { getformattedTodoDate, returnCodeToBr } from "../../../utils/methods";
-import { TodoModalContext } from "../../../Providers/TodoModalProvider";
+import { useTodoModalContext } from "../../../hooks/study/useTodoModalContext";
 
 type Props = {
   isOpen: boolean;
@@ -30,7 +30,7 @@ type Props = {
 export const TodoModal: FC<Props> = memo((props) => {
   const { isOpen, onClose } = props;
 
-  const { todo, modalMode, setModalMode } = useContext(TodoModalContext);
+  const { todo, modalMode, setModalMode } = useTodoModalContext();
 
   return (
     <Modal

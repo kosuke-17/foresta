@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 
 import { useUpdateTodoMutation, useAddTodoMutation } from "../../types/generated/graphql";
 import type { TodoData, TodoModalModeType } from "../../types/types";
-import { TodoModalContext } from "../../Providers/TodoModalProvider";
+import { useTodoModalContext } from "./useTodoModalContext";
 
 //バリデーションチェック
 const schema = yup.object().shape({
@@ -58,7 +58,7 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
     },
   });
 
-  const { setTodo } = useContext(TodoModalContext);
+  const { setTodo } = useTodoModalContext();
 
   // react-hoook-formのuseFormを使用
   const {

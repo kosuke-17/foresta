@@ -1,4 +1,4 @@
-import { Dispatch, FC, memo, SetStateAction, useContext } from "react";
+import { Dispatch, FC, memo, SetStateAction } from "react";
 import {
   Flex,
   Box,
@@ -14,7 +14,7 @@ import { DateRangePicker } from "../../atoms/study/DateRangePicker";
 import { TodoHeaderButtons } from "./TodoHeaderButtons";
 import type { TodoData, TodoModalModeType } from "../../../types/types";
 import { useEditTodo } from "../../../hooks/study/useEditTodo";
-import { TodoModalContext } from "../../../Providers/TodoModalProvider";
+import { useTodoModalContext } from "../../../hooks/study/useTodoModalContext";
 
 type Props = {
   todo: TodoData;
@@ -27,7 +27,7 @@ type Props = {
  */
 export const TodoEditForm: FC<Props> = memo((props) => {
   const { todo, setModalMode, onClose } = props;
-  const { modalMode } = useContext(TodoModalContext);
+  const { modalMode } = useTodoModalContext();
 
   const {
     register,
