@@ -3200,7 +3200,7 @@ export type UserLoginMutationOptions = Apollo.BaseMutationOptions<
   UserLoginMutationVariables
 >;
 export const UserAutoLoginDocument = gql`
-  mutation userAutoLogin($userToken: String!) {
+  mutation UserAutoLogin($userToken: String!) {
     userAutoLogin(userToken: $userToken) {
       status
       msg

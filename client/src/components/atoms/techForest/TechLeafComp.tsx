@@ -1,4 +1,6 @@
 import { FC, memo, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useGetUserLeafsByIdQuery } from "../../../types/generated/graphql";
 import { useChangeLeafStatusMutation } from "../../../types/generated/graphql";
 import { GetUserLeafsByIdDocument } from "../../../types/generated/graphql";
 import { Box, Text, HStack, Checkbox, useToast } from "@chakra-ui/react";
@@ -31,15 +33,25 @@ export const TechLeafComp: FC<Props> = memo(
     const [leafId, setLeafId] = useState<string>("");
     // 習得状況の状態管理
     const [isStatus, setIsStatus] = useState<boolean>(false);
+    // userleafId取得用のクッキー
+    const [cookies] = useCookies();
+    // userleafId取得用のQuery
+    const { data } = useGetUserLeafsByIdQuery({
+      variables: {
+        userToken: cookies.ForestaID,
+      },
+    });
+    // userleafIdを宣言、取得したIDを代入
+    const userleafId = String(data?.getUserLeafsById.node.id);
     // 技術リーフの取得状態を変更するMutation
     const [changeLeafStatusMutation] = useChangeLeafStatusMutation({
       variables: {
         techLeafInfo: {
-          userLeafsId: "6231edea9c926dc262fc12e5", // ポストマンのuserLeafsId
-          treeId: treeId,
-          branchId: branchId,
-          leafId: leafId,
-          currentStatus: isStatus,
+          userLeafsId: userleafId, // ユーザーの技術リストを指定するためのID
+          treeId: treeId, // 切り替える技術リーフが属する技術ツリーを指定するためのID
+          branchId: branchId, // 切り替える技術リーフが属する技術ブランチを指定するためのID
+          leafId: leafId, // 切り替える技術リーフを指定するためのID
+          currentStatus: isStatus, //現在の習得状態を表すフラグ
         },
       },
       //refetchでチェック後の技術データを再取得

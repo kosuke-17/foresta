@@ -21,10 +21,11 @@ interface State {
  * AboutMeパブリックゾーン.
  */
 export const Public: FC = memo(() => {
-  // エンジニア一覧からengineerIdの値を渡す
+  // エンジニアリストからtokenを受け取るためのlocation
   const location = useLocation();
   const { engineerId } = location.state as State;
   console.log(engineerId);
+
   //cookieからID取得
   const [cookies] = useCookies();
   /**

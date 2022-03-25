@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { TodosArea } from "./components/organisms/study/TodosArea";
 import { NotFound } from "./container/pages/NotFound";
 import { Study } from "./container/templates/Study";
 import { AboutMe } from "./container/templates/AboutMe";
@@ -20,10 +19,6 @@ export const Router: React.VFC = () => {
         <Routes>
           <Route path="/" element={<Auth />}>
             <Route path={"/"} element={<Study />} />
-          </Route>
-
-          <Route path="/study" element={<Auth />}>
-            <Route path={"/study"} element={<Study />} />
           </Route>
 
           <Route path="/aboutme" element={<Auth />}>
