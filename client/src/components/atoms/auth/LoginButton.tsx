@@ -2,11 +2,11 @@ import React, { FC, memo } from "react";
 import { Center, SimpleGrid } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 
-type Login = {
+type Props = {
   doLogin: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export const LoginButton: FC<Login> = memo(({ doLogin }) => {
+export const LoginButton: FC<Props> = memo(({ doLogin }) => {
   return (
     <Center>
       <SimpleGrid columns={1}>
