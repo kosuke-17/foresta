@@ -17,7 +17,7 @@ export const Header: FC = memo(() => {
   return (
     <Flex direction="column" borderBottom="3px solid #48bb78">
       <_Header>
-        <Link to="/study">
+        <Link to="/">
           <img src="/images/header-logo.png" alt="ヘッダーロゴ" />
         </Link>
         {/* ログインしていればログアウトボタン表示 */}
