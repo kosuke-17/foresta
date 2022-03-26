@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
 
-import { StackTextarea } from "../../components/atoms/study/StackTextarea";
+import { StackTextarea } from "../../../components/atoms/study/StackTextarea";
 
 export default {
   component: StackTextarea,

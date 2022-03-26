@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
-import { StackInput } from "../../components/atoms/study/StackInput";
+import { StackInput } from "../../../components/atoms/study/StackInput";
 
 export default {
   component: StackInput,
