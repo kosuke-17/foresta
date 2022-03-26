@@ -9,6 +9,8 @@ type Query {
   getAllUser: [User!]!
   """
   ユーザーidまたはユニークなIDに紐づくユーザー情報を取得.
+  本人の場合、userToken
+  本人以外のの場合、userUuid
   """
   getUserById(userToken: String, userUuid: String): ResponseUser!
   """
