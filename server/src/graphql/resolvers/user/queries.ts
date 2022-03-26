@@ -1,5 +1,4 @@
 import { Users } from "../../../models";
-import { UserUuid } from "../../../types";
 import { verifyJwtToken } from "../../../utli/fncJwtToken";
 import { error, success } from "../responseStatus";
 /**
@@ -13,14 +12,27 @@ const userQueries = {
    */
   getAllUser: async () => await Users.find({}),
   /**
-   * ユーザーユニークIDに紐づくユーザー情報を取得する.
+   * ユーザーIDまたはユーザーユニークIDに紐づくユーザー情報を取得する.
    *
+   * @param userToken - ユーザートークン
    * @param userUuid - ユーザーユニークID
-   * @returns ユーザーIDに紐づくユーザー情報
+   * @returns ユーザーIDまたはユーザーユニークIDに紐づくユーザー情報
    */
-  getUserById: async (_: any, { userUuid }: UserUuid) => {
+  getUserById: async (
+    _: any,
+    { userToken, userUuid }: { userToken: string; userUuid: string }
+  ) => {
     try {
-      const result = await Users.findOne({ _uuid: userUuid });
+      let result;
+      // 本人情報を取得
+      if (userToken) {
+        const userId = verifyJwtToken(userToken);
+        result = await Users.findById({ _id: userId });
+      }
+      // 本人以外のユーザー情報を取得
+      if (userUuid) {
+        result = await Users.findOne({ _uuid: userUuid });
+      }
       if (result === null) {
         return error("該当のユーザーが見つかりません。");
       }

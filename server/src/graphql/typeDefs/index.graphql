@@ -8,9 +8,9 @@ type Query {
   """
   getAllUser: [User!]!
   """
-  ユーザーidに紐づくユーザー情報を取得.
+  ユーザーidまたはユニークなIDに紐づくユーザー情報を取得.
   """
-  getUserById(userUuid: String!): ResponseUser!
+  getUserById(userToken: String, userUuid: String): ResponseUser!
   """
   エリアidに紐づく技術情報を取得.
   """
