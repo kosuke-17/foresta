@@ -1,5 +1,5 @@
 import { Users } from "../../../models";
-import { UserToken } from "../../../types";
+import { UserUuid } from "../../../types";
 import { verifyJwtToken } from "../../../utli/fncJwtToken";
 import { error, success } from "../responseStatus";
 /**
@@ -13,15 +13,14 @@ const userQueries = {
    */
   getAllUser: async () => await Users.find({}),
   /**
-   * ユーザーIDに紐づくユーザー情報を取得する.
+   * ユーザーユニークIDに紐づくユーザー情報を取得する.
    *
-   * @param userToken - ユーザートークン
+   * @param userUuid - ユーザーユニークID
    * @returns ユーザーIDに紐づくユーザー情報
    */
-  getUserById: async (_: any, { userToken }: UserToken) => {
-    const userId = verifyJwtToken(userToken);
+  getUserById: async (_: any, { userUuid }: UserUuid) => {
     try {
-      const result = await Users.findById({ _id: userId });
+      const result = await Users.findOne({ _uuid: userUuid });
       if (result === null) {
         return error("該当のユーザーが見つかりません。");
       }
