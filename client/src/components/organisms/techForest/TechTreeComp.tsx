@@ -39,11 +39,11 @@ export const TechTreeComp: FC<Props> = memo(({ treeData }) => {
               <Box
                 bg="white"
                 w="85%"
-                p={10}
+                p={8}
                 m={5}
                 color="black"
-                borderColor="green.500"
-                borderWidth="10px"
+                borderColor="gray.400"
+                borderWidth="4px"
                 borderRadius="lg"
               >
                 <SimpleGrid columns={1} spacing={3}>
