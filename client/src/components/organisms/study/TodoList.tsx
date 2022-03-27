@@ -16,7 +16,6 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import type { ApolloError } from "@apollo/client";
-
 import { TodoWithCheck } from "../../molucules/todos/TodoWithCheck";
 import type { TodoData } from "../../../types/types";
 import { useTodoList } from "../../../hooks/study/useTodoList";
