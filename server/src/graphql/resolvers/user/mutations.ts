@@ -21,6 +21,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { signJwtToken, verifyJwtToken } from "../../../utli/fncJwtToken";
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
 
 dotenv.config();
 
@@ -46,10 +47,13 @@ const userMutations = {
 
     // パスワードをハッシュ化
     const encryptedPassword = await bcrypt.hash(password, 10);
+    // ユニークなID
+    const _uuid = uuidv4();
 
     try {
       // ユーザーオブジェクト生成
       let createUser = new Users({
+        _uuid,
         name,
         jobType,
         email,
@@ -64,7 +68,6 @@ const userMutations = {
 
       // ユーザーIDのトークン作成
       const token = signJwtToken(TokenUserData);
-      // オブジェクトにトークン代入
       createUser.token = token;
       const result = await createUser.save();
 

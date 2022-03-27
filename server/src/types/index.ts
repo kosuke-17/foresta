@@ -27,6 +27,7 @@ export {
   UserLoginType,
   TokenPayload,
   UserToken,
+  UserUuid,
   TokenUserData,
 } from "./user";
 export { ChangeLeafInfoType } from "./userLeafs";
