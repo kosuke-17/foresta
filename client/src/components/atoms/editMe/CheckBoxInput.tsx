@@ -17,7 +17,10 @@ export const CheckBoxInput: FC<Props> = memo(
   ({ registers, errorMessage, label, array }) => {
     return (
       <>
-        <_LabelItem>{label}</_LabelItem>
+        <Flex gap={3}>
+          <_LabelItem> {label}</_LabelItem>
+          <_ErrorMessage>{errorMessage}</_ErrorMessage>
+        </Flex>
         <Flex gap={3} mt={1}>
           {array.map((item) => (
             <Flex alignItems="center" gap={1} key={item}>
@@ -26,7 +29,6 @@ export const CheckBoxInput: FC<Props> = memo(
             </Flex>
           ))}
         </Flex>
-        <_ErrorMessage>{errorMessage}</_ErrorMessage>
       </>
     );
   },
