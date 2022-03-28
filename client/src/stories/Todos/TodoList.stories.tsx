@@ -1,8 +1,9 @@
 import type { ComponentStoryObj, ComponentMeta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
+import { ApolloError } from "@apollo/client";
 
 import { TodoList } from "../../components/organisms/study/TodoList";
-import { ApolloError } from "@apollo/client";
+import { todoListDataMock, todoMocks } from "../../../__mocks__/Todos";
 
 export default {
   component: TodoList,
@@ -10,48 +11,17 @@ export default {
 
 export const Default: ComponentStoryObj<typeof TodoList> = {
   args: {
-    todos: [
-      {
-        id: "Todo1Id",
-        title: "Todo1",
-        startedAt: "2022-03-10",
-        finishedAt: "2022-03-12",
-        isStatus: false,
-      },
-      {
-        id: "Todo2Id",
-        title: "Todo2",
-        startedAt: "2022-03-15",
-        finishedAt: "2022-03-16",
-        isStatus: true,
-      },
-      {
-        id: "Todo3Id",
-        title: "Todo3",
-        startedAt: "2021-03-15",
-        finishedAt: null,
-        isStatus: false,
-      },
-      {
-        id: "Todo4Id",
-        title:
-          "長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル",
-        startedAt: "2022-03-15",
-        finishedAt: null,
-        isStatus: true,
-      },
-      {
-        id: "Todo5Id",
-        title:
-          "長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル",
-        startedAt: "2022-03-15",
-        finishedAt: "2022-03-17",
-        isStatus: true,
-      },
-    ],
+    todos: todoListDataMock,
     loading: false,
     error: undefined,
     openReadModal: action("openReadModal"),
+    openAddModal: action("openAddModal"),
+  },
+  parameters: {
+    apolloClient: {
+      mocks: todoMocks,
+      addTypename: false,
+    },
   },
   storyName: "デフォルト",
 };
