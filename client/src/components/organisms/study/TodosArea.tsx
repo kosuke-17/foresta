@@ -1,5 +1,5 @@
 import { FC, memo } from "react";
-import { Container } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
 
 import { TodoList } from "./TodoList";
@@ -30,23 +30,25 @@ export const TodosArea: FC = memo(() => {
   const todos = data?.todos.node;
 
   return (
-    <Container maxW="5xl" pt={10}>
-      {/* Todoリストエリア */}
-      <TodoList
-        todos={todos || []} // todosがなければ空配列を渡す
-        loading={loading}
-        error={error}
-        openReadModal={openReadModal}
-        openAddModal={openAddModal}
-      />
+    <Container maxWidth="full" pt={10}>
+      <Flex alignItems="stretch">
+        {/* Todoリストエリア */}
+        <TodoList
+          todos={todos || []} // todosがなければ空配列を渡す
+          loading={loading}
+          error={error}
+          openReadModal={openReadModal}
+          openAddModal={openAddModal}
+        />
 
-      {/* カレンダーエリア */}
-      <Calendar
-        todos={todos || []} // todosがなければ空配列を渡す
-        error={error}
-        openReadModal={openReadModal}
-        openAddModal={openAddModal}
-      />
+        {/* カレンダーエリア */}
+        <Calendar
+          todos={todos || []} // todosがなければ空配列を渡す
+          error={error}
+          openReadModal={openReadModal}
+          openAddModal={openAddModal}
+        />
+      </Flex>
 
       {/* Todoモーダル */}
       <TodoModal isOpen={isOpen} onClose={onClose} />
