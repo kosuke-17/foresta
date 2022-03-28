@@ -10,7 +10,7 @@ import mongoose from "mongoose";
  *  - GithubURL : string
  */
 const UserSchema = new mongoose.Schema({
-  // _id: { type: String, required: true },
+  _uuid: { type: String, required: true },
   name: { type: String, required: true },
   jobType: { type: String, required: true },
   email: { type: String, required: true, unique: true },

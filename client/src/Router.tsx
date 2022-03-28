@@ -21,10 +21,6 @@ export const Router: React.VFC = () => {
             <Route path={"/"} element={<Study />} />
           </Route>
 
-          <Route path="/study" element={<Auth />}>
-            <Route path={"/study"} element={<Study />} />
-          </Route>
-
           <Route path="/aboutme" element={<Auth />}>
             <Route path={"/aboutme"} element={<AboutMe />} />
           </Route>
