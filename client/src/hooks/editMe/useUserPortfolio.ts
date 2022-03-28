@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import {
-  GetPortfolioByUserIdDocument,
+  GetUserByIdDocument,
   Portfolio,
   useRemovePortfolioMutation,
   useUpdatePortfolioMutation,
@@ -89,7 +89,7 @@ export const useUserPortfolio = (
    * 制作物情報更新.（リフェッチ機能）
    */
   const [updatePortfolio] = useUpdatePortfolioMutation({
-    refetchQueries: [GetPortfolioByUserIdDocument], //データを表示するクエリーのDocument
+    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -135,7 +135,7 @@ export const useUserPortfolio = (
    * 制作物情報更新(削除用).（リフェッチ機能）
    */
   const [deletePortfolio] = useRemovePortfolioMutation({
-    refetchQueries: [GetPortfolioByUserIdDocument], //データを表示するクエリーのDocument
+    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
