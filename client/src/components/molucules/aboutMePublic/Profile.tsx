@@ -1,6 +1,6 @@
-import { Box, Button, Flex } from "@chakra-ui/react";
-import { MarkGithubIcon } from "@primer/octicons-react";
 import { memo, FC } from "react";
+import { Button, Flex } from "@chakra-ui/react";
+import { MarkGithubIcon } from "@primer/octicons-react";
 import styled from "styled-components";
 
 type Props = { userData: { name: string; githubId: string; jobType: string } };

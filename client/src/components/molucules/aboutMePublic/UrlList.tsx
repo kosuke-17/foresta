@@ -1,9 +1,9 @@
 import { memo, FC } from "react";
 import { Flex } from "@chakra-ui/react";
+import { XCircleFillIcon } from "@primer/octicons-react";
 import styled from "styled-components";
 
 import { Url } from "../../../types/generated/graphql";
-import { XCircleFillIcon } from "@primer/octicons-react";
 import { Heading } from "../../atoms/common/Heading";
 
 type Props = {

@@ -1,13 +1,13 @@
 import { memo, FC, useState, MouseEvent } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { XCircleFillIcon } from "@primer/octicons-react";
+import { Flex } from "@chakra-ui/react";
 
 import { SiteDetail } from "./SiteDetail";
 import { ModalSet } from "../../molucules/ModalSet";
 import { SiteImage } from "../../atoms/aboutMePublic/SiteImage";
+import { Heading } from "../../atoms/common/Heading";
 import { useModal } from "../../../hooks/useModal";
 import { PortfolioType } from "../../../types/types";
-import { XCircleFillIcon } from "@primer/octicons-react";
-import { Heading } from "../../atoms/common/Heading";
 
 type Props = { data: Array<PortfolioType> };
 

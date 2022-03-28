@@ -1,22 +1,20 @@
 import { memo, FC } from "react";
-
 import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
-import { Heading } from "../../atoms/common/Heading";
+import styled from "styled-components";
 
-import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
 import { MenuBar } from "./MenuBar";
-import { SpreadMenuBar } from "./SpreadMenuBar";
+import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
+import { MyTechStack } from "../../molucules/aboutMePublic/MyTechStack";
+import { UrlList } from "../../molucules/aboutMePublic/UrlList";
+import { Profile } from "../../molucules/aboutMePublic/Profile";
+import { Heading } from "../../atoms/common/Heading";
+import { ButtonItem } from "../../atoms/common/ButtonItem";
 import { useAboutMePrivate } from "../../../hooks/useAboutMePrivate";
 import { PortfolioType } from "../../../types/types";
 import { Url } from "../../../types/generated/graphql";
-import { Profile } from "../../molucules/aboutMePublic/Profile";
-import { MyTechStack } from "../../molucules/aboutMePublic/MyTechStack";
-import { ButtonItem } from "../../atoms/common/ButtonItem";
-import { UrlList } from "../../molucules/aboutMePublic/UrlList";
-import styled from "styled-components";
 
-type Props = { engineerId?: string };
+type Props = { engineerId?: string }; //エンジニアリストページから来たらUuIdが渡ってくる
 
 /**
  * AboutMeパブリックゾーン.
@@ -105,10 +103,12 @@ export const Public: FC<Props> = memo(({ engineerId }) => {
   );
 });
 
+//profile部分サイズ調整
 const _Profile = styled.div`
   width: 20%;
 `;
 
+//技術ツリーサイズ調整
 const _MyTechStack = styled.div`
   width: 60%;
 `;
