@@ -18,7 +18,7 @@ export const HeaderNav: FC = () => {
   // クッキー
   const [cookie] = useCookies();
   return (
-    <Flex gap={5} marginLeft={10}>
+    <Flex gap={8} marginLeft={10}>
       {navMenu.map((nav) => (
         <NavLink
           key={nav.link}

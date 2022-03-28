@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 
-type InputForm = {
+type Props = {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const PasswordInput: FC<InputForm> = memo(({ value, onChange }) => {
+export const PasswordInput: FC<Props> = memo(({ value, onChange }) => {
   // パスワード表示/非表示の状態管理
   const [show, setShow] = useState(false);
   // パスワード表示/非表示の状態を変更

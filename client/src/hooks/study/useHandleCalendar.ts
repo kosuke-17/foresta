@@ -3,7 +3,7 @@ import { addDays, DateSelectArg, EventClickArg, EventDropArg } from "@fullcalend
 import { useToast } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
 
-import { useUpdateTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
+import { useUpdateTodoMutation } from "../../types/generated/graphql";
 import type { TodoData } from "../../types/types";
 
 /**
@@ -14,9 +14,7 @@ export const useHandleCalendar = (openReadModal: (todo: TodoData) => void, openA
   const [cookies] = useCookies();
   const toast = useToast();
 
-  const [updateTodo] = useUpdateTodoMutation({
-    refetchQueries: [GetAllTodoByUserDocument],
-  });
+  const [updateTodo] = useUpdateTodoMutation();
 
   /**
    * 対象のTodoの詳細モーダルを開く.

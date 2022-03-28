@@ -6,7 +6,25 @@ import { GetUserLeafsByIdDocument } from "../../../types/generated/graphql";
 import { Box, Text, HStack, Checkbox, useToast } from "@chakra-ui/react";
 
 export type Props = {
-  treeData: any;
+  treeData: {
+    id: string;
+    treeId: string;
+    areaId: string;
+    treeName: string;
+    achievementRate: number;
+    color: string;
+    branches: {
+      id: string;
+      name: string;
+      leafs: {
+        id: string;
+        name: string;
+        techBranch_id: string;
+        techTree_id: string;
+        isStatus: boolean;
+      }[];
+    }[];
+  }[];
   techLeafTextData: string;
   techLeafStatus: boolean;
   indexOfTreeData: number;

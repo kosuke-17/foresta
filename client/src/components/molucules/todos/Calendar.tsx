@@ -5,6 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { Box } from "@chakra-ui/react";
 import type { ApolloError } from "@apollo/client";
 
+import { Heading } from "../../atoms/common/Heading";
 import type { TodoData } from "../../../types/types";
 import { isNonNullTodoData } from "../../../hooks/study/useTodoList";
 import { useHandleCalendar } from "../../../hooks/study/useHandleCalendar";
@@ -53,12 +54,10 @@ export const Calendar: FC<Props> = memo((props) => {
 
   return (
     <Box
-      padding="1rem 3rem"
-      margin="1rem"
-      bg="#f0fff4"
-      border="1px solid #6BE4A3"
-      borderRadius="3xl"
+      width="50%"
+      padding="0 1rem"
     >
+      <Heading text="Monthly Calendar" />
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"

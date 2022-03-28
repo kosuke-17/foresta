@@ -9,7 +9,7 @@ import {
 import { Button, Flex, Input } from "@chakra-ui/react";
 import styled from "styled-components";
 
-import { TextInput } from "../../../atoms/editMe/TextInput";
+import { TextInput } from "../../../atoms/common/TextInput";
 import { TableFlexItem } from "../../../atoms/TableFlexItem";
 import { Portfolio } from "../../../../types/generated/graphql";
 import { useUserPortfolio } from "../../../../hooks/editMe/useUserPortfolio";

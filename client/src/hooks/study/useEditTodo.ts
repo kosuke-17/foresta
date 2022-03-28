@@ -1,13 +1,13 @@
-import { Dispatch, SetStateAction, useCallback, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
 
-import { useUpdateTodoMutation, useAddTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
+import { useUpdateTodoMutation, useAddTodoMutation } from "../../types/generated/graphql";
 import type { TodoData, TodoModalModeType } from "../../types/types";
-import { TodoModalContext } from "../../Providers/TodoModalProvider";
+import { useTodoModalContext } from "./useTodoModalContext";
 
 //バリデーションチェック
 const schema = yup.object().shape({
@@ -37,17 +37,28 @@ export const useEditTodo = (todo: TodoData, setModalMode: Dispatch<SetStateActio
   //トーストアラート
   const toast = useToast();
 
-  //Todoデータを更新するためのmutation
-  const [updateTodo] = useUpdateTodoMutation({
-    refetchQueries: [GetAllTodoByUserDocument],
-  });
+  const [updateTodo] = useUpdateTodoMutation();
 
   // Todoを新規追加するためのmutation
   const [addTodo] = useAddTodoMutation({
-    refetchQueries: [GetAllTodoByUserDocument],
+    // Todo追加後、キャッシュを自動更新
+    // 第二引数にはレスポンスデータ
+    update(cache, { data }) {
+      cache.modify({
+        fields: {
+          // existingTodos = はデフォルト値を設定している
+          getAllTodoByUser(existingTodos = { node: [] }) {
+            const newTodo = data?.addTodo?.node;
+
+            // キャッシュに、レスポンスから取得した追加データを追加
+            return { node: [...existingTodos.node, newTodo] };
+          },
+        },
+      });
+    },
   });
 
-  const { setTodo } = useContext(TodoModalContext);
+  const { setTodo } = useTodoModalContext();
 
   // react-hoook-formのuseFormを使用
   const {

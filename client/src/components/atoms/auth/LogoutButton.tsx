@@ -5,10 +5,13 @@ import { Center, SimpleGrid, useToast } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 
 export const LogoutButton: FC = memo(() => {
+  // ログアウト通知用のトースト
   const toast = useToast();
+  // ログイン画面に遷移するためのnavigate
   const navigate = useNavigate();
   // クッキー
   const [, , removeCookie] = useCookies();
+  // ログアウトするメソッド
   const doLogout = () => {
     removeCookie("ForestaID");
     navigate("/login");
