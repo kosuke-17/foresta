@@ -1,5 +1,5 @@
 import type { ComponentStoryObj, ComponentMeta } from "@storybook/react";
-import { TextAreaWithCounter } from "../../components/atoms/editMe/TextAreaWithCounter";
+import { TextAreaWithCounter } from "../../components/atoms/common/TextAreaWithCounter";
 
 /**
  * テキストエリアコンポーネント.

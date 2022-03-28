@@ -4,6 +4,7 @@ import {
   GetSheetOtherByUserIdDocument,
   GetSheetPrByUserIdDocument,
   GetSheetProjectByUserIdDocument,
+  GetUserByIdDocument,
   GetUserUrlByIdDocument,
 } from "../src/types/generated/graphql";
 import { Cookies } from "react-cookie";
@@ -11,6 +12,32 @@ import { Cookies } from "react-cookie";
 const cookies = new Cookies();
 
 //パブリック
+/**
+ * ユーザ情報.
+ */
+export const userPublicMocks = {
+  request: {
+    query: GetUserByIdDocument, // Codegenで生成されたクエリ Documentで終わるもの。
+    variables: {
+      userToken: "",
+    },
+  },
+  result: {
+    data: {
+      user: {
+        status: "success",
+        msg: "取得に成功しました。",
+        node: {
+          name: "山田太郎",
+          jobType: "フロントエンドエンジニア",
+          spreadSheetID: "",
+          githubURL: "",
+        },
+      },
+    },
+  },
+};
+
 /**
  * URL.
  */

@@ -1,5 +1,5 @@
 import type { ComponentStoryObj, ComponentMeta } from "@storybook/react";
-import { TextInput } from "../../components/atoms/editMe/TextInput";
+import { TextInput } from "../../components/atoms/common/TextInput";
 
 /**
  * テキストボックスコンポーネント.
