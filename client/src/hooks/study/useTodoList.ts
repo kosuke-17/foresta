@@ -56,7 +56,7 @@ export const useTodoList = (todos: Array<TodoData | null>) => {
    *
    * @returns フィルタリングしたtodoの配列
    */
-  const getFilteredTodos = useCallback((tabType: "全て" | "今日" | "期限切れ") => {
+  const getFilteredTodos = useCallback((tabType: "All" | "Today" | "Expired") => {
     const today = new Date();
 
     // todosの中身がnullかどうかで型ガード
@@ -67,14 +67,14 @@ export const useTodoList = (todos: Array<TodoData | null>) => {
     // switch文で場合分け
     switch (tabType) {
       // 全ての場合
-      case "全て": {
+      case "All": {
         // 未完了のもの + 今日か未来のもの
         // 過去 + 完了済みのものは排除
         const todoList = todos.filter((todo) => !(isExpired(todo) && todo.isStatus));
         // 日付で並び替えて返す
         return getSortedTodosByDate(todoList);
       }
-      case "今日": {
+      case "Today": {
         // 今日の場合
         const todoList = todos.filter((todo) => {
           // 期間に今日が含まれているものを返す
@@ -100,7 +100,7 @@ export const useTodoList = (todos: Array<TodoData | null>) => {
         });
         return getSortedTodosByDate(todoList);
       }
-      case "期限切れ": {
+      case "Expired": {
         // 期限切れの場合
         const todoList = todos.filter((todo) => {
           // 期限切れかつ、未完了のものを返す

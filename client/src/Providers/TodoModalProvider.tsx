@@ -21,7 +21,7 @@ type ContextType = {
 };
 
 // contextを使用する
-export const TodoModalContext = createContext<ContextType>({} as ContextType);
+export const TodoModalContext = createContext<ContextType | undefined>(undefined);
 
 /**
  * Todoのモーダルの状態を管理するグローバルstate.

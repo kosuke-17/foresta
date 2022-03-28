@@ -449,7 +449,7 @@ gql`
 
 // 自動ログイン処理
 gql`
-  mutation userAutoLogin($userToken: String!) {
+  mutation UserAutoLogin($userToken: String!) {
     userAutoLogin(userToken: $userToken) {
       status
       msg
@@ -680,8 +680,8 @@ gql`
     changeTodoStatus(todoId: $todoId) {
       status
       node {
+        id
         isStatus
-        title
       }
     }
   }

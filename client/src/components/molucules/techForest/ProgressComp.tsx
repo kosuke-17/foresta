@@ -1,5 +1,6 @@
 import { FC, memo } from "react";
-import { Text, HStack, Progress } from "@chakra-ui/react";
+import { ProgressBar } from "../../atoms/techForest/ProgressBar";
+import { Text, HStack, Heading } from "@chakra-ui/react";
 
 type Props = {
   TreeName: string;
@@ -9,20 +10,15 @@ type Props = {
 export const ProgressComp: FC<Props> = memo(({ TreeName, AchievementRate }) => {
   return (
     <div>
-      <HStack pb={2}>
-        <Text color="green.500" fontSize="5xl">
+      <HStack pb={4}>
+        <Heading color="green.500" as="h2" size="xl">
           {TreeName}
-        </Text>
-        <Text color="gray.600" fontSize="2xl" pt={2} pl={6}>
+        </Heading>
+        <Text color="gray.600" fontSize="xl" pt={2} pl={2}>
           進捗率 {AchievementRate}%
         </Text>
       </HStack>
-      <Progress
-        colorScheme="green"
-        height="35px"
-        value={AchievementRate}
-        isAnimated={true}
-      />
+      <ProgressBar AchievementRate={AchievementRate} />
     </div>
   );
 });

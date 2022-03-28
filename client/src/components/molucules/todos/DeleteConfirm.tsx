@@ -1,8 +1,8 @@
+import { FC, memo } from "react";
 import { Flex, ModalBody, Heading, Button } from "@chakra-ui/react";
-import { FC, useContext } from "react";
-import { useDeleteTodo } from "../../../hooks/study/useDeleteTodo";
 
-import { TodoModalContext } from "../../../Providers/TodoModalProvider";
+import { useDeleteTodo } from "../../../hooks/study/useDeleteTodo";
+import { useTodoModalContext } from "../../../hooks/study/useTodoModalContext";
 
 type Props = {
   onClose: () => void;
@@ -11,10 +11,10 @@ type Props = {
 /**
  * Todoの削除確認モーダルコンポーネント.
  */
-export const DeleteConfirm: FC<Props> = (props) => {
+export const DeleteConfirm: FC<Props> = memo((props) => {
   const { onClose } = props;
 
-  const { todo, setModalMode } = useContext(TodoModalContext);
+  const { todo, setModalMode } = useTodoModalContext();
 
   // Todoを削除するhooksを使用
   const { onDeleteTodo } = useDeleteTodo(todo.id, onClose);
@@ -44,4 +44,4 @@ export const DeleteConfirm: FC<Props> = (props) => {
       </Flex>
     </ModalBody>
   );
-};
+});
