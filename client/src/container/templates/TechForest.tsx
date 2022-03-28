@@ -1,8 +1,9 @@
 import { FC, useState } from "react";
+import { TreeData } from "../../types/types";
+import { useGetUserLeafsByIdQuery } from "../../types/generated/graphql";
 import { useCookies } from "react-cookie";
 import { AreaSelectComp } from "../../components/molucules/techForest/AreaSelectComp";
 import { TechTreeComp } from "../../components/organisms/techForest/TechTreeComp";
-import { useGetUserLeafsByIdQuery } from "../../types/generated/graphql";
 
 export const TechForest: FC = () => {
   // クッキー
@@ -19,7 +20,7 @@ export const TechForest: FC = () => {
   });
   // 技術ツリーデータ(技術エリアデータの状態と一致しているものを絞り込み)
   const treeData = data?.getUserLeafsById.node.myForest.filter(
-    (element: any) => element.areaId == areaId,
+    (element: TreeData) => element.areaId == areaId,
   );
 
   return (

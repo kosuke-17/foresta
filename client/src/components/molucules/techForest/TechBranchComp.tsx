@@ -1,5 +1,6 @@
 import { FC, memo } from "react";
 import { TechLeafComp } from "../../atoms/techForest/TechLeafComp";
+import { TechLeafData } from "../../../types/types";
 import {
   Box,
   Text,
@@ -12,14 +13,32 @@ import {
   AccordionIcon,
 } from "@chakra-ui/react";
 
-type Prpps = {
-  treeData: any;
+type Props = {
+  treeData: {
+    id: string;
+    treeId: string;
+    areaId: string;
+    treeName: string;
+    achievementRate: number;
+    color: string;
+    branches: {
+      id: string;
+      name: string;
+      leafs: {
+        id: string;
+        name: string;
+        techBranch_id: string;
+        techTree_id: string;
+        isStatus: boolean;
+      }[];
+    }[];
+  }[];
   indexOfTreeData: number;
   techBranchText: string;
   indexOfBranchData: number;
 };
 
-export const TechBranchComp: FC<Prpps> = memo(
+export const TechBranchComp: FC<Props> = memo(
   ({ treeData, indexOfTreeData, techBranchText, indexOfBranchData }) => {
     return (
       <HStack key={indexOfBranchData}>
@@ -39,19 +58,21 @@ export const TechBranchComp: FC<Prpps> = memo(
                   .leafs &&
                   treeData?.[indexOfTreeData].branches[
                     indexOfBranchData
-                  ].leafs.map((techLeafData: any, indexOfLeafData: number) => {
-                    return (
-                      <TechLeafComp
-                        key={indexOfLeafData}
-                        treeData={treeData}
-                        techLeafTextData={techLeafData.name}
-                        techLeafStatus={techLeafData.isStatus}
-                        indexOfTreeData={indexOfTreeData}
-                        indexOfBranchData={indexOfBranchData}
-                        indexOfLeafData={indexOfLeafData}
-                      />
-                    );
-                  })}
+                  ].leafs.map(
+                    (techLeafData: TechLeafData, indexOfLeafData: number) => {
+                      return (
+                        <TechLeafComp
+                          key={indexOfLeafData}
+                          treeData={treeData}
+                          techLeafTextData={techLeafData.name}
+                          techLeafStatus={techLeafData.isStatus}
+                          indexOfTreeData={indexOfTreeData}
+                          indexOfBranchData={indexOfBranchData}
+                          indexOfLeafData={indexOfLeafData}
+                        />
+                      );
+                    },
+                  )}
               </Flex>
             </AccordionPanel>
           </AccordionItem>

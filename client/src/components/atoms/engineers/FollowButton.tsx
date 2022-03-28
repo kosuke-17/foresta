@@ -1,5 +1,6 @@
 import { FC, memo, useState } from "react";
 import { Button } from "@chakra-ui/react";
+
 export const FollowButton: FC = memo(() => {
   const [status, setStatus] = useState(true);
   const change = () => {
@@ -9,7 +10,7 @@ export const FollowButton: FC = memo(() => {
     <div>
       {status ? (
         <Button
-          colorScheme="teal"
+          colorScheme="green"
           size="md"
           width="150px"
           _focus={{ boxShadow: "none" }}
@@ -19,7 +20,7 @@ export const FollowButton: FC = memo(() => {
         </Button>
       ) : (
         <Button
-          colorScheme="teal"
+          colorScheme="green"
           variant="outline"
           size="md"
           width="150px"

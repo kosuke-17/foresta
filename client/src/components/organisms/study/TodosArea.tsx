@@ -1,7 +1,6 @@
 import { FC, memo } from "react";
 import { Container } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
-
 import { TodoList } from "./TodoList";
 import { TodoModal } from "./TodoModal";
 import { Calendar } from "../../molucules/todos/Calendar";

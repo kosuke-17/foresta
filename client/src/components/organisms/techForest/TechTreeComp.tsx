@@ -1,27 +1,49 @@
 import { FC, memo } from "react";
+import { TreeData } from "../../../types/types";
+import { TechBranch } from "../../../types/types";
 import { TechBranchComp } from "../../molucules/techForest/TechBranchComp";
 import { ProgressComp } from "../../molucules/techForest/ProgressComp";
 import { Box, Center, SimpleGrid } from "@chakra-ui/react";
 
 type Props = {
-  treeData: any;
+  treeData:
+    | {
+        id: string;
+        treeId: string;
+        areaId: string;
+        treeName: string;
+        achievementRate: number;
+        color: string;
+        branches: {
+          id: string;
+          name: string;
+          leafs: {
+            id: string;
+            name: string;
+            techBranch_id: string;
+            techTree_id: string;
+            isStatus: boolean;
+          }[];
+        }[];
+      }[]
+    | undefined;
 };
 
 export const TechTreeComp: FC<Props> = memo(({ treeData }) => {
   return (
     <>
       {treeData &&
-        treeData.map((techTreeData: any, indexOfTreeData: number) => {
+        treeData.map((techTreeData: TreeData, indexOfTreeData: number) => {
           return (
             <Center key={indexOfTreeData}>
               <Box
                 bg="white"
                 w="85%"
-                p={10}
+                p={8}
                 m={5}
                 color="black"
-                borderColor="green.500"
-                borderWidth="10px"
+                borderColor="gray.400"
+                borderWidth="4px"
                 borderRadius="lg"
               >
                 <SimpleGrid columns={1} spacing={3}>
@@ -31,7 +53,10 @@ export const TechTreeComp: FC<Props> = memo(({ treeData }) => {
                   />
                   {treeData?.[indexOfTreeData].branches &&
                     treeData?.[indexOfTreeData].branches.map(
-                      (techBranchData: any, indexOfBranchData: number) => {
+                      (
+                        techBranchData: TechBranch,
+                        indexOfBranchData: number,
+                      ) => {
                         return (
                           <TechBranchComp
                             key={indexOfBranchData}

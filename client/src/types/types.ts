@@ -45,27 +45,65 @@ export type portfolioInputType = {
   specSheetId: string;
 };
 
+// エンジニアの型
+export type EngineerData = {
+  id: string;
+  name: string;
+  jobType: string;
+  email: string;
+  password: string;
+  spreadSheetID: string;
+  githubURL: string;
+  token: string;
+};
+
+// 技術エリアの型
+export type TechArea = {
+  id: string;
+  name: string;
+};
+
 //技術ツリーの型
-export type TechTree = {
-  treeData: any;
-  techTreeData: any;
-  indexOfTreeData: number;
+export type TreeData = {
+  id: string;
+  treeId: string;
+  areaId: string;
+  treeName: string;
+  achievementRate: number;
+  color: string;
+  branches: {
+    id: string;
+    name: string;
+    leafs: {
+      id: string;
+      name: string;
+      techBranch_id: string;
+      techTree_id: string;
+      isStatus: boolean;
+    }[];
+  }[];
+};
+
+// 技術ブランチの型
+export type TechBranch = {
+  id: string;
+  name: string;
+  leafs: {
+    id: string;
+    name: string;
+    techBranch_id: string;
+    techTree_id: string;
+    isStatus: boolean;
+  }[];
 };
 
 //技術リーフの型
-export type TechLeaf = {
-  treeData: any;
-  techLeafData: any;
-  techBranchData: any;
-  indexOfTreeData: number;
-  indexOfBranchData: number;
-  indexOfLeafData: number;
-  cheakedLeaf: (
-    treeId: string,
-    branchId: string,
-    leafId: string,
-    isStatus: boolean,
-  ) => void;
+export type TechLeafData = {
+  id: string;
+  name: string;
+  techBranch_id: string;
+  techTree_id: string;
+  isStatus: boolean;
 };
 
 // エンジニアの型
