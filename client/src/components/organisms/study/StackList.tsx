@@ -33,7 +33,11 @@ export const StackList = memo(() => {
         <Heading as="h2" size="lg" mr={3} ml={5}>
           学習記録
         </Heading>
-        <StudyModal title="記録追加" stackId="" icon={<AddIcon />} />
+        <StudyModal
+          title="記録追加"
+          stackId=""
+          icon={<AddIcon data-testid="addIcon" />}
+        />
       </Flex>
       <Box mr={5} ml={5}>
         <Tabs
