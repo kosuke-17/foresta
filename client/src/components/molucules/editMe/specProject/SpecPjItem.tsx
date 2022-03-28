@@ -2,8 +2,8 @@ import { memo, FC, Dispatch, SetStateAction } from "react";
 import { Button, Spinner, Flex } from "@chakra-ui/react";
 import styled from "styled-components";
 
-import { TextInput } from "../../../atoms/editMe/TextInput";
-import { TextAreaWithCounter } from "../../../atoms/editMe/TextAreaWithCounter";
+import { TextInput } from "../../../atoms/common/TextInput";
+import { TextAreaWithCounter } from "../../../atoms/common/TextAreaWithCounter";
 import { useSpecProject } from "../../../../hooks/editMe/useSpecProject";
 import {
   SpecProjectSheet,

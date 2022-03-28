@@ -2,7 +2,7 @@ import { memo, FC, Dispatch, SetStateAction } from "react";
 import { Button, Flex } from "@chakra-ui/react";
 
 import { SelectInput } from "../../atoms/editMe/SelectInput";
-import { TextInput } from "../../atoms/editMe/TextInput";
+import { TextInput } from "../../atoms/common/TextInput";
 import { useUserInfo } from "../../../hooks/editMe/useUserInfo";
 import styled from "styled-components";
 
