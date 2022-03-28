@@ -4,22 +4,54 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { MockedProvider } from "@apollo/react-testing";
+import { createMemoryHistory } from "history";
 import userEvent from "@testing-library/user-event";
 
+import { Public } from "../../src/components/organisms/aboutMe/Public";
 import { UrlList } from "../../src/components/molucules/aboutMePublic/UrlList";
 import { SiteImageBox } from "../../src/components/molucules/aboutMePublic/SiteImageBox";
 import { SiteDetail } from "../../src/components/molucules/aboutMePublic/SiteDetail";
 import { SiteImage } from "../../src/components/atoms/AboutMePublic/SiteImage";
-import { userPortfolioMocks, userUrlMocks } from "../../__mocks__/AboutMe";
+import {
+  userPortfolioMocks,
+  userPublicMocks,
+  userUrlMocks,
+} from "../../__mocks__/AboutMe";
+import { Router } from "react-router-dom";
+
+/**
+ * 基本情報コンポーネントのテスト.
+ */
+// const WrapedUserInfoArea = () => {
+//   return (
+//     <MockedProvider mocks={[userPublicMocks]} addTypename={false}>
+//       <Public />
+//     </MockedProvider>
+//   );
+// };
+// describe("基本情報の表示", () => {
+//   it("基本情報が表示される", () => {
+//     const history = createMemoryHistory();
+//     waitFor(() => {
+//       render(
+//         <Router history={history}>
+//           <WrapedUserInfoArea />
+//         </Router>,
+//       );
+//       new Promise((resolve) => setTimeout(resolve, 0));
+//       expect(screen.getByText("氏名:山田太郎")).toBeInTheDocument();
+//       expect(screen.getByText("フロントエンドエンジニア")).toBeInTheDocument();
+//     });
+//   });
+// });
 
 /**
  * URLリストコンポーネントのテスト.
  */
-
 const WrapedUrlArea = () => {
   return (
     <MockedProvider mocks={[userUrlMocks]} addTypename={false}>
-      <UrlList />
+      <UrlList postData={""} />
     </MockedProvider>
   );
 };
@@ -42,7 +74,7 @@ describe("URLリストの表示", () => {
 const WrapedPortfolioArea = () => {
   return (
     <MockedProvider mocks={[userPortfolioMocks]} addTypename={false}>
-      <SiteImageBox />
+      <SiteImageBox postData={""} />
     </MockedProvider>
   );
 };
