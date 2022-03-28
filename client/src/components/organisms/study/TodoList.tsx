@@ -17,6 +17,7 @@ import {
 import { AddIcon } from "@chakra-ui/icons";
 import type { ApolloError } from "@apollo/client";
 
+import { Heading } from "../../atoms/common/Heading";
 import { TodoWithCheck } from "../../molucules/todos/TodoWithCheck";
 import type { TodoData } from "../../../types/types";
 import { useTodoList } from "../../../hooks/study/useTodoList";
@@ -41,12 +42,7 @@ export const TodoList: FC<Props> = memo((props) => {
   const { getFilteredTodos } = useTodoList(todos);
 
   return (
-    <>
-      <Flex align="center" gap={1} mb={1}>
-        <Text fontSize="3xl" ml={5}>
-          Todos
-        </Text>
-        <IconButton
+        <Heading text="TodoList" />
           size="sm"
           aria-label="Add Todo"
           colorScheme="teal"
