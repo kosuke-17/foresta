@@ -1,6 +1,7 @@
 # ユーザー情報
 type User {
   id: ID!
+  _uuid: ID!
   name: String!
   jobType: String!
   email: String!
