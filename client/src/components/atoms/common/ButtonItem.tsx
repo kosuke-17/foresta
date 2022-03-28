@@ -8,11 +8,11 @@ type Props = {
 };
 
 /**
- * variantがsolidのボタンコンポーネント.
+ * 設定済みのボタンコンポーネント.
  * @remarks
  * 背景色をgreenかredかgrayで指定してください。デフォルトはgreenです。
  */
-export const SolidButton: FC<Props> = memo(
+export const ButtonItem: FC<Props> = memo(
   ({ onClick, name, backgroundColor = "green" }) => {
     return (
       <>

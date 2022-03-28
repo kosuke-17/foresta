@@ -2,7 +2,7 @@ import { memo, FC, Dispatch, SetStateAction, useCallback } from "react";
 import { useCookies } from "react-cookie";
 
 import { useGetSpreadSheetIdQuery } from "../../../../types/generated/graphql";
-import { SolidButton } from "../../../atoms/common/SolidButton";
+import { ButtonItem } from "../../../atoms/common/ButtonItem";
 import styled from "styled-components";
 
 type Props = {
@@ -59,7 +59,7 @@ export const SetUp: FC<Props> = memo(({ onClose, setMenuItem }) => {
       </_Text>
       <_Image src="/images/image3.JPG" alt="メールアドレスを追加" />
       <_Btn>
-        <SolidButton name="とじる" onClick={cancel} />
+        <ButtonItem name="とじる" onClick={cancel} />
       </_Btn>
     </>
   );
