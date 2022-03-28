@@ -1,5 +1,5 @@
 import { memo, FC, Dispatch, SetStateAction } from "react";
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 
 import { TextInput } from "../../atoms/common/TextInput";
 import { useSpecSheet } from "../../../hooks/editMe/useSpecSheet";
@@ -41,12 +41,18 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
 
       {prevJobs?.map((item: any, index: number) => (
         <>
+          <Flex>
+            <Text fontWeight="semibold">{`前職${index + 1}`}</Text>
+            <Text color="red" ml={4}>
+              {errors?.[`prevJobs_${index}` as any]?.message}
+            </Text>
+          </Flex>
           <TextAreaWithCounter
             key={item.id}
             registers={register(`prevJobs_${index}` as any)}
-            label={`前職${index + 1}`}
             placeholder={`前職${index + 1}`}
           />
+
           <Button
             type="button"
             onClick={() => {
@@ -62,7 +68,6 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
           >
             削除
           </Button>
-          {errors?.[`prevJobs_${index}` as any]?.message}
         </>
       ))}
       <Box mt={3}>
