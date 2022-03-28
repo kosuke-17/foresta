@@ -1,9 +1,9 @@
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { isSameDay } from "date-fns";
 
 import type { TodoData } from "../../types/types";
-import { TodoModalContext } from "../../Providers/TodoModalProvider";
+import { useTodoModalContext } from "./useTodoModalContext";
 
 /**
  * Todoのモーダルを操作するためのhook.
@@ -11,10 +11,7 @@ import { TodoModalContext } from "../../Providers/TodoModalProvider";
 export const useTodoModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const {
-    setModalMode,
-    setTodo,
-  } = useContext(TodoModalContext);
+  const { setModalMode, setTodo } = useTodoModalContext();
 
   /**
    * Todo詳細表示のモーダルを開く.

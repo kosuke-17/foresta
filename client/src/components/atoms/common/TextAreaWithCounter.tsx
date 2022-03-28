@@ -27,7 +27,10 @@ export const TextAreaWithCounter: FC<Props> = memo(
 
     return (
       <>
-        <_LabelItem>{label}</_LabelItem>
+        <Flex gap={3}>
+          <_LabelItem> {label}</_LabelItem>
+          <_ErrorMessage>{errorMessage}</_ErrorMessage>
+        </Flex>
         {counter && (
           <Flex gap={2}>
             残り文字数:
@@ -40,13 +43,13 @@ export const TextAreaWithCounter: FC<Props> = memo(
           </Flex>
         )}
         <Textarea {...registers} placeholder={placeholder} onChange={count} />
-        <_ErrorMessage>{errorMessage}</_ErrorMessage>
       </>
     );
   },
 );
 
 const _LabelItem = styled.div`
+  color: "#9F9F9F";
   text-align: left;
   font-weight: bold;
 `;

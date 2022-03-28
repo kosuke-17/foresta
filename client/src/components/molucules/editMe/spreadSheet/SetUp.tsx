@@ -2,7 +2,7 @@ import { memo, FC, Dispatch, SetStateAction, useCallback } from "react";
 import { useCookies } from "react-cookie";
 
 import { useGetSpreadSheetIdQuery } from "../../../../types/generated/graphql";
-import { ButtonItem } from "../../../atoms/ButtonItem";
+import { ButtonItem } from "../../../atoms/common/ButtonItem";
 import styled from "styled-components";
 
 type Props = {

@@ -13,7 +13,7 @@ import {
   useGetPjNameByUserIdQuery,
   useUpdateSpreadProjectMutation,
 } from "../../../../types/generated/graphql";
-import { ButtonItem } from "../../../atoms/ButtonItem";
+import { ButtonItem } from "../../../atoms/common/ButtonItem";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用

@@ -1,6 +1,7 @@
 import { useCallback } from "react";
+import type { Reference } from "@apollo/client/cache";
 import { useToast } from "@chakra-ui/react";
-import { useRemoveTodoMutation, GetAllTodoByUserDocument } from "../../types/generated/graphql";
+import { useRemoveTodoMutation } from "../../types/generated/graphql";
 
 /**
  * Todoを削除するためのHook.
@@ -11,7 +12,22 @@ export const useDeleteTodo = (todoId: string, onClose: () => void) => {
 
   // Todoを削除するmutation
   const [removeTodo] = useRemoveTodoMutation({
-    refetchQueries: [GetAllTodoByUserDocument],
+    // update関数で手動でキャッシュを書き換える
+    update(cache) {
+      cache.modify({
+        fields: {
+          // existingEventRefs.node...各データへの参照の配列, readField...refを扱う便利関数
+          getAllTodoByUser(existingEventRefs, { readField }) {
+
+            // 削除したもの以外で配列を作成し、キャッシュデータを書き換える
+            const newTodos = existingEventRefs.node.filter(
+              (ref: Reference) => todoId !== readField("id", ref)
+            );
+            return { node: newTodos };
+          }
+        }
+      });
+    }
   });
 
   /**

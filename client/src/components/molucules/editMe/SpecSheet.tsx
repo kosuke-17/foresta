@@ -1,9 +1,9 @@
 import { memo, FC, Dispatch, SetStateAction } from "react";
 import { Box, Button, Flex } from "@chakra-ui/react";
 
-import { TextInput } from "../../atoms/editMe/TextInput";
+import { TextInput } from "../../atoms/common/TextInput";
 import { useSpecSheet } from "../../../hooks/editMe/useSpecSheet";
-import { TextAreaWithCounter } from "../../atoms/editMe/TextAreaWithCounter";
+import { TextAreaWithCounter } from "../../atoms/common/TextAreaWithCounter";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用

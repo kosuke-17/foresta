@@ -10,7 +10,7 @@ import { Button, Spinner, Flex, Input } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 
-import { TextInput } from "../../../atoms/editMe/TextInput";
+import { TextInput } from "../../../atoms/common/TextInput";
 import { TableFlexItem } from "../../../atoms/TableFlexItem";
 import { EditPortfolio } from "./EditPortfolio";
 import { useNewPortfolio } from "../../../../hooks/editMe/useNewPortfolio";

@@ -7,7 +7,6 @@ import {
   Tab,
   TabPanel,
   Box,
-  Heading,
   List,
   ListItem,
   IconButton,
@@ -16,6 +15,8 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import type { ApolloError } from "@apollo/client";
+
+import { Heading } from "../../atoms/common/Heading";
 import { TodoWithCheck } from "../../molucules/todos/TodoWithCheck";
 import type { TodoData } from "../../../types/types";
 import { useTodoList } from "../../../hooks/study/useTodoList";
@@ -29,7 +30,7 @@ type Props = {
 };
 
 // タブのタイプ
-const tabs = ["全て", "今日", "期限切れ"] as const; //as const をつけてreadonlyにする
+const tabs = ["All", "Today", "Expired"] as const; //as const をつけてreadonlyにする
 
 /**
  * Todoリストを表示するコンポーネント.
@@ -40,72 +41,78 @@ export const TodoList: FC<Props> = memo((props) => {
   const { getFilteredTodos } = useTodoList(todos);
 
   return (
-    <>
-      <Flex align="center" gap={1} mb={1}>
-        <Heading as="h2" size="lg">
-          Todoリスト
-        </Heading>
-        <IconButton
+    <Flex width="50%" direction="column">
+      <Flex align="center" gap={1}>
+        <Heading text="TodoList" />
+        {/* <IconButton
           size="sm"
           aria-label="Add Todo"
           colorScheme="teal"
           icon={<AddIcon />}
           onClick={() => openAddModal()}
-        />
+        /> */}
       </Flex>
-      <Box bg="#f5f5f5" padding="5px 24px 10px 24px">
-        <Tabs variant="soft-rounded" isLazy>
-          <TabList>
-            {tabs.map((tab, index) => (
-              <Tab
-                key={index}
-                _focus={{ boxShadow: "none" }}
-                _selected={{ pointerEvents: "none", bg: "green.200" }}
-                _hover={{ backgroundColor: "green.50" }}
-              >
-                {tab}
-              </Tab>
-            ))}
-          </TabList>
-          <TabPanels
-            bg="white"
-            padding="10px 40px"
-            overflow="auto"
-            height="180px"
-          >
-            {tabs.map((tab, index) => {
-              return (
-                <TabPanel key={index}>
-                  {loading ? (
-                    <Stack spacing={3}>
-                      <Skeleton height="20px" />
-                      <Skeleton height="20px" />
-                      <Skeleton height="20px" />
-                      <Skeleton height="20px" />
-                      <Skeleton height="20px" />
-                    </Stack>
-                  ) : error ? (
-                    <>エラーが発生しました</>
-                  ) : getFilteredTodos(tab).length > 0 ? (
-                    <List>
-                      {getFilteredTodos(tab).map((todo) => (
-                        <ListItem key={todo.id}>
-                          <TodoWithCheck
-                            todo={todo}
-                            openReadModal={openReadModal}
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  ) : (
-                    <p>該当のTodoが存在しません</p>
-                  )}
-                </TabPanel>
-              );
-            })}
-          </TabPanels>
+      <Box
+        bg="#f5f5f5"
+        padding="8px 32px 32px 32px"
+        flexGrow={1}
+        borderRadius="md"
+      >
+        <Tabs variant="soft-rounded" isLazy height="full">
+          <Flex direction="column" height="full">
+            <TabList>
+              {tabs.map((tab, index) => (
+                <Tab
+                  key={index}
+                  _focus={{ boxShadow: "none" }}
+                  _selected={{ pointerEvents: "none", bg: "green.200" }}
+                  _hover={{ backgroundColor: "green.50" }}
+                >
+                  {tab}
+                </Tab>
+              ))}
+            </TabList>
+            <TabPanels
+              bg="white"
+              padding="10px 40px"
+              overflow="auto"
+              flexGrow={1}
+              borderRadius="md"
+            >
+              {tabs.map((tab, index) => {
+                return (
+                  <TabPanel key={index}>
+                    {loading ? (
+                      <Stack spacing={5}>
+                        <Skeleton height="20px" data-testid="todo-loading" />
+                        <Skeleton height="20px" />
+                        <Skeleton height="20px" />
+                        <Skeleton height="20px" />
+                        <Skeleton height="20px" />
+                      </Stack>
+                    ) : error ? (
+                      <>エラーが発生しました{error.message}</>
+                    ) : getFilteredTodos(tab).length > 0 ? (
+                      <List spacing={3}>
+                        {getFilteredTodos(tab).map((todo) => (
+                          <ListItem key={todo.id}>
+                            <TodoWithCheck
+                              todo={todo}
+                              openReadModal={openReadModal}
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+                    ) : (
+                      <p>該当のTodoが存在しません</p>
+                    )}
+                  </TabPanel>
+                );
+              })}
+            </TabPanels>
+          </Flex>
         </Tabs>
       </Box>
-    </>
+    </Flex>
   );
 });

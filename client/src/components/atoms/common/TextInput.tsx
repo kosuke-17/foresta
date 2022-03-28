@@ -29,6 +29,7 @@ export const TextInput: FC<Props> = memo(
 );
 
 const _LabelItem = styled.div`
+  color: "#9F9F9F";
   text-align: left;
   font-weight: bold;
 `;
