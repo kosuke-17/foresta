@@ -2153,19 +2153,27 @@
           },
           {
             "name": "getUserById",
-            "description": "ユーザーidに紐づくユーザー情報を取得.",
+            "description": "ユーザーidまたはユニークなIDに紐づくユーザー情報を取得.\n本人の場合、userToken\n本人以外のの場合、userUuid",
             "args": [
               {
                 "name": "userToken",
                 "description": null,
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "userUuid",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -5826,6 +5834,22 @@
         "name": "User",
         "description": null,
         "fields": [
+          {
+            "name": "_uuid",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "email",
             "description": null,

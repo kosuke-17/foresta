@@ -320,7 +320,11 @@ export type Query = {
   getStudyStackById: ResponseStudyStack;
   /** TodoIdに紐づいたTodo情報を取得. */
   getTodoById: ResponseTodo;
-  /** ユーザーidに紐づくユーザー情報を取得. */
+  /**
+   * ユーザーidまたはユニークなIDに紐づくユーザー情報を取得.
+   * 本人の場合、userToken
+   * 本人以外のの場合、userUuid
+   */
   getUserById: ResponseUser;
   /** エリアidに紐づく技術情報を取得. */
   getUserLeafsById: ResponseUserTechLeaf;
@@ -388,7 +392,8 @@ export type QueryGetTodoByIdArgs = {
 
 /** データを取得する */
 export type QueryGetUserByIdArgs = {
-  userToken: Scalars["String"];
+  userToken?: InputMaybe<Scalars["String"]>;
+  userUuid?: InputMaybe<Scalars["String"]>;
 };
 
 /** データを取得する */
@@ -700,6 +705,7 @@ export type Url = {
 };
 
 export type User = {
+  _uuid: Scalars["ID"];
   email: Scalars["String"];
   githubURL: Scalars["String"];
   id: Scalars["ID"];
