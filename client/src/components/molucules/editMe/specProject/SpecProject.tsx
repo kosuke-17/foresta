@@ -1,6 +1,6 @@
 import { memo, FC, Dispatch, SetStateAction, useState } from "react";
 import { useCookies } from "react-cookie";
-import { Button, Spinner, Flex, Box } from "@chakra-ui/react";
+import { Spinner, Flex, Box } from "@chakra-ui/react";
 
 import {
   SpecProjectSheet,
@@ -8,6 +8,7 @@ import {
 } from "../../../../types/generated/graphql";
 import { SpecPjItem } from "./SpecPjItem";
 import styled from "styled-components";
+import { ButtonItem } from "../../../atoms/common/ButtonItem";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
@@ -61,7 +62,11 @@ export const SpecProject: FC<Props> = memo(({ setMenuItem, onClose }) => {
                   ) : (
                     <_TextItem>未登録</_TextItem>
                   )}
-                  <Button onClick={() => setIndexNum(0)}>編集</Button>
+                  <ButtonItem
+                    name="Edit"
+                    backgroundColor="green"
+                    onClick={() => setIndexNum(0)}
+                  />
                 </Flex>
               </Box>
 
@@ -73,7 +78,11 @@ export const SpecProject: FC<Props> = memo(({ setMenuItem, onClose }) => {
                   ) : (
                     <_TextItem>未登録</_TextItem>
                   )}
-                  <Button onClick={() => setIndexNum(1)}>編集</Button>
+                  <ButtonItem
+                    name="Edit"
+                    backgroundColor="green"
+                    onClick={() => setIndexNum(1)}
+                  />
                 </Flex>
               </Box>
 
@@ -85,7 +94,11 @@ export const SpecProject: FC<Props> = memo(({ setMenuItem, onClose }) => {
                   ) : (
                     <_TextItem>未登録</_TextItem>
                   )}
-                  <Button onClick={() => setIndexNum(2)}>編集</Button>
+                  <ButtonItem
+                    name="Edit"
+                    backgroundColor="green"
+                    onClick={() => setIndexNum(2)}
+                  />
                 </Flex>
               </Box>
             </>

@@ -1,9 +1,10 @@
 import { memo, FC, Dispatch, SetStateAction } from "react";
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 import { TextInput } from "../../atoms/common/TextInput";
 import { useSpecSheet } from "../../../hooks/editMe/useSpecSheet";
 import { TextAreaWithCounter } from "../../atoms/common/TextAreaWithCounter";
+import { ButtonItem } from "../../atoms/common/ButtonItem";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
@@ -53,32 +54,33 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
             placeholder={`前職${index + 1}`}
           />
 
-          <Button
-            type="button"
-            onClick={() => {
-              const newVal = [...prevJobs];
-              newVal.splice(index, 1);
-              setPrevJobs(newVal);
-              // prevJobが削除された時はデータをつめるように移動させる。（データが入っていない空箱があるため。）
-              prevJobs.forEach((_, idx) => {
-                if (index > idx) return;
-                setValue(`prevJobs_${idx}`, watch(`prevJobs_${idx + 1}`));
-              });
-            }}
-          >
-            削除
-          </Button>
+          <Box mt={3}>
+            <ButtonItem
+              name="Delete"
+              backgroundColor="red"
+              onClick={() => {
+                const newVal = [...prevJobs];
+                newVal.splice(index, 1);
+                setPrevJobs(newVal);
+                // prevJobが削除された時はデータをつめるように移動させる。（データが入っていない空箱があるため。）
+                prevJobs.forEach((_, idx) => {
+                  if (index > idx) return;
+                  setValue(`prevJobs_${idx}`, watch(`prevJobs_${idx + 1}`));
+                });
+              }}
+            />
+          </Box>
         </>
       ))}
       <Box mt={3}>
-        <Button
+        <ButtonItem
+          name="Add"
+          backgroundColor="green"
           onClick={() => {
             setPrevJobs((cur) => [...cur, ""]);
             setValue(`prevJobs_${prevJobs.length}`, "");
           }}
-        >
-          前職を追加
-        </Button>
+        />
       </Box>
 
       <TextInput
@@ -96,10 +98,12 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
       />
 
       <Flex gap={3} justifyContent="center" mt={10}>
-        <Button onClick={handleSubmit(onSubmit)}>更新</Button>
-        <Button type="button" onClick={onClose} _focus={{ boxShadow: "none" }}>
-          キャンセル
-        </Button>
+        <ButtonItem
+          name="Update"
+          backgroundColor="green"
+          onClick={handleSubmit(onSubmit)}
+        />
+        <ButtonItem name="Cancel" backgroundColor="gray" onClick={onClose} />
       </Flex>
     </>
   );
