@@ -3,7 +3,7 @@ import { Spinner, Flex, useToast } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
 
 import { useUpdateSpreadSheetMutation } from "../../../../types/generated/graphql";
-import { ButtonItem } from "../../../atoms/ButtonItem";
+import { SolidButton } from "../../../atoms/common/SolidButton";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
@@ -74,8 +74,8 @@ export const SpreadAll: FC<Props> = memo(({ onClose, setMenuItem }) => {
   return (
     <>
       <Flex gap={3} justifyContent="center">
-        <ButtonItem name="はい" onClick={outputSheet} />
-        <ButtonItem name="キャンセル" onClick={cancel} />
+        <SolidButton name="はい" onClick={outputSheet} />
+        <SolidButton name="キャンセル" onClick={cancel} />
       </Flex>
     </>
   );

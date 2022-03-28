@@ -13,7 +13,7 @@ import {
   useGetPjNameByUserIdQuery,
   useUpdateSpreadProjectMutation,
 } from "../../../../types/generated/graphql";
-import { ButtonItem } from "../../../atoms/ButtonItem";
+import { SolidButton } from "../../../atoms/common/SolidButton";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
@@ -118,8 +118,8 @@ export const SpreadPj: FC<Props> = memo(({ onClose, setMenuItem }) => {
         ))}
       </Select>
       <Flex gap={3} justifyContent="center">
-        <ButtonItem name="はい" onClick={outputSheet} />
-        <ButtonItem name="キャンセル" onClick={cancel} />
+        <SolidButton name="はい" onClick={outputSheet} />
+        <SolidButton name="キャンセル" onClick={cancel} />
       </Flex>
     </>
   );
