@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import {
-  GetUrlByIdDocument,
+  GetUserByIdDocument,
   useAddUserUrlsMutation,
   useRemoveUserUrlsMutation,
   useUpdateUserMutation,
@@ -61,7 +61,7 @@ export const useUserUrls = (
    * URL追加.（リフェッチ機能）
    */
   const [updatePortfolio] = useAddUserUrlsMutation({
-    refetchQueries: [GetUrlByIdDocument], //データを表示するクエリーのDocument
+    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -105,7 +105,7 @@ export const useUserUrls = (
    * URL削除用.（リフェッチ機能）
    */
   const [deleteUrl] = useRemoveUserUrlsMutation({
-    refetchQueries: [GetUrlByIdDocument], //データを表示するクエリーのDocument
+    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -148,7 +148,6 @@ export const useUserUrls = (
     cancel,
     register,
     errors,
-    GetUrlByIdDocument,
     deleteUrl,
     onDelete,
     onSubmit,

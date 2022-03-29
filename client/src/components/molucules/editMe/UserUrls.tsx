@@ -12,11 +12,6 @@ type Props = {
   onClose: () => void; //モーダルを閉じるメソッド
 };
 
-//やること:URLの登録が0だった場合の処理
-//CSS
-//バリデーション
-//asを処理
-
 /**
  * public部分URL編集画面.
  * @remarks title, url

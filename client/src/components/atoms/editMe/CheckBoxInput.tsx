@@ -1,10 +1,10 @@
 import { FC, memo } from "react";
 import { Flex } from "@chakra-ui/react";
 import styled from "styled-components";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 type Props = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  registers: any; //value(テキストボックスの値と紐づけ用)
+  registers: UseFormRegisterReturn; //value(テキストボックスの値と紐づけ用)
   errorMessage?: string | undefined; //エラーメッセージ(errors.registers?.messageの形で渡す)
   array: Array<string>;
   label?: string;
@@ -17,7 +17,10 @@ export const CheckBoxInput: FC<Props> = memo(
   ({ registers, errorMessage, label, array }) => {
     return (
       <>
-        <_LabelItem>{label}</_LabelItem>
+        <Flex gap={3}>
+          <_LabelItem> {label}</_LabelItem>
+          <_ErrorMessage>{errorMessage}</_ErrorMessage>
+        </Flex>
         <Flex gap={3} mt={1}>
           {array.map((item) => (
             <Flex alignItems="center" gap={1} key={item}>
@@ -26,7 +29,6 @@ export const CheckBoxInput: FC<Props> = memo(
             </Flex>
           ))}
         </Flex>
-        <_ErrorMessage>{errorMessage}</_ErrorMessage>
       </>
     );
   },

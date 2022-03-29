@@ -14,9 +14,10 @@ import { TextInput } from "../../../atoms/common/TextInput";
 import { TableFlexItem } from "../../../atoms/TableFlexItem";
 import { EditPortfolio } from "./EditPortfolio";
 import { useNewPortfolio } from "../../../../hooks/editMe/useNewPortfolio";
+import { Heading } from "../../../atoms/common/Heading";
 import {
   Portfolio,
-  useGetPortfolioByUserIdQuery,
+  useGetUserPortfolioByIdQuery,
 } from "../../../../types/generated/graphql";
 
 type Props = {
@@ -35,12 +36,12 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
   /**
    * 制作物情報デフォルト値取得.
    */
-  const { data, loading, error } = useGetPortfolioByUserIdQuery({
+  const { data, loading, error } = useGetUserPortfolioByIdQuery({
     variables: {
       userToken: cookies.ForestaID,
     },
   });
-  const portfolioData = data?.portfolios.node as Array<Portfolio>;
+  const portfolioData = data?.portfolios.node.portfolio as Array<Portfolio>;
 
   //編集モード
   const [editMode, setEditMode] = useState("");
@@ -245,3 +246,8 @@ const _LabelItem = styled.div`
   text-align: left;
   font-weight: bold;
 `;
+function useGetPortfolioByUserIdQuery(arg0: {
+  variables: { userToken: any };
+}): { data: any; loading: any; error: any } {
+  throw new Error("Function not implemented.");
+}

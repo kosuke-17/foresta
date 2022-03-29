@@ -8,8 +8,6 @@ import {
   Tr,
   Th,
   Td,
-  UnorderedList,
-  ListItem,
   Flex,
   Spinner,
 } from "@chakra-ui/react";

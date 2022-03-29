@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { useCookies } from "react-cookie";
 
 import {
-  GetPortfolioByUserIdDocument,
+  GetUserByIdDocument,
   useCreatePortfolioMutation,
   useGetSpreadSheetIdQuery,
 } from "../../types/generated/graphql";
@@ -97,7 +97,7 @@ export const useNewPortfolio = (
    * 制作物情報新規追加.（リフェッチ機能）
    */
   const [updatePortfolio] = useCreatePortfolioMutation({
-    refetchQueries: [GetPortfolioByUserIdDocument], //データを表示するクエリーのDocument
+    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
