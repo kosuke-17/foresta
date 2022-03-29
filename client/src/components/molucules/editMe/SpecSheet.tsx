@@ -39,40 +39,42 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
         label="業務外の取り組み"
         placeholder="業務外の取り組み"
       />
+      {prevJobs.length === 0
+        ? setPrevJobs((cur) => [...cur, ""])
+        : prevJobs?.map((item: any, index: number) => (
+            <>
+              <Flex>
+                <Text fontWeight="semibold">{`前職${index + 1}`}</Text>
+                <Text color="red" ml={4}>
+                  {errors?.[`prevJobs_${index}` as any]?.message}
+                </Text>
+              </Flex>
+              <TextAreaWithCounter
+                key={item.id}
+                registers={register(`prevJobs_${index}` as any)}
+                placeholder={`前職${index + 1}`}
+              />
 
-      {prevJobs?.map((item: any, index: number) => (
-        <>
-          <Flex>
-            <Text fontWeight="semibold">{`前職${index + 1}`}</Text>
-            <Text color="red" ml={4}>
-              {errors?.[`prevJobs_${index}` as any]?.message}
-            </Text>
-          </Flex>
-          <TextAreaWithCounter
-            key={item.id}
-            registers={register(`prevJobs_${index}` as any)}
-            placeholder={`前職${index + 1}`}
-          />
+              <Box mt={3} display="flex" justifyContent="right">
+                <ButtonItem
+                  name="Delete"
+                  backgroundColor="red"
+                  onClick={() => {
+                    const newVal = [...prevJobs];
+                    newVal.splice(index, 1);
+                    setPrevJobs(newVal);
+                    // prevJobが削除された時はデータをつめるように移動させる。（データが入っていない空箱があるため。）
+                    prevJobs.forEach((_, idx) => {
+                      if (index > idx) return;
+                      setValue(`prevJobs_${idx}`, watch(`prevJobs_${idx + 1}`));
+                    });
+                  }}
+                />
+              </Box>
+            </>
+          ))}
 
-          <Box mt={3}>
-            <ButtonItem
-              name="Delete"
-              backgroundColor="red"
-              onClick={() => {
-                const newVal = [...prevJobs];
-                newVal.splice(index, 1);
-                setPrevJobs(newVal);
-                // prevJobが削除された時はデータをつめるように移動させる。（データが入っていない空箱があるため。）
-                prevJobs.forEach((_, idx) => {
-                  if (index > idx) return;
-                  setValue(`prevJobs_${idx}`, watch(`prevJobs_${idx + 1}`));
-                });
-              }}
-            />
-          </Box>
-        </>
-      ))}
-      <Box mt={3}>
+      <Box mt={3} display="flex" justifyContent="right">
         <ButtonItem
           name="Add"
           backgroundColor="green"
