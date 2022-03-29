@@ -539,6 +539,24 @@ gql`
   }
 `;
 
+//技術ツリーのみ取得
+gql`
+  query GetUserOnlyTreeById($userToken: String!) {
+    tree: getUserLeafsById(userToken: $userToken) {
+      status
+      msg
+      node {
+        myForest {
+          id
+          treeName
+          achievementRate
+          color
+        }
+      }
+    }
+  }
+`;
+
 // 技術ツリーのステータスを変更
 gql`
   mutation ChangeLeafStatus($techLeafInfo: UserTechLeafUpdateInput!) {
