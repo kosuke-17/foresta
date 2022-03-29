@@ -10,6 +10,7 @@ import { Project } from "../../molucules/aboutMePrivate/Project";
 import { SpecPr } from "../../molucules/aboutMePrivate/SpecPr";
 import { Heading } from "../../atoms/common/Heading";
 import { SpreadMenuBar } from "./SpreadMenuBar";
+import { ShadowFrame } from "../../atoms/common/ShadowFrame";
 
 /**
  * AboutMeプライベート(スペックシート)ゾーン.
@@ -30,14 +31,7 @@ export const Private: FC = memo(() => {
         <Spacer />
         <SpreadMenuBar />
       </Flex>
-      <Box
-        background={"white.50"}
-        m={10}
-        p={10}
-        rounded={20}
-        border="4px"
-        borderColor="#A7A7A7"
-      >
+      <ShadowFrame margin={10} padding={10}>
         {propsDataArray.map((propsData) => (
           <div key={propsData.title}>
             <AccordionContent {...propsData} />
@@ -46,7 +40,7 @@ export const Private: FC = memo(() => {
 
         <_Title>開発経験</_Title>
         <Project />
-      </Box>
+      </ShadowFrame>
     </>
   );
 });
