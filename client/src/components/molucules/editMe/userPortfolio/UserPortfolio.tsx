@@ -15,9 +15,10 @@ import { TableFlexItem } from "../../../atoms/TableFlexItem";
 import { EditPortfolio } from "./EditPortfolio";
 import { useNewPortfolio } from "../../../../hooks/editMe/useNewPortfolio";
 import { ButtonItem } from "../../../atoms/common/ButtonItem";
+
 import {
   Portfolio,
-  useGetPortfolioByUserIdQuery,
+  useGetUserPortfolioByIdQuery,
 } from "../../../../types/generated/graphql";
 
 type Props = {
@@ -36,12 +37,12 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
   /**
    * 制作物情報デフォルト値取得.
    */
-  const { data, loading, error } = useGetPortfolioByUserIdQuery({
+  const { data, loading, error } = useGetUserPortfolioByIdQuery({
     variables: {
       userToken: cookies.ForestaID,
     },
   });
-  const portfolioData = data?.portfolios.node as Array<Portfolio>;
+  const portfolioData = data?.portfolios.node.portfolio as Array<Portfolio>;
 
   //編集モード
   const [editMode, setEditMode] = useState("");

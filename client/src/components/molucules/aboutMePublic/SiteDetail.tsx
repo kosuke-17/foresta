@@ -1,8 +1,9 @@
 import { memo, FC } from "react";
-import { SiteImage } from "../../atoms/aboutMePublic/SiteImage";
-import styled from "styled-components";
-import { TableFlexItem } from "../../atoms/TableFlexItem";
 import { Flex } from "@chakra-ui/react";
+import styled from "styled-components";
+
+import { SiteImage } from "../../atoms/aboutMePublic/SiteImage";
+import { TableFlexItem } from "../../atoms/TableFlexItem";
 import { PortfolioType } from "../../../types/types";
 
 // 自動生成したPortfolioの型から使用したいプロパティ名だけを指定
