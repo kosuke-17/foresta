@@ -116,8 +116,6 @@ export const useSpecSheet = (
   const onSubmit = useCallback(
     async (data: any) => {
       const body = Object.keys(data).reduce((acc: any, cur: string) => {
-        console.log("カレント", cur);
-
         // データがない時は送信しない
         if (cur.includes("prevJobs") && !data[cur]) return acc;
         // prevJobsが送信するデータに含まれる時はprevJobsの配列を作る
