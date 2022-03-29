@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -10,19 +10,28 @@ import {
   useUpdatePortfolioMutation,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
+import { EditPortfolioType } from "../../types/types";
 
 /**
  * バリデーションチェック.
  */
 const schema = yup.object().shape({
   //プロジェクト名
-  title: yup.string(),
+  title: yup
+    .string()
+    .trim()
+    .required("プロジェクト名を入力して下さい")
+    .max(50, "プロジェクト名は50文字以内で入力して下さい"),
   //詳細
-  description: yup.string(),
+  description: yup
+    .string()
+    .trim()
+    .required("詳細を入力して下さい")
+    .max(150, "詳細は150文字以内で入力して下さい"),
   //画像URL
-  img: yup.string(),
+  img: yup.string().trim(),
   //URL
-  portfolioURL: yup.string(),
+  portfolioURL: yup.string().trim(),
 });
 
 /**
@@ -44,7 +53,7 @@ export const useUserPortfolio = (
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<EditPortfolioType>({
     resolver: yupResolver(schema),
     defaultValues: {
       title: portfolioData.title,
@@ -97,8 +106,8 @@ export const useUserPortfolio = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = useCallback(
-    async (data: any) => {
+  const onSubmit: SubmitHandler<EditPortfolioType> = useCallback(
+    async (data: EditPortfolioType) => {
       try {
         await updatePortfolio({
           variables: {

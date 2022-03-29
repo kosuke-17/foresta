@@ -10,20 +10,28 @@ import {
   useGetSpreadSheetIdQuery,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
-import { portfolioInputType } from "../../types/types";
+import { NewPortfolioType } from "../../types/types";
 
 /**
  * バリデーションチェック.
  */
 const schema = yup.object().shape({
   //プロジェクト名
-  title: yup.string(),
+  title: yup
+    .string()
+    .trim()
+    .required("タイトルを入力してください")
+    .max(15, "タイトルは15文字以内で入力してください"),
   //詳細
-  description: yup.string(),
+  description: yup
+    .string()
+    .trim()
+    .required("詳細を入力してください")
+    .max(150, "詳細は150文字以内で入力してください"),
   //画像URL
   img: yup.string(),
   //URL
-  portfolioURL: yup.string(),
+  portfolioURL: yup.string().trim(),
   //specSheetId
   specSheetId: yup.string(),
 });
@@ -58,7 +66,7 @@ export const useNewPortfolio = (
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<portfolioInputType>({
+  } = useForm<NewPortfolioType>({
     resolver: yupResolver(schema),
   });
 
@@ -105,8 +113,8 @@ export const useNewPortfolio = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit: SubmitHandler<portfolioInputType> = useCallback(
-    async (data) => {
+  const onSubmit: SubmitHandler<NewPortfolioType> = useCallback(
+    async (data: NewPortfolioType) => {
       try {
         await updatePortfolio({
           variables: {

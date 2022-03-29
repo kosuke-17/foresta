@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCookies } from "react-cookie";
 import * as yup from "yup";
@@ -18,6 +18,7 @@ import {
   useUpdateSpecUserInfoMutation,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
+import { SpecUserInfoType } from "../../types/types";
 
 /**
  * バリデーションチェック.
@@ -151,30 +152,19 @@ export const useSpecUserInfo = (
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<SpecUserInfoType>({
     resolver: yupResolver(schema),
-    // defaultValues: {
-    //   stuffsID: userData?.user.node.userInfo.stuffID,
-    //   age: userData?.user.node.userInfo.age,
-    //   gender: String(userData?.user.node.userInfo.gender),
-    //   nearestStation: station,
-    //   nearestLine: line,
-    //   startWorkDate: userData?.user.node.userInfo.startWorkDate,
-    //   seExpAmountYear: seYear,
-    //   seExpAmountMonth: seMonth,
-    //   pgExpAmountYear: pgYear,
-    //   pgExpAmountMonth: pgMonth,
-    //   itExpAmountYear: itYear,
-    //   itExpAmountMonth: itMonth,
-    // },
   });
 
-  setValue("stuffID", userData?.user.node.userInfo.stuffID);
-  setValue("age", userData?.user.node.userInfo.age);
+  setValue("stuffID", userData?.user.node.userInfo.stuffID as string);
+  setValue("age", userData?.user.node.userInfo.age as number);
   setValue("gender", String(userData?.user.node.userInfo.gender));
   setValue("nearestStation", station);
   setValue("nearestLine", line);
-  setValue("startWorkDate", userData?.user.node.userInfo.startWorkDate);
+  setValue(
+    "startWorkDate",
+    userData?.user.node.userInfo.startWorkDate as string,
+  );
   setValue("seExpAmountYear", seYear);
   setValue("seExpAmountMonth", seMonth);
   setValue("pgExpAmountYear", pgYear);
@@ -205,8 +195,8 @@ export const useSpecUserInfo = (
    * 更新ボタンを押した時に呼ばれる
    * @param userData - 入力したデータ
    */
-  const onSubmit = useCallback(
-    async (data: any) => {
+  const onSubmit: SubmitHandler<SpecUserInfoType> = useCallback(
+    async (data: SpecUserInfoType) => {
       const neareuserData = `${data.nearestStation}(${data.nearestLine})`;
       const se = data.seExpAmountYear * 12 + data.seExpAmountMonth;
       const pg = data.pgExpAmountYear * 12 + data.pgExpAmountMonth;
