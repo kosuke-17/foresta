@@ -14,8 +14,8 @@ import { usePercentDate } from "../../../hooks/study/usePercentDate";
 import { Heading } from "../../atoms/common/Heading";
 import { Bar, Pie } from "react-chartjs-2";
 import { StackFigButton } from "../../atoms/study/StackFigButton";
-import { StackDailyButton } from "../../atoms/study/StackDaylyButton";
 import { StackDateButton } from "../../atoms/study/StackDateButton";
+import { StackDailyButton } from "../../atoms/study/StackDailyButton";
 
 /**
  * 学習記録のグラフを表示する
