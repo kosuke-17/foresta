@@ -1,18 +1,21 @@
 import "chart.js/auto";
 import { ChartOptions } from "chart.js";
-import { subDays, subMonths } from "date-fns";
-import { memo } from "react";
-import { Box, Button, Flex, Heading, Stack } from "@chakra-ui/react";
+import { format, subDays, subMonths } from "date-fns";
+import { memo, useState } from "react";
+import { Box, Flex, Stack } from "@chakra-ui/react";
 //pluginを使うため
 import "chartjs-plugin-datalabels";
 //日付を使うため
 import "chartjs-adapter-date-fns";
-import { DayStackTimeFig } from "../../molucules/stackList/DayStackTimeFig";
-import { MonthStackTimeFig } from "../../molucules/stackList/MonthStackTimeFig";
 import { useTimeFig } from "../../../hooks/study/useTimeFig";
 import { useFigBtn } from "../../../hooks/study/useFigBtn";
 import { usePercentMonth } from "../../../hooks/study/usePercentMonth";
 import { usePercentDate } from "../../../hooks/study/usePercentDate";
+import { Heading } from "../../atoms/common/Heading";
+import { Bar, Pie } from "react-chartjs-2";
+import { StackFigButton } from "../../atoms/study/StackFigButton";
+import { StackDailyButton } from "../../atoms/study/StackDaylyButton";
+import { StackDateButton } from "../../atoms/study/StackDateButton";
 
 /**
  * 学習記録のグラフを表示する
@@ -21,15 +24,28 @@ export const StackTime = memo(() => {
   //学習時間グラフ表示用hooks使用
   const { studyData, chartDatas } = useTimeFig();
 
+  //表示グラフの種類を変更するための状態
+  const [isDisplayFig, setIsDisplayFig] = useState(true);
+
+  //グラフ表示変更メソッド
+  const displayChange = () => {
+    if (isDisplayFig === true) {
+      setIsDisplayFig(false);
+    }
+    if (isDisplayFig === false) {
+      setIsDisplayFig(true);
+    }
+  };
+
   //グラフ表示切り替えボタン用hooks使用
   const {
     monthBtn,
-    dayBtn,
     subDateBtn,
     addDateBtn,
     dateValueDay,
     dateValueMonth,
     isDay,
+    title,
   } = useFigBtn();
 
   //%表示用hooks使用
@@ -42,16 +58,17 @@ export const StackTime = memo(() => {
     dateValueDay,
   );
 
-  //棒グラフのオプションを指定
+  //棒グラフのオプションを指定（daily）
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dayOptions: ChartOptions<any> = {
+    maintainAspectRatio: false,
     scales: {
       xAxes: {
         stacked: true,
-        min: subDays(new Date(), 7 + dateValueDay).getTime(),
+        min: subDays(new Date(), 6 + dateValueDay).getTime(),
         max: subDays(new Date(), dateValueDay).getTime(),
         title: {
           display: true,
-          text: "学習日時",
         },
         type: "time",
         time: {
@@ -66,12 +83,14 @@ export const StackTime = memo(() => {
         stacked: true,
         title: {
           display: true,
-          text: "学習時間（分）",
         },
       },
     },
   };
+  //棒グラフのオプションを指定（monthly）
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const monthOptions: ChartOptions<any> = {
+    maintainAspectRatio: false,
     scales: {
       xAxes: {
         stacked: true,
@@ -79,7 +98,6 @@ export const StackTime = memo(() => {
         max: subMonths(new Date(), dateValueMonth).getTime(),
         title: {
           display: true,
-          text: "学習日時",
         },
         type: "time",
         time: {
@@ -90,7 +108,6 @@ export const StackTime = memo(() => {
         stacked: true,
         title: {
           display: true,
-          text: "学習時間（分）",
         },
       },
     },
@@ -98,67 +115,114 @@ export const StackTime = memo(() => {
 
   return (
     <>
-      <Heading as="h2" size="lg" mr={3} mt={5} ml={5}>
-        学習時間
-      </Heading>
-      <Box
-        width="full"
-        backgroundColor="#f5f5f5"
-        borderRadius="md"
-        mr={5}
-        ml={5}
-      >
-        <Stack>
-          <Flex justifyContent="center" gap={5} my={5}>
-            <Button
-              backgroundColor="green.300"
-              onClick={monthBtn}
-              shadow="base"
-              color="white"
-              _hover={{ bg: "gray.300" }}
-              _focus={{ boxShadow: "none" }}
-            >
-              月別
-            </Button>
-            <Button
-              backgroundColor="green.300"
-              onClick={dayBtn}
-              shadow="base"
-              color="white"
-              _hover={{ bg: "gray.300" }}
-              _focus={{ boxShadow: "none" }}
-            >
-              日別
-            </Button>
-          </Flex>
-
-          <Flex justifyContent="center">
-            <Box>
+      <Flex width="50%" direction="column">
+        <Heading text="Weekly Record" />
+        <Box width="full">
+          <Stack>
+            <Flex justifyContent="center" alignItems="center" mt={5}>
               {isDay ? (
-                <DayStackTimeFig
-                  subDateBtn={subDateBtn}
-                  dateValueDay={dateValueDay}
-                  addDateBtn={addDateBtn}
-                  chartDatas={chartDatas}
-                  dayOptions={dayOptions}
-                  pieDateData={pieDateData}
-                  dayPercentOptions={dayPercentOptions}
+                <Box mr={20}>
+                  {format(subDays(new Date(), 6 + dateValueDay), "yyyy/MM/dd")}~
+                  {format(subDays(new Date(), dateValueDay), "yyyy/MM/dd")}
+                </Box>
+              ) : (
+                <Box mr={20}>
+                  {format(
+                    subMonths(new Date(), 1 + dateValueMonth),
+                    "yyyy/MM/dd",
+                  )}
+                  ~{format(subMonths(new Date(), dateValueMonth), "yyyy/MM/dd")}
+                </Box>
+              )}
+
+              {isDisplayFig ? (
+                <StackFigButton
+                  title="円グラフで表示"
+                  onClick={displayChange}
                 />
               ) : (
-                <MonthStackTimeFig
-                  subDateBtn={subDateBtn}
-                  dateValueMonth={dateValueMonth}
-                  addDateBtn={addDateBtn}
-                  chartDatas={chartDatas}
-                  monthOptions={monthOptions}
-                  pieMonthData={pieMonthData}
-                  monthPercentOptions={monthPercentOptions}
+                <StackFigButton
+                  title="棒グラフで表示"
+                  onClick={displayChange}
                 />
               )}
-            </Box>
-          </Flex>
-        </Stack>
-      </Box>
+              <StackDailyButton title={title} onClick={monthBtn} />
+
+              <StackDateButton
+                isType={true}
+                leftRadius={3}
+                onClick={subDateBtn}
+              />
+              <StackDateButton
+                isType={false}
+                rightRadius={3}
+                onClick={addDateBtn}
+              />
+            </Flex>
+
+            <Flex justifyContent="center">
+              {isDay ? (
+                <Flex>
+                  {isDisplayFig ? (
+                    <Box width={600} height={600}>
+                      <Bar data={chartDatas} options={dayOptions} />
+                    </Box>
+                  ) : (
+                    <Box height={500} width={500} alignItems="center">
+                      {pieDateData && pieDateData.labels?.length != 0 ? (
+                        <Pie data={pieDateData} options={dayPercentOptions} />
+                      ) : (
+                        <Flex
+                          justifyContent="center"
+                          alignItems="center"
+                          backgroundColor="gray.100"
+                          width={450}
+                          height={450}
+                          borderRadius={500}
+                          ml="30px"
+                          mt="50px"
+                        >
+                          データがありません
+                        </Flex>
+                      )}
+                    </Box>
+                  )}
+                </Flex>
+              ) : (
+                <Flex>
+                  {isDisplayFig ? (
+                    <Box width={600} height={600}>
+                      <Bar data={chartDatas} options={monthOptions} />
+                    </Box>
+                  ) : (
+                    <Box height={500} width={500} alignItems="center">
+                      {pieMonthData && pieMonthData.labels?.length != 0 ? (
+                        <Pie
+                          data={pieMonthData}
+                          options={monthPercentOptions}
+                        />
+                      ) : (
+                        <Flex
+                          justifyContent="center"
+                          alignItems="center"
+                          backgroundColor="gray.100"
+                          width={450}
+                          height={450}
+                          borderRadius={500}
+                          ml="30px"
+                          mt="50px"
+                        >
+                          データがありません
+                        </Flex>
+                      )}
+                    </Box>
+                  )}
+                </Flex>
+              )}
+            </Flex>
+          </Stack>
+        </Box>
+      </Flex>
     </>
   );
 });
