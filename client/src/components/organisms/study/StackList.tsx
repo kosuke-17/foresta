@@ -2,7 +2,6 @@ import { AddIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
-  Heading,
   Tab,
   TabList,
   TabPanel,
@@ -12,12 +11,13 @@ import {
 import { memo } from "react";
 
 import { useStackList } from "../../../hooks/study/useStackList";
+import { Heading } from "../../atoms/common/Heading";
 import { LogListTable } from "../../molucules/stackList/LogListTable";
 import { StudyListTable } from "../../molucules/stackList/StudyListTable";
 import { StudyModal } from "../../molucules/stackList/StudyModal";
 
 //タブ名
-const tabNames = ["学習リスト", "更新情報"] as const;
+const tabNames = ["StackList", "LogList"] as const;
 
 /**
  * 学習リスト/更新情報を表示する
@@ -29,65 +29,64 @@ export const StackList = memo(() => {
 
   return (
     <>
-      <Flex align="center" gap={1} mb={1}>
-        <Heading as="h2" size="lg" mr={3} ml={5}>
-          学習記録
-        </Heading>
-        <StudyModal
-          title="記録追加"
-          stackId=""
-          icon={<AddIcon data-testid="addIcon" />}
-        />
-      </Flex>
-      <Box mr={5} ml={5}>
-        <Tabs
-          isFitted
-          isLazy
-          variant="soft-rounded"
-          colorScheme="green"
-          width="full"
+      <Flex width="50%" direction="column">
+        <Flex align="center" gap={1} mb={1}>
+          <Heading text="What you learned" />
+          <StudyModal
+            title="Add Stack"
+            stackId=""
+            icon={<AddIcon data-testid="addIcon" />}
+            color="green.300"
+          />
+        </Flex>
+        <Box
+          mr={5}
+          ml={5}
           backgroundColor="#f5f5f5"
-          padding="20px"
-          w="full"
+          borderRadius="md"
+          shadow="xl"
         >
-          <TabList>
-            {tabNames.map((tab, index) => (
-              <Tab
-                key={index}
-                _focus={{ boxShadow: "none" }}
-                _selected={{ color: "white", bg: "green.300" }}
-                _hover={{ bg: "gray.300" }}
-                backgroundColor="white"
-                shadow="base"
-              >
-                {tab}
-              </Tab>
-            ))}
-          </TabList>
-          {loading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p>Error...</p>
-          ) : data?.getAllStudyStack.node.length ? (
-            <TabPanels
-              overflowY="auto"
-              height="300px"
-              backgroundColor="white"
-              margin="30px"
-            >
-              <TabPanel>
-                <StudyListTable data={data} stackSumList={stackSumList} />
-              </TabPanel>
+          <Tabs
+            isFitted
+            isLazy
+            variant="soft-rounded"
+            colorScheme="green"
+            p={5}
+          >
+            <TabList>
+              {tabNames.map((tab, index) => (
+                <Tab
+                  key={index}
+                  _focus={{ boxShadow: "none" }}
+                  _selected={{ color: "white", bg: "green.300" }}
+                  _hover={{ bg: "gray.300" }}
+                  backgroundColor="white"
+                  shadow="base"
+                >
+                  {tab}
+                </Tab>
+              ))}
+            </TabList>
+            {loading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>Error...</p>
+            ) : data?.getAllStudyStack.node.length ? (
+              <TabPanels overflow="auto" height="550px" backgroundColor="white">
+                <TabPanel backgroundColor="#f5f5f5">
+                  <StudyListTable data={data} stackSumList={stackSumList} />
+                </TabPanel>
 
-              <TabPanel>
-                <LogListTable data={data} />
-              </TabPanel>
-            </TabPanels>
-          ) : (
-            <p>学習記録が1件もありません</p>
-          )}
-        </Tabs>
-      </Box>
+                <TabPanel>
+                  <LogListTable data={data} />
+                </TabPanel>
+              </TabPanels>
+            ) : (
+              <p>学習記録が1件もありません</p>
+            )}
+          </Tabs>
+        </Box>
+      </Flex>
     </>
   );
 });
