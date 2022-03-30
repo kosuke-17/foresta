@@ -7,13 +7,18 @@ import { useState } from "react";
 export const useFigBtn = () => {
   //月ごとか日毎か
   const [isDay, setIsDay] = useState(true);
+  const [title, setTitle] = useState("Monthly");
+
   //月ごと表示ボタン
   const monthBtn = () => {
-    setIsDay(false);
-  };
-  //日毎表示ボタン
-  const dayBtn = () => {
-    setIsDay(true);
+    if (isDay === true) {
+      setIsDay(false);
+      setTitle("Daily");
+    }
+    if (isDay === false) {
+      setIsDay(true);
+      setTitle("Monthly");
+    }
   };
 
   //日付用グラフの変化させる日にち
@@ -38,11 +43,11 @@ export const useFigBtn = () => {
   };
   return {
     monthBtn,
-    dayBtn,
     subDateBtn,
     addDateBtn,
     dateValueDay,
     dateValueMonth,
     isDay,
+    title,
   };
 };
