@@ -22,7 +22,7 @@ export const SiteDetail: FC<Props> = memo(({ siteItem }) => {
         <>
           <_Description>{returnCodeToBr(siteItem.description)}</_Description>
           <_SiteImage href={siteItem.portfolioURL} target="_brank">
-            <SiteImage imageUrl={siteItem.img} />
+            <SiteImage imageUrl={siteItem.img} isUp={false} />
           </_SiteImage>
           {siteItem.skills.length != 0 && (
             <>

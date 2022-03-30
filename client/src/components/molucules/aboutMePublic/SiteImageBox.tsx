@@ -51,7 +51,7 @@ export const SiteImageBox: FC<Props> = memo(({ data }) => {
         onClose={onClose}
         modalTitle={portfolioItem?.title}
         contents={<SiteDetail siteItem={portfolioItem} />}
-        closeBtnName="とじる"
+        closeBtnName="Close"
       />
       <ShadowFrame margin={0} padding={10}>
         <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
