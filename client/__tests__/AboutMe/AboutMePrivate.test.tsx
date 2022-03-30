@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { MockedProvider } from "@apollo/react-testing";
 
@@ -11,10 +11,13 @@ import { SkillTable } from "../../src/components/molucules/aboutMePrivate/SkillT
 import { UserInfoTable } from "../../src/components/molucules/aboutMePrivate/UserInfoTable";
 import { SpecPr } from "../../src/components/molucules/aboutMePrivate/SpecPr";
 import {
+  errorMocks,
   userInfoMocks,
   userPrMocks,
   userSkillMocks,
 } from "../../__mocks__/AboutMe";
+import { MenuBar } from "../../src/components/organisms/aboutMe/MenuBar";
+import userEvent from "@testing-library/user-event";
 
 /**
  * 基本情報コンポーネントのテスト.
@@ -172,11 +175,17 @@ describe("開発経験の表示", () => {
 /**
  * その他データコンポーネントのテスト.
  */
-
-//その他のデータ(業務外,資格,前職)
 const WrapedOtherArea = () => {
   return (
     <MockedProvider mocks={[userInfoMocks]} addTypename={false}>
+      <OtherData />
+    </MockedProvider>
+  );
+};
+//エラーの場合のモック
+const WrapedErrorOtherArea = () => {
+  return (
+    <MockedProvider mocks={[errorMocks]} addTypename={false}>
       <OtherData />
     </MockedProvider>
   );
@@ -192,4 +201,67 @@ describe("その他の情報の表示", () => {
       expect(screen.getByText("前職経験2"[1])).toBeInTheDocument();
     });
   });
+});
+
+describe("メニューバー", () => {
+  it("メニューバーが表示される", () => {
+    act(() => {
+      render(<MenuBar />);
+      userEvent.click(screen.queryByTestId("open-menu"));
+      expect(screen.getByText("ユーザ情報")).toBeInTheDocument();
+      expect(screen.getByText("制作物")).toBeInTheDocument();
+      expect(screen.getByText("URL")).toBeInTheDocument();
+      expect(screen.getByText("スペックシート基本情報")).toBeInTheDocument();
+      expect(screen.getByText("スペックシートスキル要約")).toBeInTheDocument();
+      expect(screen.getByText("スペックシートその他情報")).toBeInTheDocument();
+      expect(screen.getByText("スペックシート開発経験")).toBeInTheDocument();
+    });
+  });
+  // it("メニューバー内のボタンをクリックする", () => {
+  //   act(() => {
+  //     //ユーザ情報
+  //     const menuRender = render(<MenuBar />);
+  //     userEvent.click(screen.queryByTestId("open-menu"));
+  //     userEvent.click(screen.getByText("ユーザ情報"));
+  //     expect(screen.getByText("ユーザ情報を更新")).toBeInTheDocument();
+  //     //制作物
+  //     menuRender.rerender;
+  //     userEvent.click(screen.queryByTestId("open-menu"));
+  //     userEvent.click(screen.getByText("制作物"));
+  //     expect(screen.getByText("制作物を更新")).toBeInTheDocument();
+  //     //URL
+  //     menuRender.rerender;
+  //     userEvent.click(screen.queryByTestId("open-menu"));
+  //     userEvent.click(screen.getByText("URL"));
+  //     expect(screen.getByText("URLを更新")).toBeInTheDocument();
+  //     //スペシ基本情報
+  //     menuRender.rerender;
+  //     userEvent.click(screen.queryByTestId("open-menu"));
+  //     userEvent.click(screen.getByText("スペックシート基本情報"));
+  //     expect(
+  //       screen.getByText("スペックシート基本情報を更新"),
+  //     ).toBeInTheDocument();
+  //     //スぺシスキル要約
+  //     menuRender.rerender;
+  //     userEvent.click(screen.queryByTestId("open-menu"));
+  //     userEvent.click(screen.getByText("スペックシートスキル要約"));
+  //     expect(
+  //       screen.getByText("スペックシートスキル要約を更新"),
+  //     ).toBeInTheDocument();
+  //     //スペシその他
+  //     menuRender.rerender;
+  //     userEvent.click(screen.queryByTestId("open-menu"));
+  //     userEvent.click(screen.getByText("スペックシートその他情報"));
+  //     expect(
+  //       screen.getByText("スペックシートその他情報を更新"),
+  //     ).toBeInTheDocument();
+  //     //スペシ開発経験
+  //     menuRender.rerender;
+  //     userEvent.click(screen.queryByTestId("open-menu"));
+  //     userEvent.click(screen.getByText("スペックシート開発経験"));
+  //     expect(
+  //       screen.getByText("スペックシート開発経験を更新"),
+  //     ).toBeInTheDocument();
+  //   });
+  // });
 });
