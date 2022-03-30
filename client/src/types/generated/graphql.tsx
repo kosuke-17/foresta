@@ -1064,20 +1064,7 @@ export type UpdatePortfolioMutationVariables = Exact<{
 }>;
 
 export type UpdatePortfolioMutation = {
-  updatePortfolio: {
-    status: string;
-    msg?: string | null;
-    node: Array<{
-      id: string;
-      title: string;
-      description: string;
-      img: string;
-      portfolioURL: string;
-      skills: Array<string>;
-      userId: string;
-      specSheetId: string;
-    }>;
-  };
+  updatePortfolio: { status: string; msg?: string | null };
 };
 
 export type RemovePortfolioMutationVariables = Exact<{
@@ -2427,16 +2414,6 @@ export const UpdatePortfolioDocument = gql`
     updatePortfolio(portfolio: $portfolio) {
       status
       msg
-      node {
-        id
-        title
-        description
-        img
-        portfolioURL
-        skills
-        userId
-        specSheetId
-      }
     }
   }
 `;

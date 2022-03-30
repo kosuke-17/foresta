@@ -286,16 +286,6 @@ gql`
     updatePortfolio(portfolio: $portfolio) {
       status
       msg
-      node {
-        id
-        title
-        description
-        img
-        portfolioURL
-        skills
-        userId
-        specSheetId
-      }
     }
   }
 `;
