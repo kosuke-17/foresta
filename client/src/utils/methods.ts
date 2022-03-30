@@ -69,5 +69,5 @@ export const returnCodeToBr = (text: string) => {
  * @returns "YYYY年MM月DD日"の形でフォーマットされた日時
  */
 export const getFormattedStackDate = (date: Date) => {
-  return format(date, "yyyy年MM月dd日");
+  return format(date, "yyyy/MM/dd");
 };

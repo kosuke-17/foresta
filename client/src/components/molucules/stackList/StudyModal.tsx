@@ -25,6 +25,7 @@ type Props = {
   title: string;
   stackId: string;
   icon: ReactElement<any, string | JSXElementConstructor<any>> | undefined;
+  color: string;
 };
 
 //バリデーションチェック
@@ -49,7 +50,7 @@ export const StudyModal: FC<Props> = memo((props) => {
   //モーダルの開閉
   const { isOpen, onOpen, onClose } = useDisclosure();
   //propsでもらうもの
-  const { title, icon, stackId } = props;
+  const { title, icon, stackId, color } = props;
   //学習記録を１件取得クエリー（本当はdaleyを使いたい）
   const { loading, data, error } = useGetStudyStackByIdQuery({
     variables: { studyStackId: stackId },
@@ -103,7 +104,7 @@ export const StudyModal: FC<Props> = memo((props) => {
       <Button
         onClick={openMethod}
         _focus={{ boxShadow: "none" }}
-        backgroundColor="green.300"
+        backgroundColor={color}
         color="white"
         shadow="base"
         _hover={{ bg: "gray.300" }}
@@ -120,30 +121,30 @@ export const StudyModal: FC<Props> = memo((props) => {
         isCentered
       >
         <ModalOverlay />
-        <ModalContent backgroundColor="green.100">
+        <ModalContent>
           <ModalHeader>{title}</ModalHeader>
-          {title === "記録削除" && (
+          {title === "Delete Stack" && (
             <ModalBody>この記事を削除しますか</ModalBody>
           )}
-          {title === "記録追加" && (
+          {title === "Add Stack" && (
             <StudyModalInput register={register} errors={errors} />
           )}
-          {title === "記録編集" && (
+          {title === "Edit Stack" && (
             <StudyModalInput register={register} errors={errors} />
           )}
 
           <ModalFooter>
-            {title === "記録追加" && (
-              <StackButton onClick={handleSubmit(addStack)} title="追加する" />
+            {title === "Add Stack" && (
+              <StackButton onClick={handleSubmit(addStack)} title="Add Stack" />
             )}
-            {title === "記録編集" && (
+            {title === "Edit Stack" && (
               <StackButton
                 onClick={handleSubmit(updateStack)}
-                title="編集する"
+                title="Edit Record"
               />
             )}
-            {title === "記録削除" && (
-              <StackButton onClick={removeStack} title="削除する" />
+            {title === "Delete Stack" && (
+              <StackButton onClick={removeStack} title="Delete" />
             )}
             <Button
               colorScheme="gray"
@@ -152,7 +153,7 @@ export const StudyModal: FC<Props> = memo((props) => {
               onClick={closeMethod}
               shadow="base"
             >
-              キャンセル
+              Cancel
             </Button>
           </ModalFooter>
         </ModalContent>

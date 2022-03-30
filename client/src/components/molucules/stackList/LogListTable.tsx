@@ -16,14 +16,14 @@ export const LogListTable: FC<Props> = memo((props) => {
   const { data } = props;
 
   return (
-    <Table variant="simple" colorScheme="green">
+    <Table variant="simple" colorScheme="gray">
       <Thead>
         <Tr>
-          <Th>記録日時</Th>
-          <Th>技術内容</Th>
-          <Th>学習時間</Th>
-          <Th>編集ボタン</Th>
-          <Th>削除ボタン</Th>
+          <Th>Started at</Th>
+          <Th>Tech</Th>
+          <Th>Hours</Th>
+          <Th>Edit</Th>
+          <Th>Delete</Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -32,19 +32,21 @@ export const LogListTable: FC<Props> = memo((props) => {
             <Tr key={stackList.id}>
               <Td>{getFormattedStackDate(new Date(stackList.createdAt))}</Td>
               <Td>{stackList.skillTagId}</Td>
-              <Td>{stackList.timeStack}分</Td>
+              <Td>{(stackList.timeStack / 60).toFixed(1)}Hours</Td>
               <Td>
                 <StudyModal
-                  title="記録編集"
+                  title="Edit Stack"
                   icon={<EditIcon />}
                   stackId={stackList.id}
+                  color="green.300"
                 />
               </Td>
               <Td>
                 <StudyModal
-                  title="記録削除"
+                  title="Delete Stack"
                   icon={<DeleteIcon />}
                   stackId={stackList.id}
+                  color="gray.300"
                 />
               </Td>
             </Tr>

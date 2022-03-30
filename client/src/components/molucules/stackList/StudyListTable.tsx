@@ -16,29 +16,31 @@ type Props = {
 export const StudyListTable: FC<Props> = memo((props) => {
   const { stackSumList } = props;
   return (
-    <Table variant="simple" colorScheme="green">
-      <Thead>
+    <Table variant="simple" colorScheme="gray">
+      <Thead position="sticky" top={0} background="#f5f5f5">
         <Tr>
           <Th>
-            <_Content>技術内容</_Content>
+            <_Content>Tech</_Content>
           </Th>
           <Th>
-            <_Content>学習時間(累計)</_Content>
+            <_Content>Hours</_Content>
           </Th>
-          <Th>開始日</Th>
-          <Th>最終学習日</Th>
-          <Th>メモ</Th>
+          <Th>Started at</Th>
+          <Th>Ended at</Th>
         </Tr>
       </Thead>
-      <Tbody>
-        {stackSumList &&
-          stackSumList.map((stackList) => (
-            <Tr key={stackList.id}>
+
+      {stackSumList &&
+        stackSumList.map((stackList) => (
+          <Tbody key={stackList.id} backgroundColor="white">
+            <Tr>
               <Td>
                 <_Content>{stackList.skillTagId}</_Content>
               </Td>
               <Td>
-                <_Content>{stackList.timeStack}分</_Content>
+                <_Content>
+                  {(stackList.timeStack / 60).toFixed(1)}Hours
+                </_Content>
               </Td>
               <Td>
                 <_Content>
@@ -50,12 +52,17 @@ export const StudyListTable: FC<Props> = memo((props) => {
                   {getFormattedStackDate(new Date(stackList.createdAtLast))}
                 </_Content>
               </Td>
-              <Td>
-                <_Content>{stackList.content}</_Content>
+            </Tr>
+            <Tr>
+              <Td colSpan={4} textAlign="center">
+                {stackList.content}
               </Td>
             </Tr>
-          ))}
-      </Tbody>
+            <Tr>
+              <Td colSpan={4} backgroundColor="#f5f5f5"></Td>
+            </Tr>
+          </Tbody>
+        ))}
     </Table>
   );
 });
