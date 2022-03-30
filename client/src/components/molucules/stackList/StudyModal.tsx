@@ -121,7 +121,7 @@ export const StudyModal: FC<Props> = memo((props) => {
         isCentered
       >
         <ModalOverlay />
-        <ModalContent backgroundColor="green.100">
+        <ModalContent>
           <ModalHeader>{title}</ModalHeader>
           {title === "Delete Stack" && (
             <ModalBody>この記事を削除しますか</ModalBody>
@@ -135,10 +135,13 @@ export const StudyModal: FC<Props> = memo((props) => {
 
           <ModalFooter>
             {title === "Add Stack" && (
-              <StackButton onClick={handleSubmit(addStack)} title="追加する" />
+              <StackButton onClick={handleSubmit(addStack)} title="Add Stack" />
             )}
             {title === "Edit Stack" && (
-              <StackButton onClick={handleSubmit(updateStack)} title="Edit" />
+              <StackButton
+                onClick={handleSubmit(updateStack)}
+                title="Edit Record"
+              />
             )}
             {title === "Delete Stack" && (
               <StackButton onClick={removeStack} title="Delete" />
