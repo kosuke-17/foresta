@@ -28,7 +28,7 @@ export const SiteImage: FC<Props> = memo(({ imageUrl, siteName }) => {
           borderColor="gray.100"
           borderWidth="1px"
         >
-          <Image src={imageUrl} alt={siteName} width="auto" maxH={198} />
+          <_Image src={imageUrl} alt={siteName} />
         </Box>
       </Flex>
     </>
@@ -39,4 +39,14 @@ export const SiteImage: FC<Props> = memo(({ imageUrl, siteName }) => {
 const _Name = styled.div`
   font-size: 25px;
   color: #a7a7a7;
+`;
+
+//画像をホバーで拡大
+const _Image = styled.img`
+  width: auto;
+  max-height: 198px;
+  :hover {
+    transform: scale(1.2, 1.2);
+    transition: 1s all;
+  }
 `;
