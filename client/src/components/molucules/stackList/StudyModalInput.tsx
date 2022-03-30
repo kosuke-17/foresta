@@ -5,6 +5,7 @@ import { AddStack } from "../../../types/types";
 import { TextAreaWithCounter } from "../../atoms/common/TextAreaWithCounter";
 import { TextInput } from "../../atoms/common/TextInput";
 import { StackSelectSkill } from "../../atoms/study/StackSelectSkill";
+import { StackTimeSelectBox } from "../../atoms/study/StackTimeSelectBox";
 
 type Props = {
   register: UseFormRegister<AddStack>;
@@ -32,12 +33,10 @@ export const StudyModalInput: FC<Props> = memo((props) => {
         errorMessage={errors.createdAt?.message}
       />
       <StackSelectSkill registers={register("skillTagId")} label="Technology" />
-      <TextInput
-        label="Hours"
-        type="number"
-        placeholder="Hours"
+      <StackTimeSelectBox
+        label="Minutes"
+        options={[30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360]}
         registers={register("timeStack")}
-        errorMessage={errors.timeStack?.message}
       />
       <TextAreaWithCounter
         label="Detail"
