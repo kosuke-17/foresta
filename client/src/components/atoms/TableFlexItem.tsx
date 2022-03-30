@@ -29,13 +29,12 @@ export const TableFlexItem: FC<Props> = memo(
 
     return (
       <>
-        <Flex>
+        <Flex wrap="wrap" w={500} gap={2}>
           {itemArray.map((item, i) => (
-            <div key={item}>
+            <div key={i}>
               <Box
                 backgroundColor="gray.400"
                 borderRadius={5}
-                ml={2}
                 px={2}
                 py={1}
                 textColor="white"
@@ -43,6 +42,7 @@ export const TableFlexItem: FC<Props> = memo(
                 {item}
                 {deleteBtn && (
                   <Button
+                    data-testid={`test-btn-icon${i}`}
                     onClick={() => deleteAction(i)}
                     backgroundColor="gray.400"
                     width={3}

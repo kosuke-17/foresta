@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -11,6 +11,7 @@ import {
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
 import { format } from "date-fns";
+import { ProjectType } from "../../types/types";
 
 /**
  * バリデーションチェック.
@@ -80,22 +81,8 @@ export const useSpecProject = (
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm({
+  } = useForm<ProjectType>({
     resolver: yupResolver(schema),
-    // defaultValues: {
-    //   name: projectData.name,
-    //   startedAt: projectData.startedAt,
-    //   finishedAt: projectData.finishedAt,
-    //   roleSharing: projectData.roleSharing,
-    //   memberCount: projectData.memberCount,
-    //   content: projectData.content,
-    //   devRoles: String(projectData.devRoles),
-    //   operationEnvs: String(projectData.operationEnvs),
-    //   languages: String(projectData.languages),
-    //   frameworks: String(projectData.frameworks),
-    //   libraries: String(projectData.libraries),
-    //   otherTools: String(projectData.otherTools),
-    // },
   });
 
   setValue("name", projectData.name);
@@ -138,8 +125,8 @@ export const useSpecProject = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = useCallback(
-    async (data: any) => {
+  const onSubmit: SubmitHandler<ProjectType> = useCallback(
+    async (data: ProjectType) => {
       //nullだった場合、[]に置き換える
       const os = data.operationEnvs != null ? data.operationEnvs : [];
       const lang = data.languages != null ? data.languages : [];

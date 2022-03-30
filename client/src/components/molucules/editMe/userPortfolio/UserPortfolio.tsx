@@ -20,6 +20,7 @@ import {
   Portfolio,
   useGetUserPortfolioByIdQuery,
 } from "../../../../types/generated/graphql";
+import { TextAreaWithCounter } from "../../../atoms/common/TextAreaWithCounter";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
@@ -201,14 +202,14 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
           </_TextItem>
 
           <_TextItem>
-            <TextInput
+            <TextAreaWithCounter
               registers={register("description")}
               errorMessage={errors.description?.message}
               label="詳細"
               placeholder="詳細"
             />
           </_TextItem>
-          <Flex gap={3} justifyContent="center">
+          <Flex gap={3} justifyContent="right" mt={7}>
             <ButtonItem
               name="Add"
               backgroundColor="green"

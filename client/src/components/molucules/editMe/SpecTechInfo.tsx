@@ -107,7 +107,7 @@ export const SpecTechInfo: FC<Props> = memo(({ setMenuItem, onClose }) => {
           array={other}
         />
       </_TextItem>
-      <Flex gap={3} justifyContent="center">
+      <Flex gap={3} justifyContent="right" mt={7}>
         <ButtonItem
           name="Update"
           backgroundColor="green"

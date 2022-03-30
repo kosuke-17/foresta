@@ -99,7 +99,7 @@ export const SpecSheet: FC<Props> = memo(({ setMenuItem, onClose }) => {
         placeholder="自己PR"
       />
 
-      <Flex gap={3} justifyContent="center" mt={10}>
+      <Flex gap={3} justifyContent="right" mt={7}>
         <ButtonItem
           name="Update"
           backgroundColor="green"

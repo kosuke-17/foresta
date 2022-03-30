@@ -66,7 +66,8 @@
   "jest": {
     "coveragePathIgnorePatterns": [
       "<rootDir>/build/",
-      "<rootDir>/node_modules/"
+      "<rootDir>/node_modules/",
+      "<rootDir>/src/types/generated/"
     ],
     "moduleNameMapper": {
       "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"

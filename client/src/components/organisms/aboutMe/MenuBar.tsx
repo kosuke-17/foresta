@@ -45,6 +45,7 @@ export const MenuBar: FC = memo(() => {
           backgroundColor="green.400"
           _hover={{ backgroundColor: "green.300" }}
           _active={{ backgroundColor: "green.200" }}
+          data-testid="open-menu"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

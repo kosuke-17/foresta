@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useGetUserByIdQuery } from "../../types/generated/graphql";
@@ -10,6 +10,7 @@ import {
   useUpdateUserMutation,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
+import { UserInfoType } from "../../types/types";
 
 /**
  * バリデーションチェック.
@@ -46,7 +47,6 @@ const schema = yup.object().shape({
  * @params userData - 初期表示用データ
  */
 export const useUserInfo = (
-  // userData: UserType,
   setMenuItem: Dispatch<SetStateAction<string>>,
   onClose: () => void,
 ) => {
@@ -68,14 +68,14 @@ export const useUserInfo = (
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<UserInfoType>({
     resolver: yupResolver(schema),
   });
   //初期値はログインしている人のデータを入れる
-  setValue("name", user?.name);
-  setValue("jobType", user?.jobType);
-  setValue("githubURL", user?.githubURL);
-  setValue("spreadSheetID", user?.spreadSheetID);
+  setValue("name", user?.name as string);
+  setValue("jobType", user?.jobType as string);
+  setValue("githubURL", user?.githubURL as string);
+  setValue("spreadSheetID", user?.spreadSheetID as string);
 
   /**
    * キャンセルボタンを押した時に呼ばれる.
@@ -97,8 +97,8 @@ export const useUserInfo = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = useCallback(
-    async (data: any) => {
+  const onSubmit: SubmitHandler<UserInfoType> = useCallback(
+    async (data: UserInfoType) => {
       try {
         await updateUserInfo({
           variables: {

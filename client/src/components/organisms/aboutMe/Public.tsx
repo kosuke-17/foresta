@@ -9,7 +9,6 @@ import { MyTechStack } from "../../molucules/aboutMePublic/MyTechStack";
 import { UrlList } from "../../molucules/aboutMePublic/UrlList";
 import { Profile } from "../../molucules/aboutMePublic/Profile";
 import { Heading } from "../../atoms/common/Heading";
-import { ButtonItem } from "../../atoms/common/ButtonItem";
 import { useAboutMePrivate } from "../../../hooks/useAboutMePrivate";
 import { PortfolioType } from "../../../types/types";
 import { Url } from "../../../types/generated/graphql";
@@ -64,37 +63,29 @@ export const Public: FC<Props> = memo(({ engineerId }) => {
       {user && (
         <>
           {/* 編集ボタン */}
-          {!engineerId && (
-            <Flex justifyContent="right" gap={3}>
-              <MenuBar />
-              <ButtonItem
-                name="PDFを発行"
-                onClick={() =>
-                  window.open(
-                    `https://docs.google.com/spreadsheets/d/${user?.spreadSheetID}/export?format=pdf`,
-                    "_blank",
-                  )
-                }
-              />
-            </Flex>
-          )}
-
+          <Flex justifyContent="right" my={5}>
+            {!engineerId && <MenuBar />}
+          </Flex>
           <Flex gap={50} justifyContent="center" mb={20}>
             <_Profile>
-              <Heading text="Profile" />
+              <_Head>
+                <Heading text="Profile" />
+              </_Head>
               <Profile userData={userData} />
             </_Profile>
 
             <_MyTechStack>
-              <Heading text="My Tech Stack" />
+              <_Head>
+                <Heading text="My Tech Stack" />
+              </_Head>
               <MyTechStack />
             </_MyTechStack>
           </Flex>
 
-          <Box padding={10} mx={20}>
+          <Box width="100%">
             {portfolioData && <SiteImageBox data={portfolioData} />}
           </Box>
-          <Box padding={10} mx={20}>
+          <Box width="100%" my={70}>
             {urlData && <UrlList data={urlData} />}
           </Box>
         </>
@@ -103,12 +94,18 @@ export const Public: FC<Props> = memo(({ engineerId }) => {
   );
 });
 
+//Heading
+const _Head = styled.div`
+  margin-bottom: 10px;
+  margin-left: 10px;
+`;
+
 //profile部分サイズ調整
 const _Profile = styled.div`
-  width: 20%;
+  width: 25%;
 `;
 
 //技術ツリーサイズ調整
 const _MyTechStack = styled.div`
-  width: 60%;
+  width: 70%;
 `;
