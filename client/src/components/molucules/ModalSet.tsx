@@ -7,7 +7,6 @@ import {
   ModalFooter,
   ModalBody,
   Flex,
-  Button,
   Box,
 } from "@chakra-ui/react";
 import { ButtonItem } from "../atoms/common/ButtonItem";

@@ -81,7 +81,7 @@ export const UserUrls: FC<Props> = memo(({ setMenuItem, onClose }) => {
             </div>
           ))}
 
-          <Flex justifyContent="center" gap={3} mt={5}>
+          <Flex gap={3} justifyContent="right" mt={7}>
             <ButtonItem
               name="Add"
               backgroundColor="green"

@@ -181,7 +181,7 @@ export const SpecPjItem: FC<Props> = memo(
           />
         </_TextItem>
 
-        <Flex gap={3} justifyContent="center">
+        <Flex gap={3} justifyContent="right" mt={7}>
           <ButtonItem
             name="Update"
             backgroundColor="green"

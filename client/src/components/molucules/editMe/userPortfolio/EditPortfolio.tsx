@@ -14,6 +14,7 @@ import { TableFlexItem } from "../../../atoms/TableFlexItem";
 import { Portfolio } from "../../../../types/generated/graphql";
 import { useUserPortfolio } from "../../../../hooks/editMe/useUserPortfolio";
 import { ButtonItem } from "../../../atoms/common/ButtonItem";
+import { TextAreaWithCounter } from "../../../atoms/common/TextAreaWithCounter";
 
 type Props = {
   portfolioData: Portfolio;
@@ -106,14 +107,14 @@ export const EditPortfolio: FC<Props> = memo(
             </_TextItem>
 
             <_TextItem>
-              <TextInput
+              <TextAreaWithCounter
                 registers={register("description")}
                 errorMessage={errors.description?.message}
                 label="詳細"
                 placeholder="詳細"
               />
             </_TextItem>
-            <Flex gap={3} justifyContent="center" mt={10}>
+            <Flex gap={3} justifyContent="right" mt={7}>
               <ButtonItem
                 name="Update"
                 backgroundColor="green"
