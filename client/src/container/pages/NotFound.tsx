@@ -29,17 +29,17 @@ export const NotFound = () => {
 
 const _All = styled.div`
   color: gray;
-  margin-top: 2.5rem;
-  margin-left: 3rem;
+  margin-top: 40px;
+  margin-left: 48px;
 `;
 
 const _Title = styled.div`
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+  font-size: 30px;
+  line-height: 36px;
 `;
 
 const _MarginTop = styled.div`
-  margin-top: 2.5rem;
+  margin-top: 40px;
 `;
 
 const _ListUl = styled.div`
