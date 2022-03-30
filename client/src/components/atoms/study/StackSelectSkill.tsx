@@ -1,6 +1,7 @@
 import { FC, memo } from "react";
-import { FormLabel, Select } from "@chakra-ui/react";
+import { Select } from "@chakra-ui/react";
 import { useStackList } from "../../../hooks/study/useStackList";
+import styled from "styled-components";
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,7 +26,7 @@ export const StackSelectSkill: FC<Props> = memo((props) => {
 
   return (
     <>
-      <FormLabel>{label}</FormLabel>
+      <_LabelItem> {label}</_LabelItem>
       <Select {...registers}>
         {skillTagIdListDatas &&
           skillTagIdListDatas.getAllTechTree.map((skillTag) => (
@@ -37,3 +38,9 @@ export const StackSelectSkill: FC<Props> = memo((props) => {
     </>
   );
 });
+
+const _LabelItem = styled.div`
+  color: "#9F9F9F";
+  text-align: left;
+  font-weight: bold;
+`;
