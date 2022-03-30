@@ -81,7 +81,7 @@ export const UserUrls: FC<Props> = memo(({ setMenuItem, onClose }) => {
             </div>
           ))}
 
-          <Flex gap={3} justifyContent="right" mt={7}>
+          <Flex gap={3} justifyContent="center" mt={7}>
             <ButtonItem
               name="Add"
               backgroundColor="green"
@@ -116,7 +116,7 @@ export const UserUrls: FC<Props> = memo(({ setMenuItem, onClose }) => {
             />
           </_TextItem>
 
-          <Flex gap={3} justifyContent="center">
+          <Flex gap={3} justifyContent="right" mt={7}>
             <ButtonItem
               name="Add"
               backgroundColor="green"
