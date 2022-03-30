@@ -2,9 +2,9 @@ import { ModalBody } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 import { AddStack } from "../../../types/types";
-import { StackInput } from "../../atoms/study/StackInput";
+import { TextAreaWithCounter } from "../../atoms/common/TextAreaWithCounter";
+import { TextInput } from "../../atoms/common/TextInput";
 import { StackSelectSkill } from "../../atoms/study/StackSelectSkill";
-import { StackTextarea } from "../../atoms/study/StackTextarea";
 
 type Props = {
   register: UseFormRegister<AddStack>;
@@ -24,25 +24,24 @@ export const StudyModalInput: FC<Props> = memo((props) => {
 
   return (
     <ModalBody backgroundColor="white" m={3} borderRadius="base">
-      <StackInput
-        label="日付"
+      <TextInput
+        label="Started at"
         type="date"
-        placeholder="日付"
+        placeholder="Started at"
         registers={register("createdAt")}
         errorMessage={errors.createdAt?.message}
       />
-      <StackSelectSkill registers={register("skillTagId")} label="技術" />
-      <StackInput
-        label="時間（分）"
+      <StackSelectSkill registers={register("skillTagId")} label="Technology" />
+      <TextInput
+        label="Hours"
         type="number"
-        placeholder="時間"
+        placeholder="Hours"
         registers={register("timeStack")}
         errorMessage={errors.timeStack?.message}
       />
-      <StackTextarea
-        label="メモ"
-        type="text"
-        placeholder="メモ"
+      <TextAreaWithCounter
+        label="Detail"
+        placeholder="Detail"
         registers={register("content")}
         errorMessage={errors.content?.message}
       />
