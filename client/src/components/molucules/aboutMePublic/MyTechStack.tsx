@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { ProgressComp } from "../techForest/ProgressComp";
 import { useGetUserOnlyTreeByIdQuery } from "../../../types/generated/graphql";
 import { TreeOnlyType } from "../../../types/types";
+import { ShadowFrame } from "../../atoms/common/ShadowFrame";
 
 /**
  * 技術ツリー表示コーナー.
@@ -41,20 +42,29 @@ export const MyTechStack: FC = memo(() => {
 
   return (
     <>
-      <_HiddenScrollBar className="overflow-auto h-screen">
-        {treeData &&
-          treeData.map((item) => (
-            <_Progress key={item.id}>
-              <ProgressComp
-                TreeName={item.treeName}
-                AchievementRate={item.achievementRate}
-              />
-            </_Progress>
-          ))}
-      </_HiddenScrollBar>
+      <ShadowFrame margin={0} padding={10}>
+        <_Contents>
+          <_HiddenScrollBar className="overflow-auto h-screen">
+            {treeData &&
+              treeData.map((item) => (
+                <_Progress key={item.id}>
+                  <ProgressComp
+                    TreeName={item.treeName}
+                    AchievementRate={item.achievementRate}
+                  />
+                </_Progress>
+              ))}
+          </_HiddenScrollBar>
+        </_Contents>
+      </ShadowFrame>
     </>
   );
 });
+
+//項目
+const _Contents = styled.div`
+  height: 350px;
+`;
 
 //小窓
 const _HiddenScrollBar = styled.div`

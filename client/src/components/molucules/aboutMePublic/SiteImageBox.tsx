@@ -8,6 +8,7 @@ import { SiteImage } from "../../atoms/aboutMePublic/SiteImage";
 import { Heading } from "../../atoms/common/Heading";
 import { useModal } from "../../../hooks/useModal";
 import { PortfolioType } from "../../../types/types";
+import { ShadowFrame } from "../../atoms/common/ShadowFrame";
 
 type Props = { data: Array<PortfolioType> };
 
@@ -42,7 +43,9 @@ export const SiteImageBox: FC<Props> = memo(({ data }) => {
 
   return (
     <>
-      <Heading text="Portfolio" />
+      <Flex ml={10}>
+        <Heading text="Portfolio" />
+      </Flex>
       <ModalSet
         isOpen={isOpen}
         onClose={onClose}
@@ -50,21 +53,23 @@ export const SiteImageBox: FC<Props> = memo(({ data }) => {
         contents={<SiteDetail siteItem={portfolioItem} />}
         closeBtnName="とじる"
       />
-      <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
-        {data &&
-          data.map((item) => (
-            <div key={item.id}>
-              <Flex
-                direction="column"
-                cursor="pointer"
-                outline="none"
-                onClick={(e) => openModal(e, item)}
-              >
-                <SiteImage siteName={item.title} imageUrl={item.img} />
-              </Flex>
-            </div>
-          ))}
-      </Flex>
+      <ShadowFrame margin={0} padding={10}>
+        <Flex gap={4} justifyContent="center" wrap="wrap-reverse">
+          {data &&
+            data.map((item) => (
+              <div key={item.id}>
+                <Flex
+                  direction="column"
+                  cursor="pointer"
+                  outline="none"
+                  onClick={(e) => openModal(e, item)}
+                >
+                  <SiteImage siteName={item.title} imageUrl={item.img} />
+                </Flex>
+              </div>
+            ))}
+        </Flex>
+      </ShadowFrame>
     </>
   );
 });
