@@ -286,16 +286,6 @@ gql`
     updatePortfolio(portfolio: $portfolio) {
       status
       msg
-      node {
-        id
-        title
-        description
-        img
-        portfolioURL
-        skills
-        userId
-        specSheetId
-      }
     }
   }
 `;
@@ -533,6 +523,24 @@ gql`
               isStatus
             }
           }
+        }
+      }
+    }
+  }
+`;
+
+//技術ツリーのみ取得
+gql`
+  query GetUserOnlyTreeById($userToken: String!) {
+    tree: getUserLeafsById(userToken: $userToken) {
+      status
+      msg
+      node {
+        myForest {
+          id
+          treeName
+          achievementRate
+          color
         }
       }
     }

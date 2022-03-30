@@ -1,11 +1,9 @@
 import {
-  GetPrAndSheetByUserIdDocument,
   GetSheetByUserIdDocument,
   GetSheetOtherByUserIdDocument,
   GetSheetPrByUserIdDocument,
   GetSheetProjectByUserIdDocument,
   GetUserByIdDocument,
-  GetUserUrlByIdDocument,
 } from "../src/types/generated/graphql";
 import { Cookies } from "react-cookie";
 
@@ -24,7 +22,7 @@ export const userPublicMocks = {
   },
   result: {
     data: {
-      user: {
+      tree: {
         status: "success",
         msg: "取得に成功しました。",
         node: {
@@ -39,11 +37,11 @@ export const userPublicMocks = {
 };
 
 /**
- * URL.
+ * 技術ツリー
  */
-export const userUrlMocks = {
+export const userTreeMocks = {
   request: {
-    query: GetUserUrlByIdDocument, // Codegenで生成されたクエリ Documentで終わるもの。
+    query: GetSheetByUserIdDocument, // Codegenで生成されたクエリ Documentで終わるもの。
     variables: {
       userToken: cookies.get("ForestaID"),
     },
@@ -52,76 +50,31 @@ export const userUrlMocks = {
     // データをモック
     data: {
       __typename: "Query",
-      urls: {
+      user: {
         status: "success",
         msg: "取得に成功しました。",
         node: {
-          userUrls: {
-            user_urls: [
-              {
-                urlName: "URL1",
-                url: "url1.com",
-                id: "",
-              },
-              {
-                urlName: "URL2",
-                url: "url2.com",
-                id: "",
-              },
-            ],
-            id: "",
-          },
+          myForest: [
+            {
+              id: "1",
+              treeName: "React",
+              achievementRate: 30,
+              color: "blue",
+            },
+            {
+              id: "2",
+              treeName: "Vue",
+              achievementRate: 40,
+              color: "green",
+            },
+            {
+              id: "3",
+              treeName: "Angular",
+              achievementRate: 50,
+              color: "red",
+            },
+          ],
         },
-      },
-    },
-  },
-};
-
-/**
- * 制作物.
- */
-export const userPortfolioMocks = {
-  request: {
-    query: GetUserUrlByIdDocument, // Codegenで生成されたクエリ Documentで終わるもの。
-    variables: {
-      userToken: cookies.get("ForestaID"),
-    },
-  },
-  result: {
-    data: {
-      __typename: "Query",
-      portfolios: {
-        status: "success",
-        msg: "取得に成功しました。",
-        node: [
-          {
-            id: "ID",
-            title: "制作物タイトル1",
-            description: "詳細詳細詳細",
-            img: "image.jpg",
-            portfolioURL: "url.com",
-            skills: ["Vue", "TypeScript"],
-            specSheetId: "スプレッドシートID",
-          },
-          {
-            id: "ID",
-            title: "制作物タイトル2",
-            description: "詳細詳細詳細",
-            img: "image.jpg",
-            portfolioURL: "url.com",
-            skills: ["Vue", "TypeScript"],
-            specSheetId: "スプレッドシートID",
-          },
-          {
-            id: "ID",
-            title: "制作物タイトル3",
-            description: "詳細詳細詳細",
-            img: "image.jpg",
-            portfolioURL: "url.com",
-            skills: ["Vue", "TypeScript"],
-            specSheetId: "スプレッドシートID",
-          },
-        ],
       },
     },
   },
@@ -162,6 +115,19 @@ export const userInfoMocks = {
       },
     },
   },
+};
+
+/**
+ * エラーの際
+ */
+export const errorMocks = {
+  request: {
+    query: GetSheetByUserIdDocument, // Codegenで生成されたクエリ Documentで終わるもの。
+    variables: {
+      userToken: cookies.get("ForestaID"),
+    },
+  },
+  error: new Error(),
 };
 
 /**

@@ -63,7 +63,7 @@ export const UserInfoTable: FC = memo(() => {
             </Tr>
             <Tr>
               <Td>年齢</Td>
-              <Td>{userData?.age}歳</Td>
+              <Td>{userData?.age != 0 && `${userData?.age}歳`}</Td>
             </Tr>
             <Tr>
               <Td>性別</Td>

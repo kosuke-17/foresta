@@ -65,7 +65,7 @@ export const OtherData: FC = memo(() => {
 //項目タイトル
 const _Title = styled.div`
   font-weight: bold;
-  font-size: 30px;
+  font-size: 20px;
   margin: 40px 0px 10px 0px;
 `;
 

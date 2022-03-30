@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, ReactNode } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -7,15 +7,15 @@ import {
   ModalFooter,
   ModalBody,
   Flex,
-  Button,
   Box,
 } from "@chakra-ui/react";
+import { ButtonItem } from "../atoms/common/ButtonItem";
 
 type Props = {
   onClose: () => void; //閉じるメソッド
   isOpen: boolean; //モーダルの開閉状態
   modalTitle?: string; //モーダルのタイトル
-  contents: any; //モーダルの中身
+  contents: string | ReactNode; //モーダルの中身
   closeBtnName?: string; //モーダルを閉じるボタンの名前(デフォルトあり)
   closeBtn?: boolean;
   //メソッドを含めたボタンを作成したい場合:[{name:hoge,action:method},{…}]の形で渡してください
@@ -35,7 +35,7 @@ export const ModalSet: FC<Props> = memo(
     onClose,
     modalTitle,
     contents,
-    closeBtnName = "キャンセル",
+    closeBtnName = "Cancel",
     closeBtn = true,
     actionBtnArray,
   }) => {
@@ -46,45 +46,35 @@ export const ModalSet: FC<Props> = memo(
           <ModalOverlay />
           <ModalContent width="auto" minWidth={500} maxWidth="none">
             {modalTitle ? (
-              <ModalHeader textAlign="center">{modalTitle}</ModalHeader>
+              <ModalHeader textAlign="left" color="#696969">
+                {modalTitle}
+              </ModalHeader>
             ) : (
               <Box pb={30}></Box>
             )}
             <ModalBody textAlign="center">{contents}</ModalBody>
 
             {/* ボタンコーナー */}
-            <ModalFooter justifyContent="center">
-              <Flex>
+            <ModalFooter mb={3}>
+              <Flex justifyContent="right" gap={3}>
                 {actionBtnArray &&
                   actionBtnArray.map((btn) => (
-                    <Button
-                      minWidth={120}
-                      backgroundColor="green.400"
-                      textColor="white"
-                      _hover={{ backgroundColor: "green.400" }}
-                      _active={{ backgroundColor: "green.600" }}
-                      _focus={{ boxShadow: "none" }}
+                    <ButtonItem
                       key={btn.name}
-                      mr={3}
                       onClick={() => {
                         btn.action();
                         onClose();
                       }}
-                    >
-                      {btn.name}
-                    </Button>
+                      name={btn.name}
+                      backgroundColor="green"
+                    />
                   ))}
                 {closeBtn && (
-                  <Button
-                    minWidth={120}
-                    backgroundColor="gray.300"
-                    _hover={{ backgroundColor: "gray.300" }}
-                    _active={{ backgroundColor: "gray.500" }}
-                    _focus={{ boxShadow: "none" }}
+                  <ButtonItem
                     onClick={onClose}
-                  >
-                    {closeBtnName}
-                  </Button>
+                    name={closeBtnName}
+                    backgroundColor="gray"
+                  />
                 )}
               </Flex>
             </ModalFooter>

@@ -1,6 +1,12 @@
 import { ChartData, ChartOptions } from "chart.js";
 import { string } from "yup";
-import { Todo, Portfolio, User, StudyStack } from "./generated/graphql";
+import {
+  Todo,
+  Portfolio,
+  User,
+  StudyStack,
+  TreeInfo,
+} from "./generated/graphql";
 
 // Todoの型
 export type TodoData = Pick<
@@ -30,19 +36,78 @@ export type PortfolioType = Pick<
 >;
 
 //ユーザ情報編集
-export type userInfoEditType = {
+export type UserInfoType = {
+  userToken: string;
   name: string;
   jobType: string;
   githubURL: string;
+  spreadSheetID: string;
 };
 
-//制作物入力値
-export type portfolioInputType = {
+//制作物新規追加
+export type NewPortfolioType = {
   title: string;
   description: string;
   img: string;
   portfolioURL: string;
   specSheetId: string;
+};
+
+//制作物編集
+export type EditPortfolioType = {
+  title: string;
+  description: string;
+  img: string;
+  portfolioURL: string;
+};
+
+//URL編集
+export type UrlType = {
+  urlName: string;
+  url: string;
+};
+
+//スペックシート
+export type SpecUserInfoType = {
+  stuffID: string;
+  age: number;
+  gender: string;
+  nearestStation: string;
+  nearestLine: string;
+  startWorkDate: string;
+  seExpAmountYear: number;
+  seExpAmountMonth: number;
+  pgExpAmountYear: number;
+  pgExpAmountMonth: number;
+  itExpAmountYear: number;
+  itExpAmountMonth: number;
+};
+//スペックシートスキル要約
+export type SkillType = {
+  id: string;
+  devRoles: Array<string>;
+  operationEnvs: Array<string>;
+  languages: Array<string>;
+  frameworks: Array<string>;
+  libraries: Array<string>;
+  otherTools: Array<string>;
+  specSheetId: string;
+};
+
+//スペックシート開発経験編集
+export type ProjectType = {
+  name: string;
+  startedAt: string;
+  finishedAt: string;
+  roleSharing: string;
+  memberCount: number;
+  content: string;
+  devRoles: Array<string>;
+  operationEnvs: Array<string>;
+  languages: Array<string>;
+  frameworks: Array<string>;
+  libraries: Array<string>;
+  otherTools: Array<string>;
 };
 
 // エンジニアの型
@@ -83,6 +148,12 @@ export type TreeData = {
     }[];
   }[];
 };
+
+//技術ツリーのみの型
+export type TreeOnlyType = Pick<
+  TreeInfo,
+  "id" | "achievementRate" | "treeName" | "color"
+>;
 
 // 技術ブランチの型
 export type TechBranch = {

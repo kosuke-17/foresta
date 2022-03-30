@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCookies } from "react-cookie";
 import * as yup from "yup";
@@ -12,6 +12,7 @@ import {
   useUpdateSpecTechInfoMutation,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
+import { SkillType } from "../../types/types";
 
 /**
  * バリデーションチェック.
@@ -52,7 +53,6 @@ export const useSpecTechInfo = (
   /**
    * スキル要約取得.
    */
-
   const { data: skillData } = useGetSheetSkillByUserIdQuery({
     variables: {
       userToken: cookies.ForestaID,
@@ -64,28 +64,39 @@ export const useSpecTechInfo = (
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<SkillType>({
     resolver: yupResolver(schema),
-    // defaultValues: {
-    //   id: skillData?.skills.node.techInfo.id,
-    //   devRoles: String(skillData?.skills.node.techInfo.devRoles),
-    //   operationEnvs: skillData?.skills.node.techInfo.operationEnvs,
-    //   languages: skillData?.skills.node.techInfo.languages,
-    //   frameworks: skillData?.skills.node.techInfo.frameworks,
-    //   libraries: skillData?.skills.node.techInfo.libraries,
-    //   otherTools: skillData?.skills.node.techInfo.otherTools,
-    //   specSheetId: skillData?.skills.node.techInfo.specSheetId,
-    // },
   });
 
-  setValue("id", skillData?.skills.node.techInfo.id);
-  setValue("devRoles", skillData?.skills.node.techInfo.devRoles);
-  setValue("operationEnvs", skillData?.skills.node.techInfo.operationEnvs);
-  setValue("languages", skillData?.skills.node.techInfo.languages);
-  setValue("frameworks", skillData?.skills.node.techInfo.frameworks);
-  setValue("libraries", skillData?.skills.node.techInfo.libraries);
-  setValue("otherTools", skillData?.skills.node.techInfo.otherTools);
-  setValue("specSheetId", skillData?.skills.node.techInfo.specSheetId);
+  setValue("id", skillData?.skills.node.techInfo.id as string);
+  setValue(
+    "devRoles",
+    skillData?.skills.node.techInfo.devRoles as Array<string>,
+  );
+  setValue(
+    "operationEnvs",
+    skillData?.skills.node.techInfo.operationEnvs as Array<string>,
+  );
+  setValue(
+    "languages",
+    skillData?.skills.node.techInfo.languages as Array<string>,
+  );
+  setValue(
+    "frameworks",
+    skillData?.skills.node.techInfo.frameworks as Array<string>,
+  );
+  setValue(
+    "libraries",
+    skillData?.skills.node.techInfo.libraries as Array<string>,
+  );
+  setValue(
+    "otherTools",
+    skillData?.skills.node.techInfo.otherTools as Array<string>,
+  );
+  setValue(
+    "specSheetId",
+    skillData?.skills.node.techInfo.specSheetId as string,
+  );
 
   //トーストの使用
   const toast = useToast();
@@ -110,8 +121,8 @@ export const useSpecTechInfo = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = useCallback(
-    async (data: any) => {
+  const onSubmit: SubmitHandler<SkillType> = useCallback(
+    async (data: SkillType) => {
       //nullだった場合、[]に置き換える
       const os = data.operationEnvs != null ? data.operationEnvs : [];
       const lang = data.languages != null ? data.languages : [];

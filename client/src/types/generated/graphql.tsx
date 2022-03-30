@@ -1064,20 +1064,7 @@ export type UpdatePortfolioMutationVariables = Exact<{
 }>;
 
 export type UpdatePortfolioMutation = {
-  updatePortfolio: {
-    status: string;
-    msg?: string | null;
-    node: Array<{
-      id: string;
-      title: string;
-      description: string;
-      img: string;
-      portfolioURL: string;
-      skills: Array<string>;
-      userId: string;
-      specSheetId: string;
-    }>;
-  };
+  updatePortfolio: { status: string; msg?: string | null };
 };
 
 export type RemovePortfolioMutationVariables = Exact<{
@@ -1255,6 +1242,25 @@ export type GetUserLeafsByIdQuery = {
             isStatus: boolean;
           }>;
         }>;
+      }>;
+    };
+  };
+};
+
+export type GetUserOnlyTreeByIdQueryVariables = Exact<{
+  userToken: Scalars["String"];
+}>;
+
+export type GetUserOnlyTreeByIdQuery = {
+  tree: {
+    status: string;
+    msg: string;
+    node: {
+      myForest: Array<{
+        id: string;
+        treeName: string;
+        achievementRate: number;
+        color: string;
       }>;
     };
   };
@@ -2408,16 +2414,6 @@ export const UpdatePortfolioDocument = gql`
     updatePortfolio(portfolio: $portfolio) {
       status
       msg
-      node {
-        id
-        title
-        description
-        img
-        portfolioURL
-        skills
-        userId
-        specSheetId
-      }
     }
   }
 `;
@@ -3469,6 +3465,73 @@ export type GetUserLeafsByIdLazyQueryHookResult = ReturnType<
 export type GetUserLeafsByIdQueryResult = Apollo.QueryResult<
   GetUserLeafsByIdQuery,
   GetUserLeafsByIdQueryVariables
+>;
+export const GetUserOnlyTreeByIdDocument = gql`
+  query GetUserOnlyTreeById($userToken: String!) {
+    tree: getUserLeafsById(userToken: $userToken) {
+      status
+      msg
+      node {
+        myForest {
+          id
+          treeName
+          achievementRate
+          color
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUserOnlyTreeByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserOnlyTreeByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserOnlyTreeByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserOnlyTreeByIdQuery({
+ *   variables: {
+ *      userToken: // value for 'userToken'
+ *   },
+ * });
+ */
+export function useGetUserOnlyTreeByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserOnlyTreeByIdQuery,
+    GetUserOnlyTreeByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetUserOnlyTreeByIdQuery,
+    GetUserOnlyTreeByIdQueryVariables
+  >(GetUserOnlyTreeByIdDocument, options);
+}
+export function useGetUserOnlyTreeByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserOnlyTreeByIdQuery,
+    GetUserOnlyTreeByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetUserOnlyTreeByIdQuery,
+    GetUserOnlyTreeByIdQueryVariables
+  >(GetUserOnlyTreeByIdDocument, options);
+}
+export type GetUserOnlyTreeByIdQueryHookResult = ReturnType<
+  typeof useGetUserOnlyTreeByIdQuery
+>;
+export type GetUserOnlyTreeByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserOnlyTreeByIdLazyQuery
+>;
+export type GetUserOnlyTreeByIdQueryResult = Apollo.QueryResult<
+  GetUserOnlyTreeByIdQuery,
+  GetUserOnlyTreeByIdQueryVariables
 >;
 export const ChangeLeafStatusDocument = gql`
   mutation ChangeLeafStatus($techLeafInfo: UserTechLeafUpdateInput!) {
