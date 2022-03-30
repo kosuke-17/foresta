@@ -6,7 +6,7 @@ import {
   useState,
   useCallback,
 } from "react";
-import { Button, Spinner, Flex, Input } from "@chakra-ui/react";
+import { Spinner, Flex, Input, Box } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 
@@ -14,9 +14,11 @@ import { TextInput } from "../../../atoms/common/TextInput";
 import { TableFlexItem } from "../../../atoms/TableFlexItem";
 import { EditPortfolio } from "./EditPortfolio";
 import { useNewPortfolio } from "../../../../hooks/editMe/useNewPortfolio";
+import { ButtonItem } from "../../../atoms/common/ButtonItem";
+
 import {
   Portfolio,
-  useGetPortfolioByUserIdQuery,
+  useGetUserPortfolioByIdQuery,
 } from "../../../../types/generated/graphql";
 
 type Props = {
@@ -35,12 +37,12 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
   /**
    * 制作物情報デフォルト値取得.
    */
-  const { data, loading, error } = useGetPortfolioByUserIdQuery({
+  const { data, loading, error } = useGetUserPortfolioByIdQuery({
     variables: {
       userToken: cookies.ForestaID,
     },
   });
-  const portfolioData = data?.portfolios.node as Array<Portfolio>;
+  const portfolioData = data?.portfolios.node.portfolio as Array<Portfolio>;
 
   //編集モード
   const [editMode, setEditMode] = useState("");
@@ -93,25 +95,24 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
                 <_List>
                   <Flex>
                     <_ListTitle>{portfolio.title}</_ListTitle>
-                    <Button
-                      type="button"
+                    <ButtonItem
+                      name="Edit"
+                      backgroundColor="green"
                       onClick={() => {
                         setItemName(portfolio.title);
                         setEditMode("編集");
                       }}
-                    >
-                      編集
-                    </Button>
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        setItemName(portfolio.title);
-                        setEditMode("削除");
-                      }}
-                      ml={3}
-                    >
-                      削除
-                    </Button>
+                    />
+                    <Box ml={3}>
+                      <ButtonItem
+                        name="Delete"
+                        backgroundColor="red"
+                        onClick={() => {
+                          setItemName(portfolio.title);
+                          setEditMode("削除");
+                        }}
+                      />
+                    </Box>
                   </Flex>
                 </_List>
               </>
@@ -132,20 +133,17 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
       {editMode === "" && (
         <>
           <Flex justifyContent="center" gap={3} mt={5}>
-            <Button
-              type="button"
+            <ButtonItem
+              name="Add"
+              backgroundColor="green"
               onClick={() => setEditMode("新規")}
-              _focus={{ boxShadow: "none" }}
-            >
-              新規追加
-            </Button>
-            <Button
-              type="button"
+            />
+
+            <ButtonItem
+              name="Cancel"
+              backgroundColor="gray"
               onClick={onClose}
-              _focus={{ boxShadow: "none" }}
-            >
-              キャンセル
-            </Button>
+            />
           </Flex>
         </>
       )}
@@ -182,15 +180,16 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
             <_LabelItem>使用技術</_LabelItem>
             <Flex>
               <Input type="text" value={skill} onChange={handleChange} />
-              <Button
-                onClick={() => {
-                  addSkill(skill);
-                  setSkill("");
-                }}
-                ml={3}
-              >
-                追加
-              </Button>
+              <Box ml={3}>
+                <ButtonItem
+                  name="Add"
+                  backgroundColor="green"
+                  onClick={() => {
+                    addSkill(skill);
+                    setSkill("");
+                  }}
+                />
+              </Box>
             </Flex>
             <_TextItem>
               <TableFlexItem
@@ -210,14 +209,16 @@ export const UserPortfolio: FC<Props> = memo(({ setMenuItem, onClose }) => {
             />
           </_TextItem>
           <Flex gap={3} justifyContent="center">
-            <Button onClick={handleSubmit(onSubmit)}>追加</Button>
-            <Button
-              type="button"
+            <ButtonItem
+              name="Add"
+              backgroundColor="green"
+              onClick={handleSubmit(onSubmit)}
+            />
+            <ButtonItem
+              name="Cancel"
+              backgroundColor="gray"
               onClick={() => setEditMode("")}
-              _focus={{ boxShadow: "none" }}
-            >
-              キャンセル
-            </Button>
+            />
           </Flex>
         </>
       )}

@@ -803,7 +803,7 @@ export type TreeInfo = {
 };
 
 export type GetUserByIdQueryVariables = Exact<{
-  userToken: Scalars["String"];
+  userToken?: InputMaybe<Scalars["String"]>;
 }>;
 
 export type GetUserByIdQuery = {
@@ -815,38 +815,74 @@ export type GetUserByIdQuery = {
       jobType: string;
       spreadSheetID: string;
       githubURL: string;
+      userUrls: {
+        id: string;
+        user_urls: Array<{ id: string; urlName: string; url: string } | null>;
+      };
+      portfolio: Array<{
+        id: string;
+        title: string;
+        description: string;
+        img: string;
+        portfolioURL: string;
+        skills: Array<string>;
+        userId: string;
+        specSheetId: string;
+      } | null>;
     };
   };
 };
 
-export type GetPortfolioByUserIdQueryVariables = Exact<{
-  userToken: Scalars["String"];
+export type GetUserByUuIdQueryVariables = Exact<{
+  userUuid?: InputMaybe<Scalars["String"]>;
 }>;
 
-export type GetPortfolioByUserIdQuery = {
-  portfolios: {
-    node: Array<{
-      id: string;
-      title: string;
-      description: string;
-      img: string;
-      portfolioURL: string;
-      skills: Array<string>;
-      specSheetId: string;
-    }>;
-  };
-};
-
-export type GetUrlByIdQueryVariables = Exact<{
-  userToken: Scalars["String"];
-}>;
-
-export type GetUrlByIdQuery = {
-  urls: {
+export type GetUserByUuIdQuery = {
+  user: {
     status: string;
     msg: string;
     node: {
-      userUrls: { user_urls: Array<{ urlName: string; url: string } | null> };
+      name: string;
+      jobType: string;
+      spreadSheetID: string;
+      githubURL: string;
+      userUrls: {
+        id: string;
+        user_urls: Array<{ id: string; urlName: string; url: string } | null>;
+      };
+      portfolio: Array<{
+        id: string;
+        title: string;
+        description: string;
+        img: string;
+        portfolioURL: string;
+        skills: Array<string>;
+        userId: string;
+        specSheetId: string;
+      } | null>;
+    };
+  };
+};
+
+export type GetUserPortfolioByIdQueryVariables = Exact<{
+  userToken?: InputMaybe<Scalars["String"]>;
+}>;
+
+export type GetUserPortfolioByIdQuery = {
+  portfolios: {
+    status: string;
+    msg: string;
+    node: {
+      portfolio: Array<{
+        id: string;
+        title: string;
+        description: string;
+        img: string;
+        portfolioURL: string;
+        skills: Array<string>;
+        userId: string;
+        specSheetId: string;
+      } | null>;
     };
   };
 };
@@ -1428,7 +1464,7 @@ export type RemoveTodoMutationVariables = Exact<{
 export type RemoveTodoMutation = { removeTodo: { status: string } };
 
 export const GetUserByIdDocument = gql`
-  query GetUserById($userToken: String!) {
+  query GetUserById($userToken: String) {
     user: getUserById(userToken: $userToken) {
       status
       msg
@@ -1437,6 +1473,24 @@ export const GetUserByIdDocument = gql`
         jobType
         spreadSheetID
         githubURL
+        userUrls {
+          id
+          user_urls {
+            id
+            urlName
+            url
+          }
+        }
+        portfolio {
+          id
+          title
+          description
+          img
+          portfolioURL
+          skills
+          userId
+          specSheetId
+        }
       }
     }
   }
@@ -1459,7 +1513,7 @@ export const GetUserByIdDocument = gql`
  * });
  */
 export function useGetUserByIdQuery(
-  baseOptions: Apollo.QueryHookOptions<
+  baseOptions?: Apollo.QueryHookOptions<
     GetUserByIdQuery,
     GetUserByIdQueryVariables
   >,
@@ -1490,83 +1544,33 @@ export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserByIdQuery,
   GetUserByIdQueryVariables
 >;
-export const GetPortfolioByUserIdDocument = gql`
-  query GetPortfolioByUserId($userToken: String!) {
-    portfolios: getPortfolioByUserId(userToken: $userToken) {
-      node {
-        id
-        title
-        description
-        img
-        portfolioURL
-        skills
-        specSheetId
-      }
-    }
-  }
-`;
-
-/**
- * __useGetPortfolioByUserIdQuery__
- *
- * To run a query within a React component, call `useGetPortfolioByUserIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPortfolioByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetPortfolioByUserIdQuery({
- *   variables: {
- *      userToken: // value for 'userToken'
- *   },
- * });
- */
-export function useGetPortfolioByUserIdQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetPortfolioByUserIdQuery,
-    GetPortfolioByUserIdQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetPortfolioByUserIdQuery,
-    GetPortfolioByUserIdQueryVariables
-  >(GetPortfolioByUserIdDocument, options);
-}
-export function useGetPortfolioByUserIdLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetPortfolioByUserIdQuery,
-    GetPortfolioByUserIdQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetPortfolioByUserIdQuery,
-    GetPortfolioByUserIdQueryVariables
-  >(GetPortfolioByUserIdDocument, options);
-}
-export type GetPortfolioByUserIdQueryHookResult = ReturnType<
-  typeof useGetPortfolioByUserIdQuery
->;
-export type GetPortfolioByUserIdLazyQueryHookResult = ReturnType<
-  typeof useGetPortfolioByUserIdLazyQuery
->;
-export type GetPortfolioByUserIdQueryResult = Apollo.QueryResult<
-  GetPortfolioByUserIdQuery,
-  GetPortfolioByUserIdQueryVariables
->;
-export const GetUrlByIdDocument = gql`
-  query GetUrlById($userToken: String!) {
-    urls: getUserById(userToken: $userToken) {
+export const GetUserByUuIdDocument = gql`
+  query GetUserByUuId($userUuid: String) {
+    user: getUserById(userUuid: $userUuid) {
       status
       msg
       node {
+        name
+        jobType
+        spreadSheetID
+        githubURL
         userUrls {
+          id
           user_urls {
+            id
             urlName
             url
           }
+        }
+        portfolio {
+          id
+          title
+          description
+          img
+          portfolioURL
+          skills
+          userId
+          specSheetId
         }
       }
     }
@@ -1574,52 +1578,125 @@ export const GetUrlByIdDocument = gql`
 `;
 
 /**
- * __useGetUrlByIdQuery__
+ * __useGetUserByUuIdQuery__
  *
- * To run a query within a React component, call `useGetUrlByIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUrlByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUserByUuIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserByUuIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetUrlByIdQuery({
+ * const { data, loading, error } = useGetUserByUuIdQuery({
+ *   variables: {
+ *      userUuid: // value for 'userUuid'
+ *   },
+ * });
+ */
+export function useGetUserByUuIdQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetUserByUuIdQuery,
+    GetUserByUuIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUserByUuIdQuery, GetUserByUuIdQueryVariables>(
+    GetUserByUuIdDocument,
+    options,
+  );
+}
+export function useGetUserByUuIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserByUuIdQuery,
+    GetUserByUuIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetUserByUuIdQuery, GetUserByUuIdQueryVariables>(
+    GetUserByUuIdDocument,
+    options,
+  );
+}
+export type GetUserByUuIdQueryHookResult = ReturnType<
+  typeof useGetUserByUuIdQuery
+>;
+export type GetUserByUuIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserByUuIdLazyQuery
+>;
+export type GetUserByUuIdQueryResult = Apollo.QueryResult<
+  GetUserByUuIdQuery,
+  GetUserByUuIdQueryVariables
+>;
+export const GetUserPortfolioByIdDocument = gql`
+  query GetUserPortfolioById($userToken: String) {
+    portfolios: getUserById(userToken: $userToken) {
+      status
+      msg
+      node {
+        portfolio {
+          id
+          title
+          description
+          img
+          portfolioURL
+          skills
+          userId
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetUserPortfolioByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserPortfolioByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserPortfolioByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserPortfolioByIdQuery({
  *   variables: {
  *      userToken: // value for 'userToken'
  *   },
  * });
  */
-export function useGetUrlByIdQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetUrlByIdQuery,
-    GetUrlByIdQueryVariables
+export function useGetUserPortfolioByIdQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetUrlByIdQuery, GetUrlByIdQueryVariables>(
-    GetUrlByIdDocument,
-    options,
-  );
+  return Apollo.useQuery<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >(GetUserPortfolioByIdDocument, options);
 }
-export function useGetUrlByIdLazyQuery(
+export function useGetUserPortfolioByIdLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetUrlByIdQuery,
-    GetUrlByIdQueryVariables
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetUrlByIdQuery, GetUrlByIdQueryVariables>(
-    GetUrlByIdDocument,
-    options,
-  );
+  return Apollo.useLazyQuery<
+    GetUserPortfolioByIdQuery,
+    GetUserPortfolioByIdQueryVariables
+  >(GetUserPortfolioByIdDocument, options);
 }
-export type GetUrlByIdQueryHookResult = ReturnType<typeof useGetUrlByIdQuery>;
-export type GetUrlByIdLazyQueryHookResult = ReturnType<
-  typeof useGetUrlByIdLazyQuery
+export type GetUserPortfolioByIdQueryHookResult = ReturnType<
+  typeof useGetUserPortfolioByIdQuery
 >;
-export type GetUrlByIdQueryResult = Apollo.QueryResult<
-  GetUrlByIdQuery,
-  GetUrlByIdQueryVariables
+export type GetUserPortfolioByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserPortfolioByIdLazyQuery
+>;
+export type GetUserPortfolioByIdQueryResult = Apollo.QueryResult<
+  GetUserPortfolioByIdQuery,
+  GetUserPortfolioByIdQueryVariables
 >;
 export const GetSheetByUserIdDocument = gql`
   query GetSheetByUserId($userToken: String!) {

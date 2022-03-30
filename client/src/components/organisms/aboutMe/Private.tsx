@@ -1,5 +1,5 @@
 import { memo, FC } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex, Spacer } from "@chakra-ui/react";
 import styled from "styled-components";
 
 import { AccordionContent } from "../../molucules/AccordionContent";
@@ -8,6 +8,9 @@ import { SkillTable } from "../../molucules/aboutMePrivate/SkillTable";
 import { OtherData } from "../../molucules/aboutMePrivate/OtherData";
 import { Project } from "../../molucules/aboutMePrivate/Project";
 import { SpecPr } from "../../molucules/aboutMePrivate/SpecPr";
+import { Heading } from "../../atoms/common/Heading";
+import { SpreadMenuBar } from "./SpreadMenuBar";
+import { ShadowFrame } from "../../atoms/common/ShadowFrame";
 
 /**
  * AboutMeプライベート(スペックシート)ゾーン.
@@ -23,7 +26,12 @@ export const Private: FC = memo(() => {
 
   return (
     <>
-      <Box background={"white.50"} m={10} p={20} rounded={20}>
+      <Flex m={10}>
+        <Heading text={"SpecSheet"} />
+        <Spacer />
+        <SpreadMenuBar />
+      </Flex>
+      <ShadowFrame margin={10} padding={10}>
         {propsDataArray.map((propsData) => (
           <div key={propsData.title}>
             <AccordionContent {...propsData} />
@@ -32,7 +40,7 @@ export const Private: FC = memo(() => {
 
         <_Title>開発経験</_Title>
         <Project />
-      </Box>
+      </ShadowFrame>
     </>
   );
 });
