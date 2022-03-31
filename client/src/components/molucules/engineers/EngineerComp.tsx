@@ -16,9 +16,9 @@ export const EngineerComp: FC<Props> = memo(
         w="200px"
         h="280px"
         bg="white"
-        borderWidth="2px"
-        borderRadius="lg"
+        borderRadius="2xl"
         overflow="hidden"
+        boxShadow={"md"}
       >
         <Center>
           <SimpleGrid columns={1} spacing={2}>

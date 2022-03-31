@@ -14,6 +14,7 @@ export const AreaSelectButton: FC<Props> = memo(
         bg="gray.100"
         variant="solid"
         onClick={() => changeArea(indexOfTechArea)}
+        boxShadow={"base"}
       >
         <Text color="gray.600" fontSize="sm">
           {techAreaTextData}

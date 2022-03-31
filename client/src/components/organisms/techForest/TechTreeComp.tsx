@@ -41,10 +41,8 @@ export const TechTreeComp: FC<Props> = memo(({ treeData }) => {
                 w="85%"
                 p={8}
                 m={5}
-                color="black"
-                borderColor="gray.400"
-                borderWidth="4px"
                 borderRadius="lg"
+                boxShadow={"base"}
               >
                 <SimpleGrid columns={1} spacing={3}>
                   <ProgressComp
