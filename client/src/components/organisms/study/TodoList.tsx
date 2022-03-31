@@ -57,9 +57,12 @@ export const TodoList: FC<Props> = memo((props) => {
       </Flex>
       <Box
         bg="#f5f5f5"
+        width="93%"
+        margin="auto"
         padding="8px 32px 32px 32px"
         flexGrow={1}
         borderRadius="md"
+        shadow="xl"
       >
         <Tabs variant="soft-rounded" isLazy height="full">
           <Flex direction="column" height="full">
