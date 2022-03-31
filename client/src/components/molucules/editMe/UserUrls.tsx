@@ -1,21 +1,17 @@
 import { memo, FC, Dispatch, SetStateAction, useState } from "react";
-import { Button, Spinner, Flex } from "@chakra-ui/react";
+import { Spinner, Flex, Box } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 
 import { TextInput } from "../../atoms/common/TextInput";
 import { useUserUrls } from "../../../hooks/editMe/useUserUrls";
 import { Url, useGetUserUrlByIdQuery } from "../../../types/generated/graphql";
+import { ButtonItem } from "../../atoms/common/ButtonItem";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
   onClose: () => void; //モーダルを閉じるメソッド
 };
-
-//やること:URLの登録が0だった場合の処理
-//CSS
-//バリデーション
-//asを処理
 
 /**
  * public部分URL編集画面.
@@ -70,37 +66,32 @@ export const UserUrls: FC<Props> = memo(({ setMenuItem, onClose }) => {
               <_List>
                 <Flex>
                   <_ListTitle>{url.urlName}</_ListTitle>
-
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setEditMode("削除");
-                      setUrlId(url.id);
-                    }}
-                    ml={3}
-                  >
-                    削除
-                  </Button>
+                  <Box ml={3}>
+                    <ButtonItem
+                      name="Delete"
+                      backgroundColor="red"
+                      onClick={() => {
+                        setEditMode("削除");
+                        setUrlId(url.id);
+                      }}
+                    />
+                  </Box>
                 </Flex>
               </_List>
             </div>
           ))}
 
-          <Flex justifyContent="center" gap={3} mt={5}>
-            <Button
-              type="button"
+          <Flex gap={3} justifyContent="center" mt={7}>
+            <ButtonItem
+              name="Add"
+              backgroundColor="green"
               onClick={() => setEditMode("追加")}
-              _focus={{ boxShadow: "none" }}
-            >
-              新規追加
-            </Button>
-            <Button
-              type="button"
+            />
+            <ButtonItem
+              name="Cancel"
+              backgroundColor="gray"
               onClick={onClose}
-              _focus={{ boxShadow: "none" }}
-            >
-              キャンセル
-            </Button>
+            />
           </Flex>
         </>
       )}
@@ -125,15 +116,17 @@ export const UserUrls: FC<Props> = memo(({ setMenuItem, onClose }) => {
             />
           </_TextItem>
 
-          <Flex gap={3} justifyContent="center">
-            <Button onClick={handleSubmit(onSubmit)}>追加</Button>
-            <Button
-              type="button"
+          <Flex gap={3} justifyContent="right" mt={7}>
+            <ButtonItem
+              name="Add"
+              backgroundColor="green"
+              onClick={handleSubmit(onSubmit)}
+            />
+            <ButtonItem
+              name="Cnacel"
+              backgroundColor="gray"
               onClick={() => setEditMode("")}
-              _focus={{ boxShadow: "none" }}
-            >
-              キャンセル
-            </Button>
+            />
           </Flex>
         </>
       )}
@@ -142,25 +135,24 @@ export const UserUrls: FC<Props> = memo(({ setMenuItem, onClose }) => {
         <>
           削除しますか？
           <Flex gap={3} justifyContent="center" mt={5}>
-            <Button
+            <ButtonItem
+              name="Yes"
+              backgroundColor="red"
               onClick={() => {
                 onDelete(urlId);
                 setEditMode("");
                 setUrlId("");
               }}
-            >
-              はい
-            </Button>
-            <Button
-              type="button"
+            />
+
+            <ButtonItem
+              name="Cancel"
+              backgroundColor="gray"
               onClick={() => {
                 setEditMode("");
                 setUrlId("");
               }}
-              _focus={{ boxShadow: "none" }}
-            >
-              キャンセル
-            </Button>
+            />
           </Flex>
         </>
       )}

@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
-import { StackButton } from "../../components/atoms/study/StackBotton";
+import { StackButton } from "../../../components/atoms/study/StackBotton";
 
 export default {
   component: StackButton,

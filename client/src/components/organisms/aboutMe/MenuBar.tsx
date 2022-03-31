@@ -34,14 +34,18 @@ export const MenuBar: FC = memo(() => {
       <Menu>
         <MenuButton
           _focus={{ boxShadow: "none" }}
+          type="button"
           as={Button}
-          backgroundColor="green.400"
           textColor="white"
-          _hover={{ backgroundColor: "green.300" }}
           width="auto"
           height={10}
           justifyContent="center"
           textAlign="center"
+          display="flex"
+          backgroundColor="green.400"
+          _hover={{ backgroundColor: "green.300" }}
+          _active={{ backgroundColor: "green.200" }}
+          data-testid="open-menu"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -1,5 +1,4 @@
 import { memo, FC } from "react";
-import styled from "styled-components";
 import { Box, Spinner, Flex } from "@chakra-ui/react";
 import { returnCodeToBr } from "../../../utils/methods";
 import { useCookies } from "react-cookie";
@@ -37,13 +36,7 @@ export const SpecPr: FC = memo(() => {
 
   return (
     <>
-      <Box mx={10}>
-        <_TextStyle>{returnCodeToBr(prData)}</_TextStyle>
-      </Box>
+      <Box mx={10}>{returnCodeToBr(prData)}</Box>
     </>
   );
 });
-
-const _TextStyle = styled.pre`
-  /* word-break: break-all; */
-`;

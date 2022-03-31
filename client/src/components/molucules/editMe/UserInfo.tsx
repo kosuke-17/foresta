@@ -1,10 +1,11 @@
 import { memo, FC, Dispatch, SetStateAction } from "react";
-import { Button, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 import { SelectInput } from "../../atoms/editMe/SelectInput";
 import { TextInput } from "../../atoms/common/TextInput";
 import { useUserInfo } from "../../../hooks/editMe/useUserInfo";
 import styled from "styled-components";
+import { ButtonItem } from "../../atoms/common/ButtonItem";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
@@ -68,11 +69,14 @@ export const UserInfo: FC<Props> = memo(({ setMenuItem, onClose }) => {
         />
       </_TextItem>
 
-      <Flex gap={3} justifyContent="center" mt={10}>
-        <Button onClick={handleSubmit(onSubmit)}>更新</Button>
-        <Button type="button" onClick={onClose} _focus={{ boxShadow: "none" }}>
-          キャンセル
-        </Button>
+      <Flex gap={3} justifyContent="right" mt={7}>
+        <ButtonItem
+          name="Update"
+          backgroundColor="green"
+          onClick={handleSubmit(onSubmit)}
+        />
+
+        <ButtonItem name="Cancel" backgroundColor="gray" onClick={onClose} />
       </Flex>
     </>
   );

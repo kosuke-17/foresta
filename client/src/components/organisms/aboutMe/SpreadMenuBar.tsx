@@ -67,6 +67,7 @@ export const SpreadMenuBar: FC = memo(() => {
           backgroundColor="green.400"
           textColor="white"
           _hover={{ backgroundColor: "green.300" }}
+          _active={{ backgroundColor: "green.200" }}
           width="auto"
           height={10}
           justifyContent="center"

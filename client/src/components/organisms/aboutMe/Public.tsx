@@ -1,44 +1,52 @@
 import { memo, FC } from "react";
-import { Link } from "react-router-dom";
-import { Button, Box, Flex, Spinner } from "@chakra-ui/react";
-import { MarkGithubIcon } from "@primer/octicons-react";
-import styled from "styled-components";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
+import styled from "styled-components";
 
-import { AccordionContent } from "../../molucules/AccordionContent";
-import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
-import { useGetUserByIdQuery } from "../../../types/generated/graphql";
-import { UrlList } from "../../molucules/aboutMePublic/UrlList";
 import { MenuBar } from "./MenuBar";
-import { SpreadMenuBar } from "./SpreadMenuBar";
-import { useLocation } from "react-router-dom";
+import { SiteImageBox } from "../../molucules/aboutMePublic/SiteImageBox";
+import { MyTechStack } from "../../molucules/aboutMePublic/MyTechStack";
+import { UrlList } from "../../molucules/aboutMePublic/UrlList";
+import { Profile } from "../../molucules/aboutMePublic/Profile";
+import { Heading } from "../../atoms/common/Heading";
+import { useAboutMePrivate } from "../../../hooks/useAboutMePrivate";
+import { PortfolioType } from "../../../types/types";
+import { Url } from "../../../types/generated/graphql";
 
-interface State {
-  engineerId: string;
-}
+type Props = { engineerId?: string }; //エンジニアリストページから来たらUuIdが渡ってくる
 
 /**
  * AboutMeパブリックゾーン.
  */
-export const Public: FC = memo(() => {
-  // エンジニアリストからtokenを受け取るためのlocation
-  const location = useLocation();
-  const { engineerId } = location.state as State;
-  console.log(engineerId);
-
+export const Public: FC<Props> = memo(({ engineerId }) => {
   //cookieからID取得
   const [cookies] = useCookies();
-  /**
-   * ユーザ情報の取得.
-   * @remarks 取得情報:名前、職種、GitHub
-   */
-  const { loading, error, data } = useGetUserByIdQuery({
-    variables: { userToken: cookies.ForestaID },
-  });
-  const user = data?.user.node;
+
+  //引数で渡す値は他人のページが自身のページで分岐
+  const postData = engineerId ? engineerId : cookies.ForestaID;
+
+  //hooksの利用
+  const { myLoading, myError, otherLoading, otherError, myData, otherData } =
+    useAboutMePrivate(postData);
+
+  //データをセット(他人のページなら他人のデータ、自身のページなら自身のデータ)
+  const user = engineerId ? otherData : myData;
+
+  //基本情報データ
+  const userData = {
+    name: String(user?.name),
+    githubId: String(user?.githubURL),
+    jobType: String(user?.jobType),
+  };
+
+  //制作物データ
+  const portfolioData = user?.portfolio as Array<PortfolioType>;
+
+  //URLデータ
+  const urlData = user?.userUrls.user_urls as Array<Url>;
 
   //読み込み中時の表示
-  if (loading) {
+  if (myLoading || otherLoading) {
     return (
       <Flex justifyContent="center">
         <Spinner color="green.400" />
@@ -46,83 +54,58 @@ export const Public: FC = memo(() => {
     );
   }
   //エラー時の表示
-  if (error) {
+  if (myError && otherError) {
     return <Flex justifyContent="center">Error</Flex>;
   }
 
   return (
     <>
-      <Box background={"green.100"} m={10} p={20} rounded={20} boxShadow="md">
-        {user && (
-          <>
-            <Flex justifyContent="right" gap={3}>
-              <MenuBar />
-              <SpreadMenuBar />
-            </Flex>
-            <_User>
-              <Flex justifyContent="center">
-                <_Name>氏名:{user.name}</_Name>
-                {user.githubURL && (
-                  <_Icon>
-                    <a
-                      href={`https://github.com/${user.githubURL}`}
-                      target="blank"
-                    >
-                      <MarkGithubIcon size={16} />
-                    </a>
-                  </_Icon>
-                )}
-              </Flex>
-              <_Content>{user.jobType}</_Content>
-              <_Content>
-                <Button
-                  backgroundColor="green.400"
-                  size="md"
-                  textColor="white"
-                  _hover={{ backgroundColor: "green.300" }}
-                >
-                  {/* 仮のリンク */}
-                  <Link to={"/study"}>このユーザの学習記録</Link>
-                </Button>
-              </_Content>
-            </_User>
-            <_Content>
-              <AccordionContent
-                title="技術進捗ツリーチェック項目"
-                content={<p>技術ツリー</p>}
-                size="sm"
-              />
-            </_Content>
-            <SiteImageBox />
-            <UrlList />
-          </>
-        )}
-      </Box>
+      {user && (
+        <>
+          {/* 編集ボタン */}
+          <Flex justifyContent="right" my={5}>
+            {!engineerId && <MenuBar />}
+          </Flex>
+          <Flex gap={50} justifyContent="center" mb={20}>
+            <_Profile>
+              <_Head>
+                <Heading text="Profile" />
+              </_Head>
+              <Profile userData={userData} />
+            </_Profile>
+
+            <_MyTechStack>
+              <_Head>
+                <Heading text="My Tech Stack" />
+              </_Head>
+              <MyTechStack />
+            </_MyTechStack>
+          </Flex>
+
+          <Box width="100%">
+            {portfolioData && <SiteImageBox data={portfolioData} />}
+          </Box>
+          <Box width="100%" my={70}>
+            {urlData && <UrlList data={urlData} />}
+          </Box>
+        </>
+      )}
     </>
   );
 });
 
-//氏名
-const _Name = styled.div`
-  font-weight: bold;
-  font-size: 25px;
+//Heading
+const _Head = styled.div`
+  margin-bottom: 10px;
+  margin-left: 10px;
 `;
 
-//githubアイコン
-const _Icon = styled.div`
-  margin-top: 5px;
-  margin-left: 5px;
-  :hover {
-    color: gray;
-  }
+//profile部分サイズ調整
+const _Profile = styled.div`
+  width: 25%;
 `;
 
-//パブリックゾーン上半分
-const _User = styled.div`
-  text-align: center;
-`;
-
-//技術進捗ツリー
-const _Content = styled.div`
-  margin-top: 10px;
+//技術ツリーサイズ調整
+const _MyTechStack = styled.div`
+  width: 70%;
 `;

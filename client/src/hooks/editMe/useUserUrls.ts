@@ -1,23 +1,27 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import {
-  GetUrlByIdDocument,
+  GetUserByIdDocument,
   useAddUserUrlsMutation,
   useRemoveUserUrlsMutation,
   useUpdateUserMutation,
 } from "../../types/generated/graphql";
 import { useToast } from "@chakra-ui/react";
+import { UrlType } from "../../types/types";
 
 /**
  * バリデーションチェック.
  */
 const schema = yup.object().shape({
-  urlName: yup.string(),
-  url: yup.string(),
-  urlTableId: yup.string(),
+  urlName: yup
+    .string()
+    .trim()
+    .required("タイトルを入力して下さい")
+    .max(50, "稼働開始日は50文字以内で入力して下さい"),
+  url: yup.string().trim().required("URLを入力して下さい"),
 });
 
 /**
@@ -38,13 +42,10 @@ export const useUserUrls = (
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<UrlType>({
     resolver: yupResolver(schema),
   });
-
-  setValue("urlTableId", urlTableId);
 
   //トーストの使用
   const toast = useToast();
@@ -61,7 +62,7 @@ export const useUserUrls = (
    * URL追加.（リフェッチ機能）
    */
   const [updatePortfolio] = useAddUserUrlsMutation({
-    refetchQueries: [GetUrlByIdDocument], //データを表示するクエリーのDocument
+    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -69,8 +70,8 @@ export const useUserUrls = (
    * 更新ボタンを押した時に呼ばれる
    * @param data - 入力したデータ
    */
-  const onSubmit = useCallback(
-    async (data: any) => {
+  const onSubmit: SubmitHandler<UrlType> = useCallback(
+    async (data: UrlType) => {
       try {
         await updatePortfolio({
           variables: {
@@ -105,7 +106,7 @@ export const useUserUrls = (
    * URL削除用.（リフェッチ機能）
    */
   const [deleteUrl] = useRemoveUserUrlsMutation({
-    refetchQueries: [GetUrlByIdDocument], //データを表示するクエリーのDocument
+    refetchQueries: [GetUserByIdDocument], //データを表示するクエリーのDocument
     awaitRefetchQueries: true,
   });
 
@@ -148,7 +149,6 @@ export const useUserUrls = (
     cancel,
     register,
     errors,
-    GetUrlByIdDocument,
     deleteUrl,
     onDelete,
     onSubmit,

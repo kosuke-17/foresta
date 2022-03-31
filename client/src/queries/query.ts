@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 //ユーザ情報取得.
 gql`
-  query GetUserById($userToken: String!) {
+  query GetUserById($userToken: String) {
     user: getUserById(userToken: $userToken) {
       status
       msg
@@ -11,40 +11,79 @@ gql`
         jobType
         spreadSheetID
         githubURL
-      }
-    }
-  }
-`;
-
-//ユーザ情報:制作物取得.
-gql`
-  query GetPortfolioByUserId($userToken: String!) {
-    portfolios: getPortfolioByUserId(userToken: $userToken) {
-      node {
-        id
-        title
-        description
-        img
-        portfolioURL
-        skills
-        specSheetId
-      }
-    }
-  }
-`;
-
-//ユーザ情報:URL取得.
-gql`
-  query GetUrlById($userToken: String!) {
-    urls: getUserById(userToken: $userToken) {
-      status
-      msg
-      node {
         userUrls {
+          id
           user_urls {
+            id
             urlName
             url
           }
+        }
+        portfolio {
+          id
+          title
+          description
+          img
+          portfolioURL
+          skills
+          userId
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+//ユーザ情報を固定ID取得する場合の取得
+gql`
+  query GetUserByUuId($userUuid: String) {
+    user: getUserById(userUuid: $userUuid) {
+      status
+      msg
+      node {
+        name
+        jobType
+        spreadSheetID
+        githubURL
+        userUrls {
+          id
+          user_urls {
+            id
+            urlName
+            url
+          }
+        }
+        portfolio {
+          id
+          title
+          description
+          img
+          portfolioURL
+          skills
+          userId
+          specSheetId
+        }
+      }
+    }
+  }
+`;
+
+//ユーザ:制作物取得.
+gql`
+  query GetUserPortfolioById($userToken: String) {
+    portfolios: getUserById(userToken: $userToken) {
+      status
+      msg
+      node {
+        portfolio {
+          id
+          title
+          description
+          img
+          portfolioURL
+          skills
+          userId
+          specSheetId
         }
       }
     }
@@ -247,16 +286,6 @@ gql`
     updatePortfolio(portfolio: $portfolio) {
       status
       msg
-      node {
-        id
-        title
-        description
-        img
-        portfolioURL
-        skills
-        userId
-        specSheetId
-      }
     }
   }
 `;
@@ -494,6 +523,24 @@ gql`
               isStatus
             }
           }
+        }
+      }
+    }
+  }
+`;
+
+//技術ツリーのみ取得
+gql`
+  query GetUserOnlyTreeById($userToken: String!) {
+    tree: getUserLeafsById(userToken: $userToken) {
+      status
+      msg
+      node {
+        myForest {
+          id
+          treeName
+          achievementRate
+          color
         }
       }
     }

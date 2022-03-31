@@ -1,10 +1,11 @@
 import { memo, FC, Dispatch, SetStateAction } from "react";
-import { Button, Spinner, Flex } from "@chakra-ui/react";
+import { Spinner, Flex } from "@chakra-ui/react";
 
 import { useSpecTechInfo } from "../../../hooks/editMe/useSpecTechInfo";
 import { useGetAllSkillQuery } from "../../../types/generated/graphql";
 import styled from "styled-components";
 import { CheckBoxInput } from "../../atoms/editMe/CheckBoxInput";
+import { ButtonItem } from "../../atoms/common/ButtonItem";
 
 type Props = {
   setMenuItem: Dispatch<SetStateAction<string>>; //menuItemセット用
@@ -106,11 +107,13 @@ export const SpecTechInfo: FC<Props> = memo(({ setMenuItem, onClose }) => {
           array={other}
         />
       </_TextItem>
-      <Flex gap={3} justifyContent="center">
-        <Button onClick={handleSubmit(onSubmit)}>登録</Button>
-        <Button type="button" onClick={onClose} _focus={{ boxShadow: "none" }}>
-          キャンセル
-        </Button>
+      <Flex gap={3} justifyContent="right" mt={7}>
+        <ButtonItem
+          name="Update"
+          backgroundColor="green"
+          onClick={handleSubmit(onSubmit)}
+        />
+        <ButtonItem name="Cancel" backgroundColor="gray" onClick={onClose} />
       </Flex>
     </>
   );
