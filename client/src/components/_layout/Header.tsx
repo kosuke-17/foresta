@@ -65,7 +65,7 @@ export const Header: FC = memo(() => {
               Menu
               <ChevronDownIcon />
             </MenuButton>
-            <MenuList minWidth="300px">
+            <MenuList minWidth="300px" zIndex={100}>
               <MenuItemOption>学習記録</MenuItemOption>
               <MenuItemOption>ポートフォリオ</MenuItemOption>
               <MenuItemOption>進捗ツリー</MenuItemOption>
