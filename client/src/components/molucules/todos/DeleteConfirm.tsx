@@ -1,6 +1,7 @@
 import { FC, memo } from "react";
-import { Flex, ModalBody, Heading, Button } from "@chakra-ui/react";
+import { Flex, ModalBody, Heading } from "@chakra-ui/react";
 
+import { ButtonItem } from "../../atoms/common/ButtonItem";
 import { useDeleteTodo } from "../../../hooks/study/useDeleteTodo";
 import { useTodoModalContext } from "../../../hooks/study/useTodoModalContext";
 
@@ -31,15 +32,17 @@ export const DeleteConfirm: FC<Props> = memo((props) => {
         <Heading as="p" size="md">
           ⚠️Todoを削除しますか？
         </Heading>
-        <Flex align="center" justify="center" gap={2}>
-          <Button
-            bg="pink.200"
-            _hover={{ bg: "pink.100" }}
+        <Flex align="center" justify="center" gap={8}>
+          <ButtonItem
             onClick={onDeleteTodo}
-          >
-            削除する
-          </Button>
-          <Button onClick={() => setModalMode("read")}>キャンセル</Button>
+            backgroundColor="red"
+            name={"Yes"}
+          />
+          <ButtonItem
+            onClick={() => setModalMode("read")}
+            backgroundColor="gray"
+            name={"No"}
+          />
         </Flex>
       </Flex>
     </ModalBody>

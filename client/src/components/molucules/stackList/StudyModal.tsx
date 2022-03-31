@@ -103,11 +103,13 @@ export const StudyModal: FC<Props> = memo((props) => {
     <>
       <Button
         onClick={openMethod}
+        backgroundColor={`${color}.300`}
+        _hover={{ bg: `${color}.400` }}
         _focus={{ boxShadow: "none" }}
-        backgroundColor={color}
+        _active={{ boxShadow: "none", bg: `${color}.500` }}
         color="white"
         shadow="base"
-        _hover={{ bg: "gray.300" }}
+        width={3}
       >
         {icon}
       </Button>

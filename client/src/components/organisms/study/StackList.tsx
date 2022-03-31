@@ -36,7 +36,7 @@ export const StackList = memo(() => {
             title="Add Stack"
             stackId=""
             icon={<AddIcon data-testid="addIcon" />}
-            color="green.300"
+            color="green"
           />
         </Flex>
         <Box

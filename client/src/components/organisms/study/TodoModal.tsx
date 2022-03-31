@@ -7,6 +7,7 @@ import {
   ModalHeader,
   CloseButton,
   ModalBody,
+  ModalFooter,
   Heading,
   Box,
 } from "@chakra-ui/react";
@@ -18,6 +19,7 @@ import { TodoHeaderButtons } from "../../molucules/todos/TodoHeaderButtons";
 import { DeleteConfirm } from "../../molucules/todos/DeleteConfirm";
 import { getformattedTodoDate, returnCodeToBr } from "../../../utils/methods";
 import { useTodoModalContext } from "../../../hooks/study/useTodoModalContext";
+import { ButtonItem } from "../../atoms/common/ButtonItem";
 
 type Props = {
   isOpen: boolean;
@@ -41,7 +43,7 @@ export const TodoModal: FC<Props> = memo((props) => {
       scrollBehavior={"inside"}
     >
       <ModalOverlay />
-      <ModalContent bg="green.50">
+      <ModalContent>
         {/* 編集モードもしくは追加モード */}
         {(modalMode === "update" || modalMode === "create") && (
           <TodoEditForm
@@ -54,24 +56,8 @@ export const TodoModal: FC<Props> = memo((props) => {
         {modalMode === "read" && (
           <>
             <ModalHeader>
-              <Flex justify="space-between">
+              <Flex justify="start">
                 <CloseButton onClick={onClose} />
-                <TodoHeaderButtons
-                  label1={
-                    <>
-                      <EditIcon />
-                      <span>編集</span>
-                    </>
-                  }
-                  label2={
-                    <>
-                      <DeleteIcon />
-                      削除
-                    </>
-                  }
-                  func1={() => setModalMode("update")}
-                  func2={() => setModalMode("delete")}
-                />
               </Flex>
             </ModalHeader>
 
@@ -81,23 +67,46 @@ export const TodoModal: FC<Props> = memo((props) => {
                   {todo.title}
                 </Heading>
                 <div>
-                  <_Label>日付: </_Label>
+                  <_Label>Date: </_Label>
 
                   {getformattedTodoDate(todo.startedAt, todo.finishedAt)}
                 </div>
                 <div>
-                  <_Label>ステータス: </_Label>
+                  <_Label>Status: </_Label>
                   {todo.isStatus ? "完了" : "未完了"}
                 </div>
 
                 <Box mt={5}>
-                  <_Label>メモ</_Label>
+                  <_Label>Detail</_Label>
                   <_MemoContent>
                     {todo.description ? returnCodeToBr(todo.description) : " "}
                   </_MemoContent>
                 </Box>
               </>
             </ModalBody>
+            <ModalFooter>
+              <Flex gap={5}>
+                <ButtonItem
+                  onClick={() => setModalMode("update")}
+                  name={
+                    <>
+                      <EditIcon />
+                      <span>Edit Todo</span>
+                    </>
+                  }
+                />
+                <ButtonItem
+                  onClick={() => setModalMode("delete")}
+                  backgroundColor="red"
+                  name={
+                    <>
+                      <DeleteIcon />
+                      Delete Todo
+                    </>
+                  }
+                />
+              </Flex>
+            </ModalFooter>
           </>
         )}
 

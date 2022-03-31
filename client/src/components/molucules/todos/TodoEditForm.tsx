@@ -3,15 +3,18 @@ import {
   Flex,
   Box,
   Input,
+  Heading,
   Textarea,
   Checkbox,
   ModalHeader,
   ModalBody,
+  ModalFooter,
 } from "@chakra-ui/react";
 import styled from "styled-components";
 
+import { ButtonItem } from "../../atoms/common/ButtonItem";
+import { TextInput } from "../../atoms/common/TextInput";
 import { DateRangePicker } from "../../atoms/study/DateRangePicker";
-import { TodoHeaderButtons } from "./TodoHeaderButtons";
 import type { TodoData, TodoModalModeType } from "../../../types/types";
 import { useEditTodo } from "../../../hooks/study/useEditTodo";
 import { useTodoModalContext } from "../../../hooks/study/useTodoModalContext";
@@ -46,77 +49,79 @@ export const TodoEditForm: FC<Props> = memo((props) => {
     <>
       <ModalHeader>
         {modalMode === "update" && (
-          <TodoHeaderButtons
-            label1={"更新"}
-            label2={"キャンセル"}
-            func1={handleSubmit(onUpdateTodo)}
-            func2={() => setModalMode("read")}
-          />
+          <Heading color="#696969" size="md">
+            Todoを編集する
+          </Heading>
         )}
         {modalMode === "create" && (
-          <TodoHeaderButtons
-            label1={"作成"}
-            label2={"キャンセル"}
-            func1={handleSubmit(onCreateTodo)}
-            func2={onClose}
-          />
+          <Heading color="#696969" size="md">
+            Todoを追加する
+          </Heading>
         )}
       </ModalHeader>
-
       <ModalBody padding="0 4rem">
         <>
-          <_Label>Todoタイトル: </_Label>
           <div>
-            <Input
-              focusBorderColor="green.200"
-              bg="white"
-              {...register("title")}
+            <TextInput
+              registers={register("title")}
+              errorMessage={errors.title?.message}
+              label="Title"
               placeholder="必須・50文字以内"
             />
-            <Box textColor="red" fontSize="xs">
-              {errors.title?.message}
-            </Box>
           </div>
+          <_Label>Date </_Label>
+          <DateRangePicker
+            startedAt={startedAt}
+            setStartedAt={setStartedAt}
+            finishedAt={finishedAt}
+            setFinishedAt={setFinishedAt}
+          />
           <Flex alignItems="center" mt={2}>
-            <_Label>日付: </_Label>
-            <DateRangePicker
-              startedAt={startedAt}
-              setStartedAt={setStartedAt}
-              finishedAt={finishedAt}
-              setFinishedAt={setFinishedAt}
-            />
-          </Flex>
-
-          <Flex alignItems="center" >
-            <_Label>ステータス: </_Label>
+            <_Label>Status: </_Label>
             {watch("isStatus") ? "完了" : "未完了"}
             <Checkbox
               {...register("isStatus")}
               size="lg"
-              colorScheme="teal"
+              colorScheme="green"
               bg="white"
               ml={1}
             />
           </Flex>
 
           <Box mt={5}>
-            <_Label>メモ</_Label>
-            <Textarea
-              {...register("description")}
-              mb={5}
-              bg="white"
-              focusBorderColor="green.200"
-              rows={10}
-            />
+            <_Label>Detail</_Label>
+            <Textarea {...register("description")} mb={5} rows={10} />
           </Box>
         </>
       </ModalBody>
+      <ModalFooter>
+        {modalMode === "update" && (
+          <Flex gap={5}>
+            <ButtonItem onClick={handleSubmit(onUpdateTodo)} name={"Save"} />
+            <ButtonItem
+              onClick={() => setModalMode("read")}
+              backgroundColor="gray"
+              name={"Cancel"}
+            />
+          </Flex>
+        )}
+        {modalMode === "create" && (
+          <Flex gap={5}>
+            <ButtonItem onClick={handleSubmit(onCreateTodo)} name={"Save"} />
+            <ButtonItem
+              onClick={onClose}
+              backgroundColor="gray"
+              name={"Cancel"}
+            />
+          </Flex>
+        )}
+      </ModalFooter>
     </>
   );
 });
 
 const _Label = styled.span`
+  color: "#9F9F9F";
+  text-align: left;
   font-weight: bold;
-  white-space: nowrap;
-  margin-right: 4px;
 `;
