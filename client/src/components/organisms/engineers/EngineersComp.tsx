@@ -8,6 +8,7 @@ export const EngineersComp: FC = memo(() => {
   // エンジニア一覧を取得するQuery
   const { data } = useGetAllUserQuery();
   const engineerData = data?.getAllUser;
+
   return (
     <Center>
       <Box bg="white" height="auto" w="1400px" m={10}>
@@ -17,7 +18,7 @@ export const EngineersComp: FC = memo(() => {
               return (
                 <EngineerComp
                   key={index}
-                  engineerId={engineerData.token}
+                  engineerId={engineerData._uuid}
                   engineerName={engineerData.name}
                   engineerJobType={engineerData.jobType}
                 />

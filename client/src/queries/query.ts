@@ -562,6 +562,7 @@ gql`
   query GetAllUser {
     getAllUser {
       id
+      _uuid
       name
       jobType
       email

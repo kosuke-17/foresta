@@ -120,6 +120,7 @@ export type EngineerData = {
   spreadSheetID: string;
   githubURL: string;
   token: string;
+  _uuid: string;
 };
 
 // 技術エリアの型
