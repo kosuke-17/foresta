@@ -42,9 +42,12 @@ export const Header: FC = memo(() => {
   return (
     <Flex direction="column" borderBottom="3px solid #48bb78" px={4}>
       <_Header>
-        <Link to="/">
-          <img src="/images/header-logo.png" alt="ヘッダーロゴ" />
-        </Link>
+        <Flex alignItems="center" gap={3}>
+          <Link to="/">
+            <img src="/images/header-logo.png" alt="ヘッダーロゴ" />
+          </Link>
+          {auth && <HeaderNav />}
+        </Flex>
 
         {/* ログインしていればログアウトボタン表示 */}
         {/* {auth && <LogoutButton />} */}
@@ -74,7 +77,6 @@ export const Header: FC = memo(() => {
         )}
       </_Header>
       {/* ログインしていればナビゲーションメニュー表示 */}
-      {auth && <HeaderNav />}
     </Flex>
   );
 });
