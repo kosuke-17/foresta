@@ -1,13 +1,7 @@
-import {
-  FC,
-  memo,
-  useCallback,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { FC, memo, useCallback, Dispatch, SetStateAction } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Flex, IconButton } from "@chakra-ui/react";
+import { Flex, IconButton, Input } from "@chakra-ui/react";
 
 import { getFormattedDate } from "../../../utils/methods";
 
@@ -23,6 +17,11 @@ type Props = {
  */
 export const DateRangePicker: FC<Props> = memo((props) => {
   const { startedAt, setStartedAt, finishedAt, setFinishedAt } = props;
+
+  // Inputに表示させる文字列
+  const inputDate = finishedAt
+    ? `${getFormattedDate(startedAt)} - ${getFormattedDate(finishedAt)}`
+    : getFormattedDate(startedAt);
 
   /**
    * DatePickerの選択日を変更したときのハンドラ.
@@ -45,8 +44,7 @@ export const DateRangePicker: FC<Props> = memo((props) => {
       minDate={new Date()}
       customInput={
         <Flex align="center">
-          {getFormattedDate(startedAt)}
-          {finishedAt && <> - {getFormattedDate(finishedAt)}</>}
+          <Input type="text" value={inputDate} />
           <IconButton isRound aria-label="Edit date" icon={<>🗓</>} />
         </Flex>
       }
