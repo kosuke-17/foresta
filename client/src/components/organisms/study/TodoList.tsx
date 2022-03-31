@@ -72,7 +72,11 @@ export const TodoList: FC<Props> = memo((props) => {
                   key={index}
                   bg="white"
                   _focus={{ boxShadow: "none" }}
-                  _selected={{ pointerEvents: "none", bg: "green.200" }}
+                  _selected={{
+                    pointerEvents: "none",
+                    bg: "green.300",
+                    color: "white",
+                  }}
                   _hover={{ bg: "green.50" }}
                 >
                   {tab}
