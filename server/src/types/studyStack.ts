@@ -17,6 +17,5 @@ export type StackUpdateType = {
     timeStack: string;
     createdAt: string;
     skillTagId: string;
-    userToken: string;
   };
 };

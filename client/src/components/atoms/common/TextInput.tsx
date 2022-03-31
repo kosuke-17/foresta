@@ -38,4 +38,5 @@ const _ErrorMessage = styled.div`
   color: red;
   height: 10px;
   text-align: left;
+  font-size: 12px;
 `;

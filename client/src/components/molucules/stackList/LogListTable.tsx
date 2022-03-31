@@ -38,7 +38,7 @@ export const LogListTable: FC<Props> = memo((props) => {
                   title="Edit Stack"
                   icon={<EditIcon />}
                   stackId={stackList.id}
-                  color="green.300"
+                  color="green"
                 />
               </Td>
               <Td>
@@ -46,7 +46,7 @@ export const LogListTable: FC<Props> = memo((props) => {
                   title="Delete Stack"
                   icon={<DeleteIcon />}
                   stackId={stackList.id}
-                  color="gray.300"
+                  color="gray"
                 />
               </Td>
             </Tr>

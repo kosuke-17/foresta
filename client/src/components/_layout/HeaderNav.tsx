@@ -4,10 +4,10 @@ import { Flex } from "@chakra-ui/react";
 
 // ナビゲーションメニュー項目
 const navMenu = [
-  { link: "/", text: "学習記録" },
-  { link: "/aboutme", text: "ポートフォリオ" },
-  { link: "/techforest", text: "進捗ツリー" },
-  { link: "/engineerlist", text: "エンジニアリスト" },
+  { link: "/", text: "Home" },
+  { link: "/aboutme", text: "MyPortfolio" },
+  { link: "/techforest", text: "TechTree" },
+  { link: "/engineerlist", text: "EngineerList" },
 ];
 
 /**

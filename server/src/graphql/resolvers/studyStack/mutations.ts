@@ -57,15 +57,7 @@ const studyStackMutations = {
    * @returns errorステータス
    */
   updateStudyStack: async (_: any, { stack }: StackUpdateType) => {
-    const {
-      studyStackId,
-      content,
-      timeStack,
-      createdAt,
-      skillTagId,
-      userToken,
-    } = stack;
-    const userId = verifyJwtToken(userToken);
+    const { studyStackId, content, timeStack, createdAt, skillTagId } = stack;
     try {
       const result = await StudyStack.findByIdAndUpdate(
         { _id: studyStackId },
@@ -75,7 +67,6 @@ const studyStackMutations = {
             timeStack,
             createdAt,
             skillTagId,
-            userId,
           },
         },
         { new: true }

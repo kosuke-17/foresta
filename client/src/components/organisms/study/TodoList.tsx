@@ -44,19 +44,25 @@ export const TodoList: FC<Props> = memo((props) => {
     <Flex width="50%" direction="column">
       <Flex align="center" gap={1}>
         <Heading text="TodoList" />
-        {/* <IconButton
-          size="sm"
+        <IconButton
           aria-label="Add Todo"
-          colorScheme="teal"
+          color="white"
+          bg="green.300"
+          _hover={{ bg: "green.400" }}
+          _focus={{ boxShadow: "none" }}
+          _active={{ boxShadow: "none", bg: "green.500" }}
           icon={<AddIcon />}
           onClick={() => openAddModal()}
-        /> */}
+        />
       </Flex>
       <Box
         bg="#f5f5f5"
+        width="93%"
+        margin="auto"
         padding="8px 32px 32px 32px"
         flexGrow={1}
         borderRadius="md"
+        shadow="xl"
       >
         <Tabs variant="soft-rounded" isLazy height="full">
           <Flex direction="column" height="full">
@@ -64,9 +70,14 @@ export const TodoList: FC<Props> = memo((props) => {
               {tabs.map((tab, index) => (
                 <Tab
                   key={index}
+                  bg="white"
                   _focus={{ boxShadow: "none" }}
-                  _selected={{ pointerEvents: "none", bg: "green.200" }}
-                  _hover={{ backgroundColor: "green.50" }}
+                  _selected={{
+                    pointerEvents: "none",
+                    bg: "green.300",
+                    color: "white",
+                  }}
+                  _hover={{ bg: "green.50" }}
                 >
                   {tab}
                 </Tab>
