@@ -31,7 +31,7 @@ export const TodoWithCheck: FC<Props> = memo((props) => {
         <div onClick={(e) => onChangeTodoStatus(e)}>
           <Checkbox
             isChecked={todo.isStatus}
-            colorScheme="teal"
+            colorScheme="green"
             size="lg"
             padding="5px"
           />

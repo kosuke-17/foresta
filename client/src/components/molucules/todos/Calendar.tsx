@@ -61,7 +61,7 @@ export const Calendar: FC<Props> = memo((props) => {
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        eventColor="#319896"
+        eventColor="#38a169"
         businessHours={true} // 休日に色をつけるかどうか
         contentHeight="auto" // カレンダーの高さ
         dayMaxEvents={3} // 1日に表示できるイベント数
